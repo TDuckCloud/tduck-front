@@ -1,4 +1,5 @@
 import md5 from 'js-md5'
+import signSecret from './constants'
 
 export default class signMd5Utils {
     /**
@@ -31,7 +32,7 @@ export default class signMd5Utils {
         let urlParams = this.parseQueryString(url)
         let jsonObj = this.mergeObject(urlParams, requestParams)
         let requestBody = this.sortAsc(jsonObj)
-        return md5('916lWh2WMcbSWiHv' + JSON.stringify(requestBody)).toLowerCase()
+        return md5(signSecret + JSON.stringify(requestBody)).toLowerCase()
     }
 
     /**

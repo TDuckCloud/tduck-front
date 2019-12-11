@@ -1,5 +1,11 @@
 <template>
     <div>
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="审批人">
+                <el-input v-model="username" placeholder="审批人"></el-input>
+            </el-form-item>
+        </el-form>
+        <el-button type="primary" @click="getData">查询</el-button>
         <el-table
             :data="tableData">
             <el-table-column
@@ -51,12 +57,12 @@
                 tableData: [],
                 current: 1,
                 size: 10,
-                total: 0
+                total: 0,
+                username: ''
             }
         },
         methods: {
             handleSizeChange(size) {
-                debugger
                 this.size = size
                 this.getData()
             },
@@ -73,7 +79,7 @@
                 })
             },
             getData() {
-                let params = {current: this.current, size: this.size}
+                let params = {current: this.current, size: this.size, name: this.username}
                 this.$api.get('/api/v1/user/page', {
                     params: params
                 }).then(res => {
