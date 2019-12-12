@@ -1,10 +1,13 @@
 export default [
     {
         path: '/',
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/index.vue')
+        meta: {
+            requireLogin: true
+        },
+        component: () => import(/* webpackChunkName: 'root' */ '@/layout/design-layout.vue')
     },
     {
         path: '/login',
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/login.vue')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/design/login.vue')
     }
 ]
