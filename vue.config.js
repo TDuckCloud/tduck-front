@@ -42,8 +42,8 @@ module.exports = {
     lintOnSave: true,
     devServer: {
         open: true,
-        host: 'localhost',
-        port: '8081',
+        host: '0.0.0.0',
+        port: '8080',
         proxy: {
             '/api': {
                 target: 'http://localhost:8999', // 要请求的地址
