@@ -2,9 +2,9 @@ export default [
     {
         path: '/',
         meta: {
-            requireLogin: true
+            requireLogin: false
         },
-        component: () => import(/* webpackChunkName: 'root' */ '@/layout/design-layout.vue')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/Home.vue')
     },
     {
         path: '/login',
