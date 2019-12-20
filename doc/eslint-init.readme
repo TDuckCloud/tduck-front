@@ -1,8 +1,0 @@
-根据经验,为避免ESLint出现依赖异常,最好先加-g全局安装一遍以下组件,再不带-g安装一遍
-npm install eslint
-npm install eslint-plugin-vue
-npm install eslint-config-standard
-npm install eslint-plugin-import
-npm install eslint-plugin-node
-npm install eslint-plugin-promise
-npm install eslint-plugin-standard
