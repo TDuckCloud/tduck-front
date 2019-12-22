@@ -4,23 +4,45 @@
             <el-row>
                 <el-col class="headerCol" :span="3"></el-col>
                 <el-col class="headerCol" :span="18">
-                    <el-menu :default-active="menuIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" text-color="#767677" active-text-color="#1d499e">
+                    <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5" active-text-color="#205BB5">
                         <div class="headerLogoDiv">
-                            <img src="favicon.ico" class="headerLogo"/>
-                            <span class="headerLogoTitle">TDUCK CLOUD</span>
+                            <img src="../assets/images/indexLogo.png" class="headerLogo" @click="$router.push({path:'/'})"/>
                         </div>
-                        <el-menu-item  v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath" :route="item.routerPath" class="menuItem">{{item.title}}</el-menu-item>
-                        <el-button class="consoleBtn" @click="$router.push({path:'/console'})">控 制 台</el-button>
+                        <el-button v-if="isLogin" class="headerBtn" @click="$router.push({path:'/console'})">控 制 台</el-button>
+                        <el-button v-if="!isLogin" class="headerBtn" @click="$router.push({path:'/login'})">登 录</el-button>
+                        <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath" :route="item.routerPath" class="menuItem">{{item.title}}</el-menu-item>
                     </el-menu>
                 </el-col>
                 <el-col class="headerCol" :span="3"></el-col>
             </el-row>
         </div>
         <div class="headerBody">
-            <div class="indexBody">
+            <div class="indexBody" :style="menuIndex!=='/'?'border:solid thin #205BB5;border-left:none;border-right:none;':'border:none;'">
                 <el-row>
                     <el-col class="bodyCol" :span="3"></el-col>
                     <el-col class="bodyCol" :span="18">
+                        <div v-if="menuIndex==='/'">
+                            <el-row>
+                                <el-col :span=14>
+                                    <div class="bodyLeft">
+                                        <p class="bodyTitle">TDuck - 填鸭表单</p>
+                                        <p class="bodySlogan">有你所想，有你所得。</p>
+                                        <p class="bodySloganEn">TDuck - Have what you want, get you income.</p>
+                                        <p class="bodyDetail">TDuck填鸭，是一款在线制作表单的应用工具，通过填鸭表单可以收集任何你想得到的信息。</p>
+                                        <p class="bodyDetail">简单易用，灵活的反馈数据筛选；统计图表一目了然</p>
+                                        <div class="bodyBtnDiv">
+                                            <el-button class="bodyBtn primary" type="primary" @click="$router.push({path:'/console'})">免费使用</el-button>
+                                            <el-button class="bodyBtn">在线体验</el-button>
+                                        </div>
+                                    </div>
+                                </el-col>
+                                <el-col :span=10>
+                                    <div class="bodyRight">
+                                        <img class="bodyRightImg" src="../assets/images/bodyRight.png"/>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
                         <router-view></router-view>
                     </el-col>
                     <el-col class="bodyCol" :span="3"></el-col>
@@ -33,37 +55,45 @@
     </div>
 </template>
 <script>
+import store from '@/store/index.js';
 export default {
+    computed: {
+        getStore() {
+            return store;
+        },
+        isLogin() {
+            return this.getStore.getters['token/isLogin'];
+        }
+    },
     data() {
         return {
             menuIndex: null,
             menuRouters: [
                 {
-                    routerPath: 'enterprise',
-                    title: '企业部署'
+                    routerPath: '/proposal',
+                    title: '提出建议'
                 },
                 {
-                    routerPath: 'sources',
+                    routerPath: '/sources',
                     title: '开源版本'
                 },
                 {
-                    routerPath: 'proposal',
-                    title: '提出建议'
+                    routerPath: '/enterprise',
+                    title: '企业部署'
+                },
+                {
+                    routerPath: '/',
+                    title: '首页'
                 }
             ]
         }
     },
-    methods: {
-        handleSelect(index, indexPath) {
-            this.$router.push({ path: '/' + indexPath });
-        }
-    },
     mounted() {
-        this.menuIndex = this.$route.path.substring(1);
+        this.menuIndex = this.$route.path;
     },
     watch: {
         $route(to,from) {
-            this.menuIndex = to.path.substring(1);
+            this.menuIndex = to.path;
         }
     }
 }
@@ -78,20 +108,13 @@ export default {
     width: 100%;
     top: 0px;
     z-index: 100;
-    border-bottom: solid thin #E6E6E6;
 }
 .headerDiv .headerCol .el-menu--horizontal {
     border: none;
 }
 .headerLogo {
     float: left;
-}
-.headerLogoTitle {
-    float: left;
-    color: #1d499e;
-    font-size: 25px;
-    line-height: 110px;
-    padding: 0px 15px 0px 15px;
+    cursor: pointer;
 }
 .headerLogo {
     height: 60px;
@@ -101,29 +124,79 @@ export default {
     line-height: 110px;
     height: 110px;
     font-size: 18px;
-}
-.consoleBtn {
-    font-size: 16px;
-    width: 130px;
-    margin: 35px 0px 35px 0px;
+    font-weight: 900;
     float: right;
-    color: #767677;
 }
-.consoleBtn:focus, .consoleBtn:hover {
-    border-color: #1d499e;
-    color: #1d499e;
+.headerBtn {
+    margin: 35px 0px 35px 20px;
+    float: right;
+}
+.bodyBtn {
+    margin: 30px 20px 0px 0px;
+    font-size: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.headerBtn, .bodyBtn {
+    color: #205BB5;
+    border-color: #205BB5;
+}
+.primary {
+    color: #ffffff;
+    background-color: #205BB5;
+}
+.headerBtn:focus, .headerBtn:hover, .bodyBtn:focus, .bodyBtn:hover {
+    border-color: #205BB5;
+    color: #205BB5;
+}
+.primary:focus, .primary:hover {
+    border-color: #205BB5;
+    color: #ffffff;
 }
 .headerBody {
-    padding-top: 113px;
+    padding-top: 112px;
 }
 .footerDiv {
     font-size: 14px;
-    color: white;
+    color: #205BB5;
     text-align: center;
     line-height: 110px;
 }
 .indexBody {
-    background-color: white;
-    margin: 50px 0px 0px 0px;
+    margin: 0px;
+}
+.bodyLeft {
+    padding: 200px 110px;
+}
+.bodyLeft p {
+    color: #205BB5;
+}
+.bodyTitle {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 25px;
+    margin: 0px 0px 30px 0px;
+}
+.bodySlogan {
+    font-size: 45px;
+    font-weight: 900;
+    line-height: 45px;
+    margin: 0px 0px 5px 0px;
+}
+.bodySloganEn {
+    line-height: 15px;
+    margin: 0px 0px 25px 0px;
+}
+.bodyDetail {
+    line-height: 15px;
+    margin: 0px 0px 10px 0px;
+}
+.bodySloganEn, .bodyDetail {
+    font-size: 15px;
+}
+.bodyRightImg {
+    height: 665px;
+    margin: 0 auto;
+    display: block;
 }
 </style>

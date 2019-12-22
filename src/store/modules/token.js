@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
     api
 } from '@/api'
@@ -10,7 +11,7 @@ const state = {
 const getters = {
     isLogin: state => {
         let retn = false
-        if (state.token != null) {
+        if (state.token !== null) {
             let unix = Date.parse(new Date())
             if (unix < state.failuretime * 1000) {
                 retn = true
