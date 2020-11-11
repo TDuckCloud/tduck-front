@@ -3,6 +3,7 @@ node_modules
 /dist
 /dist-dev
 /src/assets/sprites/*.*
+!/src/assets/sprites/.gitkeep
 
 # local env files
 .env.local

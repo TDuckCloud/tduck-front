@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>TDuck Cloud</title>
-    <style>
-      body {
-        margin: 0px;
-        background-color: #FFFFFF;
-      }
-    </style>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.css) { %>
+        <!-- 使用CDN的CSS文件 -->
+        <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="external nofollow preload" as="style">
+        <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="external nofollow stylesheet">
+    <% } %>
+    <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
+        <!-- 使用CDN的JS文件 -->
+        <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="external nofollow preload" as="script">
+    <% } %>
   </head>
   <body>
+    <noscript>
+        <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+    <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
+        <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+    <% } %>
+    <% if (htmlWebpackPlugin.options.debugTool == 'eruda') { %>
+        <script src="https://cdn.jsdelivr.net/npm/eruda/eruda.min.js"></script>
+        <script>eruda.init();</script>
+    <% } %>
+    <% if (htmlWebpackPlugin.options.debugTool == 'vconsole') { %>
+        <script src="https://cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
+        <script>new VConsole();</script>
+    <% } %>
+</body>
 </html>

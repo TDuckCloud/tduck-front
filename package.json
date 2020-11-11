@@ -1,63 +1,62 @@
 {
-  "name": "tduck-front",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve ",
-    "build-dev": "vue-cli-service build --mode development --dest dist-dev",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "svgo": "svgo -f src/assets/icons"
-  },
-  "dependencies": {
-    "axios": "^0.19.0",
-    "core-js": "^3.4.1",
-    "dayjs": "^1.8.17",
-    "element-ui": "^2.13.0",
-    "eslint": "^6.7.2",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^6.0.1",
-    "js-md5": "^0.7.3",
-    "lodash": "^4.17.19",
-    "nprogress": "^0.2.0",
-    "vue": "^2.6.0",
-    "vue-cookies": "^1.5.7",
-    "vue-meta": "^2.3.1",
-    "vue-router": "^3.1.3",
-    "vuex": "^3.1.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.0.0",
-    "@vue/cli-plugin-eslint": "^4.0.0",
-    "@vue/cli-service": "^4.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.6.0",
-    "eslint-plugin-vue": "^6.0.1",
-    "node-sass": "^4.13.1",
-    "sass-loader": "^8.0.0",
-    "sass-resources-loader": "^2.0.1",
-    "standard": "^14.3.1",
-    "stylelint": "^12.0.0",
-    "stylelint-config-recommended-scss": "^4.0.0",
-    "stylelint-config-standard": "^19.0.0",
-    "stylelint-scss": "^3.4.1",
-    "svg-sprite-loader": "^4.1.6",
-    "svgo": "^1.3.0",
-    "vue-template-compiler": "^2.6.0",
-    "webpack-spritesmith": "^1.0.2"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "name": "tduck-front",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build-dev": "vue-cli-service build --mode development --dest dist-dev",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "stylelint": "vue-cli-service lint:style",
+        "svgo": "svgo -f src/assets/icons",
+        "new": "plop"
+    },
+    "dependencies": {
+        "axios": "^0.21.0",
+        "core-js": "^3.6.4",
+        "dayjs": "^1.9.4",
+        "element-ui": "^2.14.0",
+        "js-cookie": "^2.2.1",
+        "js-md5": "^0.7.3",
+        "nprogress": "^0.2.0",
+        "vue": "^2.6.12",
+        "vue-meta": "^2.4.0",
+        "vue-router": "^3.4.8",
+        "vuex": "^3.5.1"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "^4.5.8",
+        "@vue/cli-plugin-eslint": "^4.5.8",
+        "@vue/cli-service": "^4.5.8",
+        "@winner-fed/vue-cli-plugin-stylelint": "^1.0.4",
+        "babel-eslint": "^10.1.0",
+        "babel-plugin-dynamic-import-node": "^2.3.3",
+        "eslint": "^7.12.1",
+        "eslint-plugin-vue": "^7.1.0",
+        "html-webpack-plugin": "^4.5.0",
+        "husky": "^4.3.0",
+        "lint-staged": "^10.5.1",
+        "plop": "^2.7.4",
+        "sass": "^1.28.0",
+        "sass-loader": "^10.0.4",
+        "sass-resources-loader": "^2.1.1",
+        "stylelint": "^13.7.2",
+        "stylelint-config-recommended-scss": "^4.2.0",
+        "stylelint-config-standard": "^20.0.0",
+        "stylelint-scss": "^3.18.0",
+        "svg-sprite-loader": "^5.0.0",
+        "svgo": "^1.3.0",
+        "vue-template-compiler": "^2.6.12",
+        "webpack-spritesmith": "^1.1.0"
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }

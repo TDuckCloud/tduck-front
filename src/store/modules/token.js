@@ -1,7 +1,4 @@
-/* eslint-disable no-shadow */
-import {
-    api
-} from '@/api'
+// import api from '@/api'
 
 const state = {
     token: localStorage.token,
@@ -11,7 +8,7 @@ const state = {
 const getters = {
     isLogin: state => {
         let retn = false
-        if (state.token !== null) {
+        if (state.token != null) {
             let unix = Date.parse(new Date())
             if (unix < state.failuretime * 1000) {
                 retn = true
@@ -24,23 +21,28 @@ const getters = {
 const actions = {
     login({
         commit
-    }, data) {
-        return new Promise((resolve, reject) => {
+    }) {
+        return new Promise(resolve => {
             // 模拟登录成功，写入 token 信息
             commit('setData', {
                 token: '1234567890',
                 failuretime: Date.parse(new Date()) / 1000 + 24 * 60 * 60
             })
             resolve()
-
-            // api.post('member/login', data).then(res => {
-            //     commit('setData', res.data)
-            //     resolve(res)
-            // }).catch(error => {
-            //     reject(error)
-            // })
         })
     }
+    // login({
+    //     commit
+    // }, data) {
+    //     return new Promise((resolve, reject) => {
+    //         api.post('member/login', data).then(res => {
+    //             commit('setData', res.data)
+    //             resolve(res)
+    //         }).catch(error => {
+    //             reject(error)
+    //         })
+    //     })
+    // }
 }
 
 const mutations = {

@@ -1,9 +1,6 @@
-/* eslint-disable camelcase */
-/* eslint-disable no-undef */
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index'
-import flattenDeep from 'lodash/flattenDeep'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // progress bar style
 
@@ -24,9 +21,27 @@ require_module.keys().forEach(file_name => {
     routes.push(require_module(file_name).default)
 })
 
-const router = new Router({
-    routes: flattenDeep(routes)
+routes.push({
+    path: '*',
+    component: () => import('@/views/404'),
+    meta: {
+        title: '找不到页面'
+    }
 })
+
+const router = new Router({
+    routes: routes.flat()
+})
+
+// 解决路由在 push/replace 了相同地址报错的问题
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+const originalReplace = Router.prototype.replace
+Router.prototype.replace = function replace(location) {
+    return originalReplace.call(this, location).catch(err => err)
+}
 
 router.beforeEach((to, from, next) => {
     NProgress.start()

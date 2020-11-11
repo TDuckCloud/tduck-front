@@ -14,7 +14,6 @@
             <RouterLink to="/example/reload">刷新当前页面</RouterLink>
             <RouterLink to="/example/permission/router">router鉴权</RouterLink>
             <RouterLink to="/example/permission/js">js鉴权</RouterLink>
-            <RouterLink to="/example/user">基本操作</RouterLink>
         </div>
         <RouterView />
     </div>
