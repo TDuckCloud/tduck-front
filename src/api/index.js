@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import { MessageBox, Message } from 'element-ui'
 import router from '@/router/index'
 import store from '@/store/index'
 import signMd5Utils from '@/util/sign'
@@ -14,7 +15,7 @@ const toLogin = () => {
 }
 
 const api = axios.create({
-    baseURL: process.env.NODE_ENV !== 'development' && process.env.VUE_APP_API_ROOT,
+    baseURL: process.env.VUE_APP_API_ROOT,
     timeout: 10000,
     responseType: 'json',
     withCredentials: false,
@@ -72,23 +73,34 @@ api.interceptors.response.use(
     response => {
         /**
          * 全局拦截请求发送后返回的数据，如果数据有报错则在这做全局的错误提示
-         * 假设返回数据格式为：{ status: 1, error: '', data: '' }
-         * 规则是当 status 为 1 时表示请求成功，为 0 时表示接口需要登录或者登录状态失效，需要重新登录
-         * 请求出错时 error 会返回错误信息
+         * 假设返回数据格式为：{"code":500,"msg":"邮箱地址不正确","data":null}
+         * 规则是当 code 为 200 时表示请求成功，500 发生错误
+         * 为 401 时表示接口需要登录或者登录状态失效，需要重新登录
+         * 请求出错时 msg 会返回错误信息
          * 则代码如下
          */
-        if (response.data.status === 1) {
-            if (response.data.error === '') {
-                // 请求成功并且没有报错
-                return Promise.resolve(response.data)
-            } else {
-                // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
-                // Message.error(options)
-                return Promise.reject(response.data)
-            }
-        } else {
-            toLogin()
+        const res = response.data
+        console.log(res)
+        if (res.code === 200) {
+            return Promise.resolve(res)
+        } else if (res.code === 500) {
+            // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
+            Message({
+                message: res.msg || 'Error',
+                type: 'error',
+                duration: 5 * 1000
+            })
+        } else if (res.code === 401) {
+            // to re-login
+            MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+                confirmButtonText: '重新登录',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                toLogin()
+            })
         }
+        return Promise.reject(res)
     },
     error => {
         return Promise.reject(error)

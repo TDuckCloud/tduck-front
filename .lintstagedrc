@@ -1,0 +1,6 @@
+{
+    "src/**/*.{js,vue}": [
+        "vue-cli-service lint",
+        "vue-cli-service lint:style"
+    ]
+}

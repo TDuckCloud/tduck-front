@@ -1,3 +1,5 @@
 dist/
 node_modules/
 src/assets/sprites/
+src/theme/
+src/util/sign.js
