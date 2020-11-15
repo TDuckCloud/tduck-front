@@ -1,8 +1,8 @@
-# vue-automation
+# tduck-front
 
 ## 这是什么
 
-一款开箱即用的 Vue 项目模版，基于 Vue CLI
+tduck-front 前端项目
 
 ## 特点
 
@@ -13,24 +13,12 @@
 - CDN支持，优化打包体积
 - 轻松实现团队代码规范
 
-## 文档
-
-[Github](https://hooray.github.io/vue-automation)
-
-[Gitee](http://eoner.gitee.io/vue-automation)（推荐国内用户访问）
-
-## 支持
-
-给个小 ❤️ 吧~
-
-[![star](https://img.shields.io/github/stars/hooray/vue-automation?style=social)](https://github.com/hooray/vue-automation/stargazers)
-
-[![star](https://gitee.com/eoner/vue-automation/badge/star.svg?theme=dark)](https://gitee.com/eoner/vue-automation/stargazers)
-
-## 推广
-
-[![](https://hooray.gitee.io/fantastic-admin/logo.png)](https://hooray.gitee.io/fantastic-admin)
-
-[Fantastic-admin](https://hooray.gitee.io/fantastic-admin)
-
-一款开箱即用的 Vue 中后台管理系统框架
+## 目录简介
+- api axios 封装
+- assets 静态资源
+- components 公共组件
+- router 路由
+- store vuex
+- theme elementui主题 
+- util 工具类
+- views 页面
