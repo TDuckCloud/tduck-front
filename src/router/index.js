@@ -46,7 +46,7 @@ Router.prototype.replace = function replace(location) {
 router.beforeEach((to, from, next) => {
     NProgress.start()
     if (to.meta.requireLogin) {
-        if (store.getters['token/isLogin']) {
+        if (store.getters['user/isLogin']) {
             next()
             NProgress.done()
         } else {

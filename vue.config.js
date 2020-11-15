@@ -65,6 +65,9 @@ module.exports = {
     },
     configureWebpack: config => {
         config.resolve.modules = ['node_modules', 'assets/sprites']
+        config.resolve.alias = {
+            '@': path.resolve(__dirname, 'src')
+        }
         config.plugins.push(...spritesmithTasks)
         if (isCDN) {
             config.externals = externals

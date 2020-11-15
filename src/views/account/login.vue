@@ -35,14 +35,16 @@
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="账号密码登录" name="account">
-                        <el-form ref="form" label-position="top" size="small" :model="account"
-                                 class="account-login-form"
+                        <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm" :rules="accountLoginRules"
+                                 class="account-login-form" status-icon hide-required-asterisk
                         >
-                            <el-form-item label="手机号/邮箱登录">
-                                <el-input v-model="account.username" placeholder="请输入手机号/邮箱" autocomplete="off" />
+                            <el-form-item label="手机号/邮箱登录" prop="account">
+                                <el-input v-model="accountForm.account" placeholder="请输入手机号/邮箱" autocomplete="off" />
                             </el-form-item>
-                            <el-form-item label="密码">
-                                <el-input v-model="account.password" placeholder="请输入密码" autocomplete="off" show-password />
+                            <el-form-item label="密码" prop="password">
+                                <el-input v-model="accountForm.password" placeholder="请输入密码" autocomplete="off"
+                                          show-password
+                                />
                             </el-form-item>
                             <el-form-item label="">
                                 <el-radio v-model="agreeProtocol" label="" />
@@ -53,7 +55,7 @@
                                 </el-link>
                             </el-form-item>
                             <el-form-item>
-                                <el-button style="width: 100%;" type="primary">登录</el-button>
+                                <el-button style="width: 100%;" type="primary" @click="loginHandle">登录</el-button>
                             </el-form-item>
                             <el-form-item style="text-align: center;">
                                 <span class="protocol-tip">使用第三方登录 或 </span>
@@ -75,15 +77,19 @@
                     @tab-click="registerHandleClick"
                 >
                     <el-tab-pane label="手机号注册" name="regPhone">
-                        <el-form ref="form" :model="account" label-width="0px">
+                        <el-form ref="form" :model="accountForm" label-width="0px">
                             <el-form-item label="">
-                                <el-input v-model="account.username" placeholder="请输入手机号" autocomplete="off" />
+                                <el-input v-model="accountForm.username" placeholder="请输入手机号" autocomplete="off" />
                             </el-form-item>
                             <el-form-item label="">
-                                <el-input v-model="account.password" show-password placeholder="请输入密码" autocomplete="off" />
+                                <el-input v-model="accountForm.password" show-password placeholder="请输入密码"
+                                          autocomplete="off"
+                                />
                             </el-form-item>
                             <el-form-item label="">
-                                <el-input v-model="account.code" style="width: 150px;" placeholder="请输入验证码" autocomplete="off" />
+                                <el-input v-model="accountForm.code" style="width: 150px;" placeholder="请输入验证码"
+                                          autocomplete="off"
+                                />
                                 <el-button style="margin-left: 20px;" type="primary">发送验证码</el-button>
                             </el-form-item>
                             <el-form-item>
@@ -92,22 +98,25 @@
                         </el-form>
                     </el-tab-pane>
                     <el-tab-pane label="邮箱注册" name="regEmail">
-                        <el-form ref="emailRegForm" status-icon :rules="emailRegRules" :model="account"
+                        <el-form ref="emailRegForm" status-icon :rules="emailRegRules" :model="accountForm"
                                  label-width="0px"
                         >
                             <el-form-item label="" prop="email">
-                                <el-input v-model="account.email" placeholder="请输入邮箱" autocomplete="off" />
+                                <el-input v-model="accountForm.email" placeholder="请输入邮箱" autocomplete="off" />
                             </el-form-item>
                             <el-form-item label="" prop="password">
-                                <el-input v-model="account.password" show-password placeholder="请输入密码"
+                                <el-input v-model="accountForm.password" show-password placeholder="请输入密码"
                                           autocomplete="off"
                                 />
                             </el-form-item>
-                            <el-form-item label="">
-                                <el-input v-model="account.code" oninput="value=value.replace(/[^\d]/g,'')" style="width: 150px;" maxlength="4" placeholder="请输入验证码"
+                            <el-form-item label="" prop="code">
+                                <el-input v-model="accountForm.code" oninput="value=value.replace(/[^\d]/g,'')"
+                                          style="width: 150px;" maxlength="4" placeholder="请输入验证码"
                                           autocomplete="off"
                                 />
-                                <el-button style="margin-left: 20px;" :disabled="validateCodeBtn" type="primary" @click="sendEmailCodeHandle">
+                                <el-button style="margin-left: 20px;" :disabled="validateCodeBtn" type="primary"
+                                           @click="sendEmailCodeHandle"
+                                >
                                     {{ validateCodeBtnText }}
                                 </el-button>
                             </el-form-item>
@@ -141,11 +150,21 @@ export default {
                 callback()
             }
         }
+        const validateAccount = (rule, value, callback) => {
+            // /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{10,20}$/
+            const reg1 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
+            const reg2 = /^(?:0|86|\+86)?1[3456789]\d{9}$/
+            if (reg1.test(value) || reg2.test(value)) {
+                callback()
+            } else {
+                callback(new Error('请输入正确的账号'))
+            }
+        }
         return {
             loginType: 'wx',
             validateCodeBtn: false,
             validateCodeBtnText: '发送验证码',
-            formType: 'reg',
+            formType: 'login',
             regType: 'regPhone',
             agreeProtocol: '',
             emailRegRules: {
@@ -159,7 +178,12 @@ export default {
                 password: [{required: true, trigger: 'blur', validator: validatePassword}],
                 code: {required: true, trigger: 'blur', message: '请输入验证码'}
             },
-            account: {
+            accountLoginRules: {
+                account: [
+                    {required: true, trigger: 'blur', message: '请输入账号'}, {trigger: 'blur', validator: validateAccount}],
+                password: [{required: true, trigger: 'blur', validator: validatePassword}]
+            },
+            accountForm: {
                 email: '',
                 password: ''
             },
@@ -174,13 +198,14 @@ export default {
         sendEmailCodeHandle() {
             this.$refs.emailRegForm.validateField('email', err => {
                 if (!err) {
+                    this.validateCodeBtn = true
                     this.$api.get(`/user/send-email-code?email=${this.account.email}`).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.validateCodeBtn = true
                         let count = 60
                         let timer = setInterval(() => {
                             count--
-                            this.validateCodeBtnText = count + 's'
+                            this.validateCodeBtnText = count + 's后重新发送'
                             if (count == 0) {
                                 this.validateCodeBtnText = '发送验证码'
                                 clearInterval(timer)
@@ -193,27 +218,42 @@ export default {
         emailRegHandle() {
             this.$refs['emailRegForm'].validate(valid => {
                 if (valid) {
-                    this.$api.post('/user/email-register', this.account).then(() => {
+                    this.$api.post('/user/email-register', this.accountForm).then(() => {
                         this.msgSuccess('注册成功，快去登录吧')
+                        setTimeout(() => {
+                            this.formType = 'login'
+                            this.loginType = 'account'
+                        }, 1000)
                     })
                 } else {
                     return false
                 }
             })
         },
-        login() {
-            this.$store.dispatch('token/login').then(() => {
-                // 登录成功后路由跳回
-                if (this.$route.query.redirect) {
-                    this.$router.replace({
-                        path: this.$route.query.redirect
+        loginHandle() {
+            this.$refs['accountLoginForm'].validate(valid => {
+                if (valid) {
+                    this.$api.post('/user/account-login', this.accountForm).then(res => {
+                        this.msgSuccess('登录成功')
+                        this.$store.dispatch('user/login', res.data).then(() => {
+                            // 登录成功后路由跳回
+                            // eslint-disable-next-line no-debugger
+                            debugger
+                            if (this.$route.query.redirect) {
+                                this.$router.replace({
+                                    path: this.$route.query.redirect
+                                })
+                            } else {
+                                if (window.history.length <= 1) {
+                                    this.$router.push({path: '/home'})
+                                } else {
+                                    this.$router.push({path: '/home'})
+                                }
+                            }
+                        })
                     })
                 } else {
-                    if (window.history.length <= 1) {
-                        this.$router.push({path: '/'})
-                    } else {
-                        this.$router.go(-1)
-                    }
+                    return false
                 }
             })
         }
@@ -222,7 +262,6 @@ export default {
 </script>
 <style scoped>
 .loginBody {
-    /* border: solid thin black; */
     margin: 70px 0 0 0;
 }
 .loginBackImg {
@@ -257,7 +296,7 @@ export default {
     line-height: 20px;
 }
 .account-login-form .el-form-item--small.el-form-item {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 .account-login-form .el-radio {
     margin-right: 0;

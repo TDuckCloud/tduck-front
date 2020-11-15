@@ -1,5 +1,5 @@
 import axios from 'axios'
-import qs from 'qs'
+// import qs from 'qs'
 import { MessageBox, Message } from 'element-ui'
 import router from '@/router/index'
 import store from '@/store/index'
@@ -15,12 +15,12 @@ const toLogin = () => {
 }
 
 const api = axios.create({
-    baseURL: process.env.VUE_APP_API_ROOT,
+    baseURL: process.env.NODE_ENV !== 'development' && process.env.VUE_APP_API_ROOT,
     timeout: 10000,
     responseType: 'json',
     withCredentials: false,
     headers: {
-        'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json'
     }
 })
 
@@ -30,37 +30,32 @@ api.interceptors.request.use(
          * 全局拦截请求发送前提交的参数
          * 以下代码为示例，在登录状态下，分别对 post 和 get 请求加上 token 参数
          */
+        if (store.getters['token/isLogin']) {
+            request.headers.token = store.state.user.token
+        }
         if (request.method == 'post') {
             if (request.data instanceof FormData) {
-                if (store.getters['token/isLogin']) {
+                if (store.getters['user/isLogin']) {
                     // 如果是 FormData 类型（上传图片）
-                    request.data.append('token', store.state.token.token)
+                    request.data.append('token', store.state.user.token)
                 }
             } else {
                 // 带上 token
                 if (request.data == undefined) {
                     request.data = {}
                 }
-                if (store.getters['token/isLogin']) {
-                    request.data.token = store.state.token.token
-                }
                 // 参数验签
                 let timestamp = new Date().getTime()
                 request.data.timestamp = '' + timestamp
                 let sign = signMd5Utils.getSign(request.url, request.data)
                 request.data.sign = sign
-                request.data = qs.stringify(request.data)
             }
-        } else {
+        } else if (request.method === 'get') {
             // 带上 token
             if (request.params == undefined) {
                 request.params = {}
             }
-            if (store.getters['token/isLogin']) {
-                request.params.token = store.state.token.token
-            }
             let timestamp = new Date().getTime()
-            console.log(request.params)
             request.params.timestamp = '' + timestamp
             let sign = signMd5Utils.getSign(request.url, request.params)
             request.params.sign = sign

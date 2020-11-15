@@ -6,9 +6,9 @@
                 <el-col class="headerCol" :span="18">
                     <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5" active-text-color="#205BB5">
                         <div class="headerLogoDiv">
-                            <img src="../assets/images/indexLogo.png" class="headerLogo" @click="$router.push({path:'/'})">
+                            <img src="../assets/images/indexLogo.png" class="headerLogo" @click="$router.push({path:'/home'})">
                         </div>
-                        <el-button v-if="isLogin" class="headerBtn" @click="$router.push({path:'/console'})">控 制 台</el-button>
+                        <el-button v-if="isLogin" class="headerBtn" @click="$router.push({path:'/home'})">控 制 台</el-button>
                         <el-button v-if="!isLogin" class="headerBtn" @click="$router.push({path:'/login'})">登 录</el-button>
                         <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath" :route="item.routerPath" class="menuItem">{{ item.title }}</el-menu-item>
                     </el-menu>
@@ -37,9 +37,7 @@
                                     </div>
                                 </el-col>
                                 <el-col :span="10">
-                                    <div class="bodyRight">
-                                        <img class="bodyRightImg" src="../assets/images/bodyRight.png">
-                                    </div>
+                                    <div class="bodyRight" />
                                 </el-col>
                             </el-row>
                         </div>
