@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container style="background-color: rgba(247, 247, 247, 100);">
         <el-header height="80px" class="homeHeaderView">
             <el-row type="flex" align="middle">
                 <el-col :span="4" :offset="1">
@@ -78,8 +78,7 @@ export default {
             return store
         },
         getUserInfo() {
-            console.log(this.getStore.getters['user/userInfo'])
-            return this.getStore.getters['user/userInfo']
+            return JSON.parse(this.getStore.getters['user/userInfo'])
         }
     },
     watch: {

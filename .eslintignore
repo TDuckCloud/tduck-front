@@ -3,6 +3,6 @@ node_modules/
 babel.config.js
 vue.config.js
 .eslintrc.js
-src/util/sign.js
+src/utils/sign.js
 src/views/form/
-src/view/utils
+src/utils/

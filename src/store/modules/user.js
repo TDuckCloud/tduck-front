@@ -32,7 +32,7 @@ const mutations = {
         localStorage.setItem('token', data.token)
         localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
         state.token = data.token
-        state.userInfo = data.userInfo
+        state.userInfo = JSON.stringify(data.userInfo)
     }
 }
 

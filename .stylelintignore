@@ -2,6 +2,6 @@ dist/
 node_modules/
 src/assets/sprites/
 src/theme/
-src/util/sign.js
+src/utils/sign.js
 src/views/form/
-src/view/utils
+src/utils/

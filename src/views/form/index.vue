@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="left-board">
+        <div class="left-board" >
 <!--            <div class="logo-wrapper">-->
 <!--                <div class="logo">-->
 <!--                    <img :src="logo" alt="logo"> Form Generator-->
@@ -43,24 +43,35 @@
         </div>
 
         <div class="center-board">
-            <div class="action-bar">
-                <el-button icon="el-icon-video-play" type="text" @click="run">
-                    运行
-                </el-button>
-                <el-button icon="el-icon-view" type="text" @click="showJson">
-                    查看json
-                </el-button>
-                <el-button icon="el-icon-download" type="text" @click="download">
-                    导出vue文件
-                </el-button>
-                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
-                    复制代码
-                </el-button>
-                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
-                    清空
-                </el-button>
-            </div>
+<!--            <div class="action-bar">-->
+<!--                <el-button icon="el-icon-video-play" type="text" @click="run">-->
+<!--                    运行-->
+<!--                </el-button>-->
+<!--                <el-button icon="el-icon-view" type="text" @click="showJson">-->
+<!--                    查看json-->
+<!--                </el-button>-->
+<!--                <el-button icon="el-icon-download" type="text" @click="download">-->
+<!--                    导出vue文件-->
+<!--                </el-button>-->
+<!--                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">-->
+<!--                    复制代码-->
+<!--                </el-button>-->
+<!--                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">-->
+<!--                    清空-->
+<!--                </el-button>-->
+<!--            </div>-->
             <el-scrollbar class="center-scrollbar">
+                <el-row type="flex" justify="center" align="middle">
+                    <el-col :span="20" style="text-align: center">
+                        <h4  class="form-name-title"
+                             >问卷名称</h4>
+                    </el-col>
+                </el-row>
+                <el-row type="flex" justify="center" align="middle">
+                    <el-col :span="24" style="text-align: center">为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位
+                        用户的宝贵意见，期待您的参与！现在我们就马上开始吧！</el-col>
+                </el-row>
+                <el-divider></el-divider>
                 <el-row class="center-board-row" :gutter="formConf.gutter">
                     <el-form
                         :size="formConf.size"
@@ -129,6 +140,8 @@ import render from '@/components/render/render'
 import FormDrawer from './FormDrawer'
 import JsonDrawer from './JsonDrawer'
 import RightPanel from './RightPanel'
+// import '@/assets/styles/index.scss'
+
 import {
     inputComponents, selectComponents, layoutComponents, formConf
 } from '@/components/generator/config'
@@ -431,4 +444,5 @@ export default {
 
 <style lang='scss' >
 @import '@/assets/styles/home';
+@import '@/assets/styles/index';
 </style>
