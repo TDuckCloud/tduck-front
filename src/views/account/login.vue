@@ -196,10 +196,10 @@ export default {
         registerHandleClick() {
         },
         sendEmailCodeHandle() {
-            this.$refs.emailRegForm.validateField('email', err => {
+            this.$refs['emailRegForm'].validateField('email', err => {
                 if (!err) {
                     this.validateCodeBtn = true
-                    this.$api.get(`/user/send-email-code?email=${this.account.email}`).then(() => {
+                    this.$api.get(`/user/send-email-code?email=${this.accountForm.email}`).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.validateCodeBtn = true
                         let count = 60
@@ -238,7 +238,6 @@ export default {
                         this.$store.dispatch('user/login', res.data).then(() => {
                             // 登录成功后路由跳回
                             // eslint-disable-next-line no-debugger
-                            debugger
                             if (this.$route.query.redirect) {
                                 this.$router.replace({
                                     path: this.$route.query.redirect

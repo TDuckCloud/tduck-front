@@ -1,13 +1,13 @@
 <template>
     <el-container>
-        <el-header height="107px" class="homeHeaderView">
+        <el-header height="80px" class="homeHeaderView">
             <el-row type="flex" align="middle">
-                <el-col :span="3" :offset="2">
+                <el-col :span="4" :offset="1">
                     <img src="@/assets/images/indexLogo.png" class="headerLogoImg"
                          @click="$router.push({path:'/project/create'})"
                     >
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="6">
                     <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5"
                              active-text-color="#205BB5"
                     >
@@ -28,11 +28,11 @@
                     <el-link href="https://element.eleme.io" target="_blank">帮助</el-link>
                 </el-col>
                 <el-col :span="3">
-                    <img :src="getUserInfo.avatar" style="width: 68px; height: 68px; border-radius: 100px;">
+                    <img :src="getUserInfo.avatar" style="width: 48px; height: 48px; border-radius: 100px;">
                 </el-col>
             </el-row>
         </el-header>
-        <el-main>
+        <el-main style="padding: 2px;">
             <!--      轮播·1-->
             <el-row>
                 <el-col :span="24">
@@ -78,7 +78,8 @@ export default {
             return store
         },
         getUserInfo() {
-            return JSON.parse(this.getStore.getters['user/userInfo'])
+            console.log(this.getStore.getters['user/userInfo'])
+            return this.getStore.getters['user/userInfo']
         }
     },
     watch: {
@@ -93,9 +94,9 @@ export default {
 </script>
 <style scoped>
 .menuItem {
-    line-height: 110px;
-    height: 110px;
-    font-size: 20px;
+    line-height: 80px;
+    height: 80px;
+    font-size: 19px;
     text-align: left;
     font-weight: 550;
     float: right;
@@ -104,7 +105,6 @@ export default {
     border-bottom: none;
 }
 .homeHeaderView {
-    height: 117px;
     line-height: 20px;
     background-color: rgba(255, 255, 255, 100);
     color: rgba(16, 16, 16, 100);
@@ -112,8 +112,8 @@ export default {
     text-align: center;
 }
 .headerLogoImg {
-    width: 245px;
-    height: 72px;
+    width: 225px;
+    height: 62px;
 }
 
 </style>

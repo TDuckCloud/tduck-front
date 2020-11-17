@@ -3,7 +3,7 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import router from '@/router/index'
 import store from '@/store/index'
-import signMd5Utils from '@/util/sign'
+import signMd5Utils from '@/utils/sign'
 
 const toLogin = () => {
     router.push({

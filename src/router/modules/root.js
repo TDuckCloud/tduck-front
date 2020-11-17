@@ -50,6 +50,22 @@ export default [
                 path: 'create',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/create.vue')
+            },
+            {
+                path: 'form',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index.vue')
+            }
+        ]
+    }, {
+        path: '/form',
+        meta: {requireLogin: true},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),
+        children: [
+            {
+                path: 'create',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/create.vue')
             }
         ]
     }

@@ -11,7 +11,6 @@ import api from './api'
 import store from './store/index'
 // 全局组件自动注册
 import '@/components/autoRegister'
-import util from './util/index'
 
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
@@ -30,8 +29,6 @@ Vue.prototype.msgInfo = function(msg) {
 }
 
 Vue.use(meta)
-Vue.use(util)
-Vue.use(util)
 Vue.use(Element, {size: 'small', zIndex: 3000})
 
 // 自动加载 svg 图标

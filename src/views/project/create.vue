@@ -42,7 +42,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :offset="3" :span="3">
+                <el-col :offset="3" :span="3" @click.native="$router.push({path:'/project/form'})">
                     <div class="project-template-view" style="display: flex; align-items: center;">
                         <div style="flex: 1;">
                             <i style="font-size: 40px; align-items: center;" class="el-icon-plus" />

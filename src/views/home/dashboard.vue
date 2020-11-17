@@ -64,7 +64,7 @@
             </el-col>
             <el-col :span="12">
                 <el-row type="flex" align="middle" justify="start">
-                    <el-col :span="5">
+                    <el-col :span="6">
                         <p class="tagTitle">表单提交地域分布图</p>
                     </el-col>
                 </el-row>
