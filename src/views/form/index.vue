@@ -1,18 +1,10 @@
 <template>
     <div class="container">
-        <div class="left-board" >
-<!--            <div class="logo-wrapper">-->
-<!--                <div class="logo">-->
-<!--                    <img :src="logo" alt="logo"> Form Generator-->
-<!--                    <a class="github" href="https://github.com/JakHuang/form-generator" target="_blank">-->
-<!--                        <img src="https://github.githubassets.com/pinned-octocat.svg" alt>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
+        <div class="left-board">
             <el-row>
                 <el-col :offset="1" :span="2">
                     <el-button size="mini" round @click="$router.back(-1)">
-                        <i class="el-icon-arrow-left" />
+                        <i class="el-icon-arrow-left"/>
                         返回
                     </el-button>
                 </el-col>
@@ -51,44 +43,46 @@
         </div>
 
         <div class="center-board">
-<!--            <div class="action-bar">-->
-<!--                <el-button icon="el-icon-video-play" type="text" @click="run">-->
-<!--                    运行-->
-<!--                </el-button>-->
-<!--                <el-button icon="el-icon-view" type="text" @click="showJson">-->
-<!--                    查看json-->
-<!--                </el-button>-->
-<!--                <el-button icon="el-icon-download" type="text" @click="download">-->
-<!--                    导出vue文件-->
-<!--                </el-button>-->
-<!--                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">-->
-<!--                    复制代码-->
-<!--                </el-button>-->
-<!--                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">-->
-<!--                    清空-->
-<!--                </el-button>-->
-<!--            </div>-->
+            <!--            <div class="action-bar">-->
+            <!--                <el-button icon="el-icon-video-play" type="text" @click="run">-->
+            <!--                    运行-->
+            <!--                </el-button>-->
+            <!--                <el-button icon="el-icon-view" type="text" @click="showJson">-->
+            <!--                    查看json-->
+            <!--                </el-button>-->
+            <!--                <el-button icon="el-icon-download" type="text" @click="download">-->
+            <!--                    导出vue文件-->
+            <!--                </el-button>-->
+            <!--                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">-->
+            <!--                    复制代码-->
+            <!--                </el-button>-->
+            <!--                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">-->
+            <!--                    清空-->
+            <!--                </el-button>-->
+            <!--            </div>-->
+            <el-row type="flex" align="middle" justify="justify">
+                <el-col :span="18" :offset="6">
+                    <el-menu default-active="1" style="background-color: transparent" mode="horizontal">
+                        <el-menu-item index="1">编辑</el-menu-item>
+                        <el-menu-item index="2">外观</el-menu-item>
+                        <el-menu-item index="3">设置</el-menu-item>
+                        <el-menu-item index="4">发布</el-menu-item>
+                        <el-menu-item index="5">统计</el-menu-item>
+                    </el-menu>
+                </el-col>
+            </el-row>
             <el-scrollbar class="center-scrollbar">
-                <el-row type="flex" align="middle" justify="justify">
-                   <el-col :span="18" :offset="6">
-                       <el-menu default-active="1" style="background-color: transparent" mode="horizontal">
-                           <el-menu-item index="1">编辑</el-menu-item>
-                           <el-menu-item index="2">外观</el-menu-item>
-                           <el-menu-item index="3">设置</el-menu-item>
-                           <el-menu-item index="4">发布</el-menu-item>
-                           <el-menu-item index="5">统计</el-menu-item>
-                       </el-menu>
-                   </el-col>
-                </el-row>
                 <el-row class="center-board-row" :gutter="formConf.gutter">
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
-                            <h4  class="form-name-text" contenteditable="true" @input="(event)=>{formConf.title=event.target.innerText}">{{formConf.title}}</h4>
+                            <h4 class="form-name-text" contenteditable="true"
+                                @input="(event)=>{formConf.title=event.target.innerText}">{{formConf.title}}</h4>
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
-                            <p  class="form-name-text" contenteditable="true" @input="(event)=>{formConf.description=event.target.innerText}">
+                            <p class="form-name-text" contenteditable="true"
+                               @input="(event)=>{formConf.description=event.target.innerText}">
                                 {{formConf.description}}
                             </p>
                         </el-col>
@@ -175,7 +169,6 @@ import {
 import {makeUpJs} from '@/components/generator/js'
 import {makeUpCss} from '@/components/generator/css'
 import drawingDefalut from '@/components/generator/drawingDefalut'
-import logo from '@/assets/logo.png'
 import CodeTypeDialog from './CodeTypeDialog'
 import DraggableItem from './DraggableItem'
 import {
@@ -190,9 +183,9 @@ const emptyActiveData = {
 }
 let oldActiveId
 let tempActiveData
-const drawingListInDB = getDrawingList()
-const formConfInDB = getFormConf()
-const idGlobal = getIdGlobal()
+let drawingListInDB
+let formConfInDB
+let idGlobal = 100
 
 export default {
     components: {
@@ -206,7 +199,6 @@ export default {
     },
     data() {
         return {
-            logo,
             idGlobal,
             formConf,
             inputComponents,
@@ -225,6 +217,7 @@ export default {
             activeData: drawingDefalut[0],
             saveDrawingListDebounce: debounce(340, saveDrawingList),
             saveIdGlobalDebounce: debounce(340, saveIdGlobal),
+            projectKey: '',
             leftComponents: [
                 {
                     title: '输入型组件',
@@ -262,31 +255,43 @@ export default {
         },
         drawingList: {
             handler(val) {
-                this.saveDrawingListDebounce(val)
+                this.saveDrawingListDebounce(val, this.projectKey)
                 if (val.length === 0) this.idGlobal = 100
             },
             deep: true
         },
         idGlobal: {
             handler(val) {
-                this.saveIdGlobalDebounce(val)
+                this.saveIdGlobalDebounce(val, this.projectKey)
             },
             immediate: true
         }
     },
     mounted() {
+        //项目key
+        let projectKey = this.$route.query.key
+        //表单内容 如果表单为空 使用默认表单
+        drawingListInDB = getDrawingList(projectKey)
         if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
             this.drawingList = drawingListInDB
         } else {
             this.drawingList = drawingDefalut
         }
         this.activeFormItem(this.drawingList[0])
+        //获取表单配置
+        formConfInDB = getFormConf(projectKey)
         if (formConfInDB) {
             this.formConf = formConfInDB
         }
+        //全局组件Id
+        if (getIdGlobal(projectKey)) {
+            idGlobal = getIdGlobal(projectKey)
+        }
+
         loadBeautifier(btf => {
             beautifier = btf
         })
+        this.projectKey = projectKey
         const clipboard = new ClipboardJS('#copyNode', {
             text: trigger => {
                 const codeStr = this.generateCode()
@@ -301,6 +306,7 @@ export default {
         clipboard.on('error', e => {
             this.$message.error('代码复制失败')
         })
+
     },
     methods: {
         activeFormItem(currentItem) {
@@ -462,7 +468,7 @@ export default {
 }
 </script>
 
-<style lang='scss' >
+<style lang='scss'>
 @import '@/assets/styles/home';
 @import '@/assets/styles/index';
 </style>

@@ -42,7 +42,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :offset="3" :span="3" @click.native="$router.push({path:'/project/form'})">
+                <el-col :offset="3" :span="3" @click.native="createBlankTemplate">
                     <div class="project-template-view" style="display: flex; align-items: center;">
                         <div style="flex: 1;">
                             <i style="font-size: 40px; align-items: center;" class="el-icon-plus" />
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import {formConf} from '@/components/generator/config'
 
 export default {
     name: 'CreateProject',
@@ -174,7 +175,8 @@ export default {
             ]
         }
     },
-    computed: {}, methods: {
+    computed: {},
+    methods: {
         getTemplateOffset(index) {
             console.log(index)
             // if (index == 5 || (index != 6 && index != 0 && index % 6 === 0)) {
@@ -184,6 +186,12 @@ export default {
                 return 3
             }
             return 0
+        },
+        createBlankTemplate() {
+            this.$api.post('/project/create', {'describe': formConf.description, 'name': formConf.title}).then(res => {
+                console.log(res)
+                this.$router.push({path: '/project/form', query: {key: res.data}})
+            })
         }
     }
 }

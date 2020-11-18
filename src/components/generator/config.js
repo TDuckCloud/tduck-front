@@ -6,7 +6,7 @@ export const formConf = {
     labelPosition: 'top',
     labelWidth: 100,
     formRules: 'rules',
-    gutter: 15,
+    gutter: 20,
     disabled: false,
     span: 24,
     title: '问卷名称',

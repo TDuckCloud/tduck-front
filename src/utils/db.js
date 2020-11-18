@@ -5,50 +5,50 @@ const DRAWING_ID = 'idGlobal'
 const TREE_NODE_ID = 'treeNodeId'
 const FORM_CONF = 'formConf'
 
-export function getDrawingList() {
-  // 加入缓存版本的概念，保证缓存数据与程序匹配
-  const version = localStorage.getItem(DRAWING_ITEMS_VERSION_KEY)
-  if (version !== DRAWING_ITEMS_VERSION) {
-    localStorage.setItem(DRAWING_ITEMS_VERSION_KEY, DRAWING_ITEMS_VERSION)
-    saveDrawingList([])
+export function getDrawingList(key) {
+    // 加入缓存版本的概念，保证缓存数据与程序匹配
+    const version = localStorage.getItem(DRAWING_ITEMS_VERSION_KEY)
+    if (version !== DRAWING_ITEMS_VERSION) {
+        localStorage.setItem(DRAWING_ITEMS_VERSION_KEY, DRAWING_ITEMS_VERSION)
+        saveDrawingList([])
+        return null
+    }
+
+    const str = localStorage.getItem(`${DRAWING_ITEMS}:${key}`)
+    if (str) return JSON.parse(str)
     return null
-  }
-
-  const str = localStorage.getItem(DRAWING_ITEMS)
-  if (str) return JSON.parse(str)
-  return null
 }
 
-export function saveDrawingList(list) {
-  localStorage.setItem(DRAWING_ITEMS, JSON.stringify(list))
+export function saveDrawingList(list, key) {
+    if (key) localStorage.setItem(`${DRAWING_ITEMS}:${key}`, JSON.stringify(list))
 }
 
-export function getIdGlobal() {
-  const str = localStorage.getItem(DRAWING_ID)
-  if (str) return parseInt(str, 10)
-  return 100
+export function getIdGlobal(key) {
+    const str = localStorage.getItem(`${DRAWING_ID}:${key}`)
+    if (str) return parseInt(str, 10)
+    return 100
 }
 
-export function saveIdGlobal(id) {
-  localStorage.setItem(DRAWING_ID, `${id}`)
+export function saveIdGlobal(id, key) {
+    if (key) localStorage.setItem(`${DRAWING_ID}:${key}`, `${id}`)
 }
 
 export function getTreeNodeId() {
-  const str = localStorage.getItem(TREE_NODE_ID)
-  if (str) return parseInt(str, 10)
-  return 100
+    const str = localStorage.getItem(TREE_NODE_ID)
+    if (str) return parseInt(str, 10)
+    return 100
 }
 
 export function saveTreeNodeId(id) {
-  localStorage.setItem(TREE_NODE_ID, `${id}`)
+    localStorage.setItem(TREE_NODE_ID, `${id}`)
 }
 
-export function getFormConf() {
-  const str = localStorage.getItem(FORM_CONF)
-  if (str) return JSON.parse(str)
-  return null
+export function getFormConf(key) {
+    const str = localStorage.getItem(`${FORM_CONF}:${key}` + key)
+    if (str) return JSON.parse(str)
+    return null
 }
 
-export function saveFormConf(obj) {
-  localStorage.setItem(FORM_CONF, JSON.stringify(obj))
+export function saveFormConf(obj, key) {
+    if (key) localStorage.setItem(`${FORM_CONF}:${key}`, JSON.stringify(obj))
 }

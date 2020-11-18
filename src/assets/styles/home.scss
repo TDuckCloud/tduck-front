@@ -53,6 +53,7 @@ $lighterBlue: #409eff;
     left: 0;
     top: 20px;
     height: 100vh;
+    background-color: rgba(255, 255, 255, 100);
 }
 .el-menu.el-menu--horizontal {
     border-bottom: none;
@@ -70,10 +71,13 @@ $lighterBlue: #409eff;
 .center-scrollbar {
     height: calc(100vh - 42px);
     overflow: hidden;
+    width: 80%;
     //border-left: 1px solid #f1e8e8;
     //border-right: 1px solid #f1e8e8;
-    margin: 3px;
+    margin: 20px auto 0;
+    //margin-top: 20px;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 100);
     border: 2px solid rgba(255, 255, 255, 100);
 }
 .center-board {
@@ -103,36 +107,6 @@ $lighterBlue: #409eff;
     border-left: none;
     .delete-btn {
         color: #f56c6c;
-    }
-}
-.logo-wrapper {
-    position: relative;
-    height: 42px;
-    background: #fff;
-    border-bottom: 1px solid #f1e8e8;
-    box-sizing: border-box;
-}
-.logo {
-    position: absolute;
-    left: 12px;
-    top: 6px;
-    line-height: 30px;
-    color: #00afff;
-    font-weight: 600;
-    font-size: 17px;
-    white-space: nowrap;
-    > img {
-        width: 30px;
-        height: 30px;
-        vertical-align: top;
-    }
-    .github {
-        display: inline-block;
-        vertical-align: sub;
-        margin-left: 15px;
-        > img {
-            height: 22px;
-        }
     }
 }
 .center-board-row {
@@ -288,6 +262,7 @@ $lighterBlue: #409eff;
     border: 1px dashed transparent;
     width: 80%;
     line-height: 30px;
+    margin: 0;
 }
 .form-name-text input {
     border: none;
