@@ -9,13 +9,16 @@ export const formConf = {
     gutter: 15,
     disabled: false,
     span: 24,
+    title: '问卷名称',
+    description: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位\n' +
+        '用户的宝贵意见，期待您的参与！现在我们就马上开始吧！',
     formBtns: true
 }
 
 // 输入型组件 【左面板】
 export const inputComponents = [
     {
-    // 组件的自定义配置
+        // 组件的自定义配置
         __config__: {
             label: '单行文本',
             labelWidth: null,
@@ -38,7 +41,7 @@ export const inputComponents = [
         },
         // 其余的为可直接写在组件标签上的属性
         placeholder: '请输入',
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         'prefix-icon': '',
         'suffix-icon': '',
@@ -68,7 +71,7 @@ export const inputComponents = [
             minRows: 4,
             maxRows: 4
         },
-        style: { width: '100%' },
+        style: {width: '100%'},
         maxlength: null,
         'show-word-limit': false,
         readonly: false,
@@ -95,7 +98,7 @@ export const inputComponents = [
         },
         placeholder: '请输入',
         'show-password': true,
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         'prefix-icon': '',
         'suffix-icon': '',
@@ -175,7 +178,7 @@ export const selectComponents = [
             }]
         },
         placeholder: '请选择',
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         disabled: false,
         filterable: false,
@@ -211,7 +214,7 @@ export const selectComponents = [
             }]
         }],
         placeholder: '请选择',
-        style: { width: '100%' },
+        style: {width: '100%'},
         props: {
             props: {
                 multiple: false,
@@ -350,7 +353,7 @@ export const selectComponents = [
             document: 'https://element.eleme.cn/#/zh-CN/component/time-picker'
         },
         placeholder: '请选择',
-        style: { width: '100%' },
+        style: {width: '100%'},
         disabled: false,
         clearable: true,
         'picker-options': {
@@ -374,7 +377,7 @@ export const selectComponents = [
             changeTag: true,
             document: 'https://element.eleme.cn/#/zh-CN/component/time-picker'
         },
-        style: { width: '100%' },
+        style: {width: '100%'},
         disabled: false,
         clearable: true,
         'is-range': true,
@@ -401,7 +404,7 @@ export const selectComponents = [
         },
         placeholder: '请选择',
         type: 'date',
-        style: { width: '100%' },
+        style: {width: '100%'},
         disabled: false,
         clearable: true,
         format: 'yyyy-MM-dd',
@@ -423,7 +426,7 @@ export const selectComponents = [
             changeTag: true,
             document: 'https://element.eleme.cn/#/zh-CN/component/date-picker'
         },
-        style: { width: '100%' },
+        style: {width: '100%'},
         type: 'daterange',
         'range-separator': '至',
         'start-placeholder': '开始日期',

@@ -5,7 +5,7 @@
             <el-row style="height: 20px;" />
             <el-row>
                 <el-col :offset="1" :span="2">
-                    <el-button size="mini" round>
+                    <el-button size="mini" round @click="$router.back(-1)">
                         <i class="el-icon-arrow-left" />
                         返回
                     </el-button>

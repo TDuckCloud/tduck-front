@@ -9,6 +9,14 @@
 <!--                    </a>-->
 <!--                </div>-->
 <!--            </div>-->
+            <el-row>
+                <el-col :offset="1" :span="2">
+                    <el-button size="mini" round @click="$router.back(-1)">
+                        <i class="el-icon-arrow-left" />
+                        返回
+                    </el-button>
+                </el-col>
+            </el-row>
             <el-scrollbar class="left-scrollbar">
                 <div class="components-list">
                     <div v-for="(item, listIndex) in leftComponents" :key="listIndex">
@@ -61,18 +69,31 @@
 <!--                </el-button>-->
 <!--            </div>-->
             <el-scrollbar class="center-scrollbar">
-                <el-row type="flex" justify="center" align="middle">
-                    <el-col :span="20" style="text-align: center">
-                        <h4  class="form-name-title"
-                             >问卷名称</h4>
-                    </el-col>
+                <el-row type="flex" align="middle" justify="justify">
+                   <el-col :span="18" :offset="6">
+                       <el-menu default-active="1" style="background-color: transparent" mode="horizontal">
+                           <el-menu-item index="1">编辑</el-menu-item>
+                           <el-menu-item index="2">外观</el-menu-item>
+                           <el-menu-item index="3">设置</el-menu-item>
+                           <el-menu-item index="4">发布</el-menu-item>
+                           <el-menu-item index="5">统计</el-menu-item>
+                       </el-menu>
+                   </el-col>
                 </el-row>
-                <el-row type="flex" justify="center" align="middle">
-                    <el-col :span="24" style="text-align: center">为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位
-                        用户的宝贵意见，期待您的参与！现在我们就马上开始吧！</el-col>
-                </el-row>
-                <el-divider></el-divider>
                 <el-row class="center-board-row" :gutter="formConf.gutter">
+                    <el-row type="flex" justify="center" align="middle">
+                        <el-col :span="20" style="text-align: center">
+                            <h4  class="form-name-text" contenteditable="true" @input="(event)=>{formConf.title=event.target.innerText}">{{formConf.title}}</h4>
+                        </el-col>
+                    </el-row>
+                    <el-row type="flex" justify="center" align="middle">
+                        <el-col :span="20" style="text-align: center">
+                            <p  class="form-name-text" contenteditable="true" @input="(event)=>{formConf.description=event.target.innerText}">
+                                {{formConf.description}}
+                            </p>
+                        </el-col>
+                    </el-row>
+                    <el-divider></el-divider>
                     <el-form
                         :size="formConf.size"
                         :label-position="formConf.labelPosition"
@@ -283,7 +304,6 @@ export default {
     },
     methods: {
         activeFormItem(currentItem) {
-            console.log(currentItem)
             this.activeData = currentItem
             this.activeId = currentItem.__config__.formId
         },

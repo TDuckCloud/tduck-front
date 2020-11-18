@@ -51,8 +51,11 @@ $lighterBlue: #409eff;
     width: 260px;
     position: absolute;
     left: 0;
-    top: 0;
+    top: 20px;
     height: 100vh;
+}
+.el-menu.el-menu--horizontal {
+    border-bottom: none;
 }
 .left-scrollbar {
     //height: calc(100vh - 42px);
@@ -67,9 +70,11 @@ $lighterBlue: #409eff;
 .center-scrollbar {
     height: calc(100vh - 42px);
     overflow: hidden;
-    border-left: 1px solid #f1e8e8;
-    border-right: 1px solid #f1e8e8;
+    //border-left: 1px solid #f1e8e8;
+    //border-right: 1px solid #f1e8e8;
+    margin: 3px;
     box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 100);
 }
 .center-board {
     height: 100vh;
@@ -274,12 +279,22 @@ $lighterBlue: #409eff;
         }
     }
 }
-.form-name-title:hover {
+.form-name-text:hover {
     text-align: center;
     border: 1px dashed #7b7b7b;
 }
-.form-name-title {
+.form-name-text {
+    padding: 6px 10px;
     border: 1px dashed transparent;
     width: 80%;
     line-height: 30px;
+}
+.form-name-text input {
+    border: none;
+    background-color: transparent;
+}
+[contenteditable]:focus {
+    outline: none;
+    background-color: #f4f4f4;
+    border: 1px solid #f4f4f4;
 }

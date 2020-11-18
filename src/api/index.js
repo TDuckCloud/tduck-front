@@ -75,7 +75,6 @@ api.interceptors.response.use(
          * 则代码如下
          */
         const res = response.data
-        console.log(res)
         if (res.code === 200) {
             return Promise.resolve(res)
         } else if (res.code === 500) {
