@@ -647,7 +647,7 @@ import TreeNodeDialog from '@/views/form/TreeNodeDialog'
 import { isNumberStr } from '@/utils/index'
 import IconsDialog from './IconsDialog'
 import {
-  inputComponents, selectComponents, layoutComponents
+  inputComponents, selectComponents
 } from '@/components/generator/config'
 import { saveFormConf } from '@/utils/db'
 

@@ -5,8 +5,10 @@ import _ from 'lodash'
  * @param item
  */
 export function formItemConvertData(item) {
+    console.log(item)
     let data = {
         'type': item.typeId,
+        'formItemId': item.__config__.formId,
         'label': item.__config__.label,
         'defaultValue': item.defaultValue,
         'required': item.__config__.required,
@@ -15,11 +17,13 @@ export function formItemConvertData(item) {
     }
     let extend = {}
     let param = dataParams[item.typeId]
-    Object.keys(param).forEach(key => {
-        let value = _.get(item, param[key])
-        _.set(extend, key, value)
-    })
-    _.set(data, 'extend', extend)
+    if (param) {
+        Object.keys(param).forEach(key => {
+            let value = _.get(item, param[key])
+            _.set(extend, key, value)
+        })
+        _.set(data, 'extend', extend)
+    }
     console.log(data)
 }
 

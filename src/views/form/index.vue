@@ -76,13 +76,14 @@
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
                             <h4 class="form-name-text" contenteditable="true"
-                                @input="(event)=>{formConf.title=event.target.innerText}">{{formConf.title}}</h4>
+                                @input="(event)=>{formConf.title=event.target.innerText;this.saveProjectInfo()}">
+                                {{formConf.title}}</h4>
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
                             <p class="form-name-text" contenteditable="true"
-                               @input="(event)=>{formConf.description=event.target.innerText}">
+                               @input="(event)=>{formConf.description=event.target.innerText;this.saveProjectInfo()}">
                                 {{formConf.description}}
                             </p>
                         </el-col>
@@ -158,7 +159,7 @@ import RightPanel from './RightPanel'
 // import '@/assets/styles/index.scss'
 
 import {
-    inputComponents, selectComponents, layoutComponents, formConf
+    inputComponents, selectComponents, formConf
 } from '@/components/generator/config'
 import {
     exportDefault, beautifierConf, isNumberStr, titleCase, deepClone
@@ -204,7 +205,6 @@ export default {
             formConf,
             inputComponents,
             selectComponents,
-            layoutComponents,
             labelWidth: 100,
             drawingList: drawingDefalut,
             drawingData: {},
@@ -227,10 +227,6 @@ export default {
                 {
                     title: '选择型组件',
                     list: selectComponents
-                },
-                {
-                    title: '布局型组件',
-                    list: layoutComponents
                 }
             ]
         }
@@ -310,6 +306,15 @@ export default {
 
     },
     methods: {
+        saveProjectInfo: debounce(430, true, function() {
+            this.$api.post('/project/update', {
+                'key': this.projectKey,
+                'name': this.formConf.title,
+                'describe': this.formConf.description
+            }).then((res) => {
+
+            })
+        }),
         activeFormItem(currentItem) {
             this.activeData = currentItem
             this.activeId = currentItem.__config__.formId
@@ -319,6 +324,7 @@ export default {
             console.log(value)
         },
         onEnd(obj) {
+            console.log(11)
             if (obj.from !== obj.to) {
                 this.activeData = tempActiveData
                 this.activeId = this.idGlobal
@@ -328,7 +334,6 @@ export default {
             const clone = this.cloneComponent(item)
             this.drawingList.push(clone)
             this.activeFormItem(clone)
-            formItemConvertData(clone)
         },
         cloneComponent(origin) {
             const clone = deepClone(origin)
@@ -337,6 +342,7 @@ export default {
             this.createIdAndKey(clone)
             clone.placeholder !== undefined && (clone.placeholder += config.label)
             tempActiveData = clone
+            formItemConvertData(clone)
             return tempActiveData
         },
         createIdAndKey(item) {
@@ -431,6 +437,7 @@ export default {
             this.operationType = 'copy'
         },
         tagChange(newTag) {
+            console.log('tagChange')
             newTag = this.cloneComponent(newTag)
             const config = newTag.__config__
             newTag.__vModel__ = this.activeData.__vModel__
