@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import HomeFunction from './home-button'
+import HomeFunction from './HomButton'
 import Dashboard from './dashboard'
 
 export default {

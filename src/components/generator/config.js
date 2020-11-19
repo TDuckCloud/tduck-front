@@ -19,6 +19,7 @@ export const formConf = {
 export const inputComponents = [
     {
         // 组件的自定义配置
+        typeId: 1,
         __config__: {
             label: '单行文本',
             labelWidth: null,
@@ -51,6 +52,7 @@ export const inputComponents = [
         disabled: false
     },
     {
+        typeId: 2,
         __config__: {
             label: '多行文本',
             labelWidth: null,
@@ -77,37 +79,40 @@ export const inputComponents = [
         readonly: false,
         disabled: false
     },
+    // },
+    // {
+    //     typeId: 3,
+    //     __config__: {
+    //         label: '密码',
+    //         showLabel: true,
+    //         labelWidth: null,
+    //         changeTag: true,
+    //         tag: 'el-input',
+    //         tagIcon: 'password',
+    //         defaultValue: undefined,
+    //         layout: 'colFormItem',
+    //         span: 24,
+    //         required: true,
+    //         regList: [],
+    //         document: 'https://element.eleme.cn/#/zh-CN/component/input'
+    //     },
+    //     __slot__: {
+    //         prepend: '',
+    //         append: ''
+    //     },
+    //     placeholder: '请输入',
+    //     'show-password': true,
+    //     style: {width: '100%'},
+    //     clearable: true,
+    //     'prefix-icon': '',
+    //     'suffix-icon': '',
+    //     maxlength: null,
+    //     'show-word-limit': false,
+    //     readonly: false,
+    //     disabled: false
+    // },
     {
-        __config__: {
-            label: '密码',
-            showLabel: true,
-            labelWidth: null,
-            changeTag: true,
-            tag: 'el-input',
-            tagIcon: 'password',
-            defaultValue: undefined,
-            layout: 'colFormItem',
-            span: 24,
-            required: true,
-            regList: [],
-            document: 'https://element.eleme.cn/#/zh-CN/component/input'
-        },
-        __slot__: {
-            prepend: '',
-            append: ''
-        },
-        placeholder: '请输入',
-        'show-password': true,
-        style: {width: '100%'},
-        clearable: true,
-        'prefix-icon': '',
-        'suffix-icon': '',
-        maxlength: null,
-        'show-word-limit': false,
-        readonly: false,
-        disabled: false
-    },
-    {
+        typeId: 4,
         __config__: {
             label: '计数器',
             showLabel: true,
@@ -155,6 +160,7 @@ export const inputComponents = [
 // 选择型组件 【左面板】
 export const selectComponents = [
     {
+        typeId: 5,
         __config__: {
             label: '下拉选择',
             showLabel: true,
@@ -185,6 +191,7 @@ export const selectComponents = [
         multiple: false
     },
     {
+        typeId: 6,
         __config__: {
             label: '级联选择',
             url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/cascaderList',
@@ -230,6 +237,7 @@ export const selectComponents = [
         separator: '/'
     },
     {
+        typeId: 7,
         __config__: {
             label: '单选框组',
             labelWidth: null,
@@ -260,6 +268,7 @@ export const selectComponents = [
         disabled: false
     },
     {
+        typeId: 8,
         __config__: {
             label: '多选框组',
             tag: 'el-checkbox-group',
@@ -292,6 +301,7 @@ export const selectComponents = [
         disabled: false
     },
     {
+        typeId: 9,
         __config__: {
             label: '开关',
             tag: 'el-switch',
@@ -316,6 +326,7 @@ export const selectComponents = [
         'inactive-value': false
     },
     {
+        typeId: 10,
         __config__: {
             label: '滑块',
             tag: 'el-slider',
@@ -338,6 +349,7 @@ export const selectComponents = [
         range: false
     },
     {
+        typeId: 12,
         __config__: {
             label: '时间选择',
             tag: 'el-time-picker',
@@ -363,6 +375,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
+        typeId: 13,
         __config__: {
             label: '时间范围',
             tag: 'el-time-picker',
@@ -388,6 +401,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
+        typeId: 14,
         __config__: {
             label: '日期选择',
             tag: 'el-date-picker',
@@ -412,6 +426,7 @@ export const selectComponents = [
         readonly: false
     },
     {
+        typeId: 15,
         __config__: {
             label: '日期范围',
             tag: 'el-date-picker',
@@ -438,6 +453,7 @@ export const selectComponents = [
         readonly: false
     },
     {
+        typeId: 16,
         __config__: {
             label: '评分',
             tag: 'el-rate',
@@ -460,6 +476,7 @@ export const selectComponents = [
         disabled: false
     },
     {
+        typeId: 17,
         __config__: {
             label: '颜色选择',
             tag: 'el-color-picker',
@@ -480,6 +497,7 @@ export const selectComponents = [
         size: 'medium'
     },
     {
+        typeId: 18,
         __config__: {
             label: '上传',
             tag: 'el-upload',
@@ -624,3 +642,4 @@ export const layoutComponents = [
         align: 'top'
     }
 ]
+

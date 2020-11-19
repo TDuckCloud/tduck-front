@@ -43,23 +43,23 @@
         </div>
 
         <div class="center-board">
-            <!--            <div class="action-bar">-->
-            <!--                <el-button icon="el-icon-video-play" type="text" @click="run">-->
-            <!--                    运行-->
-            <!--                </el-button>-->
-            <!--                <el-button icon="el-icon-view" type="text" @click="showJson">-->
-            <!--                    查看json-->
-            <!--                </el-button>-->
-            <!--                <el-button icon="el-icon-download" type="text" @click="download">-->
-            <!--                    导出vue文件-->
-            <!--                </el-button>-->
-            <!--                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">-->
-            <!--                    复制代码-->
-            <!--                </el-button>-->
-            <!--                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">-->
-            <!--                    清空-->
-            <!--                </el-button>-->
-            <!--            </div>-->
+            <div class="action-bar">
+                <el-button icon="el-icon-video-play" type="text" @click="run">
+                    运行
+                </el-button>
+                <el-button icon="el-icon-view" type="text" @click="showJson">
+                    查看json
+                </el-button>
+                <el-button icon="el-icon-download" type="text" @click="download">
+                    导出vue文件
+                </el-button>
+                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
+                    复制代码
+                </el-button>
+                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
+                    清空
+                </el-button>
+            </div>
             <el-row type="flex" align="middle" justify="justify">
                 <el-col :span="18" :offset="6">
                     <el-menu default-active="1" style="background-color: transparent" mode="horizontal">
@@ -163,6 +163,7 @@ import {
 import {
     exportDefault, beautifierConf, isNumberStr, titleCase, deepClone
 } from '@/utils/index'
+import {formItemConvertData} from '@/utils/formDataConvert'
 import {
     makeUpHtml, vueTemplate, vueScript, cssStyle
 } from '@/components/generator/html'
@@ -327,6 +328,7 @@ export default {
             const clone = this.cloneComponent(item)
             this.drawingList.push(clone)
             this.activeFormItem(clone)
+            formItemConvertData(clone)
         },
         cloneComponent(origin) {
             const clone = deepClone(origin)

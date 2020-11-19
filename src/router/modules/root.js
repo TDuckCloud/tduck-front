@@ -38,7 +38,7 @@ export default [
             {
                 path: '/',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/home/home-view')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/home/HomeView')
             }
         ]
     }, {
