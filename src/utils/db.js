@@ -30,6 +30,7 @@ export function getIdGlobal(key) {
 }
 
 export function saveIdGlobal(id, key) {
+
     if (key) localStorage.setItem(`${DRAWING_ID}:${key}`, `${id}`)
 }
 

@@ -43,23 +43,23 @@
         </div>
 
         <div class="center-board">
-            <div class="action-bar">
-                <el-button icon="el-icon-video-play" type="text" @click="run">
-                    运行
-                </el-button>
-                <el-button icon="el-icon-view" type="text" @click="showJson">
-                    查看json
-                </el-button>
-                <el-button icon="el-icon-download" type="text" @click="download">
-                    导出vue文件
-                </el-button>
-                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
-                    复制代码
-                </el-button>
-                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
-                    清空
-                </el-button>
-            </div>
+<!--            <div class="action-bar">-->
+<!--                <el-button icon="el-icon-video-play" type="text" @click="run">-->
+<!--                    运行-->
+<!--                </el-button>-->
+<!--                <el-button icon="el-icon-view" type="text" @click="showJson">-->
+<!--                    查看json-->
+<!--                </el-button>-->
+<!--                <el-button icon="el-icon-download" type="text" @click="download">-->
+<!--                    导出vue文件-->
+<!--                </el-button>-->
+<!--                <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">-->
+<!--                    复制代码-->
+<!--                </el-button>-->
+<!--                <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">-->
+<!--                    清空-->
+<!--                </el-button>-->
+<!--            </div>-->
             <el-row type="flex" align="middle" justify="justify">
                 <el-col :span="18" :offset="6">
                     <el-menu default-active="1" style="background-color: transparent" mode="horizontal">
@@ -71,19 +71,23 @@
                     </el-menu>
                 </el-col>
             </el-row>
-            <el-scrollbar class="center-scrollbar">
+            <el-row class="center-scrollbar">
                 <el-row class="center-board-row" :gutter="formConf.gutter">
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
                             <h4 class="form-name-text" contenteditable="true"
-                                @input="(event)=>{formConf.title=event.target.innerText;this.saveProjectInfo()}">
+                                @blur="(event)=>{
+                                    formConf.title=event.target.innerText;
+                                    this.saveProjectInfo()}">
                                 {{formConf.title}}</h4>
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
                             <p class="form-name-text" contenteditable="true"
-                               @input="(event)=>{formConf.description=event.target.innerText;this.saveProjectInfo()}">
+                               @blur="(event)=>{
+                                   formConf.description=event.target.innerText;
+                                   this.saveProjectInfo()}">
                                 {{formConf.description}}
                             </p>
                         </el-col>
@@ -115,14 +119,20 @@
                         </div>
                     </el-form>
                 </el-row>
-            </el-scrollbar>
+            </el-row>
         </div>
-
+        <el-row>
+            <el-col :span="3" :offset="10">
+                <el-button  type="primary">发布</el-button>
+            </el-col>
+        </el-row>
         <right-panel
+            v-if="activeData"
             :active-data="activeData"
             :form-conf="formConf"
             :show-field="!!drawingList.length"
             @tag-change="tagChange"
+            @data-change="updateProjectItemInfo"
         />
 
         <form-drawer
@@ -156,7 +166,6 @@ import render from '@/components/render/render'
 import FormDrawer from './FormDrawer'
 import JsonDrawer from './JsonDrawer'
 import RightPanel from './RightPanel'
-// import '@/assets/styles/index.scss'
 
 import {
     inputComponents, selectComponents, formConf
@@ -187,7 +196,7 @@ let oldActiveId
 let tempActiveData
 let drawingListInDB
 let formConfInDB
-let idGlobal = 100
+let idGlobal
 
 export default {
     components: {
@@ -208,14 +217,14 @@ export default {
             labelWidth: 100,
             drawingList: drawingDefalut,
             drawingData: {},
-            activeId: drawingDefalut[0].formId,
+            activeId: drawingDefalut.length!=0?drawingDefalut[0].formId:0,
             drawerVisible: false,
             formData: {},
             dialogVisible: false,
             jsonDrawerVisible: false,
             generateConf: null,
             showFileName: false,
-            activeData: drawingDefalut[0],
+            activeData: drawingDefalut?drawingDefalut[0]:null,
             saveDrawingListDebounce: debounce(340, saveDrawingList),
             saveIdGlobalDebounce: debounce(340, saveIdGlobal),
             projectKey: '',
@@ -259,7 +268,9 @@ export default {
         },
         idGlobal: {
             handler(val) {
-                this.saveIdGlobalDebounce(val, this.projectKey)
+                if (val) {
+                    this.saveIdGlobalDebounce(val, this.projectKey)
+                }
             },
             immediate: true
         }
@@ -274,17 +285,23 @@ export default {
         } else {
             this.drawingList = drawingDefalut
         }
-        this.activeFormItem(this.drawingList[0])
-        //获取表单配置
-        formConfInDB = getFormConf(projectKey)
-        if (formConfInDB) {
-            this.formConf = formConfInDB
+        if(this.drawingList.length){
+            this.activeFormItem(this.drawingList[0])
         }
+        //获取表单配置
+        // formConfInDB = getFormConf(projectKey)
+        // if (formConfInDB) {
+        //     this.formConf = formConfInDB
+        // }
+        //获取后台数据
+        this.$api.get(`/project/query/${projectKey}`).then(res => {
+            this.formConf.title = res.data.name
+            this.formConf.description = res.data.describe
+        })
         //全局组件Id
         if (getIdGlobal(projectKey)) {
-            idGlobal = getIdGlobal(projectKey)
+            this.idGlobal = getIdGlobal(projectKey)
         }
-
         loadBeautifier(btf => {
             beautifier = btf
         })
@@ -315,6 +332,24 @@ export default {
 
             })
         }),
+        updateProjectItemInfo(val) {
+            let data= formItemConvertData(val,this.projectKey)
+            this.$api.post('/project/item/update',data).then((res) => {
+
+            })
+        },
+        deleteProjectItemInfo(val) {
+            console.log(val)
+            let data= formItemConvertData(val,this.projectKey)
+            this.$api.post('/project/item/delete', data ).then((res) => {
+
+            })
+        },
+        saveProjectItemInfo(val){
+            this.$api.post('/project/item/create', val).then(res => {
+
+            })
+        },
         activeFormItem(currentItem) {
             this.activeData = currentItem
             this.activeId = currentItem.__config__.formId
@@ -324,7 +359,6 @@ export default {
             console.log(value)
         },
         onEnd(obj) {
-            console.log(11)
             if (obj.from !== obj.to) {
                 this.activeData = tempActiveData
                 this.activeId = this.idGlobal
@@ -342,7 +376,9 @@ export default {
             this.createIdAndKey(clone)
             clone.placeholder !== undefined && (clone.placeholder += config.label)
             tempActiveData = clone
-            formItemConvertData(clone)
+            let data = formItemConvertData(clone, this.projectKey)
+            console.log(data)
+            this.saveProjectItemInfo(data)
             return tempActiveData
         },
         createIdAndKey(item) {
@@ -399,8 +435,10 @@ export default {
             clone = this.createIdAndKey(clone)
             list.push(clone)
             this.activeFormItem(clone)
+            this.saveProjectItemInfo(clone)
         },
         drawingItemDelete(index, list) {
+            let item= list[index]
             list.splice(index, 1)
             this.$nextTick(() => {
                 const len = this.drawingList.length
@@ -408,6 +446,7 @@ export default {
                     this.activeFormItem(this.drawingList[len - 1])
                 }
             })
+            this.deleteProjectItemInfo(item)
         },
         generateCode() {
             const {type} = this.generateConf
@@ -437,7 +476,6 @@ export default {
             this.operationType = 'copy'
         },
         tagChange(newTag) {
-            console.log('tagChange')
             newTag = this.cloneComponent(newTag)
             const config = newTag.__config__
             newTag.__vModel__ = this.activeData.__vModel__

@@ -187,7 +187,7 @@ export default {
         disabled: false,
         span: 24,
         formBtns: true,
-        unFocusedComponentBorder: false
+        unFocusedComponentBorder: true
       },
       formConf2: {
         fields: [
@@ -270,7 +270,7 @@ export default {
         disabled: false,
         span: 24,
         formBtns: true,
-        unFocusedComponentBorder: false
+        unFocusedComponentBorder: true
       }
     }
   },

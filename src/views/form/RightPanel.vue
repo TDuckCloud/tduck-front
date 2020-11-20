@@ -2,12 +2,8 @@
   <div class="right-board">
     <el-tabs v-model="currentTab" class="center-tabs">
       <el-tab-pane label="组件属性" name="field" />
-      <el-tab-pane label="表单属性" name="form" />
     </el-tabs>
     <div class="field-box">
-      <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
-        <i class="el-icon-link" />
-      </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
         <el-form v-show="currentTab==='field' && showField" size="small" label-width="90px">
@@ -580,7 +576,6 @@
             </div>
           </template>
         </el-form>
-        <!-- 表单属性 -->
         <el-form v-show="currentTab === 'form'" size="small" label-width="90px">
           <el-form-item label="表单名">
             <el-input v-model="formConf.formRef" placeholder="请输入表单名（ref）" />
@@ -650,7 +645,7 @@ import {
   inputComponents, selectComponents
 } from '@/components/generator/config'
 import { saveFormConf } from '@/utils/db'
-
+import {debounce} from "throttle-debounce"
 const dateTimeFormat = {
   date: 'yyyy-MM-dd',
   week: 'yyyy 第 WW 周',
@@ -767,12 +762,6 @@ export default {
     }
   },
   computed: {
-    documentLink() {
-      return (
-        this.activeData.__config__.document
-        || 'https://element.eleme.cn/#/zh-CN/component/installation'
-      )
-    },
     dateOptions() {
       if (
         this.activeData.type !== undefined
@@ -816,7 +805,15 @@ export default {
         saveFormConf(val)
       },
       deep: true
-    }
+    },
+    activeData : {
+       handler(val) {
+           if(val){
+               this.dataChange(val)
+           }
+       },
+       deep: true
+    },
   },
   methods: {
     addReg() {
@@ -957,6 +954,9 @@ export default {
       if (!target) target = selectComponents.find(item => item.__config__.tagIcon === tagIcon)
       this.$emit('tag-change', target)
     },
+    dataChange: debounce(430, false, function(val) {
+       this.$emit('data-change', val)
+    }),
     changeRenderKey() {
       if (needRerenderList.includes(this.activeData.__config__.tag)) {
         this.activeData.__config__.renderKey = +new Date()
@@ -967,6 +967,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/index';
 .right-board {
   width: 350px;
   position: absolute;
@@ -1018,22 +1019,7 @@ export default {
     display: none;
   }
 }
-.document-link {
-  position: absolute;
-  display: block;
-  width: 26px;
-  height: 26px;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  background: #409eff;
-  z-index: 1;
-  border-radius: 0 0 6px 0;
-  text-align: center;
-  line-height: 26px;
-  color: #fff;
-  font-size: 18px;
-}
+
 .node-label{
   font-size: 14px;
 }

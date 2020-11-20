@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import qs from 'qs'
-import { MessageBox, Message } from 'element-ui'
+import {MessageBox, Message} from 'element-ui'
 import router from '@/router/index'
 import store from '@/store/index'
 import signMd5Utils from '@/utils/sign'
@@ -77,7 +77,7 @@ api.interceptors.response.use(
         const res = response.data
         if (res.code === 200) {
             return Promise.resolve(res)
-        } else if (res.code === 500) {
+        } else if (res.code === 500 || res.code == 403) {
             // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
             Message({
                 message: res.msg || 'Error',

@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import md5 from 'js-md5'
 import constants from './constants'
-
+import _ from 'lodash'
 export default class sign {
     /**
      * json参数升序
@@ -31,13 +31,8 @@ export default class sign {
     static getSign(url, requestParams) {
 
         let urlParams = this.parseQueryString(url)
-        console.log(urlParams)
-        let jsonObj = this.mergeObject(urlParams, requestParams)
-        console.log(jsonObj)
+        let jsonObj = _.merge(urlParams, requestParams)
         let requestBody = this.sortAsc(jsonObj)
-        console.log(requestBody)
-        console.log(constants.signSecret + JSON.stringify(requestBody))
-        console.log(md5(constants.signSecret + JSON.stringify(requestBody)).toLowerCase())
         return md5(constants.signSecret + JSON.stringify(requestBody)).toLowerCase()
     }
 

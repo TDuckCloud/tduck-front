@@ -25,7 +25,7 @@
                 <el-col :span="6" />
             </el-row>
             <el-row>
-                <el-col :offset="6" :span="8">
+                <el-col :offset="6" :span="10">
                     <el-menu default-active="1" class="el-menu-demo" mode="horizontal">
                         <el-menu-item index="1">全部</el-menu-item>
                         <el-menu-item index="2">问卷调查</el-menu-item>

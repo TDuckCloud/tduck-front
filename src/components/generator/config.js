@@ -12,7 +12,8 @@ export const formConf = {
     title: '问卷名称',
     description: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位\n' +
         '用户的宝贵意见，期待您的参与！现在我们就马上开始吧！',
-    formBtns: true
+    formBtns: true,
+    unFocusedComponentBorder: true
 }
 
 // 输入型组件 【左面板】
@@ -135,25 +136,6 @@ export const inputComponents = [
         precision: undefined,
         'controls-position': '',
         disabled: false
-    },
-    {
-        __config__: {
-            label: '编辑器',
-            showLabel: true,
-            changeTag: true,
-            labelWidth: null,
-            tag: 'tinymce',
-            tagIcon: 'rich-text',
-            defaultValue: null,
-            span: 24,
-            layout: 'colFormItem',
-            required: true,
-            regList: [],
-            document: 'http://tinymce.ax-z.cn'
-        },
-        placeholder: '请输入',
-        height: 300, // 编辑器高度
-        branding: false // 隐藏右下角品牌烙印
     }
 ]
 
@@ -349,7 +331,7 @@ export const selectComponents = [
         range: false
     },
     {
-        typeId: 12,
+        typeId: 11,
         __config__: {
             label: '时间选择',
             tag: 'el-time-picker',
@@ -375,7 +357,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
-        typeId: 13,
+        typeId: 12,
         __config__: {
             label: '时间范围',
             tag: 'el-time-picker',
@@ -401,7 +383,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
-        typeId: 14,
+        typeId: 13,
         __config__: {
             label: '日期选择',
             tag: 'el-date-picker',
@@ -426,7 +408,7 @@ export const selectComponents = [
         readonly: false
     },
     {
-        typeId: 15,
+        typeId: 14,
         __config__: {
             label: '日期范围',
             tag: 'el-date-picker',
@@ -453,7 +435,7 @@ export const selectComponents = [
         readonly: false
     },
     {
-        typeId: 16,
+        typeId: 15,
         __config__: {
             label: '评分',
             tag: 'el-rate',
@@ -476,7 +458,7 @@ export const selectComponents = [
         disabled: false
     },
     {
-        typeId: 17,
+        typeId: 16,
         __config__: {
             label: '颜色选择',
             tag: 'el-color-picker',
@@ -497,7 +479,7 @@ export const selectComponents = [
         size: 'medium'
     },
     {
-        typeId: 18,
+        typeId: 17,
         __config__: {
             label: '上传',
             tag: 'el-upload',
