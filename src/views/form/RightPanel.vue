@@ -313,12 +313,12 @@
                   <i class="el-icon-s-operation" />
                 </div>
                 <el-input v-model="item.label" placeholder="选项名" size="small" />
-                <el-input
-                  placeholder="选项值"
-                  size="small"
-                  :value="item.value"
-                  @input="setOptionValue(item, $event)"
-                />
+<!--                <el-input-->
+<!--                  placeholder="选项值"-->
+<!--                  size="small"-->
+<!--                  :value="item.value"-->
+<!--                  @input="setOptionValue(item, $event)"-->
+<!--                />-->
                 <div class="close-btn select-line-icon" @click="activeData.__slot__.options.splice(index, 1)">
                   <i class="el-icon-remove-outline" />
                 </div>
@@ -339,50 +339,50 @@
 
           <template v-if="['el-cascader'].indexOf(activeData.__config__.tag) > -1">
             <el-divider>选项</el-divider>
-            <el-form-item label="数据类型">
-              <el-radio-group v-model="activeData.__config__.dataType" size="small">
-                <el-radio-button label="dynamic">
-                  动态数据
-                </el-radio-button>
-                <el-radio-button label="static">
-                  静态数据
-                </el-radio-button>
-              </el-radio-group>
-            </el-form-item>
+<!--            <el-form-item label="数据类型">-->
+<!--              <el-radio-group v-model="activeData.__config__.dataType" size="small">-->
+<!--                <el-radio-button label="dynamic">-->
+<!--                  动态数据-->
+<!--                </el-radio-button>-->
+<!--                <el-radio-button label="static">-->
+<!--                  静态数据-->
+<!--                </el-radio-button>-->
+<!--              </el-radio-group>-->
+<!--            </el-form-item>-->
 
-            <template v-if="activeData.__config__.dataType === 'dynamic'">
-              <el-form-item label="接口地址">
-                <el-input
-                  v-model="activeData.__config__.url"
-                  :title="activeData.__config__.url"
-                  placeholder="请输入接口地址"
-                  clearable
-                >
-                  <el-select
-                    slot="prepend"
-                    v-model="activeData.__config__.method"
-                    :style="{width: '85px'}"
-                  >
-                    <el-option label="get" value="get" />
-                    <el-option label="post" value="post" />
-                    <el-option label="put" value="put" />
-                    <el-option label="delete" value="delete" />
-                  </el-select>
-                </el-input>
-              </el-form-item>
-              <el-form-item label="数据位置">
-                <el-input v-model="activeData.__config__.dataKey" placeholder="请输入标签键名" />
-              </el-form-item>
-              <el-form-item label="标签键名">
-                <el-input v-model="activeData.props.props.label" placeholder="请输入标签键名" />
-              </el-form-item>
-              <el-form-item label="值键名">
-                <el-input v-model="activeData.props.props.value" placeholder="请输入值键名" />
-              </el-form-item>
-              <el-form-item label="子级键名">
-                <el-input v-model="activeData.props.props.children" placeholder="请输入子级键名" />
-              </el-form-item>
-            </template>
+<!--            <template v-if="activeData.__config__.dataType === 'dynamic'">-->
+<!--              <el-form-item label="接口地址">-->
+<!--                <el-input-->
+<!--                  v-model="activeData.__config__.url"-->
+<!--                  :title="activeData.__config__.url"-->
+<!--                  placeholder="请输入接口地址"-->
+<!--                  clearable-->
+<!--                >-->
+<!--                  <el-select-->
+<!--                    slot="prepend"-->
+<!--                    v-model="activeData.__config__.method"-->
+<!--                    :style="{width: '85px'}"-->
+<!--                  >-->
+<!--                    <el-option label="get" value="get" />-->
+<!--                    <el-option label="post" value="post" />-->
+<!--                    <el-option label="put" value="put" />-->
+<!--                    <el-option label="delete" value="delete" />-->
+<!--                  </el-select>-->
+<!--                </el-input>-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="数据位置">-->
+<!--                <el-input v-model="activeData.__config__.dataKey" placeholder="请输入标签键名" />-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="标签键名">-->
+<!--                <el-input v-model="activeData.props.props.label" placeholder="请输入标签键名" />-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="值键名">-->
+<!--                <el-input v-model="activeData.props.props.value" placeholder="请输入值键名" />-->
+<!--              </el-form-item>-->
+<!--              <el-form-item label="子级键名">-->
+<!--                <el-input v-model="activeData.props.props.children" placeholder="请输入子级键名" />-->
+<!--              </el-form-item>-->
+<!--            </template>-->
 
             <!-- 级联选择静态树 -->
             <el-tree
@@ -807,9 +807,12 @@ export default {
       deep: true
     },
     activeData : {
-       handler(val) {
-           if(val){
-               this.dataChange(val)
+       handler(newValue,oldValue) {
+           // 切换选中时不触发
+           if(newValue.__config__.formId===oldValue.__config__.formId){
+               if(newValue){
+                   this.dataChange(newValue)
+               }
            }
        },
        deep: true
@@ -823,9 +826,10 @@ export default {
       })
     },
     addSelectItem() {
+
       this.activeData.__slot__.options.push({
         label: '',
-        value: ''
+        value:  this.activeData.__slot__.options.length+1
       })
     },
     addTreeItem() {
@@ -971,12 +975,12 @@ export default {
 .right-board {
   width: 350px;
   position: absolute;
-  right: 0;
+  right: 17px;
   top: 0;
   padding-top: 3px;
   .field-box {
     position: relative;
-    height: calc(100vh - 42px);
+    height: calc(100vh - 242px);
     box-sizing: border-box;
     overflow: hidden;
   }

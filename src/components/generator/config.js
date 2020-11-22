@@ -185,7 +185,7 @@ export const selectComponents = [
             tagIcon: 'cascader',
             layout: 'colFormItem',
             defaultValue: [],
-            dataType: 'dynamic',
+            dataType: 'static',
             span: 24,
             required: true,
             regList: [],

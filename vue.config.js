@@ -53,7 +53,7 @@ module.exports = {
     publicPath: '',
     productionSourceMap: false,
     devServer: {
-        disableHostCheck:true,
+        disableHostCheck: true,
         open: true,
         port: 8888,
         // 开发环境默认开启反向代理，如果不需要请自行注释

@@ -45,9 +45,7 @@
                     </el-carousel>
                 </el-col>
             </el-row>
-            <el-scrollbar style="height: 100%;">
-                <router-view />
-            </el-scrollbar>
+            <router-view />
         </el-main>
     </el-container>
 </template>

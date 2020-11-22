@@ -58,15 +58,8 @@ export default [
             }
         ]
     }, {
-        path: '/form',
-        meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),
-        children: [
-            {
-                path: 'create',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/create.vue')
-            }
-        ]
+        path: '/project/preview',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView.vue')
     }
 ]

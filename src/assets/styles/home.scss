@@ -1,5 +1,5 @@
-$selectedColor: #f6f7ff;
-$lighterBlue: #409eff;
+$selectedColor: #f5f8ff;
+$lighterBlue: #4aa0fa;
 .container {
     position: relative;
     width: 100%;
@@ -41,10 +41,10 @@ $lighterBlue: #409eff;
         font-size: 15px;
     }
     &:hover {
-        border: 1px dashed #787be8;
-        color: #787be8;
+        border: 1px dashed #4144f8;
+        color: #4480f5;
         .svg-icon {
-            color: #787be8;
+            color: #4144f8;
         }
     }
 }
@@ -54,14 +54,13 @@ $lighterBlue: #409eff;
     left: 0;
     top: 20px;
     height: 100vh;
-    background-color: rgba(255, 255, 255, 100);
+    //background-color: rgba(255, 255, 255, 100);
 }
 .el-menu.el-menu--horizontal {
     border-bottom: none;
 }
 .left-scrollbar {
-    //height: calc(100vh - 42px);
-    height: calc(100vh - 142px);
+    height: calc(100vh - 290px);
     overflow: hidden;
     margin: 5px;
     border-radius: 7px;
@@ -70,22 +69,19 @@ $lighterBlue: #409eff;
     border: 1px solid rgba(255, 255, 255, 100);
 }
 .center-scrollbar {
-    height: calc(100vh - 42px);
+    height: calc(100vh - 230px);
     overflow: hidden;
     width: 80%;
-    //border-left: 1px solid #f1e8e8;
-    //border-right: 1px solid #f1e8e8;
     margin: 20px auto 0;
-    //margin-top: 20px;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 100);
     border: 2px solid rgba(255, 255, 255, 100);
     overflow-y: hidden;
 }
 .center-board {
-    height: 100vh;
+    height: calc(100vh - 220px);
     width: auto;
-    margin: 0 350px 0 260px;
+    margin: 0 350px 80px 260px;
     box-sizing: border-box;
 }
 .empty-info {
@@ -95,7 +91,7 @@ $lighterBlue: #409eff;
     right: 0;
     text-align: center;
     font-size: 18px;
-    color: #ccb1ea;
+    color: #0067f3;
     letter-spacing: 4px;
 }
 .action-bar {
