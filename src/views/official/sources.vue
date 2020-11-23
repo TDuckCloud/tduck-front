@@ -1,5 +1,5 @@
 <template>
-    <div id="sources" style="height: 690px; /* 开发时请将此样式移除 */">
+    <div id="sources">
         开源版本
     </div>
 </template>

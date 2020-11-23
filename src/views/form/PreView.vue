@@ -1,7 +1,7 @@
 <template>
     <div class="preview-form">
         <div class="" v-if="!formState">
-            <el-row type="flex" justify="center" align="middle">
+            <el-row  type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
                     <h4 class="form-name-text">
                         {{formConf.title}}</h4>
@@ -15,10 +15,11 @@
                 </el-col>
             </el-row>
             <el-divider></el-divider>
-            <parser v-if="formConf.fields.length" :form-conf="formConf" @submit="sumbitForm1"/>
+            <parser v-if="formConf.fields.length" :form-conf="formConf" @submit="submitForm"/>
         </div>
         <div v-if="formState">
-            <p style="text-align: center">您已完成本次问卷，感谢您的帮助与支持</p>
+            <p style="text-align: center">
+                <i class="el-icon-check"/>您已完成本次问卷，感谢您的帮助与支持</p>
         </div>
     </div>
 </template>
@@ -46,6 +47,7 @@ export default {
     data() {
         return {
             key2: +new Date(),
+            projectKey: '',
             formState: false,//是否填写
             formConf: {
                 fields: [],
@@ -72,6 +74,7 @@ export default {
                 disabled: false,
                 span: 24,
                 formBtns: true,
+                resetBtn: true ,
                 unFocusedComponentBorder: true
             }
         }
@@ -82,7 +85,7 @@ export default {
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/project/query/details/${this.$route.query.key}`).then(res => {
+        this.$api.get(`/user/project/query/details/${this.$route.query.key}`).then(res => {
             if (res.data) {
                 let fields = res.data.projectItems.map(item => {
                     return dbDataConvertForItemJson(item)
@@ -92,6 +95,7 @@ export default {
                 this.formConf.description = res.data.project.describe
             }
         })
+        this.projectKey = this.$route.query.key
     },
     methods: {
         fillFormData(form, data) {
@@ -102,18 +106,10 @@ export default {
                 }
             })
         },
-        change() {
-            this.key2 = +new Date()
-            const t = this.formConf
-            this.formConf = this.formConf2
-            this.formConf2 = t
-        },
-        sumbitForm1(data) {
-            console.log('sumbitForm1提交数据：', data)
-            this.formState = true
-        },
-        sumbitForm2(data) {
-            console.log('sumbitForm2提交数据：', data)
+        submitForm(data) {
+            this.$api.post('/user/project/result/create', {'projectKey': this.projectKey, 'collectData': data}).then(res => {
+                this.formState = true
+            })
         }
     }
 }

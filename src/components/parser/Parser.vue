@@ -70,12 +70,31 @@ function renderFrom(h) {
 }
 
 function formBtns(h) {
-    return <el-col>
-        <el-form-item size="large">
-            <el-button type="primary" onClick={this.submitForm}>提交</el-button>
-            <el-button onClick={this.resetForm}>重置</el-button>
+    const { formConfCopy } = this
+    if(formConfCopy.resetBtn){
+        return   <el-col>
+            <el-form-item size="large" style="margin-top:30px">
+                <el-row>
+                    <el-col span="4" offset="6">
+                        <el-button type="primary" onClick={this.submitForm}>提交</el-button>
+                    </el-col>
+                    <el-col span="9" offset="3" >
+                        <el-button onClick={this.resetForm}>重置</el-button>
+                    </el-col>
+                </el-row>
+            </el-form-item>
+        </el-col>
+    }
+    return   <el-col>
+        <el-form-item size="large" style="margin-top:30px">
+            <el-row type="flex" justify="center" >
+                <el-col span="8" >
+                    <el-button type="primary" onClick={this.submitForm}>提交</el-button>
+                </el-col>
+            </el-row>
         </el-form-item>
     </el-col>
+
 }
 
 function renderFormItem(h, elementList) {

@@ -1,10 +1,10 @@
 <template>
-    <div id="login">
-        <el-row class="loginBody">
-            <el-col :span="12">
-                <img class="loginBackImg" src="http://qiniu.smileyi.top/login-banner">
+    <div class="login-container" style=" border-top: 1px solid #205bb5;">
+        <el-row class="login-body">
+            <el-col :span="5" :offset="4">
+                <img class="login-img" src="http://qiniu.smileyi.top/login-banner">
             </el-col>
-            <el-col :span="12">
+            <el-col :offset="3" :span="12">
                 <el-tabs v-if="formType=='login'" v-model="loginType" class="login-form-tab" style="width: 320px;"
                          @tab-click="loginTypeHandleClick"
                 >
@@ -17,14 +17,22 @@
                                 <el-link icon="el-icon-refresh-left" :underline="false">刷新二维码</el-link>
                             </div>
                             <el-divider style="width: 100px;" />
-                            <div style="display: flex; flex-direction: row;">
-                                <el-link style="margin-left: 20px;">忘记密码</el-link>
-                                <el-link style="margin-left: 20px;" @click="()=>{this.formType='reg'}">立即注册</el-link>
-                                <div class="other-login">
-                                    <svg-icon name="loginQQ" class="other-login-icon" />
-                                    <svg-icon name="loginWx" class="other-login-icon" />
-                                </div>
-                            </div>
+                            <el-row>
+                                <el-col :span="6">
+                                    <el-link class="login-tip">忘记密码</el-link>
+                                </el-col>
+                                <el-col :span="6">
+                                    <el-link class="login-tip">
+                                        <el-link class="login-tip" @click="()=>{this.formType='reg'}">立即注册</el-link>
+                                    </el-link>
+                                </el-col>
+                                <el-col :span="9" :offset="3">
+                                    <div class="other-login">
+                                        <svg-icon name="loginQQ" class="other-login-icon" />
+                                        <svg-icon name="loginWx" class="other-login-icon" />
+                                    </div>
+                                </el-col>
+                            </el-row>
                             <el-divider style="width: 100px;" />
                             <p class="login-tip">关于TDuckCloud登录</p>
                             <p class="login-tip">
@@ -35,7 +43,8 @@
                         </div>
                     </el-tab-pane>
                     <el-tab-pane label="账号密码登录" name="account">
-                        <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm" :rules="accountLoginRules"
+                        <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm"
+                                 :rules="accountLoginRules"
                                  class="account-login-form" status-icon hide-required-asterisk
                         >
                             <el-form-item label="手机号/邮箱登录" prop="account">
@@ -47,27 +56,49 @@
                                 />
                             </el-form-item>
                             <el-form-item label="">
-                                <el-radio v-model="agreeProtocol" label="" />
-                                <span class="protocol-tip">我已同意</span>
-                                <el-link :underline="false" type="primary" class="protocol-tip">《TDuck用户服务协议》</el-link>
-                                <el-link :underline="false" type="primary" class="protocol-tip" style="float: right;">
-                                    忘记密码？
-                                </el-link>
+                                <el-row type="flex" align="middle">
+                                    <el-col :span="3">
+                                        <el-radio v-model="agreeProtocol" label="" />
+                                    </el-col>
+                                    <el-col :span="4">
+                                        <span class="protocol-tip">我已同意</span>
+                                    </el-col>
+                                    <el-col :span="10">
+                                        <el-link :underline="false" type="primary" class="protocol-tip">
+                                            《TDuck用户服务协议》
+                                        </el-link>
+                                    </el-col>
+                                    <el-col :span="6" :offset="1">
+                                        <el-link :underline="false" type="primary" class="protocol-tip">
+                                            忘记密码？
+                                        </el-link>
+                                    </el-col>
+                                </el-row>
                             </el-form-item>
                             <el-form-item>
                                 <el-button style="width: 100%;" type="primary" @click="loginHandle">登录</el-button>
                             </el-form-item>
-                            <el-form-item style="text-align: center;">
-                                <span class="protocol-tip">使用第三方登录 或 </span>
-                                <el-link :underline="false" type="primary" class="protocol-tip"
-                                         @click="()=>{this.formType='reg'}"
-                                >
-                                    立即注册
-                                </el-link>
-                                <div class="other-login">
-                                    <svg-icon name="loginQQ" class="other-login-icon" />
-                                    <svg-icon name="loginWx" class="other-login-icon" />
-                                </div>
+                            <el-form-item>
+                                <el-row type="flex" align="middle">
+                                    <el-col :span="8" :offset="6">
+                                        <span class="protocol-tip">使用第三方登录 或 </span>
+                                    </el-col>
+                                    <el-col :span="6">
+                                        <el-link :underline="false" type="primary" class="protocol-tip"
+                                                 @click="()=>{this.formType='reg'}"
+                                        >
+                                            立即注册
+                                        </el-link>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :offset="8">
+                                        <div class="other-login">
+                                            <svg-icon name="loginQQ" class="other-login-icon" />
+                                            <svg-icon name="loginWx" class="other-login-icon" />
+                                        </div>
+                                    </el-col>
+                                </el-row>
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
@@ -260,12 +291,12 @@ export default {
 }
 </script>
 <style scoped>
-.loginBody {
-    margin: 70px 0 0 0;
+
+.login-body {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    margin: 90px 0 0 0;
 }
-.loginBackImg {
-    left: 271px;
-    top: 353px;
+.login-img {
     width: 489px;
     height: 447px;
 }
@@ -284,8 +315,8 @@ export default {
         }
     }
 }
-.other-login {
-    margin-left: auto;
+.other-login .other-login-icon {
+    margin-left: 10px;
 }
 .login-tip {
     color: rgba(16, 16, 16, 1);
@@ -300,7 +331,15 @@ export default {
 .account-login-form .el-radio {
     margin-right: 0;
 }
+.wx-login .el-divider--horizontal {
+    margin: 10px 0;
+}
 .account-login-form .protocol-tip {
     font-size: 12px;
+    line-height: 40px;
+}
+.el-form-item--small .el-form-item__content,
+.el-form-item--small .el-form-item__label {
+    line-height: 40px;
 }
 </style>

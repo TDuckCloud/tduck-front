@@ -1,5 +1,5 @@
 <template>
-    <div id="enterprise" style="height: 690px; /* 开发时请将此样式移除 */">
+    <div id="enterprise">
         企业部署
     </div>
 </template>

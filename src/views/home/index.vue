@@ -1,5 +1,5 @@
 <template>
-    <el-container style="background-color: rgba(247, 247, 247, 100);">
+    <el-container>
         <el-header height="80px" class="homeHeaderView">
             <el-row type="flex" align="middle">
                 <el-col :span="4" :offset="1">

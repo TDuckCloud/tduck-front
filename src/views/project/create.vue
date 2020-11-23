@@ -188,7 +188,7 @@ export default {
             return 0
         },
         createBlankTemplate() {
-            this.$api.post('/project/create', {'describe': formConf.description, 'name': formConf.title}).then(res => {
+            this.$api.post('/user/project/create', {'describe': formConf.description, 'name': formConf.title}).then(res => {
                 console.log(res)
                 this.$router.push({path: '/project/form', query: {key: res.data}})
             })

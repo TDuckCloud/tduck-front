@@ -1,5 +1,5 @@
 <template>
-    <div id="proposal" style="height: 690px; /* 开发时请将此样式移除 */">
+    <div id="proposal">
         提出建议
     </div>
 </template>

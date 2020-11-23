@@ -2,8 +2,13 @@ export default [
     {
         path: '/',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/welcome.vue'),
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),
         children: [
+            {
+                path: '/',
+                meta: {requireLogin: false},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/introduction.vue')
+            },
             {
                 path: '/login',
                 meta: {requireLogin: false},
@@ -12,22 +17,17 @@ export default [
             {
                 path: '/enterprise',
                 meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/common/enterprise/index.vue')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/enterprise')
             },
             {
                 path: '/sources',
                 meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/common/sources/index.vue')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/sources')
             },
             {
                 path: '/proposal',
                 meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/common/proposal/index.vue')
-            },
-            {
-                path: '/console',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/console/index.vue')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/proposal')
             }
         ]
     }, {

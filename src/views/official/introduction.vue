@@ -1,39 +1,11 @@
 <template>
-    <div id="welcome">
-        <div class="header-container">
-            <el-row type="flex" align="middle">
-                <el-col class="header-col" :span="3" :offset="2">
-                    <div>
-                        <img src="../assets/images/indexLogo.png" class="header-logo"
-                             @click="$router.push({path:'/home'})"
-                        >
-                    </div>
-                </el-col>
-                <el-col class="header-col" :span="10" :offset="3">
-                    <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5"
-                             active-text-color="#205BB5"
-                    >
-                        <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
-                                      :route="item.routerPath" class="menu-item"
-                        >
-                            {{ item.title }}
-                        </el-menu-item>
-                    </el-menu>
-                </el-col>
-                <el-col class="header-col" :span="3">
-                    <el-button v-if="isLogin" class="header-btn" @click="$router.push({path:'/home'})">控 制 台</el-button>
-                    <el-button v-if="!isLogin" class="header-btn" @click="$router.push({path:'/login'})">登 录</el-button>
-                </el-col>
-            </el-row>
-        </div>
-        <div class="welcome-body">
-            <div class="view_container"
-                 :style="menuIndex!=='/'?'border:solid thin #205BB5;border-left:none;border-right:none;':'border:none;'"
-            >
+    <div id="introduction">
+        <div class="introduction-body">
+            <div class="view_container">
                 <el-row>
                     <el-col class="body-col" :span="3" />
                     <el-col class="body-col" :span="18">
-                        <div v-if="menuIndex==='/'">
+                        <div>
                             <el-row>
                                 <el-col :span="14">
                                     <div class="view_container_content">
@@ -66,12 +38,10 @@
                 </el-row>
             </div>
             <el-divider />
-            <div class="view_container"
-                 :style="menuIndex!=='/'?'border:solid thin #205BB5;border-left:none;border-right:none;':'border:none;'"
-            >
+            <div class="view_container">
                 <el-row>
                     <el-col class="body-col" :span="24">
-                        <div v-if="menuIndex==='/'">
+                        <div>
                             <el-row>
                                 <el-col :span="5" :offset="1">
                                     <div class="bodyRight">
@@ -102,7 +72,7 @@
             <div class="view_container">
                 <div class="view_container_content" style="padding: 100px 0;">
                     <el-row type="flex" align="middle">
-                        <el-col :span="10" offset="5">
+                        <el-col :span="10" :offset="5">
                             <p style="font-size: 28px;">TDuck - 填鸭表单</p>
                             <p class="body-title">社区版 / 开源版 / 企业部署 </p>
                             <p class="body-detail">Technology changes the world ——用技术改变世界</p>
@@ -125,7 +95,7 @@
                     </el-row>
                 </div>
             </div>
-            <div class="welcome-footer">
+            <div class="introduction-footer">
                 <el-row>
                     <el-col :span="3" :offset="2">
                         <p class="title">关于我们</p>
@@ -139,83 +109,59 @@
                     <el-col :span="3">
                         <p class="title"> 项目地址</p>
                         <p class="subtitle">
+                            <svg-icon name="gitee" style="width: 14px; height: 14px;" />
                             码云
                         </p>
                         <p class="subtitle">
+                            <svg-icon name="github" style="width: 12px; height: 12px;" />
                             Gitee
                         </p>
                     </el-col>
-                    <el-col :span="3">
-                        <p class="title">  联系方式</p>
+                    <el-col :span="4">
+                        <p class="title"> 联系方式</p>
                         <p class="subtitle">
+                            <i class="el-icon-message" />
                             TDuckServer@tduckcloud.com
                         </p>
                         <p class="subtitle">
-                            +86  15080929435
+                            <i class="el-icon-phone" /> +86 15080929435
                         </p>
                     </el-col>
                     <el-col :span="3">
-                        <p class="title">  友情地址</p>
+                        <p class="title"> 友情地址</p>
                         <p class="subtitle">
                             Element UI
                         </p>
                     </el-col>
-                    <el-col span="3" :offset="3">
-                        <img style="width: 130px; height: 130px;" src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2x0aj.png">
+                    <el-col :span="3" :offset="3">
+                        <img style="width: 130px; height: 130px;"
+                             src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2x0aj.png"
+                        >
                         <p class="title">微信公众号/关注我们</p>
                     </el-col>
                 </el-row>
                 <el-divider />
                 <p class="subtitle" style="text-align: center;">
-                    Copyright © 2020 TDuckCloud. All Rights Reserved.   湘ICP备19005498号-1    湖南省众达数蔚信息技术有限公司 版权所有
+                    Copyright © 2020 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1 湖南省众达数蔚信息技术有限公司 版权所有
                 </p>
             </div>
-            <router-view />
         </div>
     </div>
 </template>
 <script>
-import store from '@/store/index.js'
 
 export default {
     data() {
         return {
-            menuIndex: null,
-            menuRouters: [
-                {
-                    routerPath: '/proposal',
-                    title: '提出建议'
-                },
-                {
-                    routerPath: '/sources',
-                    title: '开源版本'
-                },
-                {
-                    routerPath: '/enterprise',
-                    title: '企业部署'
-                },
-                {
-                    routerPath: '/',
-                    title: '首页'
-                }
-            ]
+
         }
     },
     computed: {
-        getStore() {
-            return store
-        },
-        isLogin() {
-            return this.getStore.getters['token/isLogin']
-        }
     },
     watch: {
-        $route(to) {
-            this.menuIndex = to.path
-        }
+
     },
     mounted() {
-        this.menuIndex = this.$route.path
     }
 }
 </script>
@@ -278,7 +224,7 @@ export default {
     border-color: #205bb5;
     color: #fff;
 }
-.welcome-body {
+.introduction-body {
     padding-top: 112px;
 }
 .view_container {
@@ -325,7 +271,7 @@ export default {
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 100);
 }
-.welcome-footer {
+.introduction-footer {
     height: 300px;
     line-height: 20px;
     background-color: rgba(32, 91, 181, 100);
@@ -333,12 +279,12 @@ export default {
     border: 1px solid rgba(187, 187, 187, 100);
     padding: 69px 0 0 0;
 }
-.welcome-footer .title {
+.introduction-footer .title {
     color: rgba(255, 255, 255, 100);
     font-size: 20px;
     text-align: left;
 }
-.welcome-footer .subtitle {
+.introduction-footer .subtitle {
     color: rgba(255, 255, 255, 100);
     font-size: 14px;
     text-align: left;
