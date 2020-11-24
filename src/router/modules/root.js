@@ -1,5 +1,10 @@
 export default [
     {
+        path: '/test',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/test')
+    },
+    {
         path: '/',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),
@@ -61,5 +66,9 @@ export default [
         path: '/project/preview',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView.vue')
+    }, {
+        path: '/project/view',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/ProjectForm.vue')
     }
 ]

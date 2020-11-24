@@ -1,42 +1,71 @@
-<template xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<template>
     <div class="theme-container">
         <el-row>
-            <el-col :span="8" :offset="1">
-                <div class="left-container">
-                    <p class="theme-title">外观主题</p>
-                    <el-row>
-                        <el-col :span="3">
-                            <span class="theme-prompt-text">风格</span>
-                        </el-col>
-                        <el-col :span="3" v-for="item in styleList">
-                            <span class="style-btn">{{item.label}}</span>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="3">
-                            <span class="theme-prompt-text">颜色</span>
-                        </el-col>
-                        <el-col v-bind:style="{backgroundColor: c}" class="color-btn" :span="3" v-for="c in colorList">
-                        </el-col>
-                    </el-row>
-                </div>
+            <el-col :span="5" :offset="1">
+                <el-scrollbar style="height: 77vh">
+                    <div class="left-container">
+                        <p class="theme-title">外观主题</p>
+                        <el-row>
+                            <el-col :span="3">
+                                <span class="theme-prompt-text">风格</span>
+                            </el-col>
+                            <el-col :span="3" v-for="item in styleList">
+                            <span
+                                :class="{'style-btn-active':activeStyle==item.key}"
+                                class="style-btn" @click="activeStyleHandler(item)">{{item.label}}</span>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="3">
+                                <span class="theme-prompt-text">颜色</span>
+                            </el-col>
+                            <el-col :span="3">
+                            <span
+                                :class="{'style-btn-active':activeColor=''}"
+                                class="style-btn" @click="activeColorHandler('')">全部</span>
+                            </el-col>
+                            <el-col
+                                :class="{'style-btn-active':activeColor==c}"
+                                @click.native="activeColorHandler(c)" v-bind:style="{backgroundColor: c}"
+                                class="color-btn"
+                                :span="3" v-for="c in colorList">
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="8" v-for="t in themeList">
+                                <el-image
+                                    class="head-list-img"
+                                    style="width: 100px; height: 100px"
+                                    :src="t.headImgUrl"
+                                    fit="cover"
+                                ></el-image>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </el-scrollbar>
             </el-col>
-            <el-col :span="8">
-
+            <el-col :offset="0" :span="12">
+                <pre-view :projectKey="projectKey"/>
             </el-col>
-            <el-col :span="8">
-                外观设置
+            <el-col :span="6">
+                <div class="right-container"></div>
             </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
+import PreView from './PreView'
+
 export default {
     name: 'theme',
+    components: {
+        PreView
+    },
     data() {
         return {
             styleList: [
+                {'label': '全部', 'key': ''},
                 {'label': '节日', 'key': 'festival'},
                 {'label': '亲子', 'key': 'parent_child'},
                 {'label': '风景', 'key': 'scenery'},
@@ -56,10 +85,35 @@ export default {
                 '#484848',
                 '#EAEAEA',
                 '#804000'
-            ]
+            ],
+            activeColor: '',
+            activeStyle: '',
+            projectKey: '',
+            themeList: []
         }
-    }, methods: {
-        tet() {
+    },
+    mounted() {
+        this.projectKey = this.$route.query.key
+        this.queryProjectTheme()
+    },
+    methods: {
+        activeStyleHandler(item) {
+            this.activeStyle = item.key
+            this.queryProjectTheme()
+        },
+        activeColorHandler(item) {
+            this.activeColor = item
+            this.queryProjectTheme()
+        },
+        queryProjectTheme() {
+            this.$api.get('/project/theme/query', {
+                params: {
+                    'color': this.activeColor,
+                    'style': this.activeStyle
+                }
+            }).then(res => {
+                this.themeList = res.data
+            })
         }
     }
 }
@@ -69,14 +123,15 @@ export default {
 .theme-container {
     width: 100%;
     height: 100%;
-    overflow-y: hidden;
     background-color: #f7f7f7;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow: hidden;
+
 }
 
 .left-container {
     width: 341px;
-    height: 845px;
+    height: 70vh;
     line-height: 20px;
     border-radius: 7px;
     text-align: center;
@@ -85,16 +140,15 @@ export default {
     background-color: white;
 }
 
+
 .style-btn {
-    line-height: 25px;
+    line-height: 30px;
     border-radius: 4px;
-    padding: 2px;
-    color: rgba(16, 16, 16, 100);
+    padding: 3px;
+    color: #707070;
     font-size: 14px;
-    margin: 3px;
-    text-align: center;
-    font-family: Arial;
-    border: 1px solid rgba(187, 187, 187, 100);
+    margin: 0 2px 4px 0;
+//margin: 5px 9px; text-align: center; border: 1px solid #EAEAEA;
 }
 
 .theme-title {
@@ -106,8 +160,8 @@ export default {
 
 .theme-prompt-text {
     color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 30px;
     text-align: left;
     font-family: SourceHanSansSC-regular;
 }
@@ -129,5 +183,28 @@ export default {
 .color-btn:hover,
 .style-btn:hover {
     cursor: pointer;
+    border: 1px solid rgba(11, 141, 213, 100);
+}
+
+.style-btn-active {
+    border: 1px solid rgba(11, 141, 213, 100);
+}
+
+.head-list-img {
+    border: 2px solid transparent;
+}
+
+.head-list-img:hover {
+    cursor: pointer;
+    border: 2px solid rgba(11, 141, 213, 100);
+}
+
+.right-container {
+    width: 456px;
+    height: 600px;
+    line-height: 20px;
+    text-align: center;
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 100);
 }
 </style>
