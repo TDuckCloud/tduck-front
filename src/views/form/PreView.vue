@@ -19,7 +19,7 @@
             <span slot="label"><i class="el-icon-monitor"></i>
                 电脑
             </span>
-                <project-form :projectConfig="projectConfig" />
+                <project-form :projectConfig="projectConfig"/>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -32,19 +32,20 @@ import ProjectForm from './ProjectForm'
 export default {
     name: 'PreView',
     props: {
-        projectConfig: {
-            projectKey: '',
-            headImgUrl: '',
-            color: ''
-        }
+        projectKey: ''
     },
     data() {
-        return {}
+        return {
+            projectConfig: {
+                projectKey: '',
+                showBtns: false
+            }
+        }
     },
     mounted() {
         this.projectConfig = {
-            headImgUrl: 'http://cdn1.wenjuan.com/appear-PC-防疫13.png',
-            projectKey: 'afd5c3562c924d20b7da67b1f192ce25'
+            projectKey: 'afd5c3562c924d20b7da67b1f192ce25',
+            showBtns: false
         }
     },
     components: {

@@ -2,7 +2,8 @@
     <div class="project-form">
         <div class="">
             <el-image
-                :src="projectConfig.headImgUrl"
+                v-if="projectTheme.headImgUrl"
+                :src="projectTheme.headImgUrl"
                 fit="scale-down"></el-image>
             <el-row type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
@@ -44,8 +45,6 @@ export default {
     },
     props: {
         projectConfig: {
-            headImgUrl: '',
-            color: '',
             projectKey: '',
             showBtn: false
         }
@@ -54,6 +53,9 @@ export default {
         return {
             key2: +new Date(),
             projectKey: '',
+            projectTheme: {
+                headImgUrl:''
+            },
             formConf: {
                 fields: [],
                 __methods__: {},
@@ -76,20 +78,12 @@ export default {
     watch: {},
     created() {
         //不存去路由中尝试获取
-        if (!this.projectConfig) {
-            this.projectConfig = {
-                headImgUrl: '',
-                color: '',
-                projectKey: '',
-                showBtn: false
-            }
-        }
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.projectKey = this.projectConfig.projectKey
         } else if (this.$route.query.key) {
             this.projectKey = this.$route.query.key
         }
-        this.formConf.formBtns = this.projectConfig.showBtn
+        this.formConf.formBtns = this.projectConfig.showBtns
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
@@ -100,6 +94,9 @@ export default {
                 })
                 this.formConf.fields = fields
                 this.formConf.title = res.data.project.name
+                if(res.data.userProjectTheme){
+                    this.projectTheme = res.data.userProjectTheme
+                }
                 this.formConf.description = res.data.project.describe
             }
         })

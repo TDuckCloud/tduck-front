@@ -32,20 +32,26 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <el-col :span="8" v-for="t in themeList">
-                                <el-image
-                                    class="head-list-img"
-                                    style="width: 100px; height: 100px"
-                                    :src="t.headImgUrl"
-                                    fit="cover"
-                                ></el-image>
+                            <el-col
+                                class="theme-img-view"
+                                :span="8" v-for="t in themeList"
+                                @click.native="activeThemeHandler(t)">
+                                <p :class="{'head-list-view-select':activeTheme.id==t.id}">
+                                    <el-image
+                                        :class="{'head-list-img-active':activeTheme.id==t.id}"
+                                        class="head-list-img"
+                                        style="width: 100px; height: 100px"
+                                        :src="t.headImgUrl"
+                                        fit="cover"
+                                    ></el-image>
+                                </p>
                             </el-col>
                         </el-row>
                     </div>
                 </el-scrollbar>
             </el-col>
             <el-col :offset="0" :span="12">
-                <pre-view :projectKey="projectKey"/>
+                <pre-view :project-key="projectKey"/>
             </el-col>
             <el-col :span="6">
                 <div class="right-container"></div>
@@ -64,6 +70,7 @@ export default {
     },
     data() {
         return {
+            projectKey: '',
             styleList: [
                 {'label': '全部', 'key': ''},
                 {'label': '节日', 'key': 'festival'},
@@ -88,18 +95,31 @@ export default {
             ],
             activeColor: '',
             activeStyle: '',
-            projectKey: '',
+            activeTheme: '',
             themeList: []
         }
     },
     mounted() {
-        this.projectKey = this.$route.query.key
+        this.projectConfig.projectKey = this.$route.query.key
         this.queryProjectTheme()
     },
     methods: {
         activeStyleHandler(item) {
             this.activeStyle = item.key
             this.queryProjectTheme()
+        },
+        activeThemeHandler(item) {
+            if (item) {
+                this.$confirm('切换主题，系统将不会保存您在上一主题所做的修改，请知悉。', '切换主题提醒', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消操作',
+                    type: 'info'
+                }).then(() => {
+                    this.activeTheme = item
+                }).catch(() => {
+
+                })
+            }
         },
         activeColorHandler(item) {
             this.activeColor = item
@@ -197,6 +217,21 @@ export default {
 .head-list-img:hover {
     cursor: pointer;
     border: 2px solid rgba(11, 141, 213, 100);
+}
+
+.head-list-img-active {
+    border: 2px solid rgba(11, 141, 213, 100);
+}
+
+.theme-img-view .head-list-view-select ::after {
+    content: "";
+    background: url('~@/assets/images/mobile_theme_active.png');
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 4px;
+    right: 4px;
 }
 
 .right-container {
