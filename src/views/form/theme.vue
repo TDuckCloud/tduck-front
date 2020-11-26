@@ -51,10 +51,33 @@
                 </el-scrollbar>
             </el-col>
             <el-col :offset="0" :span="12">
-                <pre-view :project-key="projectKey"/>
+                <pre-view :key="projectFormKey" :project-key="projectKey"/>
             </el-col>
             <el-col :span="6">
-                <div class="right-container"></div>
+                <div class="right-container">
+                    <el-menu
+                        default-active="2"
+                        class="el-menu-vertical-demo">
+                        <el-submenu index="1">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>背景</span>
+                            </template>
+                            <el-menu-item-group>
+                                <template slot="title">分组一</template>
+                                <el-menu-item index="1-1">选项1</el-menu-item>
+                                <el-menu-item index="1-2">选项2</el-menu-item>
+                            </el-menu-item-group>
+                            <el-menu-item-group title="分组2">
+                                <el-menu-item index="1-3">选项3</el-menu-item>
+                            </el-menu-item-group>
+                            <el-submenu index="1-4">
+                                <template slot="title">选项4</template>
+                                <el-menu-item index="1-4-1">选项1</el-menu-item>
+                            </el-submenu>
+                        </el-submenu>
+                    </el-menu>
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -70,6 +93,7 @@ export default {
     },
     data() {
         return {
+            projectFormKey: +new Date(),
             projectKey: '',
             styleList: [
                 {'label': '全部', 'key': ''},
@@ -100,13 +124,20 @@ export default {
         }
     },
     mounted() {
-        this.projectConfig.projectKey = this.$route.query.key
+        this.projectKey = this.$route.query.key
         this.queryProjectTheme()
+        this.projectFormKey = +new Date()
     },
     methods: {
         activeStyleHandler(item) {
             this.activeStyle = item.key
             this.queryProjectTheme()
+        },
+        saveUserTheme() {
+            let params = {'projectKey': this.projectKey, 'themeId': this.activeTheme.id}
+            this.$api.post('/user/project/theme/save', params).then(res => {
+                this.projectFormKey = +new Date()
+            })
         },
         activeThemeHandler(item) {
             if (item) {
@@ -116,6 +147,7 @@ export default {
                     type: 'info'
                 }).then(() => {
                     this.activeTheme = item
+                    this.saveUserTheme()
                 }).catch(() => {
 
                 })
@@ -235,7 +267,7 @@ export default {
 }
 
 .right-container {
-    width: 456px;
+    width: 256px;
     height: 600px;
     line-height: 20px;
     text-align: center;

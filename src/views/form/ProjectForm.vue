@@ -5,13 +5,13 @@
                 v-if="projectTheme.headImgUrl"
                 :src="projectTheme.headImgUrl"
                 fit="scale-down"></el-image>
-            <el-row type="flex" justify="center" align="middle">
+            <el-row v-if="projectTheme.showTitle" type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
                     <h4 class="form-name-text">
                         {{formConf.title}}</h4>
                 </el-col>
             </el-row>
-            <el-row type="flex" justify="center" align="middle">
+            <el-row v-if="projectTheme.showDescribe" type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
                     <p class="form-name-text">
                         {{formConf.description}}
@@ -51,10 +51,11 @@ export default {
     },
     data() {
         return {
-            key2: +new Date(),
             projectKey: '',
             projectTheme: {
-                headImgUrl:''
+                headImgUrl: '',
+                showTitle: true,
+                showDescribe: true
             },
             formConf: {
                 fields: [],
@@ -76,14 +77,20 @@ export default {
     },
     computed: {},
     watch: {},
+    beforeCreate() {
+        console.log( document.querySelector('body'))
+        document.querySelector('body').className = 'project-body'
+    },
     created() {
-        //不存去路由中尝试获取
+
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.projectKey = this.projectConfig.projectKey
+            this.formConf.formBtns = this.projectConfig.showBtns
+            //不存去路由中尝试获取 ifreme
         } else if (this.$route.query.key) {
             this.projectKey = this.$route.query.key
+            this.formConf.formBtns = false
         }
-        this.formConf.formBtns = this.projectConfig.showBtns
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
@@ -94,7 +101,7 @@ export default {
                 })
                 this.formConf.fields = fields
                 this.formConf.title = res.data.project.name
-                if(res.data.userProjectTheme){
+                if (res.data.userProjectTheme) {
                     this.projectTheme = res.data.userProjectTheme
                 }
                 this.formConf.description = res.data.project.describe
@@ -114,13 +121,28 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
+
 .project-form {
     margin: 15px auto;
     width: 800px;
     padding: 15px;
     background-repeat: repeat;
     background-color: rgba(229, 239, 247, 0.87);
+    overflow: hidden;
+}
+
+.project-body::-webkit-scrollbar {
+    width: 0 !important;
+    background: transparent;
+}
+
+.project-body {
+    -ms-overflow-style: none;
+}
+
+.project-body {
+    overflow: -moz-scrollbars-none;
 }
 
 @media screen and (max-width: 750px) {
@@ -128,6 +150,11 @@ export default {
         margin: 0px;
         width: 93% !important;
         background-color: white;
+    }
+
+    .project-form {
+        height: 100%;
+        width: 60vw;
     }
 }
 </style>
