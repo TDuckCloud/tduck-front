@@ -50,33 +50,99 @@
                     </div>
                 </el-scrollbar>
             </el-col>
-            <el-col :offset="0" :span="12">
+            <el-col :offset="0" :span="14">
                 <pre-view :key="projectFormKey" :project-key="projectKey"/>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="4">
                 <div class="right-container">
-                    <el-menu
-                        default-active="2"
-                        class="el-menu-vertical-demo">
-                        <el-submenu index="1">
-                            <template slot="title">
-                                <i class="el-icon-location"></i>
-                                <span>背景</span>
-                            </template>
-                            <el-menu-item-group>
-                                <template slot="title">分组一</template>
-                                <el-menu-item index="1-1">选项1</el-menu-item>
-                                <el-menu-item index="1-2">选项2</el-menu-item>
-                            </el-menu-item-group>
-                            <el-menu-item-group title="分组2">
-                                <el-menu-item index="1-3">选项3</el-menu-item>
-                            </el-menu-item-group>
-                            <el-submenu index="1-4">
-                                <template slot="title">选项4</template>
-                                <el-menu-item index="1-4-1">选项1</el-menu-item>
-                            </el-submenu>
-                        </el-submenu>
-                    </el-menu>
+                    <p class="right-title">外观设置</p>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">添加logo</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.useLogo">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="showSettings.useLogo" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-sub-title">logo设置</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-upload
+                                class="upload-demo"
+                                ref="upload"
+                                action="https://jsonplaceholder.typicode.com/posts/"
+                                :show-file-list="false"
+                                :auto-upload="false">
+                                <el-link slot="trigger" size="small" type="primary">上传Logo</el-link>
+                            </el-upload>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="showSettings.useLogo" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-sub-title">logo位置</span>
+                        </el-col>
+                        <el-col :span="16">
+                            <el-button-group>
+                                <el-button style="width: 30%;padding-left: 6px" size="mini">左对齐</el-button>
+                                <el-button style="width: 30%;text-align: center!important" size="mini">居中</el-button>
+                                <el-button style="width: 30%;text-align: center!important;" size="mini">右对齐</el-button>
+                            </el-button-group>
+                        </el-col>
+                    </el-row>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">背景设置</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.useLogo">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">按钮设置</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.useLogo">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">显示标题</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.useLogo">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">显示描述</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.useLogo">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
+                    <el-row class="option-line-view" type="flex" align="middle">
+                        <el-col :span="8">
+                            <span class="option-line-title">显示序号</span>
+                        </el-col>
+                        <el-col :span="8" :offset="8">
+                            <el-switch
+                                v-model="showSettings.showNumber">
+                            </el-switch>
+                        </el-col>
+                    </el-row>
                 </div>
             </el-col>
         </el-row>
@@ -93,6 +159,11 @@ export default {
     },
     data() {
         return {
+            //外观设置
+            showSettings: {
+                useLogo: false,//打开logo
+                showNumber: false//打开logo
+            },
             projectFormKey: +new Date(),
             projectKey: '',
             styleList: [
@@ -199,8 +270,8 @@ export default {
     padding: 3px;
     color: #707070;
     font-size: 14px;
-    margin: 0 2px 4px 0;
-//margin: 5px 9px; text-align: center; border: 1px solid #EAEAEA;
+    text-align: center;
+    border: 1px solid #EAEAEA;
 }
 
 .theme-title {
@@ -267,11 +338,48 @@ export default {
 }
 
 .right-container {
-    width: 256px;
-    height: 600px;
+    width: 270px;
+    height: 78vh;
     line-height: 20px;
     text-align: center;
+    padding: 22px;
     box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 100);
+    background-color: white;
+}
+
+.right-title {
+    color: rgba(16, 16, 16, 100);
+    font-size: 24px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular;
+    margin: 0 0 30px 0;
+}
+
+.right-container .option-line-view {
+    padding: 0px;
+    margin: 0px;
+    width: 280px;
+    height: 42px;
+    line-height: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    border: 1px solid rgba(187, 187, 187, 100);
+}
+
+.right-container .option-line-title {
+    color: rgba(16, 16, 16, 100);
+    line-height: 40px;
+    font-size: 14px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular
+}
+
+.option-line-sub-title {
+    color: rgb(82, 81, 81);
+    line-height: 40px;
+    font-size: 13px;
+    text-align: left;
 }
 </style>
