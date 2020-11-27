@@ -1,6 +1,10 @@
 <template>
     <div class="project-form">
         <div class="">
+            <div :style="{textAlign:projectTheme.logoPosition}">
+                <img
+                    :src="projectTheme.logoImg" class="logo-img">
+            </div>
             <el-image
                 v-if="projectTheme.headImgUrl"
                 :src="projectTheme.headImgUrl"
@@ -54,6 +58,7 @@ export default {
             projectKey: '',
             projectTheme: {
                 headImgUrl: '',
+                logoImg: '',
                 showTitle: true,
                 showDescribe: true
             },
@@ -78,7 +83,7 @@ export default {
     computed: {},
     watch: {},
     beforeCreate() {
-        console.log( document.querySelector('body'))
+        console.log(document.querySelector('body'))
         document.querySelector('body').className = 'project-body'
     },
     created() {
@@ -121,7 +126,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 
 .project-form {
     margin: 15px auto;
@@ -145,6 +150,10 @@ export default {
     overflow: -moz-scrollbars-none;
 }
 
+.logo-img {
+    max-height: 120px;
+}
+
 @media screen and (max-width: 750px) {
     .project-form {
         margin: 0px;
@@ -155,6 +164,9 @@ export default {
     .project-form {
         height: 100%;
         width: 60vw;
+    }
+    .logo-img {
+        max-height: 2.94rem;
     }
 }
 </style>

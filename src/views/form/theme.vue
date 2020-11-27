@@ -12,7 +12,7 @@
                             <el-col :span="3" v-for="item in styleList">
                             <span
                                 :class="{'style-btn-active':activeStyle==item.key}"
-                                class="style-btn" @click="activeStyleHandler(item)">{{item.label}}</span>
+                                class="style-btn" @click="activeStyleHandle(item)">{{item.label}}</span>
                             </el-col>
                         </el-row>
                         <el-row>
@@ -22,11 +22,11 @@
                             <el-col :span="3">
                             <span
                                 :class="{'style-btn-active':activeColor=''}"
-                                class="style-btn" @click="activeColorHandler('')">全部</span>
+                                class="style-btn" @click="activeColorHandle('')">全部</span>
                             </el-col>
                             <el-col
                                 :class="{'style-btn-active':activeColor==c}"
-                                @click.native="activeColorHandler(c)" v-bind:style="{backgroundColor: c}"
+                                @click.native="activeColorHandle(c)" v-bind:style="{backgroundColor: c}"
                                 class="color-btn"
                                 :span="3" v-for="c in colorList">
                             </el-col>
@@ -35,7 +35,7 @@
                             <el-col
                                 class="theme-img-view"
                                 :span="8" v-for="t in themeList"
-                                @click.native="activeThemeHandler(t)">
+                                @click.native="activeThemeHandle(t)">
                                 <p :class="{'head-list-view-select':activeTheme.id==t.id}">
                                     <el-image
                                         :class="{'head-list-img-active':activeTheme.id==t.id}"
@@ -62,35 +62,44 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.useLogo">
+                                v-model="showSettings.logoSetting">
                             </el-switch>
                         </el-col>
                     </el-row>
-                    <el-row v-if="showSettings.useLogo" type="flex" align="middle">
-                        <el-col :span="8">
+                    <el-row v-if="showSettings.logoSetting" type="flex" align="middle">
+                        <el-col :span="6">
                             <span class="option-line-sub-title">logo设置</span>
                         </el-col>
-                        <el-col :span="8" :offset="8">
+                        <el-col :span="4">
+                            <img
+                                v-if="userProjectTheme.logoImg"
+                                style="width: 30px;height: 30px"
+                                :src="userProjectTheme.logoImg"/>
+                        </el-col>
+                        <el-col :span="8" :offset="6">
                             <el-upload
-                                class="upload-demo"
-                                ref="upload"
-                                action="https://jsonplaceholder.typicode.com/posts/"
-                                :show-file-list="false"
-                                :auto-upload="false">
+                                ref="logoUpload"
+                                accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                :headers="getUploadHeader"
+                                :on-success="uploadLogoHandle"
+                                action="/user/file/upload"
+                                :show-file-list="false">
                                 <el-link slot="trigger" size="small" type="primary">上传Logo</el-link>
                             </el-upload>
                         </el-col>
                     </el-row>
-                    <el-row v-if="showSettings.useLogo" type="flex" align="middle">
-                        <el-col :span="8">
+                    <el-row v-if="showSettings.logoSetting" type="flex" align="middle">
+                        <el-col :span="6">
                             <span class="option-line-sub-title">logo位置</span>
                         </el-col>
-                        <el-col :span="16">
-                            <el-button-group>
-                                <el-button style="width: 30%;padding-left: 6px" size="mini">左对齐</el-button>
-                                <el-button style="width: 30%;text-align: center!important" size="mini">居中</el-button>
-                                <el-button style="width: 30%;text-align: center!important;" size="mini">右对齐</el-button>
-                            </el-button-group>
+                        <el-col :span="18">
+                            <el-radio-group
+                                @change="saveUserTheme"
+                                v-model="userProjectTheme.logoPosition" size="mini">
+                                <el-radio-button label="left">左对齐</el-radio-button>
+                                <el-radio-button label="center">居中</el-radio-button>
+                                <el-radio-button label="right">右对齐</el-radio-button>
+                            </el-radio-group>
                         </el-col>
                     </el-row>
                     <el-row class="option-line-view" type="flex" align="middle">
@@ -99,9 +108,50 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.useLogo">
+                                v-model="showSettings.backgroundSetting">
                             </el-switch>
                         </el-col>
+                    </el-row>
+                    <el-row v-if="showSettings.backgroundSetting">
+                        <el-row type="flex" align="middle">
+                            <el-col :span="8">
+                                <span class="option-line-sub-title">背景类型</span>
+                            </el-col>
+                            <el-col :spvan="18">
+                                <el-radio-group v-model="showSettings.backgroundType" size="mini">
+                                    <el-radio-button label="color">颜色</el-radio-button>
+                                    <el-radio-button label="img">图片</el-radio-button>
+                                </el-radio-group>
+                            </el-col>
+                        </el-row>
+                    </el-row>
+                    <el-row v-if="showSettings.backgroundSetting&&showSettings.backgroundType=='color'">
+                        <el-row type="flex" align="middle">
+                            <el-col :span="8">
+                                <span class="option-line-sub-title">选择颜色</span>
+                            </el-col>
+                            <el-col :spvan="18">
+                                <el-color-picker v-model="background" size="mini"></el-color-picker>
+                            </el-col>
+                        </el-row>
+                    </el-row>
+                    <el-row v-if="showSettings.backgroundType=='img'">
+                        <el-row type="flex" align="middle">
+                            <el-col :span="8">
+                                <span class="option-line-sub-title">选择图片</span>
+                            </el-col>
+                            <el-col :spvan="18">
+                                <el-upload
+                                    class="upload-demo"
+                                    ref="upload"
+                                    accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                    :headers="getUploadHeader"
+                                    action="/user/file/upload"
+                                    :show-file-list="false">
+                                    <el-link slot="trigger" size="small" type="primary">上传背景</el-link>
+                                </el-upload>
+                            </el-col>
+                        </el-row>
                     </el-row>
                     <el-row class="option-line-view" type="flex" align="middle">
                         <el-col :span="8">
@@ -109,9 +159,19 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.useLogo">
+                                v-model="showSettings.btnSetting">
                             </el-switch>
                         </el-col>
+                    </el-row>
+                    <el-row v-if="showSettings.btnSetting">
+                        <el-row type="flex" align="middle">
+                            <el-col :span="10">
+                                <span class="option-line-sub-title">按钮提示文字</span>
+                            </el-col>
+                            <el-col :spvan="10">
+                                <el-input style="width: 80%" v-model="userProjectTheme.submitBtnText" placeholder="请输入内容" size="mini"></el-input>
+                            </el-col>
+                        </el-row>
                     </el-row>
                     <el-row class="option-line-view" type="flex" align="middle">
                         <el-col :span="8">
@@ -119,7 +179,8 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.useLogo">
+                                @change="saveUserTheme"
+                                v-model="userProjectTheme.showTitle">
                             </el-switch>
                         </el-col>
                     </el-row>
@@ -129,7 +190,8 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.useLogo">
+                                @change="saveUserTheme"
+                                v-model="userProjectTheme.showDescribe">
                             </el-switch>
                         </el-col>
                     </el-row>
@@ -139,7 +201,8 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
-                                v-model="showSettings.showNumber">
+                                @change="saveUserTheme"
+                                v-model="userProjectTheme.showNumber">
                             </el-switch>
                         </el-col>
                     </el-row>
@@ -151,6 +214,7 @@
 
 <script>
 import PreView from './PreView'
+import store from '@/store'
 
 export default {
     name: 'theme',
@@ -161,8 +225,22 @@ export default {
         return {
             //外观设置
             showSettings: {
-                useLogo: false,//打开logo
-                showNumber: false//打开logo
+                logoSetting: false,//打开logo
+                backgroundSetting: false,
+                btnSetting: false,
+                backgroundType: 'color'
+            },
+            //用户主题设置
+            userProjectTheme: {
+                projectKey: '',
+                themeId: '',
+                showTitle: true,
+                showDescribe: true,
+                showNumber: false,
+                background: '',
+                logoImg: '',
+                logoPosition: 'left',
+                submitBtnText: '提交'
             },
             projectFormKey: +new Date(),
             projectKey: '',
@@ -199,18 +277,30 @@ export default {
         this.queryProjectTheme()
         this.projectFormKey = +new Date()
     },
+    computed: {
+        getUploadHeader() {
+            return {
+                'token': this.$store.getters['user/isLogin']
+            }
+        }
+    },
     methods: {
-        activeStyleHandler(item) {
+        uploadLogoHandle(response, file, fileList) {
+            this.userProjectTheme.logoImg = response.data
+            this.saveUserTheme()
+        },
+        activeStyleHandle(item) {
             this.activeStyle = item.key
             this.queryProjectTheme()
         },
         saveUserTheme() {
-            let params = {'projectKey': this.projectKey, 'themeId': this.activeTheme.id}
-            this.$api.post('/user/project/theme/save', params).then(res => {
+            this.userProjectTheme.projectKey = this.projectKey
+            this.userProjectTheme.themeId = this.activeTheme ? this.this.activeTheme.id : ''
+            this.$api.post('/user/project/theme/save', this.userProjectTheme).then(res => {
                 this.projectFormKey = +new Date()
             })
         },
-        activeThemeHandler(item) {
+        activeThemeHandle(item) {
             if (item) {
                 this.$confirm('切换主题，系统将不会保存您在上一主题所做的修改，请知悉。', '切换主题提醒', {
                     confirmButtonText: '确定',
@@ -224,7 +314,7 @@ export default {
                 })
             }
         },
-        activeColorHandler(item) {
+        activeColorHandle(item) {
             this.activeColor = item
             this.queryProjectTheme()
         },
@@ -338,7 +428,7 @@ export default {
 }
 
 .right-container {
-    width: 270px;
+    width: 310px;
     height: 78vh;
     line-height: 20px;
     text-align: center;

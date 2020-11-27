@@ -64,7 +64,7 @@ export default {
             return store
         },
         isLogin() {
-            return this.getStore.getters['token/isLogin']
+            return this.getStore.getters['user/isLogin']
         }
     },
     watch: {

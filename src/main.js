@@ -14,6 +14,7 @@ import '@/components/autoRegister'
 
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
+Vue.prototype.$store = store
 Vue.prototype.$cookies = Cookies
 Vue.prototype.msgSuccess = function(msg) {
     this.$message({ showClose: true, message: msg, type: 'success' })
