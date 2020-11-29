@@ -21,7 +21,7 @@
                             </el-col>
                             <el-col :span="3">
                             <span
-                                :class="{'style-btn-active':activeColor=''}"
+                                :class="{'style-btn-active':activeColor==''}"
                                 class="style-btn" @click="activeColorHandle('')">全部</span>
                             </el-col>
                             <el-col
@@ -118,7 +118,13 @@
                                 <span class="option-line-sub-title">背景类型</span>
                             </el-col>
                             <el-col :spvan="18">
-                                <el-radio-group v-model="showSettings.backgroundType" size="mini">
+                                <el-radio-group
+                                    @change="()=>{
+                                        this.userProjectTheme.backgroundImg=''
+                                        this.userProjectTheme.backgroundColor=''
+
+                                    }"
+                                    v-model="showSettings.backgroundType" size="mini">
                                     <el-radio-button label="color">颜色</el-radio-button>
                                     <el-radio-button label="img">图片</el-radio-button>
                                 </el-radio-group>
@@ -131,7 +137,10 @@
                                 <span class="option-line-sub-title">选择颜色</span>
                             </el-col>
                             <el-col :spvan="18">
-                                <el-color-picker v-model="background" size="mini"></el-color-picker>
+                                <el-color-picker
+                                    @change="saveUserTheme"
+                                    v-model=" userProjectTheme.backgroundColor"
+                                    size="mini"></el-color-picker>
                             </el-col>
                         </el-row>
                     </el-row>
@@ -146,6 +155,7 @@
                                     ref="upload"
                                     accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                                     :headers="getUploadHeader"
+                                    :on-success="uploadBackgroundHandle"
                                     action="/user/file/upload"
                                     :show-file-list="false">
                                     <el-link slot="trigger" size="small" type="primary">上传背景</el-link>
@@ -169,7 +179,10 @@
                                 <span class="option-line-sub-title">按钮提示文字</span>
                             </el-col>
                             <el-col :spvan="10">
-                                <el-input style="width: 80%" v-model="userProjectTheme.submitBtnText" placeholder="请输入内容" size="mini"></el-input>
+                                <el-input style="width: 80%"
+                                          @change="saveUserTheme"
+                                          v-model="userProjectTheme.submitBtnText"
+                                          placeholder="请输入内容" size="mini"></el-input>
                             </el-col>
                         </el-row>
                     </el-row>
@@ -237,7 +250,8 @@ export default {
                 showTitle: true,
                 showDescribe: true,
                 showNumber: false,
-                background: '',
+                backgroundColor: '',
+                backgroundImg: '',
                 logoImg: '',
                 logoPosition: 'left',
                 submitBtnText: '提交'
@@ -276,6 +290,7 @@ export default {
         this.projectKey = this.$route.query.key
         this.queryProjectTheme()
         this.projectFormKey = +new Date()
+        this.queryUserProjectTheme()
     },
     computed: {
         getUploadHeader() {
@@ -285,6 +300,11 @@ export default {
         }
     },
     methods: {
+        uploadBackgroundHandle(response, file, fileList) {
+            this.userProjectTheme.backgroundImg = response.data
+            this.userProjectTheme.backgroundColor = ''
+            this.saveUserTheme()
+        },
         uploadLogoHandle(response, file, fileList) {
             this.userProjectTheme.logoImg = response.data
             this.saveUserTheme()
@@ -295,9 +315,28 @@ export default {
         },
         saveUserTheme() {
             this.userProjectTheme.projectKey = this.projectKey
-            this.userProjectTheme.themeId = this.activeTheme ? this.this.activeTheme.id : ''
+            this.userProjectTheme.themeId = this.activeTheme ? this.activeTheme.id : ''
             this.$api.post('/user/project/theme/save', this.userProjectTheme).then(res => {
                 this.projectFormKey = +new Date()
+            })
+        },
+        queryUserProjectTheme() {
+            this.$api.post(`/user/project/theme/query/${this.projectKey}`).then(res => {
+                if(!res.data){
+                    return
+                }
+                this.userProjectTheme = res.data
+                let {themeId, logoImg, backgroundImg, backgroundColor, submitBtnText} = res.data
+                this.activeTheme = {
+                    'id': themeId
+                }
+                this.showSettings.logoSetting = logoImg ? true : false
+                this.showSettings.btnSetting = submitBtnText ? true : false
+                if (backgroundImg || backgroundColor) {
+                    this.showSettings.backgroundSetting = true
+                    this.showSettings.backgroundType = backgroundImg ? 'img' : 'color'
+                }
+
             })
         },
         activeThemeHandle(item) {
@@ -315,6 +354,7 @@ export default {
             }
         },
         activeColorHandle(item) {
+            console.log(item)
             this.activeColor = item
             this.queryProjectTheme()
         },

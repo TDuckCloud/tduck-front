@@ -24,17 +24,20 @@
         </el-row>
         <editor :projectKey="projectKey" v-if="activeIndex==1&&projectKey"/>
         <theme :projectKey="projectKey" v-if="activeIndex==2"/>
+        <setting :projectKey="projectKey" v-if="activeIndex==3"/>
     </div>
 </template>
 
 <script>
 import editor from './editor'
 import theme from './theme'
+import setting from './setting'
 
 export default {
     components: {
         editor,
-        theme
+        theme,
+        setting
     },
     data() {
         return {

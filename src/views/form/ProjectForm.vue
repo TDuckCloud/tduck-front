@@ -1,5 +1,7 @@
 <template>
-    <div class="project-form">
+    <div class="project-form"
+         :style="{backgroundColor:projectTheme.backgroundColor,
+          background:projectTheme.backgroundImg?'url('+projectTheme.backgroundImg+')  no-repeat center':''}">
         <div class="">
             <div :style="{textAlign:projectTheme.logoPosition}">
                 <img
@@ -50,7 +52,9 @@ export default {
     props: {
         projectConfig: {
             projectKey: '',
-            showBtn: false
+            showBtns: true,
+            //预览模式
+            preview: false
         }
     },
     data() {
@@ -75,7 +79,10 @@ export default {
                 disabled: false,
                 span: 24,
                 formBtns: true,
-                resetBtn: true,
+                resetBtn: false,
+                submitBtnText: '提交',
+                submitBtnColor: '#205bb5',
+                showNumber: false,
                 unFocusedComponentBorder: true
             }
         }
@@ -83,18 +90,17 @@ export default {
     computed: {},
     watch: {},
     beforeCreate() {
-        console.log(document.querySelector('body'))
         document.querySelector('body').className = 'project-body'
     },
     created() {
 
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.projectKey = this.projectConfig.projectKey
-            this.formConf.formBtns = this.projectConfig.showBtns
+            // this.formConf.formBtns = this.projectConfig.showBtns
             //不存去路由中尝试获取 ifreme
         } else if (this.$route.query.key) {
             this.projectKey = this.$route.query.key
-            this.formConf.formBtns = false
+            this.formConf.formBtns = true
         }
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
@@ -106,15 +112,29 @@ export default {
                 })
                 this.formConf.fields = fields
                 this.formConf.title = res.data.project.name
+                this.formConf.description = res.data.project.describe
+                this.formConf.description = res.data.project.describe
                 if (res.data.userProjectTheme) {
                     this.projectTheme = res.data.userProjectTheme
                 }
-                this.formConf.description = res.data.project.describe
-            }
+                let {submitBtnText, showNumber,btnsColor} = res.data.userProjectTheme
+                if (submitBtnText) {
+                    this.formConf.submitBtnText = submitBtnText
+                }
+                if (showNumber) {
+                    this.formConf.showNumber = showNumber
+                }
+                if(btnsColor){
+                    this.formConf.submitBtnColor = btnsColor
+                }
+                    }
         })
     },
     methods: {
         submitForm(data) {
+            if (this.projectConfig.preview) {
+                return
+            }
             this.$api.post('/user/project/result/create', {
                 'projectKey': this.projectKey,
                 'collectData': data
@@ -153,6 +173,12 @@ export default {
 .logo-img {
     max-height: 120px;
 }
+.submit-btn-form-item{
+    text-align: left;
+}
+.submit-btn-form-item button{
+    width: 20%;
+}
 
 @media screen and (max-width: 750px) {
     .project-form {
@@ -167,6 +193,12 @@ export default {
     }
     .logo-img {
         max-height: 2.94rem;
+    }
+    .submit-btn-form-item{
+        text-align: center;
+    }
+    .submit-btn-form-item button{
+        width: 80%;
     }
 }
 </style>

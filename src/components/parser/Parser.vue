@@ -18,13 +18,19 @@ const layouts = {
     colFormItem(h, scheme) {
         const config = scheme.__config__
         const listeners = buildListeners.call(this, scheme)
-
+        const { formConfCopy ,serialNumber} = this
         let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null
         if (config.showLabel === false) labelWidth = '0'
+        let label=config.label
+        if(formConfCopy.showNumber){
+            this.serialNumber=this.serialNumber+1
+            label=serialNumber +': ' + label
+        }
+
         return (
             <el-col span={config.span}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
-                              label={config.showLabel ? config.label : ''}>
+                              label={config.showLabel ? label : ''}>
                     <render conf={scheme} {...{ on: listeners }} />
                 </el-form-item>
             </el-col>
@@ -71,6 +77,11 @@ function renderFrom(h) {
 
 function formBtns(h) {
     const { formConfCopy } = this
+    let  style={
+        'background-color':formConfCopy.submitBtnColor,
+        'border-color':formConfCopy.submitBtnColor
+    }
+    let btnSpan=24
     if(formConfCopy.resetBtn){
         return   <el-col>
             <el-form-item size="large" style="margin-top:30px">
@@ -86,10 +97,10 @@ function formBtns(h) {
         </el-col>
     }
     return   <el-col>
-        <el-form-item size="large" style="margin-top:30px">
-            <el-row type="flex" justify="center" >
-                <el-col span="8" >
-                    <el-button type="primary" onClick={this.submitForm}>提交</el-button>
+        <el-form-item size="large" class="submit-btn-form-item" style="margin-top:30px;">
+            <el-row type="flex"  justify="center" >
+                <el-col span={btnSpan}>
+                    <el-button style={style} type="primary" onClick={this.submitForm}>{this.formConfCopy.submitBtnText}</el-button>
                 </el-col>
             </el-row>
         </el-form-item>
@@ -157,6 +168,7 @@ export default {
     },
     data() {
         const data = {
+            serialNumber: 1,//序号
             formConfCopy: deepClone(this.formConf),
             [this.formConf.formModel]: {},
             [this.formConf.formRules]: {}
