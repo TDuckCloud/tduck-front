@@ -7,7 +7,7 @@
                     返回
                 </el-button>
                 <el-button size="mini" round>
-                    <router-link target="_blank" :to="{path:'/project/preview',query:{key:this.projectKey}}">发布预览
+                    <router-link target="_blank" :to="{path:'/project/write',query:{key:this.projectKey}}">发布预览
                     </router-link>
                 </el-button>
             </el-col>

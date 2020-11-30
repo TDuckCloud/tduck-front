@@ -70,5 +70,10 @@ export default [
         path: '/project/view',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/ProjectForm.vue')
+``    },
+    {
+        path: '/project/write',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write.vue')
     }
 ]

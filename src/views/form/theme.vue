@@ -321,7 +321,7 @@ export default {
             })
         },
         queryUserProjectTheme() {
-            this.$api.post(`/user/project/theme/query/${this.projectKey}`).then(res => {
+            this.$api.get(`/user/project/theme/query/${this.projectKey}`).then(res => {
                 if(!res.data){
                     return
                 }

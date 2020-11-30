@@ -43,7 +43,6 @@ export default {
             mobilePreviewUrl: '',
             projectConfig: {
                 projectKey: '',
-                preview: true,
                 showBtns: true
             }
         }

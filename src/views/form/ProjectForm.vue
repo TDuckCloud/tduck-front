@@ -35,6 +35,7 @@
 import Parser from '@/components/parser/Parser'
 import {dbDataConvertForItemJson} from '@/utils/convert'
 
+
 window.onload = function() {
     document.addEventListener('touchstart', function(event) {
         if (event.touches.length > 1) {
@@ -52,9 +53,7 @@ export default {
     props: {
         projectConfig: {
             projectKey: '',
-            showBtns: true,
-            //预览模式
-            preview: false
+            showBtns: true
         }
     },
     data() {
@@ -93,7 +92,6 @@ export default {
         document.querySelector('body').className = 'project-body'
     },
     created() {
-
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.projectKey = this.projectConfig.projectKey
             // this.formConf.formBtns = this.projectConfig.showBtns
@@ -132,15 +130,7 @@ export default {
     },
     methods: {
         submitForm(data) {
-            if (this.projectConfig.preview) {
-                return
-            }
-            this.$api.post('/user/project/result/create', {
-                'projectKey': this.projectKey,
-                'collectData': data
-            }).then(res => {
-                this.formState = true
-            })
+            this.$emit('submit',data)
         }
     }
 }
