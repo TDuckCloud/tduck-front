@@ -532,8 +532,8 @@ export default {
         queryUserProjectSetting() {
             this.userProjectSettingData.projectKey = this.projectKey
             this.$api.get(`/user/project/setting/query/${this.projectKey}`).then(res => {
-                this.userProjectSettingData = res.data
                 if (res.data) {
+                    this.userProjectSettingData = res.data
                     let {
                         submitPromptImg, submitPromptText, submitJumpUrl, timedCollectionBeginTime,
                         timedQuantitativeQuantity, newWriteNotifyEmail, newWriteNotifyWx,

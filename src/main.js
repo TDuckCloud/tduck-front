@@ -11,7 +11,7 @@ import api from './api'
 import store from './store/index'
 // 全局组件自动注册
 import '@/components/autoRegister'
-
+import VueClipboard from 'vue-clipboard2'
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$store = store
@@ -29,6 +29,7 @@ Vue.prototype.msgInfo = function(msg) {
     this.$message.info(msg)
 }
 
+Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
 

@@ -11,10 +11,15 @@
                     <el-tab-pane label="微信扫码登录" name="wx">
                         <div class="wx-login">
                             <div style="text-align: center;">
-                                <img class="qrcode" :src="wxLoginQrCode">
+                                <img class="wx-login-qrcode" :src="wxLoginQrCode">
                             </div>
                             <div style="text-align: center;">
-                                <el-link icon="el-icon-refresh-left" :underline="false">刷新二维码</el-link>
+                                <el-link icon="el-icon-refresh-left"
+                                         :underline="false"
+                                         @click="getLoginWxQrCode"
+                                >
+                                    刷新二维码
+                                </el-link>
                             </div>
                             <el-divider style="width: 100px;" />
                             <el-row>
@@ -218,19 +223,48 @@ export default {
                 email: '',
                 password: ''
             },
-            wxLoginQrCode: 'http://qiniu.smileyi.top/20191213/9f217b754ad44f0caaa83040ce62fe93.png'
+            wxLoginQrCode: '',
+            wxLoginId: '',
+            refreshWxQrcodeTimer: null,
+            wxQrcodeResultTimer: null
         }
+    },
+    created() {
+        this.getLoginWxQrCode()
+        this.refreshWxQrcodeTimer = setInterval(() => {
+            this.getLoginWxQrCode()
+        }, 5 * 60 * 1000)
+        this.wxQrcodeResultTimer = setInterval(() => {
+            this.getLoginWxQrCodeResult()
+        }, 5 * 1000)
+    },
+    destroyed() {
+        clearInterval(this.refreshWxQrcodeTimer)
+        clearInterval(this.wxQrcodeResultTimer)
     },
     methods: {
         loginTypeHandleClick() {
         },
         registerHandleClick() {
         },
+        getLoginWxQrCode() {
+            this.$api.get('/login/wx/qrcode').then(res => {
+                this.wxLoginQrCode = res.data.qrCodeUrl
+                this.wxLoginId = res.data.loginId
+            })
+        },
+        getLoginWxQrCodeResult() {
+            this.$api.get('/login/wx/qrcode/result', {params: {loginId: this.wxLoginId}}).then(res => {
+                if (res.data) {
+                    this.loginSuccessHandle(res.data)
+                }
+            })
+        },
         sendEmailCodeHandle() {
             this.$refs['emailRegForm'].validateField('email', err => {
                 if (!err) {
                     this.validateCodeBtn = true
-                    this.$api.get(`/user/send-email-code?email=${this.accountForm.email}`).then(() => {
+                    this.$api.get(`/register/email/code?email=${this.accountForm.email}`).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.validateCodeBtn = true
                         let count = 60
@@ -249,7 +283,7 @@ export default {
         emailRegHandle() {
             this.$refs['emailRegForm'].validate(valid => {
                 if (valid) {
-                    this.$api.post('/user/email-register', this.accountForm).then(() => {
+                    this.$api.post('/register/email', this.accountForm).then(() => {
                         this.msgSuccess('注册成功，快去登录吧')
                         setTimeout(() => {
                             this.formType = 'login'
@@ -261,26 +295,29 @@ export default {
                 }
             })
         },
+        loginSuccessHandle(data) {
+            this.msgSuccess('登录成功')
+            this.$store.dispatch('user/login', data).then(() => {
+                // 登录成功后路由跳回
+                // eslint-disable-next-line no-debugger
+                if (this.$route.query.redirect) {
+                    this.$router.replace({
+                        path: this.$route.query.redirect
+                    })
+                } else {
+                    if (window.history.length <= 1) {
+                        this.$router.push({path: '/home'})
+                    } else {
+                        this.$router.push({path: '/home'})
+                    }
+                }
+            })
+        },
         loginHandle() {
             this.$refs['accountLoginForm'].validate(valid => {
                 if (valid) {
-                    this.$api.post('/user/account-login', this.accountForm).then(res => {
-                        this.msgSuccess('登录成功')
-                        this.$store.dispatch('user/login', res.data).then(() => {
-                            // 登录成功后路由跳回
-                            // eslint-disable-next-line no-debugger
-                            if (this.$route.query.redirect) {
-                                this.$router.replace({
-                                    path: this.$route.query.redirect
-                                })
-                            } else {
-                                if (window.history.length <= 1) {
-                                    this.$router.push({path: '/home'})
-                                } else {
-                                    this.$router.push({path: '/home'})
-                                }
-                            }
-                        })
+                    this.$api.post('/login/account', this.accountForm).then(res => {
+                        this.loginSuccessHandle(res.data)
                     })
                 } else {
                     return false
@@ -293,7 +330,7 @@ export default {
 <style scoped>
 
 .login-body {
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    font-familyly: "Helvetica Neue", helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", arial, sans-serif;
     margin: 90px 0 0 0;
 }
 .login-img {
@@ -310,10 +347,12 @@ export default {
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        .qrcode {
-            margin: 20px;
-        }
     }
+}
+.wx-login-qrcode {
+    margin: 20px;
+    width: 194px;
+    height: 194px;
 }
 .other-login .other-login-icon {
     margin-left: 10px;

@@ -30,6 +30,7 @@ routes.push({
 })
 
 const router = new Router({
+    mode: 'history',
     routes: routes.flat()
 })
 

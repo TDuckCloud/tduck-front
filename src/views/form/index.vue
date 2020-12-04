@@ -6,10 +6,6 @@
                     <i class="el-icon-arrow-left"/>
                     返回
                 </el-button>
-                <el-button size="mini" round>
-                    <router-link target="_blank" :to="{path:'/project/write',query:{key:this.projectKey}}">发布预览
-                    </router-link>
-                </el-button>
             </el-col>
             <el-col :span="10" :offset="3">
                 <el-menu :default-active="activeIndex" @select="handleSelect" style="background-color: transparent"
@@ -25,6 +21,7 @@
         <editor :projectKey="projectKey" v-if="activeIndex==1&&projectKey"/>
         <theme :projectKey="projectKey" v-if="activeIndex==2"/>
         <setting :projectKey="projectKey" v-if="activeIndex==3"/>
+        <publish :projectKey="projectKey" v-if="activeIndex==4"/>
     </div>
 </template>
 
@@ -32,16 +29,18 @@
 import editor from './editor'
 import theme from './theme'
 import setting from './setting'
+import publish from './publish'
 
 export default {
     components: {
         editor,
         theme,
-        setting
+        setting,
+        publish
     },
     data() {
         return {
-            activeIndex: '2',
+            activeIndex: '4',
             projectKey: ''
         }
     },

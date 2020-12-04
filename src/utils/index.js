@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-restricted-syntax */
+
 /* eslint-disable guard-for-in */
 /**
  * num 小于0，左缩进num*2个空格； 大于0，右缩进num*2个空格。
@@ -9,7 +10,10 @@
  */
 export function indent(str, num, len = 2) {
     if (num === 0) return str
-    const isLeft = num < 0; const result = []; let reg; let
+    const isLeft = num < 0
+    const result = []
+    let reg
+    let
         spaces = ''
     if (isLeft) {
         num *= -1
@@ -126,9 +130,15 @@ export function deepClone(obj) {
     // RegExp
     if (_toString.call(obj) === '[object RegExp]') {
         const flags = []
-        if (obj.global) { flags.push('g') }
-        if (obj.multiline) { flags.push('m') }
-        if (obj.ignoreCase) { flags.push('i') }
+        if (obj.global) {
+            flags.push('g')
+        }
+        if (obj.multiline) {
+            flags.push('m')
+        }
+        if (obj.ignoreCase) {
+            flags.push('i')
+        }
 
         return new RegExp(obj.source, flags.join(''))
     }
@@ -143,15 +153,26 @@ export function deepClone(obj) {
 }
 
 export function uuid() {
-    let s = [];
-    let hexDigits = "0123456789abcdef";
+    let s = []
+    let hexDigits = '0123456789abcdef'
     for (var i = 0; i < 36; i++) {
-        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1)
     }
-    s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-    s[8] = s[13] = s[18] = s[23] = "-";
+    s[14] = '4'  // bits 12-15 of the time_hi_and_version field to 0010
+    s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1)  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+    s[8] = s[13] = s[18] = s[23] = '-'
 
-    let uuid = s.join("");
-    return uuid;
+    let uuid = s.join('')
+    return uuid
+}
+
+export function getQueryString(name) {
+    let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+    let r = window.location.search.substr(1).match(reg)  //获取url中"?"符后的字符串并正则匹配
+    let context = ''
+    if (r != null)
+        context = r[2]
+    reg = null
+    r = null
+    return context == null || context == '' || context == 'undefined' ? '' : context
 }

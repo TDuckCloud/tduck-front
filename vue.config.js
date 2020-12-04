@@ -50,7 +50,7 @@ const cdn = {
 }
 
 module.exports = {
-    publicPath: '',
+    publicPath: '/',
     productionSourceMap: false,
     devServer: {
         disableHostCheck: true,
@@ -58,8 +58,8 @@ module.exports = {
         port: 8888,
         // 开发环境默认开启反向代理，如果不需要请自行注释
         proxy: {
-            '/': {
-                target: process.env.VUE_APP_API_ROOT,
+            '/tduck-api': {
+                target: 'http://localhost:8999/',
                 changeOrigin: true
             }
         }

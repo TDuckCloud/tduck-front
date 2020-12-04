@@ -14,13 +14,13 @@
             <el-row v-if="projectTheme.showTitle" type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
                     <h4 class="form-name-text">
-                        {{formConf.title}}</h4>
+                        {{ formConf.title }}</h4>
                 </el-col>
             </el-row>
             <el-row v-if="projectTheme.showDescribe" type="flex" justify="center" align="middle">
                 <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
                     <p class="form-name-text">
-                        {{formConf.description}}
+                        {{ formConf.description }}
                     </p>
                 </el-col>
             </el-row>
@@ -34,7 +34,6 @@
 <script>
 import Parser from '@/components/parser/Parser'
 import {dbDataConvertForItemJson} from '@/utils/convert'
-
 
 window.onload = function() {
     document.addEventListener('touchstart', function(event) {
@@ -114,23 +113,24 @@ export default {
                 this.formConf.description = res.data.project.describe
                 if (res.data.userProjectTheme) {
                     this.projectTheme = res.data.userProjectTheme
-                }
-                let {submitBtnText, showNumber,btnsColor} = res.data.userProjectTheme
-                if (submitBtnText) {
-                    this.formConf.submitBtnText = submitBtnText
-                }
-                if (showNumber) {
-                    this.formConf.showNumber = showNumber
-                }
-                if(btnsColor){
-                    this.formConf.submitBtnColor = btnsColor
-                }
+                    let {submitBtnText, showNumber, btnsColor} = res.data.userProjectTheme
+                    if (submitBtnText) {
+                        this.formConf.submitBtnText = submitBtnText
                     }
+                    if (showNumber) {
+                        this.formConf.showNumber = showNumber
+                    }
+                    if (btnsColor) {
+                        this.formConf.submitBtnColor = btnsColor
+                    }
+                }
+
+            }
         })
     },
     methods: {
         submitForm(data) {
-            this.$emit('submit',data)
+            this.$emit('submit', data)
         }
     }
 }
@@ -163,10 +163,12 @@ export default {
 .logo-img {
     max-height: 120px;
 }
-.submit-btn-form-item{
+
+.submit-btn-form-item {
     text-align: left;
 }
-.submit-btn-form-item button{
+
+.submit-btn-form-item button {
     width: 20%;
 }
 
@@ -184,10 +186,10 @@ export default {
     .logo-img {
         max-height: 2.94rem;
     }
-    .submit-btn-form-item{
+    .submit-btn-form-item {
         text-align: center;
     }
-    .submit-btn-form-item button{
+    .submit-btn-form-item button {
         width: 80%;
     }
 }

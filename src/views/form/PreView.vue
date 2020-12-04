@@ -49,7 +49,7 @@ export default {
     },
     mounted() {
         let url = window.location.protocol + '//' + window.location.host
-        this.mobilePreviewUrl = `${url}/#/project/view?key=${this.projectKey}`
+        this.mobilePreviewUrl = `${url}/project/view?key=${this.projectKey}`
         this.$set(this.projectConfig, 'projectKey', this.projectKey)
     },
     components: {
