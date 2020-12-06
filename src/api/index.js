@@ -85,14 +85,20 @@ api.interceptors.response.use(
                 duration: 5 * 1000
             })
         } else if (res.code === 401) {
-            // to re-login
-            MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
-                confirmButtonText: '重新登录',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                toLogin()
-            })
+            // 有一个接口进入该方法 其他接口则不在进入
+            let reLogin = store.getters['global/isReLogin']
+            if (!reLogin) {
+                store.dispatch('global/loginExpired', true).then(() => {
+                    // to re-login
+                    MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', {
+                        confirmButtonText: '重新登录',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        toLogin()
+                    })
+                })
+            }
         }
         return Promise.reject(res)
     },

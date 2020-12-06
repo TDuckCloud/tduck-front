@@ -59,7 +59,7 @@ module.exports = {
         // 开发环境默认开启反向代理，如果不需要请自行注释
         proxy: {
             '/tduck-api': {
-                target: 'http://localhost:8999/',
+                target: 'http://smalljop.test.utools.club',
                 changeOrigin: true
             }
         }

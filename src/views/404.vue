@@ -1,6 +1,8 @@
 <template>
-    <div>
-        我真的尽力了，但还是找不到页面
+    <div class=""
+         style="display: flex; height: 100vh; align-items: center; justify-content: center; justify-items: center;"
+    >
+        <p class="title"> 404，联系一下开发者 </p>
     </div>
 </template>
 <script>
@@ -15,3 +17,10 @@ export default {
     methods: {}
 }
 </script>
+<style>
+.title {
+    color: rgba(32, 91, 181, 100);
+    font-size: 84px;
+    text-align: left;
+}
+</style>

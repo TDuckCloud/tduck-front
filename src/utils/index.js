@@ -176,3 +176,7 @@ export function getQueryString(name) {
     r = null
     return context == null || context == '' || context == 'undefined' ? '' : context
 }
+
+export function getCurrentDomain() {
+    return window.location.protocol + '//' + window.location.host
+}

@@ -58,7 +58,7 @@ export default {
             menuRouters: [
                 {
                     routerPath: '/proposal',
-                    title: '提出建议'
+                    title: '免费模板'
                 },
                 {
                     routerPath: '/sources',

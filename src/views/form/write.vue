@@ -19,9 +19,10 @@
                     :src="userProjectSetting.submitPromptImg"
                     fit="cover"></el-image>
             </div>
-            <p style="text-align: center" v-if="userProjectSetting.submitPromptText">
+            <p style="text-align: center">
                 <i class="el-icon-check"/>
                 <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
+                <span v-else>{{globalDefaultValue.projectSubmitPromptText}}</span>
             </p>
         </div>
     </div>
@@ -50,6 +51,7 @@ export default {
             userProjectSetting: {
                 submitPromptText: ''
             },
+            globalDefaultValue: defaultValue,
             //微信授权地址
             wxAuthorizationUrl: '',
             wxAuthorizationCode: '',
@@ -64,7 +66,6 @@ export default {
         let key = this.$route.query.key
         this.projectConfig.projectKey = key
         let wxCode = getQueryString('code')
-        alert(wxCode)
         if (wxCode) {
             alert(wxCode)
             this.wxAuthorizationCode = wxCode
@@ -206,7 +207,7 @@ export default {
                 'projectKey': this.projectConfig.projectKey,
                 'collectData': data
             }).then(res => {
-                this.formState = true
+                this.writeStatus = 2
             })
         }
     }

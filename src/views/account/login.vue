@@ -11,7 +11,15 @@
                     <el-tab-pane label="微信扫码登录" name="wx">
                         <div class="wx-login">
                             <div style="text-align: center;">
-                                <img class="wx-login-qrcode" :src="wxLoginQrCode">
+                                <el-image
+                                    v-loading="wxQrCodeLoading"
+                                    class="wx-login-qrcode"
+                                    :src="wxLoginQrCode"
+                                    fit="fill"
+                                    @load="(e)=>{
+                                        this.wxQrCodeLoading=false
+                                    }"
+                                />
                             </div>
                             <div style="text-align: center;">
                                 <el-link icon="el-icon-refresh-left"
@@ -33,7 +41,9 @@
                                 </el-col>
                                 <el-col :span="9" :offset="3">
                                     <div class="other-login">
-                                        <svg-icon name="loginQQ" class="other-login-icon" />
+                                        <span @click="redirectUrl(qqLoginAuthorizeUrl)">
+                                            <svg-icon name="loginQQ" class="other-login-icon" />
+                                        </span>
                                         <svg-icon name="loginWx" class="other-login-icon" />
                                     </div>
                                 </el-col>
@@ -99,7 +109,9 @@
                                 <el-row>
                                     <el-col :offset="8">
                                         <div class="other-login">
-                                            <svg-icon name="loginQQ" class="other-login-icon" />
+                                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">
+                                                <svg-icon name="loginQQ" class="other-login-icon" />
+                                            </span>
                                             <svg-icon name="loginWx" class="other-login-icon" />
                                         </div>
                                     </el-col>
@@ -175,6 +187,9 @@
     </div>
 </template>
 <script>
+
+import {getCurrentDomain} from '@/utils'
+
 export default {
     name: 'Login',
     data() {
@@ -223,10 +238,12 @@ export default {
                 email: '',
                 password: ''
             },
+            wxQrCodeLoading: true,
             wxLoginQrCode: '',
             wxLoginId: '',
             refreshWxQrcodeTimer: null,
-            wxQrcodeResultTimer: null
+            wxQrcodeResultTimer: null,
+            qqLoginAuthorizeUrl: ''
         }
     },
     created() {
@@ -237,6 +254,7 @@ export default {
         this.wxQrcodeResultTimer = setInterval(() => {
             this.getLoginWxQrCodeResult()
         }, 5 * 1000)
+        this.getQQLoginAuthorizeUrl()
     },
     destroyed() {
         clearInterval(this.refreshWxQrcodeTimer)
@@ -247,11 +265,24 @@ export default {
         },
         registerHandleClick() {
         },
+        // 获取微信登录二维码
         getLoginWxQrCode() {
+            this.wxQrCodeLoading = true
             this.$api.get('/login/wx/qrcode').then(res => {
                 this.wxLoginQrCode = res.data.qrCodeUrl
                 this.wxLoginId = res.data.loginId
             })
+        },
+        // qq登录授权地址
+        getQQLoginAuthorizeUrl() {
+            let reUrl = getCurrentDomain() + '/redirect'
+            this.$api.get('/login/qq/authorize/url', {params: {redirectUri: reUrl}}).then(res => {
+                this.qqLoginAuthorizeUrl = res.data
+            })
+        },
+        redirectUrl(url) {
+            console.log(url)
+            location.href = url
         },
         getLoginWxQrCodeResult() {
             this.$api.get('/login/wx/qrcode/result', {params: {loginId: this.wxLoginId}}).then(res => {
@@ -298,8 +329,10 @@ export default {
         loginSuccessHandle(data) {
             this.msgSuccess('登录成功')
             this.$store.dispatch('user/login', data).then(() => {
+                // 重置状态
+                this.$store.dispatch('global/loginExpired', false).then(() => {
+                })
                 // 登录成功后路由跳回
-                // eslint-disable-next-line no-debugger
                 if (this.$route.query.redirect) {
                     this.$router.replace({
                         path: this.$route.query.redirect
@@ -327,7 +360,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 
 .login-body {
     font-familyly: "Helvetica Neue", helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", arial, sans-serif;
@@ -341,21 +374,14 @@ export default {
     margin-left: 100px;
     height: 500px;
     width: 520px;
-    .wx-login {
-        display: flex;
-        align-content: center;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
 }
 .wx-login-qrcode {
-    margin: 20px;
     width: 194px;
     height: 194px;
 }
 .other-login .other-login-icon {
     margin-left: 10px;
+    cursor: pointer;
 }
 .login-tip {
     color: rgba(16, 16, 16, 1);

@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="setting" :model="userProjectSettingData">
+    <el-form ref="setting" :model="userProjectSettingData" :rules="settingRules">
         <el-row class="project-setting-container" type="flex" justify="center" align="top">
             <el-col :span="5" :offset="3" class="project-setting-view">
                 <p class="project-setting-title">
@@ -54,7 +54,7 @@
                     <el-col :span="20" class="setting-input">
                         <el-input v-model="userProjectSettingData.submitPromptText"
                                   :show-word-limit="true"
-                                  :maxlength="100"
+                                  :maxlength="50"
                                   @change="saveUserProjectSetting"/>
                     </el-col>
                 </el-row>
@@ -75,7 +75,7 @@
                     <el-col :span="20" class="setting-input">
                         <el-input
                             :show-word-limit="true"
-                            :maxlength="100"
+                            :maxlength="50"
                             @change="saveUserProjectSetting"
                             v-model="userProjectSettingData.submitJumpUrl"/>
                     </el-col>
@@ -148,7 +148,7 @@
                         <el-col :span="15">
                             <el-input class="setting-input" style="width: 80%"
                                       :show-word-limit="true"
-                                      :maxlength="100"
+                                      :maxlength="50"
                                       @change="saveUserProjectSetting"
                                       v-model="userProjectSettingData.timedNotEnabledPromptText"/>
                         </el-col>
@@ -160,7 +160,7 @@
                         <el-col :span="15">
                             <el-input class="setting-input" style="width: 80%"
                                       :show-word-limit="true"
-                                      :maxlength="100"
+                                      :maxlength="50"
                                       @change="saveUserProjectSetting"
                                       v-model="userProjectSettingData.timedDeactivatePromptText"/>
                         </el-col>
@@ -220,7 +220,7 @@
                             <el-input class="setting-input" style="width: 80%"
                                       @change="saveUserProjectSetting"
                                       :show-word-limit="true"
-                                      :maxlength="100"
+                                      :maxlength="50"
                                       v-model="userProjectSettingData.timedNotEnabledPromptText"/>
                         </el-col>
                     </el-row>
@@ -232,7 +232,7 @@
                             <el-input class="setting-input" style="width: 80%"
                                       @change="saveUserProjectSetting"
                                       :show-word-limit="true"
-                                      :maxlength="100"
+                                      :maxlength="50"
                                       v-model="userProjectSettingData.timedDeactivatePromptText"/>
                         </el-col>
                     </el-row>
@@ -257,7 +257,7 @@
                             <el-input class="setting-input" style="width: 80%"
                                       @change="saveUserProjectSetting"
                                       :show-word-limit="true"
-                                      :maxlength="100"
+                                      :maxlength="50"
                                       v-model="userProjectSettingData.timedEndPromptText"/>
                         </el-col>
                     </el-row>
@@ -274,7 +274,7 @@
                 </el-row>
                 <el-row type="flex" align="middle">
                     <el-col :span="12">
-                        <p class="project-setting-label">每人限制填写1次</p>
+                        <p class="project-setting-label">每人每天限制填写1次</p>
                     </el-col>
                     <el-col :span="12">
                         <el-switch
@@ -291,7 +291,7 @@
                         <el-input class="setting-input" style="width: 80%"
                                   @change="saveUserProjectSetting"
                                   :show-word-limit="true"
-                                  :maxlength="100"
+                                  :maxlength="50"
                                   v-model="userProjectSettingData.writeOncePromptText"/>
                     </el-col>
                 </el-row>
@@ -322,9 +322,12 @@
                             <p class="project-setting-sub-label">请填写邮箱：</p>
                         </el-col>
                         <el-col :span="12">
-                            <el-input class="setting-input" style="width: 80%"
-                                      @change="saveUserProjectSetting"
-                                      v-model="userProjectSettingData.newWriteNotifyEmail"/>
+                            <el-form-item prop="newWriteNotifyEmail">
+                                <el-input class="setting-input" style="width: 80%"
+                                          @change="saveUserProjectSetting"
+                                          placeholder="多个邮箱用 ; 隔开"
+                                          v-model="userProjectSettingData.newWriteNotifyEmail"/>
+                            </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row type="flex" align="middle">
@@ -342,7 +345,7 @@
                         <el-col :span="10">
                             <p class="project-setting-sub-label">
                                 需要关注公众号
-                                <el-link>TDUCK</el-link>
+                                <el-link type="primary" @click="openSubNotifyWxDialogHandle">TDUCK</el-link>
                             </p>
                         </el-col>
                     </el-row>
@@ -351,10 +354,21 @@
                             <p class="project-setting-sub-label">提醒人：</p>
                         </el-col>
                         <el-col :span="12">
-                            <img style="width: 24px;height: 24px;" src=""/>
+                            <span class="sub-user-view" v-for="(user,i) in subNotifyWxUserList">
+                                 <i class="el-icon-close sub-user-delete" @click="deleteSubNotifyUserHandle(i)"/>
+                                 <el-avatar :src="user.headImgUrl"></el-avatar>
+                            </span>
                         </el-col>
                     </el-row>
                 </div>
+                <el-dialog title="微信扫描二维码订阅"
+                           width="400px"
+                           :visible.sync="dialogSubNotifyVisible">
+                    <el-image
+                        style="width: 150px; height: 150px"
+                        :src="subNotifyWxQrCode"
+                        fit="fill"></el-image>
+                </el-dialog>
                 <el-row type="flex" align="middle">
                     <el-col :span="12">
                         <p class="project-setting-label">记录微信用户个人信息</p>
@@ -435,7 +449,7 @@
                         <el-input
                             @change="saveUserProjectSetting"
                             :show-word-limit="true"
-                            :maxlength="100"
+                            :maxlength="50"
                             class="setting-input" style="width: 80%" v-model="userProjectSettingData.shareTitle"/>
                     </el-col>
                 </el-row>
@@ -456,7 +470,7 @@
                         <el-input
                             @change="saveUserProjectSetting"
                             :show-word-limit="true"
-                            :maxlength="100"
+                            :maxlength="50"
                             class="setting-input" style="width: 80%" v-model="userProjectSettingData.shareDesc"/>
                     </el-col>
                 </el-row>
@@ -473,6 +487,15 @@ export default {
     },
     data() {
         return {
+            settingRules: {
+                newWriteNotifyEmail: [
+                    {
+                        trigger: 'blur',
+                        pattern: /^((([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}\;))*(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})))$/,
+                        message: '请输入正确发送的邮箱'
+                    }
+                ]
+            },
             projectSetting: {
                 showPromptImg: false,
                 showPromptText: true,
@@ -491,8 +514,8 @@ export default {
                 submitPromptText: '提交成功 !',
                 submitJumpUrl: '',
                 wxWrite: false,
-                timedNotEnabledPromptText: '',
-                timedDeactivatePromptText: '',
+                timedNotEnabledPromptText: '填写尚未启用',
+                timedDeactivatePromptText: '填写尚已经停用',
                 timedQuantitativeQuantity: null,
                 timedEndPromptText: '',
                 everyoneWriteOnce: false,
@@ -506,7 +529,11 @@ export default {
                 shareImg: '',
                 shareTitle: '',
                 shareDesc: ''
-            }
+            },
+            dialogSubNotifyVisible: false,
+            subNotifyWxQrCode: '',
+            subNotifyWxUserList: [],
+            subNotifyUserTimer: null
         }
     },
     computed: {
@@ -519,6 +546,10 @@ export default {
     mounted() {
         this.projectKey = this.$route.query.key
         this.queryUserProjectSetting()
+        this.getSubNotifyWxQrCode()
+    },
+    destroyed() {
+        clearInterval(this.subNotifyUserTimer)
     },
     methods: {
         uploadSubmitPromptHandle(response, file, fileList) {
@@ -539,13 +570,16 @@ export default {
                         timedQuantitativeQuantity, newWriteNotifyEmail, newWriteNotifyWx,
                         shareImg, shareTitle, shareDesc
                     } = res.data
+                    if (newWriteNotifyWx) {
+                        this.querySubNotifyWxUser(newWriteNotifyWx)
+                    }
                     this.projectSetting = {
                         showPromptImg: !!submitPromptImg,
                         showPromptText: !!submitPromptText,
                         showSubmitJumpUrl: !!submitJumpUrl,
-                        timingCollectForm: timedCollectionBeginTime & !timedQuantitativeQuantity,
+                        timingCollectForm: !!timedCollectionBeginTime && !!timedQuantitativeQuantity,
                         timingCollectTimeRange: !!timedQuantitativeQuantity,
-                        newFeedbackRemind: newWriteNotifyEmail | newWriteNotifyWx,
+                        newFeedbackRemind: !!newWriteNotifyEmail || !!newWriteNotifyWx,
                         newFeedbackRemindEmail: !!newWriteNotifyEmail,
                         newFeedbackRemindWx: !!newWriteNotifyWx,
                         customizeShareIcon: !!shareImg,
@@ -559,6 +593,46 @@ export default {
             this.userProjectSettingData.projectKey = this.projectKey
             this.$api.post('/user/project/setting/save', this.userProjectSettingData).then(res => {
             })
+        },
+        openSubNotifyWxDialogHandle() {
+            this.dialogSubNotifyVisible = true
+            this.projectSetting.newFeedbackRemindWx = true
+            this.subNotifyUserTimer = setInterval(() => {
+                this.querySubNotifyWxUser()
+            }, 5 * 1000)
+        },
+        querySubNotifyWxUser(openIdStr) {
+            this.$api.get('/user/project/wx/notify/user', {
+                params: {
+                    key: this.projectKey,
+                    openIdStr: openIdStr
+                }
+            }).then(res => {
+                this.subNotifyWxUserList = res.data
+                if (this.subNotifyWxUserList) {
+                    let changeNewWriteNotifyWx = this.subNotifyWxUserList.map(item => item.openId).join(';')
+                    if (!openIdStr && changeNewWriteNotifyWx != this.userProjectSettingData.newWriteNotifyWx) {
+                        this.userProjectSettingData.newWriteNotifyWx = changeNewWriteNotifyWx
+                        this.saveUserProjectSetting()
+                    }
+                }
+            })
+        },
+        getSubNotifyWxQrCode() {
+            this.$api.get('/user/project/wx/notify/qrcode', {params: {key: this.projectKey}}).then(res => {
+                this.subNotifyWxQrCode = res.data
+            })
+        },
+        deleteSubNotifyUserHandle(i) {
+            if (this.subNotifyWxUserList) {
+                let openId = this.subNotifyWxUserList[i].openId
+                let key = this.projectKey
+                this.$api.post(`/user/project/wx/notify/user/delete/${key}/${openId}`).then(res => {
+                    this.subNotifyWxUserList.splice(i)
+                    this.userProjectSettingData.newWriteNotifyWx = this.subNotifyWxUserList.map(item => item.openId).join(';')
+                    this.saveUserProjectSetting()
+                })
+            }
         },
         clearFieldHandle(fields) {
             fields.forEach((field) => {
@@ -627,12 +701,29 @@ export default {
     justify-content: center;
 }
 
-/deep/ .setting-input input {
-    border: none;
-    border-bottom: 1px solid rgba(187, 187, 187, 100);
-    border-radius: 0;
-    line-height: 20px;
-    height: 20px;
+.sub-user-view {
+    position: relative;
+    width: 60px;
+    cursor: pointer;
+}
+
+.sub-user-view:hover .sub-user-delete {
+    display: block;
+}
+
+.sub-user-delete {
+    position: absolute;
+    right: -6px;
+    background-color: red;
+    color: white;
+    border-radius: 50px;
+    padding: 2px;
+    font-size: 12px;
+    height: 16px;
+    width: 16px;
+    font-weight: 500;
+    line-height: 18px;
+    display: none;
 }
 
 .share-img {
@@ -645,9 +736,22 @@ export default {
     justify-content: center;
 }
 
+/deep/ .setting-input input {
+    border: none;
+    border-bottom: 1px solid rgba(187, 187, 187, 100);
+    border-radius: 0;
+    line-height: 20px;
+    height: 20px;
+}
+
+
 /deep/ .collection-date-picker input {
     border: none;
     border-bottom: 1px solid rgba(187, 187, 187, 100);
     border-radius: 0;
+}
+
+/deep/ .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin: 0;
 }
 </style>
