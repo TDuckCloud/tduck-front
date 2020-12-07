@@ -1,6 +1,7 @@
 <script>
-import { deepClone } from '@/utils/index'
+import {deepClone} from '@/utils/index'
 import render from '@/components/render/render.js'
+import _ from 'lodash'
 
 const ruleTrigger = {
     'el-input': 'blur',
@@ -14,24 +15,30 @@ const ruleTrigger = {
     'el-rate': 'change'
 }
 
+const processType = {
+    'el-select': '__slot__.options',
+    'el-radio-group': '__slot__.options',
+    'el-checkbox-group': '__slot__.options'
+}
+
 const layouts = {
     colFormItem(h, scheme) {
         const config = scheme.__config__
         const listeners = buildListeners.call(this, scheme)
-        const { formConfCopy ,serialNumber} = this
+        const {formConfCopy, serialNumber} = this
         let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null
         if (config.showLabel === false) labelWidth = '0'
-        let label=config.label
-        if(formConfCopy.showNumber){
-            this.serialNumber=this.serialNumber+1
-            label=serialNumber +': ' + label
+        let label = config.label
+        if (formConfCopy.showNumber) {
+            this.serialNumber = this.serialNumber + 1
+            label = serialNumber + ': ' + label
         }
 
         return (
             <el-col span={config.span}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
                               label={config.showLabel ? label : ''}>
-                    <render conf={scheme} {...{ on: listeners }} />
+                    <render conf={scheme} {...{on: listeners}} />
                 </el-form-item>
             </el-col>
         )
@@ -54,7 +61,7 @@ const layouts = {
 }
 
 function renderFrom(h) {
-    const { formConfCopy } = this
+    const {formConfCopy} = this
 
     return (
         <el-row gutter={formConfCopy.gutter}>
@@ -65,7 +72,7 @@ function renderFrom(h) {
                 label-width={`${formConfCopy.labelWidth}px`}
                 ref={formConfCopy.formRef}
                 // model不能直接赋值 https://github.com/vuejs/jsx/issues/49#issuecomment-472013664
-                props={{ model: this[formConfCopy.formModel] }}
+                props={{model: this[formConfCopy.formModel]}}
                 rules={this[formConfCopy.formRules]}
             >
                 {renderFormItem.call(this, h, formConfCopy.fields)}
@@ -76,31 +83,32 @@ function renderFrom(h) {
 }
 
 function formBtns(h) {
-    const { formConfCopy } = this
-    let  style={
-        'background-color':formConfCopy.submitBtnColor,
-        'border-color':formConfCopy.submitBtnColor
+    const {formConfCopy} = this
+    let style = {
+        'background-color': formConfCopy.submitBtnColor,
+        'border-color': formConfCopy.submitBtnColor
     }
-    let btnSpan=24
-    if(formConfCopy.resetBtn){
-        return   <el-col>
+    let btnSpan = 24
+    if (formConfCopy.resetBtn) {
+        return <el-col>
             <el-form-item size="large" style="margin-top:30px">
                 <el-row>
                     <el-col span="4" offset="6">
                         <el-button type="primary" onClick={this.submitForm}>提交</el-button>
                     </el-col>
-                    <el-col span="9" offset="3" >
+                    <el-col span="9" offset="3">
                         <el-button onClick={this.resetForm}>重置</el-button>
                     </el-col>
                 </el-row>
             </el-form-item>
         </el-col>
     }
-    return   <el-col>
+    return <el-col>
         <el-form-item size="large" class="submit-btn-form-item" style="margin-top:30px;">
-            <el-row type="flex"  justify="center" >
+            <el-row type="flex" justify="center">
                 <el-col span={btnSpan}>
-                    <el-button style={style} type="primary" onClick={this.submitForm}>{this.formConfCopy.submitBtnText}</el-button>
+                    <el-button style={style} type="primary"
+                               onClick={this.submitForm}>{this.formConfCopy.submitBtnText}</el-button>
                 </el-col>
             </el-row>
         </el-form-item>
@@ -127,8 +135,16 @@ function renderChildren(h, scheme) {
 }
 
 function setValue(event, config, scheme) {
+    debugger
     this.$set(config, 'defaultValue', event)
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
+    if (processType[config.tag]) {
+        let item = _.find(_.get(scheme, processType[config.tag]), {'value': event})
+        this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+    } else {
+        this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, event)
+    }
+
 }
 
 function buildListeners(scheme) {
@@ -161,6 +177,7 @@ export default {
             handler(val) {
                 this.formConfCopy = val
                 this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
+                this.initFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
                 this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
             },
             deep: true
@@ -171,17 +188,22 @@ export default {
             serialNumber: 1,//序号
             formConfCopy: deepClone(this.formConf),
             [this.formConf.formModel]: {},
+            [this.formConf.labelFormModel]: {},
             [this.formConf.formRules]: {}
         }
         this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
+        this.initFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
         this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
         return data
     },
     methods: {
         initFormData(componentList, formData) {
+            //设置默认值
             componentList.forEach(cur => {
                 const config = cur.__config__
-                if (cur.__vModel__) formData[cur.__vModel__] = config.defaultValue
+                if (cur.__vModel__) {
+                    formData[cur.__vModel__] = config.defaultValue
+                }
                 if (config.children) this.initFormData(config.children, formData)
             })
         },
@@ -190,7 +212,7 @@ export default {
                 const config = cur.__config__
                 if (Array.isArray(config.regList)) {
                     if (config.required) {
-                        const required = { required: config.required, message: cur.placeholder }
+                        const required = {required: config.required, message: cur.placeholder}
                         if (Array.isArray(config.defaultValue)) {
                             required.type = 'array'
                             required.message = `请至少选择一个${config.label}`
@@ -215,7 +237,10 @@ export default {
             this.$refs[this.formConf.formRef].validate(valid => {
                 if (!valid) return false
                 // 触发sumit事件
-                this.$emit('submit', this[this.formConf.formModel])
+                this.$emit('submit', {
+                    formModel: this[this.formConf.formModel],
+                    labelFormModel: this[this.formConf.labelFormModel]
+                })
                 return true
             })
         }

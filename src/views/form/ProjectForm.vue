@@ -69,6 +69,7 @@ export default {
                 __methods__: {},
                 formRef: 'elForm',
                 formModel: 'formData',
+                labelFormModel: 'labelFormData',
                 size: 'small',
                 labelPosition: 'top',
                 labelWidth: 100,
