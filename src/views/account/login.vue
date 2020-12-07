@@ -60,7 +60,8 @@
                     <el-tab-pane label="账号密码登录" name="account">
                         <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm"
                                  :rules="accountLoginRules"
-                                 class="account-login-form" status-icon hide-required-asterisk
+                                 class="account-login-form"
+                                 status-icon hide-required-asterisk @key.enter.native="loginHandle"
                         >
                             <el-form-item label="手机号/邮箱登录" prop="account">
                                 <el-input v-model="accountForm.account" placeholder="请输入手机号/邮箱" autocomplete="off" />
@@ -223,7 +224,7 @@ export default {
                     {required: true, trigger: 'blur', message: '请输入邮箱'},
                     {
                         pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
-                        message: '请输入正确的邮箱'
+                        message: '请输入正确的邮箱,多个使用;分隔'
                     }
                 ],
                 password: [{required: true, trigger: 'blur', validator: validatePassword}],

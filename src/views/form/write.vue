@@ -32,7 +32,7 @@
 import ProjectForm from './ProjectForm'
 import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
-import {getQueryString} from '@/utils'
+import {getCurrentDomain, getQueryString} from '@/utils'
 
 let wx
 
@@ -75,8 +75,7 @@ export default {
         this.queryProjectSettingStatus()
         this.queryProjectSetting()
         //加载微信相关 获取签名
-        let url = window.location.href.split(('#'))[0]
-        this.$api.get('/wx/jsapi/signature', {params: {url: url}}).then(res => {
+        this.$api.get('/wx/jsapi/signature', {params: {url: getCurrentDomain()}}).then(res => {
             this.wxSignature = res.data
             this.setWxConfig()
         })
