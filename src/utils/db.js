@@ -4,6 +4,7 @@ const DRAWING_ITEMS_VERSION_KEY = 'DRAWING_ITEMS_VERSION'
 const DRAWING_ID = 'idGlobal'
 const TREE_NODE_ID = 'treeNodeId'
 const FORM_CONF = 'formConf'
+const CHECKED_COLUMNS = 'checkedColumns'
 
 export function getDrawingList(key) {
     // 加入缓存版本的概念，保证缓存数据与程序匹配
@@ -52,4 +53,14 @@ export function getFormConf(key) {
 
 export function saveFormConf(obj, key) {
     if (key) localStorage.setItem(`${FORM_CONF}:${key}`, JSON.stringify(obj))
+}
+
+export function saveCheckedColumn(key, obj) {
+    if (key) localStorage.setItem(`${CHECKED_COLUMNS}:${key}`, JSON.stringify(obj))
+}
+
+export function getCheckedColumn(key, obj) {
+    const str = localStorage.getItem(`${CHECKED_COLUMNS}:${key}`)
+    if (str) return JSON.parse(str)
+    return null
 }

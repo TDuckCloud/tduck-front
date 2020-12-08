@@ -230,7 +230,7 @@ export default {
                     let tagOptionKey = processType[temConfig.tag]
                     let defaultValue = temConfig.defaultValue
                     let labelStr = ''
-                    if (tagOptionKey) {
+                    if (tagOptionKey&&defaultValue) {
                         if (defaultValue instanceof Array) {
                             defaultValue.forEach(item => {
                                 let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)

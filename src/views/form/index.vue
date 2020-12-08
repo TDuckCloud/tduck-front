@@ -22,7 +22,7 @@
         <theme :projectKey="projectKey" v-if="activeIndex==2"/>
         <setting :projectKey="projectKey" v-if="activeIndex==3"/>
         <publish :projectKey="projectKey" v-if="activeIndex==4"/>
-        <statistics :projectKey="projectKey" v-if="activeIndex==5"/>
+        <statistics :projectKey="projectKey" v-if="activeIndex==5&&projectKey"/>
     </div>
 </template>
 

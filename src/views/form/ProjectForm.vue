@@ -103,7 +103,7 @@ export default {
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/user/project/query/details/${this.projectKey}`).then(res => {
+        this.$api.get(`/user/project/details/query/${this.projectKey}`).then(res => {
             if (res.data) {
                 let fields = res.data.projectItems.map(item => {
                     return dbDataConvertForItemJson(item)
