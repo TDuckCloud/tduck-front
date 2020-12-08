@@ -22,7 +22,7 @@
             <p style="text-align: center">
                 <i class="el-icon-check"/>
                 <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
-                <span v-else>{{globalDefaultValue.projectSubmitPromptText}}</span>
+                <span v-else>{{ globalDefaultValue.projectSubmitPromptText }}</span>
             </p>
         </div>
     </div>
@@ -204,7 +204,8 @@ export default {
         submitForm(data) {
             this.$api.post('/user/project/result/create', {
                 'projectKey': this.projectConfig.projectKey,
-                'collectData': data
+                'originalData': data.formModel,
+                'processData': data.labelFormModel
             }).then(res => {
                 this.writeStatus = 2
             })

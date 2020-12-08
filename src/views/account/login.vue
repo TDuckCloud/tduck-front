@@ -61,6 +61,7 @@
                         <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm"
                                  :rules="accountLoginRules"
                                  class="account-login-form"
+
                                  status-icon hide-required-asterisk @key.enter.native="loginHandle"
                         >
                             <el-form-item label="手机号/邮箱登录" prop="account">

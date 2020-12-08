@@ -22,6 +22,7 @@
         <theme :projectKey="projectKey" v-if="activeIndex==2"/>
         <setting :projectKey="projectKey" v-if="activeIndex==3"/>
         <publish :projectKey="projectKey" v-if="activeIndex==4"/>
+        <statistics :projectKey="projectKey" v-if="activeIndex==5"/>
     </div>
 </template>
 
@@ -30,17 +31,18 @@ import editor from './editor'
 import theme from './theme'
 import setting from './setting'
 import publish from './publish'
-
+import statistics from './statistics'
 export default {
     components: {
         editor,
         theme,
         setting,
-        publish
+        publish,
+        statistics
     },
     data() {
         return {
-            activeIndex: '4',
+            activeIndex: '5',
             projectKey: ''
         }
     },

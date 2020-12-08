@@ -17,6 +17,7 @@ const ruleTrigger = {
 
 const processType = {
     'el-select': '__slot__.options',
+    'el-cascader': 'options',
     'el-radio-group': '__slot__.options',
     'el-checkbox-group': '__slot__.options'
 }
@@ -135,16 +136,40 @@ function renderChildren(h, scheme) {
 }
 
 function setValue(event, config, scheme) {
-    debugger
     this.$set(config, 'defaultValue', event)
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
-    if (processType[config.tag]) {
-        let item = _.find(_.get(scheme, processType[config.tag]), {'value': event})
-        this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+    setValueLabel.call(this, event, config, scheme)
+}
+
+function setValueLabel(event, config, scheme) {
+    let tagOptionKey = processType[config.tag]
+    if (tagOptionKey) {
+        if (event instanceof Array) {
+            let labelStr = ''
+            event.forEach(item => {
+                let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
+                labelStr += label + ','
+            })
+            this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, labelStr)
+        } else {
+            let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
+            this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+        }
     } else {
         this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, event)
     }
+}
 
+function getObject(array, key, value) {
+    let o
+    array.some(function iter(a) {
+        if (a[key] === value) {
+            o = a
+            return true
+        }
+        return Array.isArray(a.children) && a.children.some(iter)
+    })
+    return o
 }
 
 function buildListeners(scheme) {
@@ -177,7 +202,7 @@ export default {
             handler(val) {
                 this.formConfCopy = val
                 this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
-                this.initFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
+                this.initLabelFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
                 this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
             },
             deep: true
@@ -192,11 +217,35 @@ export default {
             [this.formConf.formRules]: {}
         }
         this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
-        this.initFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
+        this.initLabelFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
         this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
         return data
     },
     methods: {
+        initLabelFormData(componentList, formData) {
+            //设置默认值
+            componentList.forEach(cur => {
+                let temConfig = cur.__config__
+                if (cur.__vModel__) {
+                    let tagOptionKey = processType[temConfig.tag]
+                    let defaultValue = temConfig.defaultValue
+                    let labelStr = ''
+                    if (tagOptionKey) {
+                        if (defaultValue instanceof Array) {
+                            defaultValue.forEach(item => {
+                                let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)
+                                labelStr += label + ','
+                            })
+                            formData[cur.__vModel__] = labelStr
+                        } else {
+                            let {label} = _.find(_.get(cur, tagOptionKey), {'value': defaultValue})
+                            formData[cur.__vModel__] = label
+                        }
+                    }
+                }
+                if (temConfig.children) this.initLabelFormData(temConfig.children, formData)
+            })
+        },
         initFormData(componentList, formData) {
             //设置默认值
             componentList.forEach(cur => {
