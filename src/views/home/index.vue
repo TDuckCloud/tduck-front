@@ -4,7 +4,7 @@
             <el-row type="flex" align="middle">
                 <el-col :span="4" :offset="1">
                     <img src="@/assets/images/indexLogo.png" class="header-logo-img"
-                         @click="$router.push({path:'/project/create'})"
+                         @click="$router.push({path:'/'})"
                     >
                 </el-col>
                 <el-col :span="10">
@@ -17,12 +17,6 @@
                             {{ item.title }}
                         </el-menu-item>
                     </el-menu>
-                    <!--                    <span v-for="(item, index) in menuRouters" :key="index"-->
-                    <!--                          class="menu-item"-->
-                    <!--                          @click="activeMenuHandle(item.routerPath)"-->
-                    <!--                    >-->
-                    <!--                        {{ item.title }}-->
-                    <!--                    </span>-->
                 </el-col>
                 <el-col :span="1">
                     <el-button round>升级</el-button>
@@ -67,7 +61,7 @@
                             </div>
                         </div>
                         <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
-                            <img :src="getUserInfo.avatar" style="width: 50px; height: 50px; border-radius: 100px;">
+                            <img :src="getUserInfo.avatar" class="user-avatar">
                         </div>
                     </el-popover>
                 </el-col>
@@ -186,6 +180,12 @@ export default {
         background-color: rgba(210, 210, 210, 78);
         border: 1px solid rgba(210, 210, 210, 78);
     }
+}
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    cursor: pointer;
 }
 
 </style>

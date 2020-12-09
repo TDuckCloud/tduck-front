@@ -5,6 +5,11 @@ export default [
         component: () => import(/* webpackChunkName: 'root' */ '@/views/test')
     },
     {
+        path: '/redirect',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/redirect')
+    },
+    {
         path: '/',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),

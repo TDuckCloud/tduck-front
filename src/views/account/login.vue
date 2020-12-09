@@ -179,7 +179,9 @@
                         <el-link style="margin-left: 20px;">忘记密码</el-link>
                         <el-link style="margin-left: 20px;" @click="registerHandleClick">立即注册</el-link>
                         <div class="other-login">
-                            <svg-icon name="loginQQ" class="other-login-icon" />
+                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">
+                                <svg-icon name="loginQQ" class="other-login-icon" />
+                            </span>
                             <svg-icon name="loginWx" class="other-login-icon" />
                         </div>
                     </div>
