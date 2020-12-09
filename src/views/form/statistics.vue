@@ -1,21 +1,28 @@
 <template>
     <div class="statistics-container">
         <div class="filter-table-view">
-            <el-form :inline="true" class="demo-form-inline">
-                <el-form-item label="审批人">
-                    <el-input placeholder="审批人"></el-input>
-                </el-form-item>
-                <el-form-item label="活动区域">
-
+            <el-form :inline="true"  class="demo-form-inline" ref="filterForm">
+                <el-form-item label="提交时间" prop="endDateTime">
+                    <el-date-picker
+                        v-model="queryConditions.beginDateTime"
+                        type="datetime"
+                        placeholder="开始时间">
+                    </el-date-picker>
+                    <span> 至 </span>
+                    <el-date-picker
+                        v-model="queryConditions.endDateTime"
+                        type="datetime"
+                        placeholder="结束时间">
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">查询</el-button>
+                    <el-button type="primary" @click="queryProjectResult">查询</el-button>
                 </el-form-item>
             </el-form>
         </div>
         <div class="result-table-view">
             <el-table
-                stripe :header-cell-style="{background:'#184F7D'}"
+                stripe :header-cell-style="{background:'#2466a0'}"
                 :data="projectResultList">
                 <el-table-column
                     type="selection"
@@ -107,7 +114,9 @@ export default {
             projectItemColumns: {},
             //查询条件
             queryConditions: {
-                projectKey: ''
+                projectKey: '',
+                beginDateTime: '',
+                endDateTime: ''
             }
         }
     }, methods: {
@@ -118,7 +127,7 @@ export default {
         },
         queryProjectResult() {
             this.$api.post(`/user/project/result/query`, this.queryConditions).then(res => {
-                this.projectResultList = res.data
+                this.projectResultList = res.data.records
             })
         },
         saveStatisticsCheckedColumns() {

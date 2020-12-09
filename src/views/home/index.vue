@@ -36,9 +36,40 @@
                     <el-link href="https://element.eleme.io" target="_blank">帮助</el-link>
                 </el-col>
                 <el-col :span="3">
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <img :src="getUserInfo.avatar" style="width: 50px; height: 50px; border-radius: 100px;">
-                    </div>
+                    <el-popover
+                        placement="bottom-end"
+                        width="200"
+                        trigger="click"
+                    >
+                        <div class="user-person-menu">
+                            <div>
+                                <p class="nick-name">{{ getUserInfo.name }}</p>
+                            </div>
+                            <div class="person-menu-divider" />
+                            <div>
+                                <p class="person-menu-item">
+                                    <font-icon class="fab fa-get-pocket" />
+                                    我的账户
+                                </p>
+                                <p class="person-menu-item">
+                                    <font-icon class="fas fa-envelope" />
+                                    站内信
+                                </p>
+                                <p class="person-menu-item">
+                                    <font-icon class="fas fa-user-circle" />
+                                    联系人
+                                </p>
+                                <div class="person-menu-divider" />
+                                <p class="person-menu-item" @click="logoutHandle">
+                                    <font-icon class="fas fa-sign-out" />
+                                    退出登录
+                                </p>
+                            </div>
+                        </div>
+                        <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
+                            <img :src="getUserInfo.avatar" style="width: 50px; height: 50px; border-radius: 100px;">
+                        </div>
+                    </el-popover>
                 </el-col>
             </el-row>
         </el-header>
@@ -49,9 +80,12 @@
 </template>
 <script>
 import store from '@/store/index.js'
+import FontIcon from '@/components/FontIcon'
+import router from '@/router'
 
 export default {
     name: 'Home',
+    components: {FontIcon},
     data() {
         return {
             menuIndex: null,
@@ -90,6 +124,16 @@ export default {
     methods: {
         activeMenuHandle(routerPath) {
             this.menuIndex = routerPath
+        },
+        logoutHandle() {
+            this.$store.dispatch('user/logout').then(() => {
+                router.push({
+                    path: '/login',
+                    query: {
+                        redirect: router.currentRoute.fullPath
+                    }
+                })
+            })
         }
     }
 }
@@ -120,6 +164,27 @@ export default {
         width: 225px;
         height: 62px;
         float: left;
+    }
+}
+.user-person-menu {
+    .nick-name {
+        height: 16px;
+        color: rgba(70, 70, 70, 86);
+        font-size: 14px;
+        line-height: 16px;
+        text-align: left;
+    }
+    .person-menu-item {
+        color: rgba(70, 70, 70, 86);
+        font-size: 14px;
+        text-align: left;
+    }
+    .person-menu-item:hover {
+        cursor: pointer;
+    }
+    .person-menu-divider {
+        background-color: rgba(210, 210, 210, 78);
+        border: 1px solid rgba(210, 210, 210, 78);
     }
 }
 

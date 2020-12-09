@@ -1,8 +1,12 @@
 <template>
     <div class="write-container">
         <div v-if="writeStatus==0">
+            <div style="display: flex;justify-content: center">
+                <div class="icon-view" style="background-color: red">
+                    <i class="el-icon-check success-icon"/>
+                </div>
+            </div>
             <p style="text-align: center" v-if="writeNotStartPrompt">
-                <i class="el-icon-check"/>
                 <span v-if="writeNotStartPrompt">{{ writeNotStartPrompt }}</span>
             </p>
         </div>
@@ -19,8 +23,13 @@
                     :src="userProjectSetting.submitPromptImg"
                     fit="cover"></el-image>
             </div>
+            <div style="display: flex;justify-content: center">
+                <div class="icon-view">
+                    <i class="el-icon-check success-icon"/>
+                </div>
+            </div>
             <p style="text-align: center">
-                <i class="el-icon-check"/>
+
                 <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
                 <span v-else>{{ globalDefaultValue.projectSubmitPromptText }}</span>
             </p>
@@ -46,7 +55,7 @@ export default {
                 preview: false,
                 showBtns: true
             },
-            writeStatus: 1,
+            writeStatus: 3,
             writeNotStartPrompt: '',
             userProjectSetting: {
                 submitPromptText: ''
@@ -219,5 +228,22 @@ export default {
 .write-container {
     margin: 0;
     padding: 0;
+}
+.icon-view {
+    width: 59px;
+    height: 59px;
+    border-radius: 100px;
+    background-color: #0076FF;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.success-icon {
+    text-align: center;
+    color: white;
+    font-size: 30px;
 }
 </style>

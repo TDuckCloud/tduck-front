@@ -24,6 +24,12 @@ const actions = {
             })
             resolve()
         })
+    },
+    logout(context) {
+        context.commit('setData', {
+            token: null,
+            userInfo: null
+        })
     }
 }
 
