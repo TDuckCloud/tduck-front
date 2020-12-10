@@ -29,10 +29,10 @@ export default class sign {
      * @returns {string} 获取签名
      */
     static getSign(url, requestParams) {
-
         let urlParams = this.parseQueryString(url)
         let jsonObj = _.merge(urlParams, requestParams)
         let requestBody = this.sortAsc(jsonObj)
+        console.log(constants.signSecret + JSON.stringify(requestBody))
         return md5(constants.signSecret + JSON.stringify(requestBody)).toLowerCase()
     }
 

@@ -56,8 +56,20 @@ api.interceptors.request.use(
                 request.params = {}
             }
             let timestamp = new Date().getTime()
+            // get 请求所有参数转成string类型 用于签名计算
             request.params.timestamp = '' + timestamp
-            let sign = signMd5Utils.getSign(request.url, request.params)
+            let strParams = JSON.stringify(request.params, function(key, value) {
+                if (key) {
+                    if (value == undefined || value == null) {
+                        return undefined
+                    }
+                    return '' + value
+                }
+
+                return value
+            })
+            console.log(JSON.stringify(request.params) + ':str' + strParams)
+            let sign = signMd5Utils.getSign(request.url, JSON.parse(strParams))
             request.params.sign = sign
         }
         return request

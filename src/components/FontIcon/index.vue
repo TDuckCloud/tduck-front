@@ -15,3 +15,8 @@ export default {
   }
 }
 </script>
+<style>
+i::before{
+    background:transparent;
+}
+</style>

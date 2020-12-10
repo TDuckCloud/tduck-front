@@ -62,6 +62,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/create.vue')
             },
             {
+                path: 'my',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject.vue')
+            },
+            {
                 path: 'form',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index.vue')

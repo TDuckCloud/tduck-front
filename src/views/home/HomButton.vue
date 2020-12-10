@@ -6,7 +6,9 @@
             </el-button>
         </el-col>
         <el-col :span="5">
-            <el-button class="home-fun-btn">我的项目<i class="el-icon-s-custom" /></el-button>
+            <el-button class="home-fun-btn" @click="$router.push({path:'/project/my'})">
+                我的项目<i class="el-icon-s-custom" />
+            </el-button>
         </el-col>
         <el-col :span="5">
             <el-button class="home-fun-btn">行业模板<i class="el-icon-s-management" /></el-button>

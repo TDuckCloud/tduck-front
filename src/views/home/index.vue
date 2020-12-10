@@ -1,76 +1,78 @@
 <template>
-    <el-container>
-        <el-header height="80" class="home-header-view">
-            <el-row type="flex" align="middle">
-                <el-col :span="4" :offset="1">
-                    <img src="@/assets/images/indexLogo.png" class="header-logo-img"
-                         @click="$router.push({path:'/'})"
-                    >
-                </el-col>
-                <el-col :span="10">
-                    <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5"
-                             active-text-color="#205BB5"
-                    >
-                        <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
-                                      :route="item.routerPath" class="menu-item"
+    <div>
+        <el-container>
+            <el-header height="80" class="home-header-view">
+                <el-row type="flex" align="middle">
+                    <el-col :span="4" :offset="1">
+                        <img src="@/assets/images/indexLogo.png" class="header-logo-img"
+                             @click="$router.push({path:'/'})"
                         >
-                            {{ item.title }}
-                        </el-menu-item>
-                    </el-menu>
-                </el-col>
-                <el-col :span="1">
-                    <el-button round>升级</el-button>
-                </el-col>
-                <el-col :span="1">
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <svg-icon name="loginWx" style="width: 24px; height: 24px;" />
-                    </div>
-                </el-col>
-                <el-col :span="1">
-                    <el-link href="https://element.eleme.io" target="_blank">帮助</el-link>
-                </el-col>
-                <el-col :span="3">
-                    <el-popover
-                        placement="bottom-end"
-                        width="200"
-                        trigger="click"
-                    >
-                        <div class="user-person-menu">
-                            <div>
-                                <p class="nick-name">{{ getUserInfo.name }}</p>
-                            </div>
-                            <div class="person-menu-divider" />
-                            <div>
-                                <p class="person-menu-item">
-                                    <font-icon class="fab fa-get-pocket" />
-                                    我的账户
-                                </p>
-                                <p class="person-menu-item">
-                                    <font-icon class="fas fa-envelope" />
-                                    站内信
-                                </p>
-                                <p class="person-menu-item">
-                                    <font-icon class="fas fa-user-circle" />
-                                    联系人
-                                </p>
+                    </el-col>
+                    <el-col :span="10">
+                        <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5"
+                                 active-text-color="#205BB5"
+                        >
+                            <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
+                                          :route="item.routerPath" class="menu-item"
+                            >
+                                {{ item.title }}
+                            </el-menu-item>
+                        </el-menu>
+                    </el-col>
+                    <el-col :span="1">
+                        <el-button round>升级</el-button>
+                    </el-col>
+                    <el-col :span="1">
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <svg-icon name="loginWx" style="width: 24px; height: 24px;" />
+                        </div>
+                    </el-col>
+                    <el-col :span="1">
+                        <el-link href="https://element.eleme.io" target="_blank">帮助</el-link>
+                    </el-col>
+                    <el-col :span="3">
+                        <el-popover
+                            placement="bottom-end"
+                            width="200"
+                            trigger="click"
+                        >
+                            <div class="user-person-menu">
+                                <div>
+                                    <p class="nick-name">{{ getUserInfo.name }}</p>
+                                </div>
                                 <div class="person-menu-divider" />
-                                <p class="person-menu-item" @click="logoutHandle">
-                                    <font-icon class="fas fa-sign-out" />
-                                    退出登录
-                                </p>
+                                <div>
+                                    <p class="person-menu-item">
+                                        <font-icon class="fab fa-get-pocket" />
+                                        我的账户
+                                    </p>
+                                    <p class="person-menu-item">
+                                        <font-icon class="fas fa-envelope" />
+                                        站内信
+                                    </p>
+                                    <p class="person-menu-item">
+                                        <font-icon class="fas fa-user-circle" />
+                                        联系人
+                                    </p>
+                                    <div class="person-menu-divider" />
+                                    <p class="person-menu-item" @click="logoutHandle">
+                                        <font-icon class="fas fa-sign-out" />
+                                        退出登录
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                        <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
-                            <img :src="getUserInfo.avatar" class="user-avatar">
-                        </div>
-                    </el-popover>
-                </el-col>
-            </el-row>
-        </el-header>
-        <el-main style="padding: 2px;">
-            <router-view />
-        </el-main>
-    </el-container>
+                            <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
+                                <img :src="getUserInfo.avatar" class="user-avatar">
+                            </div>
+                        </el-popover>
+                    </el-col>
+                </el-row>
+            </el-header>
+            <el-main class="home-main-view">
+                <router-view />
+            </el-main>
+        </el-container>
+    </div>
 </template>
 <script>
 import store from '@/store/index.js'
@@ -133,6 +135,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .menu-item {
     line-height: 80px;
     height: 80px;

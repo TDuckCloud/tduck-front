@@ -151,7 +151,7 @@ export default {
             }
         },
         queryProjectItems() {
-            this.$api.get(`/user/project/item/query/${this.projectKey}`).then(res => {
+            this.$api.get(`/user/project/item/list/${this.projectKey}`).then(res => {
                 if (res.data) {
                     res.data.map((item) => {
                         _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)
