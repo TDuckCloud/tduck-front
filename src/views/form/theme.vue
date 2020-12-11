@@ -9,7 +9,9 @@
                             <el-col :span="3">
                                 <span class="theme-prompt-text">风格</span>
                             </el-col>
-                            <el-col :span="3" v-for="item in styleList">
+                            <el-col
+                                :key="item.key"
+                                :span="3" v-for="item in styleList">
                             <span
                                 :class="{'style-btn-active':activeStyle==item.key}"
                                 class="style-btn" @click="activeStyleHandle(item)">{{item.label}}</span>
@@ -28,12 +30,14 @@
                                 :class="{'style-btn-active':activeColor==c}"
                                 @click.native="activeColorHandle(c)" v-bind:style="{backgroundColor: c}"
                                 class="color-btn"
+                                :key="c"
                                 :span="3" v-for="c in colorList">
                             </el-col>
                         </el-row>
                         <el-row>
                             <el-col
                                 class="theme-img-view"
+                                :key="t.id"
                                 :span="8" v-for="t in themeList"
                                 @click.native="activeThemeHandle(t)">
                                 <p :class="{'head-list-view-select':activeTheme.id==t.id}">
@@ -321,7 +325,7 @@ export default {
             })
         },
         queryUserProjectTheme() {
-            this.$api.get(`/user/project/theme/query/${this.projectKey}`).then(res => {
+            this.$api.get(`/user/project/theme/${this.projectKey}`).then(res => {
                 if(!res.data){
                     return
                 }
@@ -359,7 +363,7 @@ export default {
             this.queryProjectTheme()
         },
         queryProjectTheme() {
-            this.$api.get('/project/theme/query', {
+            this.$api.get('/project/theme/list', {
                 params: {
                     'color': this.activeColor,
                     'style': this.activeStyle

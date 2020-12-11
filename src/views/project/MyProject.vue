@@ -1,60 +1,66 @@
 <template>
     <div class="my-project-container">
         <div class="filter-view">
-            <el-row type="flex" align="middle" justify="center" style="height: 50px;">
-                <el-col :span="3">
-                    <font-icon class="fas fa-th-large show-view-type-icon show-view-type-icon-active" />
-                    <font-icon class="fas  fa-th-list show-view-type-icon" />
-                </el-col>
-                <el-col :span="3">
-                    <span class="title">项目更新时间</span>
-                </el-col>
-                <el-col :span="10">
+            <div>
+                <span @click="switchDataShowTypeHandle('gird')">
+                    <font-icon
+                        class="fas fa-th-large show-view-type-icon "
+                        :class="{'show-view-type-icon-active':dataShowType=='gird'}"
+                    />
+                </span>
+                <span @click="switchDataShowTypeHandle('table')">
+                    <font-icon
+                        class="fas  fa-th-list show-view-type-icon"
+                        :class="{'show-view-type-icon-active':dataShowType=='table'}"
+                    />
+                </span>
+            </div>
+            <el-form ref="form" label-width="100px">
+                <el-form-item label="项目更新时间">
                     <el-date-picker
-                        style="width: 50%;"
+                        v-model="queryParams.beginDateTime"
+                        style="width: 20%;"
+                        value-format="yyyy-MM-dd HH:mm:ss"
                         type="datetime"
                         placeholder="选择开始时间"
                     />
+                    至
                     <el-date-picker
-                        style="width: 50%;"
+                        v-model="queryParams.endDateTime"
+                        style="width: 20%;"
                         type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        :default-time="'23:59:59'"
                         placeholder="选择结束时间"
                     />
-                </el-col>
-                <el-col :span="4" :offset="1">
-                    <el-input v-model="queryParams.name" type="text" placeholder="请输入项目名称" />
-                </el-col>
-                <el-col :span="3" :offset="1">
-                    <el-button type="primary" @click="queryProjectPage">查询</el-button>
-                </el-col>
-                <el-col :span="6">
-                    <el-button>
+                    <el-input
+                        v-model="queryParams.name"
+                        style="width: 20%; margin-left: 20px;" type="text" placeholder="请输入项目名称"
+                    />
+                    <el-button style="margin-left: 20px;" type="primary" @click="queryProjectPage">查询</el-button>
+                    <el-button style="margin-left: 20px;">
                         <font-icon class="fas fa-plus-square" />
                         新建文件夹
                     </el-button>
-                    <el-button>
+                    <el-button style="margin-left: 10px;">
                         <font-icon class="fas fa-recycle" />
                         回收站
                     </el-button>
-                </el-col>
-            </el-row>
-            <el-row type="flex" align="middle" justify="center" style="height: 50px;">
-                <el-col :span="2" :offset="3">
-                    <span class="title">项目状态</span>
-                </el-col>
-                <el-col :span="6">
+                </el-form-item>
+                <el-form-item label="项目状态">
                     <el-radio-group v-model="queryParams.status" size="small" @change="queryProjectPage">
                         <el-radio-button v-for="status in projectStatusList" :key="status.code" :label="status.code">
                             {{ status.name }}
                         </el-radio-button>
                     </el-radio-group>
-                </el-col>
-                <el-col :span="13" />
-            </el-row>
+                </el-form-item>
+            </el-form>
         </div>
-        <div class="project-grid-view">
-            <el-row>
-                <el-col v-for="p in projectList" :key="p.id" class="project-grid-item-view" :span="4">
+        <div v-if="dataShowType=='gird'" class="project-grid-container">
+            <div
+                class="project-grid-view"
+            >
+                <div v-for="p in projectList" :key="p.id" class="project-grid-item-view" :span="4">
                     <span v-for="status in projectStatusList" :key="status.code">
                         <span
                             v-if="status.code==p.status"
@@ -69,8 +75,68 @@
                          src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/pic%20(1).png"
                     >
                     <p class="project-grid-view-time">创建时间：2020/12/8</p>
-                </el-col>
-            </el-row>
+                </div>
+            </div>
+        </div>
+        <div v-if="dataShowType=='table'" class="project-table-view">
+            <el-table
+                :data="projectList"
+                stripe
+                border
+                highlight-current-row
+
+                style="width: 100%;"
+                empty-text="暂无数据"
+            >
+                <el-table-column
+                    prop="name"
+                    align="center"
+                    label="标题"
+                />
+                <el-table-column
+                    show-overflow-tooltip
+                    prop="describe"
+                    align="center"
+                    label="描述"
+                />
+                <el-table-column
+                    align="center"
+                    label="状态"
+                >
+                    <template slot-scope="scope">
+                        <span v-for="status in projectStatusList" :key="status.code">
+                            <span
+                                v-if="status.code==scope.row.status"
+                            >
+                                {{ status.name }}
+                            </span>
+                        </span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    align="center"
+                    prop="createTime"
+                    label="创建时间"
+                />
+                <el-table-column
+                    align="center"
+                    prop="updateTime"
+                    label="更新时间"
+                />
+                <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <el-link type="primary"
+                                 style="margin: 2px;"
+                                 @click="$router.push({path: '/project/form', query: {key: scope.row.key,active:1}})"
+                        >
+                            编辑
+                        </el-link>
+                        <el-link type="danger" style="margin: 2px;">
+                            删除
+                        </el-link>
+                    </template>
+                </el-table-column>
+            </el-table>
         </div>
         <div class="project-page-view">
             <el-pagination
@@ -97,11 +163,14 @@ export default {
     components: {},
     data() {
         return {
+            dataShowType: 'gird',
             total: 0,
             queryParams: {
                 current: 1,
                 size: 10,
                 name: '',
+                beginDateTime: null,
+                endDateTime: null,
                 status: null
             },
             projectStatusList: projectStatusList,
@@ -114,6 +183,9 @@ export default {
     },
 
     methods: {
+        switchDataShowTypeHandle(type) {
+            this.dataShowType = type
+        },
         getStatusColorClass(code) {
             let color = this.projectStatusList.find(item => item.code = code).color
             return {
@@ -138,18 +210,17 @@ export default {
 
 <style scoped>
 .my-project-container {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 80vh;
-    overflow-x: hidden !important;
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
+    align-content: center;
+    justify-content: center;
 }
 .filter-view {
     margin-top: 40px;
-    width: 60%;
+    display: flex;
+    flex-direction: row;
 }
 .title {
     color: rgba(16, 16, 16, 100);
@@ -158,18 +229,32 @@ export default {
     line-height: 20px;
 }
 .show-view-type-icon {
-    width: 20px;
-    height: 20px;
+    width: 17px;
+    height: 17px;
     color: #a8a8a8;
     font-size: 20px;
     margin: 5px;
+    cursor: pointer;
 }
 .show-view-type-icon-active {
     color: rgba(92, 155, 249, 100);
 }
-.project-grid-view {
+.project-grid-container {
     margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.project-grid-view {
+    display: flex;
     width: 60%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.project-table-view {
+    margin-top: 20px;
+    width: 80%;
 }
 .project-grid-item-view {
     width: 169px;
@@ -191,7 +276,7 @@ export default {
     background-color: rgba(0, 110, 255, 100);
     text-align: center;
     border: 1px solid rgba(0, 110, 255, 100);
-    border-radius: 80px;
+    border-radius: 20px;
     position: absolute;
     left: 10px;
     top: 20px;

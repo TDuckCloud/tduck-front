@@ -12,13 +12,13 @@
                 :src="projectTheme.headImgUrl"
                 fit="scale-down"></el-image>
             <el-row v-if="projectTheme.showTitle" type="flex" justify="center" align="middle">
-                <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
+                <el-col  style="text-align: center">
                     <h4 class="form-name-text">
                         {{ formConf.title }}</h4>
                 </el-col>
             </el-row>
             <el-row v-if="projectTheme.showDescribe" type="flex" justify="center" align="middle">
-                <el-col :sm="{span:20}" :xs="{span:24,offset:0}" style="text-align: center">
+                <el-col style="text-align: center">
                     <p class="form-name-text">
                         {{ formConf.description }}
                     </p>
@@ -103,7 +103,7 @@ export default {
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/user/project/details/query/${this.projectKey}`).then(res => {
+        this.$api.get(`/user/project/details/${this.projectKey}`).then(res => {
             if (res.data) {
                 let fields = res.data.projectItems.map(item => {
                     return dbDataConvertForItemJson(item)

@@ -43,7 +43,7 @@
                                 @blur="(event)=>{
                                     formConf.title=event.target.innerText;
                                     this.saveProjectInfo()}">
-                                {{formConf.title}}</h4>
+                                {{ formConf.title }}</h4>
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
@@ -52,7 +52,7 @@
                                @blur="(event)=>{
                                    formConf.description=event.target.innerText;
                                    this.saveProjectInfo()}">
-                                {{formConf.description}}
+                                {{ formConf.description }}
                             </p>
                         </el-col>
                     </el-row>
@@ -63,7 +63,8 @@
                         :disabled="formConf.disabled"
                         :label-width="formConf.labelWidth + 'px'"
                     >
-                        <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"  @end="onItemEnd">
+                        <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
+                                   @end="onItemEnd">
                             <draggable-item
                                 v-for="(item, index) in drawingList"
                                 :key="item.renderKey"
@@ -108,7 +109,7 @@ import {
 import {
     exportDefault, beautifierConf, isNumberStr, titleCase, deepClone
 } from '@/utils/index'
-import {formItemConvertData} from '@/utils/convert'
+import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
 import DraggableItem from './DraggableItem'
 import {
@@ -118,7 +119,6 @@ import {
 let oldActiveId
 let tempActiveData
 let drawingListInDB
-let formConfInDB
 let idGlobal
 
 export default {
@@ -128,8 +128,9 @@ export default {
         RightPanel,
         DraggableItem
     },
-    props:{
-        projectKey:''
+    props: {
+        projectKey: '',
+        isEdit: true //是编辑状态进入
     },
     data() {
         return {
@@ -198,30 +199,31 @@ export default {
     mounted() {
         //项目key
         let projectKey = this.projectKey
-        //表单内容 如果表单为空 使用默认表单
-        drawingListInDB = getDrawingList(projectKey)
-        if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
-            this.drawingList = drawingListInDB
+        //如果是编辑 从服务端读取数据
+        if (this.isEdit) {
+            this.queryProjectItems()
         } else {
-            this.drawingList = drawingDefalut
+            //表单内容 如果表单为空 使用默认表单
+            drawingListInDB = getDrawingList(projectKey)
+            if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
+                this.drawingList = drawingListInDB
+            } else {
+                this.drawingList = drawingDefalut
+            }
         }
         if (this.drawingList.length) {
             this.activeFormItem(this.drawingList[0])
         }
         //获取表单配置
-        // formConfInDB = getFormConf(projectKey)
-        // if (formConfInDB) {
-        //     this.formConf = formConfInDB
-        // }
-        //获取后台数据
-        this.$api.get(`/user/project/query/${projectKey}`).then(res => {
+        //获取服务端数据
+        this.$api.get(`/user/project/${projectKey}`).then(res => {
             this.formConf.title = res.data.name
             this.formConf.description = res.data.describe
         })
         //全局组件Id
-        if (getIdGlobal(projectKey)) {
-            this.idGlobal = getIdGlobal(projectKey)
-        }
+        this.$api.get(`/user/project/item/max-form-id`, {params: {key: this.projectKey}}).then(res => {
+            this.idGlobal = res.data ? res.data : 100
+        })
         this.projectKey = projectKey
 
     },
@@ -242,7 +244,6 @@ export default {
             })
         },
         deleteProjectItemInfo(val) {
-            console.log(val)
             let data = formItemConvertData(val, this.projectKey)
             this.$api.post('/user/project/item/delete', data).then((res) => {
 
@@ -252,6 +253,11 @@ export default {
             let params = formItemConvertData(item, this.projectKey)
             this.$api.post('/user/project/item/create', params).then(res => {
                 item.sort = res.data.sort
+            })
+        },
+        queryProjectItems() {
+            this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
+                this.drawingList = res.data.map(item => dbDataConvertForItemJson(item))
             })
         },
         activeFormItem(currentItem) {
@@ -268,18 +274,18 @@ export default {
                 this.activeId = this.idGlobal
             }
         },
-        onItemEnd(obj){
+        onItemEnd(obj) {
             console.log(obj)
-            let params={'projectKey':this.projectKey}
-            if(this.drawingList[obj.newIndex-1]){
-                let sort1=this.drawingList[obj.newIndex-1].sort
-                params.beforePosition=sort1
+            let params = {'projectKey': this.projectKey}
+            if (this.drawingList[obj.newIndex - 1]) {
+                let sort1 = this.drawingList[obj.newIndex - 1].sort
+                params.beforePosition = sort1
             }
-            if(this.drawingList[obj.newIndex+1]){
-                let sort2=  this.drawingList[obj.newIndex+1].sort
-                params.afterPosition=sort2
+            if (this.drawingList[obj.newIndex + 1]) {
+                let sort2 = this.drawingList[obj.newIndex + 1].sort
+                params.afterPosition = sort2
             }
-            params.formItemId=this.drawingList[obj.newIndex].__config__.formId
+            params.formItemId = this.drawingList[obj.newIndex].__config__.formId
             this.$api.post('/user/project/item/sort', params).then(res => {
                 this.drawingList[obj.newIndex].sort = res.data.sort
             })
@@ -289,14 +295,14 @@ export default {
             this.drawingList.push(clone)
             this.activeFormItem(clone)
         },
-        cloneComponent(origin,save=true) {
+        cloneComponent(origin, save = true) {
             const clone = deepClone(origin)
             const config = clone.__config__
             config.span = this.formConf.span // 生成代码时，会根据span做精简判断
             this.createIdAndKey(clone)
             clone.placeholder !== undefined && (clone.placeholder += config.label)
             tempActiveData = clone
-            if(save){
+            if (save) {
                 this.saveProjectItemInfo(clone)
             }
             return tempActiveData
@@ -345,16 +351,16 @@ export default {
             this.deleteProjectItemInfo(item)
         },
         tagChange(newTag) {
-            newTag = this.cloneComponent(newTag,false)
+            newTag = this.cloneComponent(newTag, false)
             const config = newTag.__config__
             newTag.__vModel__ = this.activeData.__vModel__
-            newTag.sort=this.activeData.sort
+            newTag.sort = this.activeData.sort
             config.formId = this.activeId
             config.span = this.activeData.__config__.span
             this.activeData.__config__.tag = config.tag
             this.activeData.__config__.tagIcon = config.tagIcon
             this.activeData.__config__.document = config.document
-            this.activeData.typeId=newTag.typeId
+            this.activeData.typeId = newTag.typeId
             if (typeof this.activeData.__config__.defaultValue === typeof config.defaultValue) {
                 config.defaultValue = this.activeData.__config__.defaultValue
             }
@@ -383,6 +389,6 @@ export default {
 </script>
 
 <style lang='scss'>
-@import '@/assets/styles/home';
-@import '@/assets/styles/index';
+@import '@/assets/styles/form/home';
+@import '@/assets/styles/form/index';
 </style>

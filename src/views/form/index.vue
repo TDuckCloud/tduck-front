@@ -18,11 +18,13 @@
                 </el-menu>
             </el-col>
         </el-row>
-        <editor :projectKey="projectKey" v-if="activeIndex==1&&projectKey"/>
-        <theme :projectKey="projectKey" v-if="activeIndex==2"/>
-        <setting :projectKey="projectKey" v-if="activeIndex==3"/>
-        <publish :projectKey="projectKey" v-if="activeIndex==4"/>
-        <statistics :projectKey="projectKey" v-if="activeIndex==5&&projectKey"/>
+        <div v-if="projectKey">
+            <editor :projectKey="projectKey" :is-edit="isEdit" v-if="activeIndex==1"/>
+            <theme :projectKey="projectKey" v-if="activeIndex==2"/>
+            <setting :projectKey="projectKey" v-if="activeIndex==3"/>
+            <publish :projectKey="projectKey" v-if="activeIndex==4"/>
+            <statistics :projectKey="projectKey" v-if="activeIndex==5"/>
+        </div>
     </div>
 </template>
 
@@ -32,6 +34,7 @@ import theme from './theme'
 import setting from './setting'
 import publish from './publish'
 import statistics from './statistics'
+
 export default {
     components: {
         editor,
@@ -43,14 +46,16 @@ export default {
     data() {
         return {
             activeIndex: '5',
-            projectKey: ''
+            isEdit: false,
+            projectKey:''
         }
     },
     computed: {},
     watch: {},
     mounted() {
         this.projectKey = this.$route.query.key
-        console.log(this.projectKey)
+        this.isEdit = !!this.$route.query.active
+        this.activeIndex=this.$route.query.active
     },
     methods: {
         handleSelect(key, keyPath) {

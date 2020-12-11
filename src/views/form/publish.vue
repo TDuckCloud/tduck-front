@@ -42,7 +42,8 @@
                         <div style="text-align: center">
                             <el-link type="primary" @click="()=>{
                                 this.downloadFile('qrcode.png',this.qrCodeUrl)
-                            }">下载分享二维码</el-link>
+                            }">下载分享二维码
+                            </el-link>
                         </div>
                     </el-col>
                 </el-row>
@@ -66,6 +67,7 @@ export default {
     mounted() {
         let url = window.location.protocol + '//' + window.location.host
         this.writeLink = `${url}/project/write?key=${this.projectKey}`
+        this.getProjectStatus()
     },
     data() {
         return {
@@ -74,8 +76,15 @@ export default {
             qrCodeUrl: ''
         }
     }, methods: {
+        getProjectStatus() {
+            this.$api.get(`/user/project/${this.projectKey}`).then(res => {
+                if (res.data.status != 1) {
+                    this.publishStatus = true
+                }
+            })
+        },
         publishProject() {
-            this.$api.post(`/user/project/publish/${this.projectKey}`).then(res => {
+            this.$api.post(`/user/project/publish`, {key: this.projectKey}).then(res => {
                 this.publishStatus = true
                 this.msgSuccess('发布成功')
             })
@@ -84,12 +93,12 @@ export default {
             this.qrCodeUrl = dataUrl
         },
         downloadFile(fileName, content) {
-            let aLink = document.createElement('a');
-            let blob = this.base64ToBlob(content); //new Blob([content]);
-            let evt = document.createEvent("HTMLEvents");
-            evt.initEvent("click", true, true);//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
-            aLink.download = fileName;
-            aLink.href = URL.createObjectURL(blob);
+            let aLink = document.createElement('a')
+            let blob = this.base64ToBlob(content) //new Blob([content]);
+            let evt = document.createEvent('HTMLEvents')
+            evt.initEvent('click', true, true)//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+            aLink.download = fileName
+            aLink.href = URL.createObjectURL(blob)
             // aLink.dispatchEvent(evt);
             aLink.click()
         },

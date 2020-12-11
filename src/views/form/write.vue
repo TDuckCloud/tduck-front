@@ -1,10 +1,8 @@
 <template>
     <div class="write-container">
-        <div v-if="writeStatus==0">
-            <div style="display: flex;justify-content: center">
-                <div class="icon-view" style="background-color: red">
-                    <i class="el-icon-check success-icon"/>
-                </div>
+        <div v-if="writeStatus==0" class="title-icon-view">
+            <div class="icon-view">
+                <i class="el-icon-check success-icon"/>
             </div>
             <p style="text-align: center" v-if="writeNotStartPrompt">
                 <span v-if="writeNotStartPrompt">{{ writeNotStartPrompt }}</span>
@@ -16,20 +14,17 @@
                 :projectConfig="projectConfig"
                 v-if="projectConfig.projectKey"/>
         </div>
-        <div v-if="writeStatus==2">
-            <div style="text-align: center">
+        <div v-if="writeStatus==2" class="title-icon-view">
+            <div>
                 <el-image
                     v-if="userProjectSetting.submitPromptImg"
                     :src="userProjectSetting.submitPromptImg"
                     fit="cover"></el-image>
             </div>
-            <div style="display: flex;justify-content: center">
-                <div class="icon-view">
-                    <i class="el-icon-check success-icon"/>
-                </div>
+            <div class="icon-view">
+                <i class="el-icon-check success-icon"/>
             </div>
             <p style="text-align: center">
-
                 <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
                 <span v-else>{{ globalDefaultValue.projectSubmitPromptText }}</span>
             </p>
@@ -55,7 +50,7 @@ export default {
                 preview: false,
                 showBtns: true
             },
-            writeStatus: 3,
+            writeStatus: 2,
             writeNotStartPrompt: '',
             userProjectSetting: {
                 submitPromptText: ''
@@ -96,7 +91,7 @@ export default {
     }, methods: {
         queryProjectSettingStatus() {
             //是否能进入填写
-            this.$api.get(`/user/project/setting/status/${this.projectConfig.projectKey}`).then(res => {
+            this.$api.get(`/user/project/setting/status`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
                 if (res.msg) {
                     this.writeNotStartPrompt = res.msg
                     this.writeStatus = 0
@@ -184,7 +179,7 @@ export default {
             })
         },
         queryProjectSetting() {
-            this.$api.get(`/user/project/setting/query/${this.projectConfig.projectKey}`).then(res => {
+            this.$api.get(`/user/project/setting/${this.projectConfig.projectKey}`).then(res => {
                 if (res.data) {
                     this.userProjectSetting = res.data
                     //仅在微信环境打开
@@ -223,21 +218,33 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
 .write-container {
     margin: 0;
     padding: 0;
+    height: 100%;
+    width: 100%;
+
 }
+
+.title-icon-view {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
 .icon-view {
     width: 59px;
     height: 59px;
     border-radius: 100px;
     background-color: #0076FF;
     display: flex;
-    align-items: center;
     align-content: center;
-    justify-items: center;
+    align-items: center;
     justify-content: center;
 }
 

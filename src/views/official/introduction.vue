@@ -184,7 +184,6 @@ export default {
     float: left;
     cursor: pointer;
     height: 60px;
-    padding: 25px 0 20px 0;
 }
 .menu-item {
     line-height: 110px;

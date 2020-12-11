@@ -474,7 +474,8 @@
                             class="setting-input" style="width: 80%" v-model="userProjectSettingData.shareDesc"/>
                     </el-col>
                 </el-row>
-                <div v-if="userProjectSettingData.shareDesc||userProjectSettingData.shareTitle||userProjectSettingData.shareImg">
+                <div
+                    v-if="userProjectSettingData.shareDesc||userProjectSettingData.shareTitle||userProjectSettingData.shareImg">
                     <div class="share-preview">
                         <div class="share-preview-msg">
                             <div>
@@ -590,7 +591,7 @@ export default {
         },
         queryUserProjectSetting() {
             this.userProjectSettingData.projectKey = this.projectKey
-            this.$api.get(`/user/project/setting/query/${this.projectKey}`).then(res => {
+            this.$api.get(`/user/project/setting/${this.projectKey}`).then(res => {
                 if (res.data) {
                     this.userProjectSettingData = res.data
                     let {
@@ -630,7 +631,7 @@ export default {
             }, 5 * 1000)
         },
         querySubNotifyWxUser(openIdStr) {
-            this.$api.get('/user/project/wx/notify/user', {
+            this.$api.get('/user/project/wx/notify-user', {
                 params: {
                     key: this.projectKey,
                     openIdStr: openIdStr
@@ -647,7 +648,7 @@ export default {
             })
         },
         getSubNotifyWxQrCode() {
-            this.$api.get('/user/project/wx/notify/qrcode', {params: {key: this.projectKey}}).then(res => {
+            this.$api.get('user/project/wx/notify-qrcode', {params: {key: this.projectKey}}).then(res => {
                 this.subNotifyWxQrCode = res.data
             })
         },
@@ -655,7 +656,7 @@ export default {
             if (this.subNotifyWxUserList) {
                 let openId = this.subNotifyWxUserList[i].openId
                 let key = this.projectKey
-                this.$api.post(`/user/project/wx/notify/user/delete/${key}/${openId}`).then(res => {
+                this.$api.post(`/user/project/wx/delete/notify-user?key=${key}&openId=${openId}`).then(res => {
                     this.subNotifyWxUserList.splice(i)
                     this.userProjectSettingData.newWriteNotifyWx = this.subNotifyWxUserList.map(item => item.openId).join(';')
                     this.saveUserProjectSetting()

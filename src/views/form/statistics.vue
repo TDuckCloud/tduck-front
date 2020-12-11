@@ -1,17 +1,20 @@
 <template>
     <div class="statistics-container">
         <div class="filter-table-view">
-            <el-form :inline="true"  class="demo-form-inline" ref="filterForm">
+            <el-form :inline="true" class="demo-form-inline" ref="filterForm">
                 <el-form-item label="提交时间" prop="endDateTime">
                     <el-date-picker
                         v-model="queryConditions.beginDateTime"
                         type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
                         placeholder="开始时间">
                     </el-date-picker>
                     <span> 至 </span>
                     <el-date-picker
                         v-model="queryConditions.endDateTime"
                         type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
+                        :default-time="'23:59:59'"
                         placeholder="结束时间">
                     </el-date-picker>
                 </el-form-item>
@@ -28,7 +31,7 @@
                     type="selection"
                     width="55">
                 </el-table-column>
-                <el-table-column v-for="col in fixedCustomColumns" :key="col"
+                <el-table-column v-for="col in fixedCustomColumns" :key="`t${col}`"
                                  :label="fixedDefaultLabelFormColumn[col]">
                     <template slot-scope="scope">
                         {{ scope.row[col] }}
@@ -57,7 +60,7 @@
                 <el-divider></el-divider>
                 <el-checkbox-group v-model="checkFixedCustomColumns">
                     <el-row>
-                        <el-col :span="4" v-for="(val, key, index)  in fixedDefaultLabelFormColumn">
+                        <el-col :span="4" v-for="(val, key, index)  in fixedDefaultLabelFormColumn" :key="key">
                             <el-checkbox :label="key">{{ val }}</el-checkbox>
                         </el-col>
                     </el-row>
@@ -65,7 +68,7 @@
                 <el-divider></el-divider>
                 <el-checkbox-group v-model="checkOtherCustomColumns">
                     <el-row>
-                        <el-col :span="8" v-for="(val, key, index) in projectItemColumns">
+                        <el-col :span="8" v-for="(val, key, index) in projectItemColumns" :key="key">
                             <el-checkbox :label="key">{{ val }}</el-checkbox>
                         </el-col>
                     </el-row>
@@ -126,7 +129,7 @@ export default {
             )
         },
         queryProjectResult() {
-            this.$api.post(`/user/project/result/query`, this.queryConditions).then(res => {
+            this.$api.post(`/user/project/result/page`, this.queryConditions).then(res => {
                 this.projectResultList = res.data.records
             })
         },
@@ -151,7 +154,7 @@ export default {
             }
         },
         queryProjectItems() {
-            this.$api.get(`/user/project/item/list/${this.projectKey}`).then(res => {
+            this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
                 if (res.data) {
                     res.data.map((item) => {
                         _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)
