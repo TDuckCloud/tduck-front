@@ -112,7 +112,7 @@ api.interceptors.response.use(
                 })
             }
         }
-        return Promise.reject(res)
+        return Promise.resolve(res)
     },
     error => {
         return Promise.reject(error)

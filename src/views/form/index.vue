@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="overflow-y: hidden!important;">
         <el-row type="flex" align="middle" justify="justify">
             <el-col :offset="1" :span="4">
                 <el-button size="mini" round @click="$router.back(-1)">
@@ -18,7 +18,7 @@
                 </el-menu>
             </el-col>
         </el-row>
-        <div v-if="projectKey">
+        <div v-if="projectKey" style="overflow-y: hidden">
             <editor :projectKey="projectKey" :is-edit="isEdit" v-if="activeIndex==1"/>
             <theme :projectKey="projectKey" v-if="activeIndex==2"/>
             <setting :projectKey="projectKey" v-if="activeIndex==3"/>
@@ -45,9 +45,9 @@ export default {
     },
     data() {
         return {
-            activeIndex: '5',
+            activeIndex: '1',
             isEdit: false,
-            projectKey:''
+            projectKey: ''
         }
     },
     computed: {},
@@ -55,7 +55,9 @@ export default {
     mounted() {
         this.projectKey = this.$route.query.key
         this.isEdit = !!this.$route.query.active
-        this.activeIndex=this.$route.query.active
+        if (this.$route.query.active) {
+            this.activeIndex = this.$route.query.active
+        }
     },
     methods: {
         handleSelect(key, keyPath) {
@@ -67,5 +69,11 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' >
+.container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+}
 </style>

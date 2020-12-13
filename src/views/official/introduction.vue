@@ -1,76 +1,65 @@
 <template>
-    <div id="introduction">
+    <div class="introduction">
         <div class="introduction-body">
-            <div class="view_container">
-                <el-row>
-                    <el-col class="body-col" :span="3" />
-                    <el-col class="body-col" :span="18">
-                        <div>
-                            <el-row>
-                                <el-col :span="14">
-                                    <div class="view_container_content">
-                                        <p class="body-title">TDuck - 填鸭表单</p>
-                                        <p class="body-slogan">有你所想，有你所得。</p>
-                                        <p class="body-sloganEn">TDuck - Have what you want, get you income.</p>
-                                        <p class="body-detail">TDuck填鸭，是一款在线制作表单的应用工具，通过填鸭表单可以收集任何你想得到的信息。</p>
-                                        <p class="body-detail">简单易用，灵活的反馈数据筛选；统计图表一目了然</p>
-                                        <div>
-                                            <el-button class="body-btn primary" type="primary"
-                                                       @click="$router.push({path:'/console'})"
-                                            >
-                                                免费使用
-                                            </el-button>
-                                            <el-button class="body-btn">在线体验</el-button>
-                                        </div>
-                                    </div>
-                                </el-col>
-                                <el-col :span="10">
-                                    <div class="bodyRight">
-                                        <img class="body-right-img"
-                                             src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2woer.png"
-                                        >
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </div>
-                    </el-col>
-                    <el-col class="body-col" :span="3" />
-                </el-row>
+            <div class="view-container">
+                <div class="view-container-content">
+                    <el-row type="flex" justify="center" align="middle">
+                        <el-col :span="10" :offset="1">
+                            <div class="view-container-content">
+                                <p class="body-title">TDuck - 填鸭表单</p>
+                                <p class="body-slogan">有你所想，有你所得。</p>
+                                <p class="body-sloganEn">TDuck - Have what you want, get you income.</p>
+                                <p class="body-detail">TDuck填鸭，是一款在线制作表单的应用工具，通过填鸭表单可以收集任何你想得到的信息。</p>
+                                <p class="body-detail">简单易用，灵活的反馈数据筛选；统计图表一目了然</p>
+                                <div>
+                                    <el-button class="body-btn primary" type="primary"
+                                               @click="$router.push({path:'/console'})"
+                                    >
+                                        免费使用
+                                    </el-button>
+                                    <el-button class="body-btn">在线体验</el-button>
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="10">
+                            <div>
+                                <img class="body-right-img"
+                                     src="@/assets/images/official/v2_q2woer.png"
+                                >
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
             </div>
             <el-divider />
-            <div class="view_container">
-                <el-row>
-                    <el-col class="body-col" :span="24">
-                        <div>
-                            <el-row>
-                                <el-col :span="5" :offset="1">
-                                    <div class="bodyRight">
-                                        <img class="body-right-img"
-                                             src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2wstp.png"
-                                        >
-                                    </div>
-                                </el-col>
-                                <el-col :offset="5" :span="13">
-                                    <div class="view_container_content">
-                                        <p style="font-size: 28px;">杂乱的工作界面也会影响心情鸭！</p>
-                                        <p class="body-title">TDuck，化繁为简，给你最好的体验。</p>
-                                        <p class="body-sloganEn">TDuck -So Easy。</p>
-                                        <p class="body-detail">·超多表单组件供您选择</p>
-                                        <p class="body-detail">·逻辑设置，让您的表单更灵活</p>
-                                        <p class="body-detail"> ·Element UI，饿了么同款UI组建，表单也要美美哒</p>
-                                        <p class="body-detail"> ·多样化数据统计；懂你，胜过另一半</p>
-                                        <div style="width: 42px;" class="title-divider-line" />
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </div>
-                        <el-divider />
-                    </el-col>
-                    <el-col class="body-col" :span="3" />
-                </el-row>
+            <div class="view-container">
+                <div class="view-container-content">
+                    <el-row type="flex" justify="center" align="middle">
+                        <el-col :span="10" :offset="1">
+                            <div>
+                                <img class="body-right-img"
+                                     src="@/assets/images/official/v2_q2wstp.png"
+                                >
+                            </div>
+                        </el-col>
+                        <el-col :offset="1" :span="12">
+                            <div>
+                                <p style="font-size: 28px;">杂乱的工作界面也会影响心情鸭！</p>
+                                <p class="body-title">TDuck，化繁为简，给你最好的体验。</p>
+                                <p class="body-sloganEn">TDuck -So Easy。</p>
+                                <p class="body-detail">·超多表单组件供您选择</p>
+                                <p class="body-detail">·逻辑设置，让您的表单更灵活</p>
+                                <p class="body-detail"> ·Element UI，饿了么同款UI组建，表单也要美美哒</p>
+                                <p class="body-detail"> ·多样化数据统计；懂你，胜过另一半</p>
+                                <div style="width: 42px;" class="title-divider-line" />
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
             </div>
-            <div class="view_container">
-                <div class="view_container_content" style="padding: 100px 0;">
+            <el-divider />
+            <div class="view-container">
+                <div class="view-container-content" style="width: 80%;">
                     <el-row type="flex" align="middle">
                         <el-col :span="10" :offset="5">
                             <p style="font-size: 28px;">TDuck - 填鸭表单</p>
@@ -86,13 +75,12 @@
                             <p style="font-size: 20px; font-weight: 550;">联系我们</p>
                         </el-col>
                     </el-row>
-                    <el-row>
-                        <el-col :span="10" :offset="5">
-                            <img style="height: 478px;"
-                                 src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2wxu6.gif"
-                            >
-                        </el-col>
-                    </el-row>
+                </div>
+                <div>
+                    <img style="height: 478px;"
+                         src="@/assets/images/official/v2_q2wxu6.gif"
+                    >
+                    >
                 </div>
             </div>
             <div class="introduction-footer">
@@ -130,7 +118,10 @@
                     <el-col :span="3">
                         <p class="title"> 友情地址</p>
                         <p class="subtitle">
-                            Element UI
+                            <a href="https://element.eleme.cn/#/zh-CN/" target="_blank">Element UI</a>
+                        </p>
+                        <p class="subtitle">
+                            <a href="https://gitee.com/mrhj/form-generator" target="_blank"> form-generator</a>
                         </p>
                     </el-col>
                     <el-col :span="3" :offset="3">
@@ -152,50 +143,15 @@
 
 export default {
     data() {
-        return {
-
-        }
+        return {}
     },
-    computed: {
-    },
-    watch: {
-
-    },
+    computed: {},
+    watch: {},
     mounted() {
     }
 }
 </script>
 <style scoped>
-.header-col,
-.body-col {
-    border: solid thin white;
-}
-.header-container {
-    background-color: white;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-}
-.header-container .header-col .el-menu--horizontal {
-    border: none;
-}
-.header-logo {
-    float: left;
-    cursor: pointer;
-    height: 60px;
-}
-.menu-item {
-    line-height: 110px;
-    height: 110px;
-    font-size: 18px;
-    font-weight: 900;
-    float: right;
-}
-.header-btn {
-    margin: 35px 0 35px 20px;
-    float: right;
-}
 .body-btn {
     margin: 30px 20px 0 0;
     font-size: 20px;
@@ -223,16 +179,25 @@ export default {
     border-color: #205bb5;
     color: #fff;
 }
+.introduction {
+    background: url('~@/assets/images/official/offcial-bg01.png') repeat-x;
+}
 .introduction-body {
-    padding-top: 112px;
+    /* padding-top: 112px; */
 }
-.view_container {
-    margin: 0;
+.view-container {
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
 }
-.view_container_content {
-    padding: 200px 110px;
+.view-container-content {
+    background-color: transparent;
 }
-.view_container_content p {
+.view-container-content p {
     color: #205bb5;
 }
 .body-title {
@@ -260,8 +225,9 @@ export default {
     font-size: 15px;
 }
 .body-right-img {
-    height: 665px;
-    display: block;
+    /* height: 665px; */
+    width: 100%;
+    height: 100%;
 }
 .title-divider-line {
     height: 3px;
@@ -271,7 +237,7 @@ export default {
     border: 1px solid rgba(255, 255, 255, 100);
 }
 .introduction-footer {
-    height: 300px;
+    height: 350px;
     line-height: 20px;
     background-color: rgba(32, 91, 181, 100);
     text-align: center;

@@ -179,7 +179,7 @@
                     </el-row>
                     <el-row v-if="showSettings.btnSetting">
                         <el-row type="flex" align="middle">
-                            <el-col :span="10">
+                            <el-col :span="12">
                                 <span class="option-line-sub-title">按钮提示文字</span>
                             </el-col>
                             <el-col :spvan="10">
@@ -383,12 +383,9 @@ export default {
     background-color: #f7f7f7;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     overflow: hidden;
-
 }
 
 .left-container {
-    width: 341px;
-    height: 70vh;
     line-height: 20px;
     border-radius: 7px;
     text-align: center;

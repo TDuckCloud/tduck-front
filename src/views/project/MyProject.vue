@@ -60,22 +60,36 @@
             <div
                 class="project-grid-view"
             >
-                <div v-for="p in projectList" :key="p.id" class="project-grid-item-view" :span="4">
-                    <span v-for="status in projectStatusList" :key="status.code">
-                        <span
-                            v-if="status.code==p.status"
-                            :style="{backgroundColor:status.color,borderColor:status.color}"
-                            class="project-grid-view-status"
-                        />
-                    </span>
-                    <p>
-                        {{ p.name }}
-                    </p>
+                <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer" :span="4">
+                    <el-row type="flex" align="middle" justify="center">
+                        <el-col :span="5">
+                            <span
+                                :style="getStatusColorStyle(p.status)"
+                                class="project-grid-view-status"
+                            />
+                        </el-col>
+                        <el-col :span="19">
+                            <el-tooltip :content="p.name" placement="top">
+                                <p class="project-title">
+                                    {{ p.name }}
+                                </p>
+                            </el-tooltip>
+                        </el-col>
+                    </el-row>
                     <img class="project-grid-view-preimg"
                          src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/pic%20(1).png"
                     >
                     <p class="project-grid-view-time">创建时间：2020/12/8</p>
+                    <div class="gird-operating-btns">
+                        <el-button type="text" @click="toEditHandle(p.key)">
+                            <i class="el-icon-edit" />
+                            编辑
+                        </el-button>
+                    </div>
                 </div>
+            </div>
+            <div v-if="!projectList||projectList.length==0" class="project-grid-container">
+                <div />
             </div>
         </div>
         <div v-if="dataShowType=='table'" class="project-table-view">
@@ -90,6 +104,7 @@
             >
                 <el-table-column
                     prop="name"
+                    show-overflow-tooltip
                     align="center"
                     label="标题"
                 />
@@ -127,7 +142,7 @@
                     <template slot-scope="scope">
                         <el-link type="primary"
                                  style="margin: 2px;"
-                                 @click="$router.push({path: '/project/form', query: {key: scope.row.key,active:1}})"
+                                 @click="toEditHandle(scope.row.key)"
                         >
                             编辑
                         </el-link>
@@ -144,7 +159,7 @@
                 background
                 :page-size.sync="queryParams.size"
                 :current-page.sync="queryParams.current"
-                layout="prev, pager, next"
+                layout="total, prev, pager, next"
                 :total="total"
                 @current-change="queryProjectPage"
             />
@@ -177,22 +192,26 @@ export default {
             projectList: []
         }
     },
-    computed: {},
+    computed: {
+        getStatusColorStyle() {
+            return function(code) {
+                let color = this.projectStatusList.find(item => item.code == code).color
+                return {
+                    backgroundColor: color,
+                    borderColor: color
+                }
+            }
+        }
+    },
     created() {
         this.queryProjectPage()
     },
-
     methods: {
         switchDataShowTypeHandle(type) {
             this.dataShowType = type
         },
-        getStatusColorClass(code) {
-            let color = this.projectStatusList.find(item => item.code = code).color
-            return {
-                backgroundColor: color,
-                borderColor: color
-            }
-
+        toEditHandle(key) {
+            this.$router.push({path: '/project/form', query: {key: key, active: 1}})
         },
         queryProjectPage() {
             this.$api.get('/user/project/page', {
@@ -208,7 +227,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .my-project-container {
     display: flex;
     width: 100%;
@@ -222,22 +241,16 @@ export default {
     display: flex;
     flex-direction: row;
 }
-.title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: left;
-    line-height: 20px;
-}
 .show-view-type-icon {
-    width: 17px;
-    height: 17px;
-    color: #a8a8a8;
-    font-size: 20px;
+    color: white;
+    font-size: 18px;
+    -webkit-text-stroke: 0.5px #a8a8a8;
     margin: 5px;
     cursor: pointer;
 }
 .show-view-type-icon-active {
     color: rgba(92, 155, 249, 100);
+    -webkit-text-stroke: 0.5px rgba(92, 155, 249, 100);
 }
 .project-grid-container {
     margin-top: 20px;
@@ -247,10 +260,9 @@ export default {
 }
 .project-grid-view {
     display: flex;
-    width: 60%;
+    width: 950px;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
 }
 .project-table-view {
     margin-top: 20px;
@@ -264,22 +276,42 @@ export default {
     background-color: rgba(255, 255, 255, 100);
     text-align: center;
     box-shadow: 0 3px 6px 3px rgba(0, 0, 0, 0.12);
-    border: 1px solid rgba(255, 255, 255, 100);
     margin: 10px;
     position: relative;
+    .project-title {
+        color: rgba(16, 16, 16, 100);
+        font-size: 14px;
+        text-align: left;
+        line-height: 20px;
+        max-height: 20px;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .project-grid-view-status {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        line-height: 20px;
+        background-color: rgba(0, 110, 255, 100);
+        text-align: center;
+        border: 1px solid rgba(0, 110, 255, 100);
+        border-radius: 20px;
+    }
 }
-.project-grid-view-status {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    line-height: 20px;
-    background-color: rgba(0, 110, 255, 100);
-    text-align: center;
-    border: 1px solid rgba(0, 110, 255, 100);
-    border-radius: 20px;
+.gird-operating-btns {
     position: absolute;
-    left: 10px;
-    top: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    bottom: 0;
+    display: none;
+    border: none;
+}
+.project-grid-item-view:hover .gird-operating-btns {
+    display: block;
 }
 .project-grid-view-preimg {
     width: 143px;
@@ -289,7 +321,7 @@ export default {
     color: rgba(144, 147, 153, 100);
     font-size: 12px;
     line-height: 20px;
-    text-align: left;
+    text-align: center;
     margin: 0;
 }
 .project-page-view {

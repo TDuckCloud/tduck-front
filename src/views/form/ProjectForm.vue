@@ -10,6 +10,7 @@
             <el-image
                 v-if="projectTheme.headImgUrl"
                 :src="projectTheme.headImgUrl"
+                style="width: 100%"
                 fit="scale-down"></el-image>
             <el-row v-if="projectTheme.showTitle" type="flex" justify="center" align="middle">
                 <el-col  style="text-align: center">
@@ -145,7 +146,6 @@ export default {
     padding: 15px;
     background-repeat: repeat;
     background-color: rgba(229, 239, 247, 0.87);
-    overflow: hidden;
 }
 
 .project-body::-webkit-scrollbar {
@@ -155,11 +155,9 @@ export default {
 
 .project-body {
     -ms-overflow-style: none;
-}
-
-.project-body {
     overflow: -moz-scrollbars-none;
 }
+
 
 .logo-img {
     max-height: 120px;
@@ -176,14 +174,11 @@ export default {
 @media screen and (max-width: 750px) {
     .project-form {
         margin: 0px;
-        width: 93% !important;
+        height: 100%;
+        width: 100% !important;
         background-color: white;
     }
 
-    .project-form {
-        height: 100%;
-        width: 60vw;
-    }
     .logo-img {
         max-height: 2.94rem;
     }

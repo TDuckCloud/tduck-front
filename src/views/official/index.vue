@@ -1,5 +1,5 @@
 <template>
-    <div id="welcome">
+    <div>
         <div class="header-container">
             <el-row type="flex" align="middle">
                 <el-col class="header-col" :span="3" :offset="3">
@@ -78,10 +78,6 @@ export default {
 }
 </script>
 <style scoped>
-.header-col,
-.body-col {
-    border: solid thin white;
-}
 .header-container {
     background-color: white;
     width: 100%;
@@ -95,11 +91,10 @@ export default {
     float: left;
     cursor: pointer;
     height: 60px;
-    padding: 25px 0 20px 0;
 }
 .menu-item {
-    line-height: 110px;
-    height: 110px;
+    line-height: 90px;
+    height: 90px;
     font-size: 18px;
     font-weight: 900;
     float: right;

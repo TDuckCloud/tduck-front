@@ -1,7 +1,7 @@
 <template>
     <div class="statistics-container">
         <div class="filter-table-view">
-            <el-form :inline="true" class="demo-form-inline" ref="filterForm">
+            <el-form :inline="true" ref="filterForm">
                 <el-form-item label="提交时间" prop="endDateTime">
                     <el-date-picker
                         v-model="queryConditions.beginDateTime"
@@ -49,8 +49,19 @@
                     :render-header="renderHeader">
                 </el-table-column>
             </el-table>
+            <div style="display: flex;justify-content: center;margin-top: 10px">
+                <el-pagination
+                    v-if="total>10"
+                    background
+                    :page-size.sync="queryConditions.size"
+                    :current-page.sync="queryConditions.current"
+                    layout="total, prev, pager, next"
+                    :total="total"
+                    @current-change="queryProjectResult"
+                />
+            </div>
         </div>
-        <div class="">
+        <div >
             <el-dialog center title="自定义显示列" :visible.sync="customColumnDialogVisible">
                 <el-row>
                     <el-col :span="3">
@@ -115,8 +126,11 @@ export default {
             projectResultList: [],
             projectItemList: [],
             projectItemColumns: {},
+            total: 0,
             //查询条件
             queryConditions: {
+                current: 1,
+                size: 10,
                 projectKey: '',
                 beginDateTime: '',
                 endDateTime: ''
@@ -129,8 +143,11 @@ export default {
             )
         },
         queryProjectResult() {
-            this.$api.post(`/user/project/result/page`, this.queryConditions).then(res => {
-                this.projectResultList = res.data.records
+            this.$api.get(`/user/project/result/page`, {params: this.queryConditions}).then(res => {
+                let {records, total, size} = res.data
+                this.projectResultList = records
+                this.total = total
+                this.queryConditions.size = size
             })
         },
         saveStatisticsCheckedColumns() {

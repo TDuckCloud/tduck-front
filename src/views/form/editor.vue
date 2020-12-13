@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="form-edit-container">
         <div class="left-board">
             <el-scrollbar class="left-scrollbar">
                 <div class="components-list">
@@ -388,7 +388,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' >
 @import '@/assets/styles/form/home';
 @import '@/assets/styles/form/index';
 </style>

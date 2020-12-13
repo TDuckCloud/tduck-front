@@ -26,7 +26,7 @@
             </el-row>
             <el-row>
                 <el-col :offset="6" :span="10">
-                    <el-menu default-active="1" class="el-menu-demo" mode="horizontal">
+                    <el-menu default-active="1" style="background-color: transparent;" mode="horizontal">
                         <el-menu-item index="1">全部</el-menu-item>
                         <el-menu-item index="2">问卷调查</el-menu-item>
                         <el-menu-item index="3">满意度调查</el-menu-item>
@@ -70,6 +70,7 @@
             <el-row type="flex" justify="center">
                 <el-col :span="5">
                     <el-pagination
+                        background
                         :hide-on-single-page="true"
                         :total="50"
                         layout="prev, pager, next"
@@ -188,7 +189,10 @@ export default {
             return 0
         },
         createBlankTemplate() {
-            this.$api.post('/user/project/create', {'describe': formConf.description, 'name': formConf.title}).then(res => {
+            this.$api.post('/user/project/create', {
+                'describe': formConf.description,
+                'name': formConf.title
+            }).then(res => {
                 console.log(res)
                 this.$router.push({path: '/project/form', query: {key: res.data}})
             })

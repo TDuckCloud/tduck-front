@@ -50,7 +50,7 @@ export default {
                 preview: false,
                 showBtns: true
             },
-            writeStatus: 2,
+            writeStatus: 1,
             writeNotStartPrompt: '',
             userProjectSetting: {
                 submitPromptText: ''
@@ -64,7 +64,10 @@ export default {
         }
     },
     beforeCreate() {
-
+        let meta = document.createElement('meta')
+        meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+        meta.name = 'viewport'
+        document.getElementsByTagName('head')[0].appendChild(meta)
     },
     created() {
         let key = this.$route.query.key

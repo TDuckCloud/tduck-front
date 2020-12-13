@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-container>
-            <el-header height="80" class="home-header-view">
+            <el-header height="92" class="home-header-view">
                 <el-row type="flex" align="middle">
                     <el-col :span="4" :offset="1">
                         <img src="@/assets/images/indexLogo.png" class="header-logo-img"
@@ -106,7 +106,11 @@ export default {
             return store
         },
         getUserInfo() {
-            return JSON.parse(this.getStore.getters['user/userInfo'])
+            let user = JSON.parse(this.getStore.getters['user/userInfo'])
+            if (!user) {
+                this.logoutHandle()
+            }
+            return user
         }
     },
     watch: {
@@ -151,8 +155,8 @@ export default {
     border-bottom: none;
 }
 .home-header-view {
-    line-height: 90px;
-    height: 80px;
+    line-height: 92px;
+    height: 92px;
     background-color: rgba(255, 255, 255, 100);
     color: rgba(16, 16, 16, 100);
     font-size: 14px;
@@ -190,5 +194,9 @@ export default {
     border-radius: 100px;
     cursor: pointer;
 }
-
+.home-main-view {
+    height: calc(100vh - 92px);
+    background-color: #f7f7f7;
+    padding: 0;
+}
 </style>

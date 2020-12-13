@@ -26,7 +26,7 @@ export default {
 </script>
 <style scoped>
 .home-fun-btn {
-    width: 285px;
+    width: 70%;
     height: 145px;
     line-height: 20px;
     border-radius: 15px;

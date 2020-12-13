@@ -25,6 +25,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login.vue')
             },
             {
+                path: '/forget/password',
+                meta: {requireLogin: false},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
+            },
+            {
                 path: '/enterprise',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/enterprise')

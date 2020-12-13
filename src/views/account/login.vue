@@ -32,7 +32,7 @@
                             <el-divider style="width: 100px;" />
                             <el-row>
                                 <el-col :span="6">
-                                    <el-link class="login-tip">忘记密码</el-link>
+                                    <el-link class="login-tip" @click="toForgetPwdHandle">忘记密码</el-link>
                                 </el-col>
                                 <el-col :span="6">
                                     <el-link class="login-tip">
@@ -176,7 +176,7 @@
                         </el-form>
                     </el-tab-pane>
                     <div style="display: flex; flex-direction: row;">
-                        <el-link style="margin-left: 20px;">忘记密码</el-link>
+                        <el-link style="margin-left: 20px;" @click="toForgetPwdHandle">忘记密码</el-link>
                         <el-link style="margin-left: 20px;" @click="registerHandleClick">立即注册</el-link>
                         <div class="other-login">
                             <span @click="redirectUrl(qqLoginAuthorizeUrl)">
@@ -276,6 +276,10 @@ export default {
                 this.wxLoginQrCode = res.data.qrCodeUrl
                 this.wxLoginId = res.data.loginId
             })
+        },
+        // 忘记密码
+        toForgetPwdHandle() {
+            this.$router.push({path: '/forget/password'})
         },
         // qq登录授权地址
         getQQLoginAuthorizeUrl() {
