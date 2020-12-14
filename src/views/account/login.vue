@@ -188,14 +188,26 @@
                 </el-tabs>
             </el-col>
         </el-row>
+        <Verify
+            ref="verify"
+            :mode="'pop'"
+            :captcha-type="'blockPuzzle'"
+            :img-size="{ width: '330px', height: '155px' }"
+            @success="verifySuccessHandle"
+        />
     </div>
 </template>
 <script>
 
 import {getCurrentDomain} from '@/utils'
+// 引入组件
+import Verify from '@/components/verifition/Verify'
 
 export default {
     name: 'Login',
+    components: {
+        Verify
+    },
     data() {
         const validatePassword = (rule, value, callback) => {
             // /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{10,20}$/
@@ -268,6 +280,17 @@ export default {
         loginTypeHandleClick() {
         },
         registerHandleClick() {
+        },
+        verifySuccessHandle(params) {
+            let slideCode = params.captchaVerification
+            this.$api.request({
+                url: '/login/account',
+                method: 'post',
+                params: {slideCode},
+                data: this.accountForm
+            }).then(res => {
+                this.loginSuccessHandle(res.data)
+            })
         },
         // 获取微信登录二维码
         getLoginWxQrCode() {
@@ -357,9 +380,7 @@ export default {
         loginHandle() {
             this.$refs['accountLoginForm'].validate(valid => {
                 if (valid) {
-                    this.$api.post('/login/account', this.accountForm).then(res => {
-                        this.loginSuccessHandle(res.data)
-                    })
+                    this.$refs.verify.show()
                 } else {
                     return false
                 }

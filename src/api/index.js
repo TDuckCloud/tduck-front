@@ -33,45 +33,14 @@ api.interceptors.request.use(
         if (store.getters['user/isLogin']) {
             request.headers.token = store.state.user.token
         }
-        if (request.method == 'post') {
-            if (request.data instanceof FormData) {
-                if (store.getters['user/isLogin']) {
-                    // 如果是 FormData 类型（上传图片）
-                    request.data.append('token', store.state.user.token)
-                }
-            } else {
-                // 带上 token
-                if (request.data == undefined) {
-                    request.data = {}
-                }
-                // 参数验签
-                let timestamp = new Date().getTime()
-                request.data.timestamp = '' + timestamp
-                let sign = signMd5Utils.getSign(request.url, request.data)
-                request.data.sign = sign
-            }
-        } else if (request.method === 'get') {
-            // 带上 token
-            if (request.params == undefined) {
-                request.params = {}
-            }
-            let timestamp = new Date().getTime()
-            // get 请求所有参数转成string类型 用于签名计算
-            request.params.timestamp = '' + timestamp
-            let strParams = JSON.stringify(request.params, function(key, value) {
-                if (key) {
-                    if (value == undefined || value == null) {
-                        return undefined
-                    }
-                    return '' + value
-                }
-
-                return value
-            })
-            console.log(JSON.stringify(request.params) + ':str' + strParams)
-            let sign = signMd5Utils.getSign(request.url, JSON.parse(strParams))
-            request.params.sign = sign
+        // 签名验证
+        if (request.params == undefined) {
+            request.params = {}
         }
+        let timestamp = new Date().getTime()
+        request.params.timestamp = '' + timestamp
+        let sign = signMd5Utils.getSign(request.url, request, timestamp)
+        request.params.sign = sign
         return request
     }
 )
@@ -86,16 +55,18 @@ api.interceptors.response.use(
          * 请求出错时 msg 会返回错误信息
          * 则代码如下
          */
+        let errCodes = [500, 405, 403]
         const res = response.data
         if (res.code === 200) {
             return Promise.resolve(res)
-        } else if (res.code === 500 || res.code == 403) {
+        } else if (errCodes.includes(res.code)) {
             // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
             Message({
                 message: res.msg || 'Error',
                 type: 'error',
                 duration: 5 * 1000
             })
+            return Promise.reject(res)
         } else if (res.code === 401) {
             // 有一个接口进入该方法 其他接口则不在进入
             let reLogin = store.getters['global/isReLogin']
@@ -111,6 +82,7 @@ api.interceptors.response.use(
                     })
                 })
             }
+            return Promise.reject(res)
         }
         return Promise.resolve(res)
     },

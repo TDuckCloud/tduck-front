@@ -26,7 +26,7 @@
                         </el-form-item>
                     </el-form>
                 </el-tab-pane>
-                <el-tab-pane label="邮箱注册" name="email">
+                <el-tab-pane label="邮箱找回" name="email">
                     <el-form ref="emailRegForm" status-icon :rules="emailRetrieveRules" :model="retrieveAccountForm"
                              label-width="0px"
                     >

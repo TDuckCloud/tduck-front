@@ -26,10 +26,7 @@ const actions = {
         })
     },
     logout(context) {
-        context.commit('setData', {
-            token: null,
-            userInfo: null
-        })
+        context.commit('delData')
     }
 }
 
@@ -39,6 +36,10 @@ const mutations = {
         localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
         state.token = data.token
         state.userInfo = JSON.stringify(data.userInfo)
+    },
+    delData() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('userInfo')
     }
 }
 

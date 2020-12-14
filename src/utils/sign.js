@@ -1,7 +1,8 @@
 /* eslint-disable no-alert */
-import md5 from 'js-md5'
+import CryptoJS from 'crypto-js'
 import constants from './constants'
 import _ from 'lodash'
+
 export default class sign {
     /**
      * json参数升序
@@ -23,17 +24,34 @@ export default class sign {
         return sortObj
     }
 
+
     /**
      * @param url 请求的url,应该包含请求参数(url的?后面的参数)
      * @param requestParams 请求参数(POST的JSON参数)
      * @returns {string} 获取签名
      */
-    static getSign(url, requestParams) {
+    static getSign(url, request, timestamp) {
+        let requestParams = {}
+        if (request.params) {
+            // get 请求所有参数转成string类型 用于签名计算
+            requestParams = JSON.parse(JSON.stringify(request.params, function(key, value) {
+                if (key) {
+                    if (value == undefined || value == null) {
+                        return undefined
+                    }
+                    return '' + value
+                }
+                return value
+            }))
+        }
+        let dataParams = request.data ? request.data : {}
         let urlParams = this.parseQueryString(url)
         let jsonObj = _.merge(urlParams, requestParams)
+        jsonObj = _.merge(jsonObj, dataParams)
         let requestBody = this.sortAsc(jsonObj)
         console.log(constants.signSecret + JSON.stringify(requestBody))
-        return md5(constants.signSecret + JSON.stringify(requestBody)).toLowerCase()
+        console.log(CryptoJS.MD5(constants.signSecret + JSON.stringify(requestBody)).toString().toLowerCase())
+        return CryptoJS.MD5(constants.signSecret + JSON.stringify(requestBody)).toString().toLowerCase()
     }
 
     /**

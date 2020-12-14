@@ -38,7 +38,7 @@
                         >
                             <div class="user-person-menu">
                                 <div>
-                                    <p class="nick-name">{{ getUserInfo.name }}</p>
+                                    <p v-if="getUserInfo" class="nick-name">{{ getUserInfo.name }}</p>
                                 </div>
                                 <div class="person-menu-divider" />
                                 <div>
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                             <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
-                                <img :src="getUserInfo.avatar" class="user-avatar">
+                                <img v-if="getUserInfo" :src="getUserInfo.avatar" class="user-avatar">
                             </div>
                         </el-popover>
                     </el-col>
