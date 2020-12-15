@@ -32,6 +32,7 @@
                     </el-tab-pane>
                     <el-tab-pane label="邮箱找回" name="email">
                         <el-form ref="emailForm" status-icon :model="retrieveAccountForm"
+                                 :rules="emailRules"
                                  label-width="0px"
                         >
                             <el-form-item label="" prop="email">
@@ -73,6 +74,12 @@
                 </el-form>
             </div>
         </div>
+        <div v-if="retrieveStep==3" class="msg-view">
+            <p>
+                我们已向你的邮箱中发送了重置密码的邮件，请查看并点击邮件中的链接。
+                没有收到邮件？请检查您的垃圾邮件或者重新发送
+            </p>
+        </div>
         <Verify
             ref="verify"
             :mode="'pop'"
@@ -98,7 +105,7 @@ export default {
                 callback(new Error('密码最少为6位数'))
             } else {
                 if (this.resetPwdForm.rePassword !== '') {
-                    this.$refs.restPwdForm.validateField('rePassword')
+                    this.$refs['resetPwdForm'].validateField('rePassword')
                 }
                 callback()
             }
@@ -117,6 +124,7 @@ export default {
             retrieveType: 'phone',
             emailValidateCodeBtn: false,
             emailValidateCodeBtnText: '发送验证码',
+            emailSendSuccess: true,
             retrieveAccountForm: {
                 phoneNumber: '',
                 email: '',
@@ -138,6 +146,15 @@ export default {
                 ],
                 code: {required: true, trigger: 'blur', message: '请输入验证码'}
             },
+            emailRules: {
+                email: [
+                    {required: true, trigger: 'blur', message: '请输入邮箱'},
+                    {
+                        pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                        message: '请输入正确的邮箱'
+                    }
+                ]
+            },
             pwdRules: {
                 password: [{required: true, trigger: 'blur', validator: validatePassword}],
                 rePassword: [{required: true, trigger: 'blur', validator: validateRePass}]
@@ -147,6 +164,8 @@ export default {
     created() {
         let code = this.$route.query.code
         if (code) {
+            this.resetAccount = this.$route.query.email
+            this.resetPwdForm.code = code
             this.retrieveStep = 2
         }
     },
@@ -158,12 +177,17 @@ export default {
                 }
             })
         },
-        sendPhoneValidateCode() {
+        sendPhoneValidateCode(params) {
             let slideCode = params.captchaVerification
+            let phoneNumber = this.retrieveAccountForm.phoneNumber
             this.$refs['phoneForm'].validateField('phoneNumber', err => {
                 if (!err) {
                     this.emailValidateCodeBtn = true
-                    this.$api.get(`/retrieve/password/phone/code?phoneNumber=${this.retrieveAccountForm.phoneNumber}&slideCode=${slideCode}`).then(() => {
+                    this.$api.request({
+                        url: '/retrieve/password/phone/code',
+                        method: 'get',
+                        params: {slideCode: slideCode, phoneNumber: phoneNumber}
+                    }).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.emailValidateCodeBtn = true
                         let count = 60
@@ -200,7 +224,9 @@ export default {
                     this.$api.post('/retrieve/password/reset', this.resetPwdForm).then(res => {
                         if (res.data) {
                             this.msgSuccess('密码重置成功，快去登录吧')
-                            this.$router.push({path: '/login'})
+                            setTimeout(() => {
+                                this.$router.push({path: '/login'})
+                            }, 2000)
                         }
                     })
                 }
@@ -213,10 +239,17 @@ export default {
                 }
             })
         },
-        sendEmailValidate() {
-            this.$refs['emailForm'].validateField('email', err => {
-                if (!err) {
-                    this.$refs.verify.show()
+        sendEmailValidate(params) {
+            let slideCode = params.captchaVerification
+            this.$refs['emailForm'].validate(valid => {
+                if (valid) {
+                    this.$api.request({
+                        url: '/retrieve/password/email',
+                        method: 'get',
+                        params: {slideCode: slideCode, email: this.retrieveAccountForm.email}
+                    }).then(() => {
+                        this.retrieveStep = 3
+                    })
                 }
             })
         },
@@ -267,5 +300,12 @@ export default {
         font-size: 19px;
         width: 80%;
     }
+}
+.msg-view {
+    @include position-center(xy);
+
+    text-align: center;
+    color: #929292;
+    width: 30%;
 }
 </style>

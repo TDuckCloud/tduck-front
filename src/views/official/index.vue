@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="official-container">
         <div class="header-container">
             <el-row type="flex" align="middle">
                 <el-col class="header-col" :span="3" :offset="3">
@@ -22,13 +22,17 @@
                 </el-col>
                 <el-col class="header-col" :span="3">
                     <el-button v-if="isLogin" class="header-btn" @click="$router.push({path:'/home'})">控 制 台</el-button>
-                    <el-button v-if="!isLogin&&this.$route.path!='/login' " class="header-btn" @click="$router.push({path:'/login'})">登 录</el-button>
+                    <el-button v-if="!isLogin&&this.$route.path!='/login' " class="header-btn"
+                               @click="$router.push({path:'/login'})"
+                    >
+                        登 录
+                    </el-button>
                 </el-col>
             </el-row>
         </div>
-        <el-row>
+        <div class="main-container">
             <router-view />
-        </el-row>
+        </div>
     </div>
 </template>
 <script>
@@ -78,11 +82,19 @@ export default {
 }
 </script>
 <style scoped>
+.official-container {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
 .header-container {
     background-color: white;
     width: 100%;
     top: 0;
     z-index: 100;
+}
+.main-container {
+    height: calc(100vh - 102px);
 }
 .header-container .header-col .el-menu--horizontal {
     border: none;
