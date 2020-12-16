@@ -501,7 +501,7 @@ export const selectComponents = [
         __slot__: {
             'list-type': true
         },
-        action: 'https://jsonplaceholder.typicode.com/posts/',
+        action: 'https://api.freebrio.com/api/v1/file/upload',
         disabled: false,
         accept: '',
         name: 'file',

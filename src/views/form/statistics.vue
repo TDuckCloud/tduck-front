@@ -25,7 +25,7 @@
         </div>
         <div class="result-table-view">
             <el-table
-                stripe :header-cell-style="{background:'#2466a0'}"
+                stripe
                 :data="projectResultList">
                 <el-table-column
                     type="selection"
@@ -198,7 +198,7 @@ export default {
 
 .result-table-view {
     width: 80%;
-    margin: 0px auto;
+    margin: 6px auto;
 }
 
 .filter-table-view {

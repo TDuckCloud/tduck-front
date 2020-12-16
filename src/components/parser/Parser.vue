@@ -135,6 +135,28 @@ function renderChildren(h, scheme) {
     return renderFormItem.call(this, h, config.children)
 }
 
+function setUpload(config, scheme, response, file, fileList) {
+    debugger
+    console.log(this[this.formConf.formModel][scheme.__vModel__])
+    let newValue = JSON.parse(this[this.formConf.formModel][scheme.__vModel__])
+    if (!newValue) {
+        newValue = []
+    }
+    newValue.push({name: file.name, url: response.data})
+    this.$set(config, 'defaultValue', JSON.stringify(newValue))
+    this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
+
+}
+
+function deleteUpload(event, config, scheme, file, fileList) {
+    let newValue = []
+    fileList.forEach(element => {
+        newValue.push({name: element.name, url: element.url})
+    })
+    this.$set(config, 'defaultValue', JSON.stringify(newValue))
+    this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
+}
+
 function setValue(event, config, scheme) {
     this.$set(config, 'defaultValue', event)
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
@@ -183,6 +205,8 @@ function buildListeners(scheme) {
     })
     // 响应 render.js 中的 vModel $emit('input', val)
     listeners.input = event => setValue.call(this, event, config, scheme)
+    listeners.upload = (response, file, fileList) => setUpload.call(this, config, scheme, response, file, fileList)
+    listeners.deleteUpload = event => setValue.call(this, event, config, scheme)
 
     return listeners
 }
@@ -230,7 +254,7 @@ export default {
                     let tagOptionKey = processType[temConfig.tag]
                     let defaultValue = temConfig.defaultValue
                     let labelStr = ''
-                    if (tagOptionKey&&defaultValue) {
+                    if (tagOptionKey && defaultValue) {
                         if (defaultValue instanceof Array) {
                             defaultValue.forEach(item => {
                                 let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)
