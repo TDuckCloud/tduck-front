@@ -130,8 +130,18 @@ let dataParams = {
         'max': 'max',
         'step': 'step'
     },//时间选择
-    11: {}
+    11: {},
+    //文件上传
+    17: {
+        'buttonText': '__config__.buttonText',
+        'showTip': '__config__.showTip',
+        'fileSize': '__config__.fileSize',
+        'sizeUnit': '__config__.sizeUnit',
+        'listType': 'list-type',
+        'limit': 'limit',
+        'multiple': 'multiple'
 
+    }
 }
 
 

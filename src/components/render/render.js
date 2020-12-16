@@ -25,6 +25,9 @@ function vModel(dataObject, defaultValue) {
         dataObject.attrs['on-remove'] = (file, fileList) => {
             this.$emit('deleteUpload', file, fileList)
         }
+        dataObject.attrs['on-exceed']=(file, fileList) => {
+            this.$emit('deleteUpload', file, fileList)
+        }
     } else {
         dataObject.props.value = defaultValue
 

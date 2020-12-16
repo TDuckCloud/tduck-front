@@ -29,9 +29,9 @@
               </el-option-group>
             </el-select>
           </el-form-item>
-          <el-form-item v-if="activeData.__vModel__!==undefined" label="字段名">
-            <el-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />
-          </el-form-item>
+<!--          <el-form-item v-if="activeData.__vModel__!==undefined" label="字段名">-->
+<!--            <el-input v-model="activeData.__vModel__" placeholder="请输入字段名（v-model）" />-->
+<!--          </el-form-item>-->
           <el-form-item v-if="activeData.__config__.componentName!==undefined" label="组件名">
             {{ activeData.__config__.componentName }}
           </el-form-item>
@@ -214,9 +214,9 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item v-if="activeData.name !== undefined" label="文件字段名">
-            <el-input v-model="activeData.name" placeholder="请输入上传文件字段名" />
-          </el-form-item>
+<!--          <el-form-item v-if="activeData.name !== undefined" label="文件字段名">-->
+<!--            <el-input v-model="activeData.name" placeholder="请输入上传文件字段名" />-->
+<!--          </el-form-item>-->
           <el-form-item v-if="activeData.accept !== undefined" label="文件类型">
             <el-select
               v-model="activeData.accept"
@@ -242,9 +242,9 @@
               </el-select>
             </el-input>
           </el-form-item>
-          <el-form-item v-if="activeData.action !== undefined" label="上传地址">
-            <el-input v-model="activeData.action" placeholder="请输入上传地址" clearable />
-          </el-form-item>
+<!--          <el-form-item v-if="activeData.action !== undefined" label="上传地址">-->
+<!--            <el-input v-model="activeData.action" placeholder="请输入上传地址" clearable />-->
+<!--          </el-form-item>-->
           <el-form-item v-if="activeData['list-type'] !== undefined" label="列表类型">
             <el-radio-group v-model="activeData['list-type']" size="small">
               <el-radio-button label="text">
@@ -515,9 +515,12 @@
           <el-form-item v-if="activeData.__config__.tag === 'el-upload'" label="多选文件">
             <el-switch v-model="activeData.multiple" />
           </el-form-item>
-          <el-form-item v-if="activeData['auto-upload'] !== undefined" label="自动上传">
-            <el-switch v-model="activeData['auto-upload']" />
-          </el-form-item>
+            <el-form-item v-if="activeData.__config__.tag === 'el-upload'" label="文件个数">
+                <el-input-number v-model="activeData.limit" />
+            </el-form-item>
+<!--          <el-form-item v-if="activeData['auto-upload'] !== undefined" label="自动上传">-->
+<!--            <el-switch v-model="activeData['auto-upload']" />-->
+<!--          </el-form-item>-->
           <el-form-item v-if="activeData.readonly !== undefined" label="是否只读">
             <el-switch v-model="activeData.readonly" />
           </el-form-item>

@@ -136,25 +136,24 @@ function renderChildren(h, scheme) {
 }
 
 function setUpload(config, scheme, response, file, fileList) {
-    debugger
-    console.log(this[this.formConf.formModel][scheme.__vModel__])
     let newValue = JSON.parse(this[this.formConf.formModel][scheme.__vModel__])
     if (!newValue) {
         newValue = []
     }
-    newValue.push({name: file.name, url: response.data})
+    newValue.push({fileName: file.name, url: response.data})
     this.$set(config, 'defaultValue', JSON.stringify(newValue))
     this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
-
+    setValueLabel.call(this, {type: 'file', files: JSON.stringify(newValue)}, config, scheme)
 }
 
-function deleteUpload(event, config, scheme, file, fileList) {
+function deleteUpload(config, scheme, file, fileList) {
     let newValue = []
     fileList.forEach(element => {
-        newValue.push({name: element.name, url: element.url})
+        newValue.push({fileName: element.name, url: element.url})
     })
     this.$set(config, 'defaultValue', JSON.stringify(newValue))
     this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
+    setValueLabel.call(this, {type: 'file', files: JSON.stringify(newValue)}, config, scheme)
 }
 
 function setValue(event, config, scheme) {
@@ -177,6 +176,8 @@ function setValueLabel(event, config, scheme) {
             let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
             this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
         }
+    } else if (config.tag === 'el-upload') {
+        this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, event)
     } else {
         this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, event)
     }
@@ -206,7 +207,7 @@ function buildListeners(scheme) {
     // 响应 render.js 中的 vModel $emit('input', val)
     listeners.input = event => setValue.call(this, event, config, scheme)
     listeners.upload = (response, file, fileList) => setUpload.call(this, config, scheme, response, file, fileList)
-    listeners.deleteUpload = event => setValue.call(this, event, config, scheme)
+    listeners.deleteUpload = (file, fileList) => deleteUpload.call(this, config, scheme, file, fileList)
 
     return listeners
 }
@@ -283,6 +284,13 @@ export default {
         buildRules(componentList, rules) {
             componentList.forEach(cur => {
                 const config = cur.__config__
+                if (cur.tag === 'el-upload') {
+                    config.regList.push({
+                        validator: () => {
+                            console.log(cur.limit)
+                        }, trigger: 'change'
+                    })
+                }
                 if (Array.isArray(config.regList)) {
                     if (config.required) {
                         const required = {required: config.required, message: cur.placeholder}

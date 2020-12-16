@@ -494,7 +494,7 @@ export const selectComponents = [
             buttonText: '点击上传',
             regList: [],
             changeTag: true,
-            fileSize: 2,
+            fileSize: 1,
             sizeUnit: 'MB',
             document: 'https://element.eleme.cn/#/zh-CN/component/upload'
         },
@@ -507,6 +507,7 @@ export const selectComponents = [
         name: 'file',
         'auto-upload': true,
         'list-type': 'text',
+        limit: 2,
         multiple: false
     }
 ]

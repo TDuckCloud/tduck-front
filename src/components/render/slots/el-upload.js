@@ -7,11 +7,12 @@ export default {
     } else {
       list.push(<el-button size="small" type="primary" icon="el-icon-upload">{config.buttonText}</el-button>)
     }
-    if (config.showTip) {
+    if (config.showTip  ) {
       list.push(
-        <div slot="tip" class="el-upload__tip">只能上传不超过 {config.fileSize}{config.sizeUnit} 的{conf.accept}文件</div>
+        <div slot="tip" class="el-upload__tip">只能上传不超过 {config.fileSize}{config.sizeUnit} 的{conf.accept}文件,最多不超过{conf.limit}个文件</div>
       )
     }
+
     return list
   }
 }
