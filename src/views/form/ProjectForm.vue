@@ -12,19 +12,12 @@
                 :src="projectTheme.headImgUrl"
                 style="width: 100%"
                 fit="scale-down"></el-image>
-            <el-row v-if="projectTheme.showTitle" type="flex" justify="center" align="middle">
-                <el-col  style="text-align: center">
-                    <h4 class="form-name-text">
-                        {{ formConf.title }}</h4>
-                </el-col>
-            </el-row>
-            <el-row v-if="projectTheme.showDescribe" type="flex" justify="center" align="middle">
-                <el-col style="text-align: center">
-                    <p class="form-name-text">
-                        {{ formConf.description }}
-                    </p>
-                </el-col>
-            </el-row>
+            <h4 class="form-name-text" v-if="projectTheme.showTitle" style="text-align: center">
+                {{ formConf.title }}
+            </h4>
+            <p class="form-name-text" v-if="projectTheme.showDescribe" style="text-align: center">
+                {{ formConf.description }}
+            </p>
             <el-divider>
             </el-divider>
             <parser v-if="formConf.fields.length" :form-conf="formConf" @submit="submitForm"/>
@@ -96,7 +89,7 @@ export default {
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.projectKey = this.projectConfig.projectKey
             // this.formConf.formBtns = this.projectConfig.showBtns
-            //不存去路由中尝试获取 ifreme
+            //不存去路由中尝试获取 iframe
         } else if (this.$route.query.key) {
             this.projectKey = this.$route.query.key
             this.formConf.formBtns = true

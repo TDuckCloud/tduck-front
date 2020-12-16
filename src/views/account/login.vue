@@ -86,7 +86,7 @@
                                         </el-link>
                                     </el-col>
                                     <el-col :span="6" :offset="1">
-                                        <el-link :underline="false" type="primary" class="protocol-tip">
+                                        <el-link :underline="false" type="primary" class="protocol-tip" @click="toForgetPwdHandle">
                                             忘记密码？
                                         </el-link>
                                     </el-col>

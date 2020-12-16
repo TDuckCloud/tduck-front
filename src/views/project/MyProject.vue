@@ -1,5 +1,11 @@
 <template>
     <div class="my-project-container">
+        <div class="back-view">
+            <el-button size="mini" round @click="$router.back(-1)">
+                <i class="el-icon-arrow-left" />
+                返回
+            </el-button>
+        </div>
         <div class="filter-view">
             <div>
                 <span @click="switchDataShowTypeHandle('gird')">
@@ -48,7 +54,11 @@
                     </el-button>
                 </el-form-item>
                 <el-form-item label="项目状态">
-                    <el-radio-group v-model="queryParams.status" size="small" @change="queryProjectPage">
+                    <el-radio-group v-model="queryParams.status" size="small" @change="()=>{
+                        this.queryParams.current=0
+                        this.queryProjectPage()
+                    }"
+                    >
                         <el-radio-button v-for="status in projectStatusList" :key="status.code" :label="status.code">
                             {{ status.name }}
                         </el-radio-button>
@@ -81,9 +91,16 @@
                     >
                     <p class="project-grid-view-time">创建时间：2020/12/8</p>
                     <div class="gird-operating-btns">
-                        <el-button type="text" @click="toEditHandle(p.key)">
+                        <el-button type="text" @click="toProjectHandle(p.key,1)">
                             <i class="el-icon-edit" />
                             编辑
+                        </el-button>
+                        <el-button
+                            v-if="p.status!=1"
+                            type="text" @click="toProjectHandle(p.key,5)"
+                        >
+                            <i class="el-icon-data-analysis" />
+                            统计
                         </el-button>
                     </div>
                 </div>
@@ -142,9 +159,17 @@
                     <template slot-scope="scope">
                         <el-link type="primary"
                                  style="margin: 2px;"
-                                 @click="toEditHandle(scope.row.key)"
+                                 @click="toProjectHandle(scope.row.key,1)"
                         >
                             编辑
+                        </el-link>
+                        <el-link
+                            v-if="scope.row.status!=1"
+                            type="success"
+                            style="margin: 2px;"
+                            @click="toProjectHandle(scope.row.key,5)"
+                        >
+                            统计
                         </el-link>
                         <el-link type="danger" style="margin: 2px;">
                             删除
@@ -210,8 +235,8 @@ export default {
         switchDataShowTypeHandle(type) {
             this.dataShowType = type
         },
-        toEditHandle(key) {
-            this.$router.push({path: '/project/form', query: {key: key, active: 1}})
+        toProjectHandle(key, type) {
+            this.$router.push({path: '/project/form', query: {key: key, active: type}})
         },
         queryProjectPage() {
             this.$api.get('/user/project/page', {
@@ -231,13 +256,19 @@ export default {
 .my-project-container {
     display: flex;
     width: 100%;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     align-content: center;
-    justify-content: center;
+}
+.back-view {
+    display: flex;
+    width: 80%;
+    align-content: flex-start;
+    margin: 10px;
 }
 .filter-view {
-    margin-top: 40px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
 }

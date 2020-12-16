@@ -30,7 +30,10 @@
                                 </el-button>
                             </el-col>
                             <el-col :span="6">
-                                <el-button type="warning">查看反馈</el-button>
+                                <el-button
+                                    @click="toFeedbackPageHandle"
+                                    type="warning">查看反馈
+                                </el-button>
                             </el-col>
                         </el-row>
                     </el-col>
@@ -55,6 +58,7 @@
 
 <script>
 import VueQr from 'vue-qr'
+import {getCurrentDomain} from '@/utils'
 
 export default {
     name: 'projectPublish',
@@ -113,6 +117,11 @@ export default {
                 uInt8Array[i] = raw.charCodeAt(i)
             }
             return new Blob([uInt8Array], {type: contentType})
+        },
+        toFeedbackPageHandle() {
+            let currentDomain = getCurrentDomain()
+            let url = `${currentDomain}/project/form?key=${this.projectKey}&active=5`
+            window.location.href = url
         }
     }
 
