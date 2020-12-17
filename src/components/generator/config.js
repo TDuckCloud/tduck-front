@@ -494,14 +494,14 @@ export const selectComponents = [
             buttonText: '点击上传',
             regList: [],
             changeTag: true,
-            fileSize: 1,
+            fileSize: 10,
             sizeUnit: 'MB',
             document: 'https://element.eleme.cn/#/zh-CN/component/upload'
         },
         __slot__: {
             'list-type': true
         },
-        action: 'https://api.freebrio.com/api/v1/file/upload',
+        action: '/tduck-api/project/file/upload/',
         disabled: false,
         accept: '',
         name: 'file',

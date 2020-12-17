@@ -65,6 +65,7 @@ export function dbDataConvertForItemJson(data) {
             jsonItem.__config__.defaultValue = data.defaultValue.value
         }
     }
+
     jsonItem.regList = data.regList
     jsonItem.placeholder = data.placeholder
     jsonItem.__vModel__ = 'field' + data.formItemId

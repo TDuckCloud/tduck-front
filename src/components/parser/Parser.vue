@@ -1,5 +1,5 @@
 <script>
-import {deepClone} from '@/utils/index'
+import {deepClone, jsonClone} from '@/utils/index'
 import render from '@/components/render/render.js'
 import _ from 'lodash'
 
@@ -34,7 +34,10 @@ const layouts = {
             this.serialNumber = this.serialNumber + 1
             label = serialNumber + ': ' + label
         }
-
+        //不同项目地址区分
+        if (config.tag === 'el-upload') {
+            scheme.action = scheme.action + this.formConf.projectKey
+        }
         return (
             <el-col span={config.span}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
@@ -235,7 +238,7 @@ export default {
     },
     data() {
         const data = {
-            serialNumber: 1,//序号
+            // serialNumber: 1,//序号
             formConfCopy: deepClone(this.formConf),
             [this.formConf.formModel]: {},
             [this.formConf.labelFormModel]: {},

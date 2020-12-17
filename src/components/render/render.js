@@ -25,8 +25,29 @@ function vModel(dataObject, defaultValue) {
         dataObject.attrs['on-remove'] = (file, fileList) => {
             this.$emit('deleteUpload', file, fileList)
         }
-        dataObject.attrs['on-exceed']=(file, fileList) => {
-            this.$emit('deleteUpload', file, fileList)
+        dataObject.attrs['on-exceed'] = (files, fileList) => {
+            this.$message.error(`最多上传${config.limit}个文件`);
+        },
+        dataObject.attrs['before-upload'] = (file) => {
+            let sizeUnitNum = 1
+            //文件大小判断
+            switch (config.sizeUnit) {
+                case 'KB':
+                    sizeUnitNum = 1024
+                    break
+                case 'MB':
+                    sizeUnitNum = 1024 * 1024
+                    break
+                case 'GB':
+                    sizeUnitNum = 1024 * 1024 * 1024
+                    break
+            }
+            let totalSize= config.fileSize*sizeUnitNum
+            if (file.size> totalSize) {
+                this.$message.error(`上传图片大小不能超过${config.fileSize}${config.sizeUnit}`);
+                return false
+            }
+            console.log(dataObject)
         }
     } else {
         dataObject.props.value = defaultValue

@@ -20,7 +20,7 @@
             </p>
             <el-divider>
             </el-divider>
-            <parser v-if="formConf.fields.length" :form-conf="formConf" @submit="submitForm"/>
+            <parser v-if="startParser" :form-conf="formConf" @submit="submitForm"/>
         </div>
     </div>
 </template>
@@ -51,7 +51,7 @@ export default {
     },
     data() {
         return {
-            projectKey: '',
+            startParser:false,
             projectTheme: {
                 headImgUrl: '',
                 logoImg: '',
@@ -60,6 +60,7 @@ export default {
             },
             formConf: {
                 fields: [],
+                projectKey:'',
                 __methods__: {},
                 formRef: 'elForm',
                 formModel: 'formData',
@@ -87,17 +88,17 @@ export default {
     },
     created() {
         if (this.projectConfig && this.projectConfig.projectKey) {
-            this.projectKey = this.projectConfig.projectKey
+            this.formConf.projectKey = this.projectConfig.projectKey
             // this.formConf.formBtns = this.projectConfig.showBtns
             //不存去路由中尝试获取 iframe
         } else if (this.$route.query.key) {
-            this.projectKey = this.$route.query.key
+            this.formConf.projectKey  = this.$route.query.key
             this.formConf.formBtns = true
         }
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/user/project/details/${this.projectKey}`).then(res => {
+        this.$api.get(`/user/project/details/${this.formConf.projectKey }`).then(res => {
             if (res.data) {
                 let fields = res.data.projectItems.map(item => {
                     return dbDataConvertForItemJson(item)
@@ -119,6 +120,7 @@ export default {
                         this.formConf.submitBtnColor = btnsColor
                     }
                 }
+                this.startParser=true
 
             }
         })
@@ -180,6 +182,11 @@ export default {
     }
     .submit-btn-form-item button {
         width: 80%;
+    }
+}
+@media screen and (max-width: 500px) {
+    .el-message {
+        min-width: 300px !important;
     }
 }
 </style>
