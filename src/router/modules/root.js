@@ -54,6 +54,11 @@ export default [
                 path: '/',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/home/HomeView')
+            },
+            {
+                path: 'member',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/member')
             }
         ]
     }, {

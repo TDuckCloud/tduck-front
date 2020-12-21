@@ -31,12 +31,7 @@ const layouts = {
         if (config.showLabel === false) labelWidth = '0'
         let label = config.label
         if (formConfCopy.showNumber) {
-            this.serialNumber = this.serialNumber + 1
-            label = serialNumber + ': ' + label
-        }
-        //不同项目地址区分
-        if (config.tag === 'el-upload') {
-            scheme.action = scheme.action + this.formConf.projectKey
+            label = scheme.serialNumber + ': ' + label
         }
         return (
             <el-col span={config.span}>
@@ -238,7 +233,6 @@ export default {
     },
     data() {
         const data = {
-            // serialNumber: 1,//序号
             formConfCopy: deepClone(this.formConf),
             [this.formConf.formModel]: {},
             [this.formConf.labelFormModel]: {},

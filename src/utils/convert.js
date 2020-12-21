@@ -16,6 +16,7 @@ export function formItemConvertData(item, projectKey) {
         'required': item.__config__.required,
         'placeholder': item.placeholder,
         'regList': item.__config__.regList,
+        'showLabel': item.__config__.showLabel,
         'projectKey': projectKey
     }
     let expand = {}
@@ -58,6 +59,7 @@ export function dbDataConvertForItemJson(data) {
     jsonItem.__config__.label = data.label
     jsonItem.__config__.required = data.required
     jsonItem.__config__.regList = data.regList
+    jsonItem.__config__.showLabel = data.showLabel
     if (data.defaultValue) {
         if (data.defaultValue.json) {
             jsonItem.__config__.defaultValue = JSON.parse(data.defaultValue.value)
@@ -65,7 +67,10 @@ export function dbDataConvertForItemJson(data) {
             jsonItem.__config__.defaultValue = data.defaultValue.value
         }
     }
-
+    //不同项目地址区分
+    if (jsonItem.tag === 'el-upload') {
+        jsonItem.action = jsonItem.action + data.projectKey
+    }
     jsonItem.regList = data.regList
     jsonItem.placeholder = data.placeholder
     jsonItem.__vModel__ = 'field' + data.formItemId

@@ -2,7 +2,7 @@
     <div>
         <el-container>
             <el-header height="92" class="home-header-view">
-                <el-row type="flex" align="middle">
+                <el-row type="flex" align="middle" justify="center">
                     <el-col :span="4" :offset="1">
                         <img src="@/assets/images/indexLogo.png" class="header-logo-img"
                              @click="$router.push({path:'/'})"
@@ -23,7 +23,10 @@
                         <el-button round>升级</el-button>
                     </el-col>
                     <el-col :span="1">
-                        <div style="display: flex; align-items: center; justify-content: center;">
+                        <div style="display: flex;
+                        align-items: center;
+                        justify-content: center;"
+                        >
                             <svg-icon name="loginWx" style="width: 24px; height: 24px;" />
                         </div>
                     </el-col>
@@ -42,7 +45,7 @@
                                 </div>
                                 <div class="person-menu-divider" />
                                 <div>
-                                    <p class="person-menu-item">
+                                    <p class="person-menu-item" @click="$router.push({path: '/home/member'})">
                                         <font-icon class="fab fa-get-pocket" />
                                         我的账户
                                     </p>
@@ -157,13 +160,14 @@ export default {
 .home-header-view {
     line-height: 92px;
     height: 92px;
+    min-width: 960px;
     background-color: rgba(255, 255, 255, 100);
     color: rgba(16, 16, 16, 100);
     font-size: 14px;
     text-align: center;
     .header-logo-img {
-        width: 225px;
-        height: 62px;
+        width: 90%;
+        height: 90%;
         float: left;
     }
 }
@@ -182,6 +186,7 @@ export default {
     }
     .person-menu-item:hover {
         cursor: pointer;
+        color: rgba(32, 91, 181, 100);
     }
     .person-menu-divider {
         background-color: rgba(210, 210, 210, 78);

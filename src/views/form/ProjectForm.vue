@@ -51,7 +51,7 @@ export default {
     },
     data() {
         return {
-            startParser:false,
+            startParser: false,
             projectTheme: {
                 headImgUrl: '',
                 logoImg: '',
@@ -60,7 +60,7 @@ export default {
             },
             formConf: {
                 fields: [],
-                projectKey:'',
+                projectKey: '',
                 __methods__: {},
                 formRef: 'elForm',
                 formModel: 'formData',
@@ -92,16 +92,20 @@ export default {
             // this.formConf.formBtns = this.projectConfig.showBtns
             //不存去路由中尝试获取 iframe
         } else if (this.$route.query.key) {
-            this.formConf.projectKey  = this.$route.query.key
+            this.formConf.projectKey = this.$route.query.key
             this.formConf.formBtns = true
         }
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/user/project/details/${this.formConf.projectKey }`).then(res => {
+        this.$api.get(`/user/project/details/${this.formConf.projectKey}`).then(res => {
             if (res.data) {
+                let serialNumber = 1
                 let fields = res.data.projectItems.map(item => {
-                    return dbDataConvertForItemJson(item)
+                    let projectItem = dbDataConvertForItemJson(item)
+                    projectItem.serialNumber = serialNumber
+                    serialNumber++
+                    return projectItem
                 })
                 this.formConf.fields = fields
                 this.formConf.title = res.data.project.name
@@ -120,7 +124,7 @@ export default {
                         this.formConf.submitBtnColor = btnsColor
                     }
                 }
-                this.startParser=true
+                this.startParser = true
 
             }
         })
@@ -184,6 +188,7 @@ export default {
         width: 80%;
     }
 }
+
 @media screen and (max-width: 500px) {
     .el-message {
         min-width: 300px !important;
