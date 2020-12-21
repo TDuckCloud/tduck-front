@@ -48,12 +48,13 @@
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
-                            <p class="form-name-text" contenteditable="true"
-                               @blur="(event)=>{
-                                   formConf.description=event.target.innerText;
-                                   this.saveProjectInfo()}">
-                                {{ formConf.description }}
-                            </p>
+                            <Tinymce v-model="formConf.description" :height="300" placeholder="请输入表单描述" />
+<!--                            <p class="form-name-text" contenteditable="true"-->
+<!--                               @blur="(event)=>{-->
+<!--                                   formConf.description=event.target.innerText;-->
+<!--                                   this.saveProjectInfo()}">-->
+<!--                                {{ formConf.description }}-->
+<!--                            </p>-->
                         </el-col>
                     </el-row>
                     <el-divider></el-divider>

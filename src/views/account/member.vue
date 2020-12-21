@@ -18,14 +18,14 @@
                                 <td width="80" style="text-align: right;">账号邮箱：</td>
                                 <td>
                                     {{ userInfo.email }}
-                                    <el-link type="primary">绑定</el-link>
+                                    <el-link type="primary" @click="emailDialogVisible=true">绑定</el-link>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="80" style="text-align: right;">密码：</td>
                                 <td>
                                     ******
-                                    <el-link type="primary">修改</el-link>
+                                    <el-link type="primary" @click="pwdDialogVisible=true">修改</el-link>
                                 </td>
                             </tr>
                             <tr>
@@ -82,39 +82,66 @@
             </div>
         </el-card>
         <el-dialog
-            title="提示"
-            :visible.sync="editDialogVisible"
+            title="修改用户名"
+            :visible.sync="editNameDialogVisible"
             width="30%"
             center
         >
-            <el-form ref="form" :model="userInfo" label-width="80px">
-                <el-form-item label="新用户名">
+            <el-form ref="form" :model="userInfo" :rules="userInfoRules" label-width="80px">
+                <el-form-item label="新用户名" prop="name">
                     <el-input v-model="userInfo.name" />
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="editDialogVisible = false">取 消</el-button>
                 <el-button type="primary"
-                           @click="()=>{this.editDialogVisible = false;this.updateUserHandle()}"
-                >确 定</el-button>
+                           @click="()=>{this.editNameDialogVisible = false;this.updateUserHandle()}"
+                >保存</el-button>
             </span>
         </el-dialog>
         <el-dialog
-            title="提示"
+            title="修改密码"
             :visible.sync="pwdDialogVisible"
             width="30%"
             center
         >
-            <el-form ref="form" :model="userInfo" label-width="80px">
-                <el-form-item label="新用户名">
-                    <el-input v-model="userInfo.name" />
+            <el-form ref="form"
+                     style="width: 80%;"
+                     :model="userPwdForm" :rules="userPwdRules" label-width="120px"
+            >
+                <el-form-item label="输入旧密码" prop="oldPassword">
+                    <el-input v-model="userPwdForm.oldPassword" placeholder="请输入旧密码" show-password />
+                </el-form-item>
+                <el-form-item label="输入新密码" prop="password">
+                    <el-input v-model="userPwdForm.password" placeholder="请输入新密码" show-password />
+                </el-form-item>
+                <el-form-item label="重复输入密码" prop="repeatPassword">
+                    <el-input v-model="userPwdForm.repeatPassword" placeholder="请重复输入密码" show-password />
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="pwdDialogVisible = false">取 消</el-button>
                 <el-button type="primary"
-                           @click="()=>{this.pwdDialogVisible = false;this.updateUserHandle()}"
-                >确 定</el-button>
+                           @click="()=>{this.pwdDialogVisible = false;this.updateUserPwdHandle()}"
+                >完 成</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog
+            title="修改邮箱"
+            :visible.sync="emailDialogVisible"
+            width="30%"
+            center
+        >
+            <el-form ref="form"
+                     style="width: 80%;"
+                     :model="userInfo" :rules="userInfoRules" label-width="80px"
+            >
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="userInfo.email" placeholder="请输入邮箱" />
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary"
+                           @click="()=>{this.pwdDialogVisible = false;this.sendUpdateEmail()}"
+                >发送验证邮件</el-button>
             </span>
         </el-dialog>
     </div>
@@ -122,6 +149,7 @@
 
 <script>
 import myUpload from 'vue-image-crop-upload'
+import constants from '@/utils/constants'
 
 export default {
     name: 'Member',
@@ -129,9 +157,56 @@ export default {
         myUpload
     },
     data() {
+        let validateRePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'))
+            } else if (value !== this.resetPwdForm.rePassword) {
+                callback(new Error('两次输入密码不一致!'))
+            } else {
+                callback()
+            }
+        }
         return {
-            editDialogVisible: false,
+            userInfoRules: {
+                name: [
+                    {required: true, trigger: 'blur', message: '请输入昵称'}
+                ],
+                email: [
+                    {required: true, trigger: 'blur', message: '请输入邮箱'},
+                    {
+                        pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                        message: '请输入正确的邮箱'
+                    }
+                ]
+            },
+            userPwdRules: {
+                oldPassword: [
+                    {required: true, trigger: 'blur', message: '请输入旧密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ],
+                password: [
+                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ],
+                repeatPassword: [
+                    {required: true, trigger: 'blur', validator: validateRePass}
+                ]
+            },
+            editNameDialogVisible: false,
+            pwdDialogVisible: false,
+            emailDialogVisible: false,
             userInfo: {},
+            userPwdForm: {
+                oldPassword: '',
+                password: '',
+                repeatPassword: ''
+            },
             showUploadAvatar: false
         }
     },
@@ -150,6 +225,21 @@ export default {
         },
         getUploadUrl() {
             return `${process.env.VUE_APP_API_ROOT}/user/file/upload`
+        },
+        updateUserPwdHandle() {
+            this.$api.post('/user/update/password', this.userPwdForm).then(res => {
+                if (res.data) {
+                    console.log(res.data)
+                    this.msgSuccess('修改成功')
+                }
+            })
+        },
+        sendUpdateEmail() {
+            this.$api.get('/update/email', {params: {email: this.userInfo.email}}).then(res => {
+                if (res.data) {
+                    this.msgSuccess('发送成功')
+                }
+            })
         },
         updateUserHandle() {
             this.$api.post('/user/update', this.userInfo).then(res => {

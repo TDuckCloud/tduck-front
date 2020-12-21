@@ -93,6 +93,7 @@
 <script>
 // 引入组件
 import Verify from '@/components/verifition/Verify'
+import constants from '@/utils/constants'
 
 export default {
     name: 'RetrievePwd',
@@ -100,16 +101,6 @@ export default {
         Verify
     },
     data() {
-        let validatePassword = (rule, value, callback) => {
-            if (value.length < 6) {
-                callback(new Error('密码最少为6位数'))
-            } else {
-                if (this.resetPwdForm.rePassword !== '') {
-                    this.$refs['resetPwdForm'].validateField('rePassword')
-                }
-                callback()
-            }
-        }
         let validateRePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'))
@@ -156,7 +147,13 @@ export default {
                 ]
             },
             pwdRules: {
-                password: [{required: true, trigger: 'blur', validator: validatePassword}],
+                password: [
+                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ],
                 rePassword: [{required: true, trigger: 'blur', validator: validateRePass}]
             }
         }

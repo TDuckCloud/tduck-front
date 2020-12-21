@@ -218,6 +218,7 @@
 import {getCurrentDomain} from '@/utils'
 // 引入组件
 import Verify from '@/components/verifition/Verify'
+import constants from '@/utils/constants'
 
 export default {
     name: 'Login',
@@ -225,16 +226,7 @@ export default {
         Verify
     },
     data() {
-        const validatePassword = (rule, value, callback) => {
-            // /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{10,20}$/
-            if (value.length < 6) {
-                callback(new Error('密码最少为6位数'))
-            } else {
-                callback()
-            }
-        }
         const validateAccount = (rule, value, callback) => {
-            // /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\W_]).{10,20}$/
             const reg1 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
             const reg2 = /^(?:0|86|\+86)?1[3456789]\d{9}$/
             if (reg1.test(value) || reg2.test(value)) {
@@ -260,7 +252,13 @@ export default {
                         message: '请输入正确的手机号'
                     }
                 ],
-                password: [{required: true, trigger: 'blur', validator: validatePassword}],
+                password: [
+                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ],
                 code: {required: true, trigger: 'blur', message: '请输入验证码'}
             },
             emailRegRules: {
@@ -271,13 +269,25 @@ export default {
                         message: '请输入正确的邮箱'
                     }
                 ],
-                password: [{required: true, trigger: 'blur', validator: validatePassword}],
+                password: [
+                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ],
                 code: {required: true, trigger: 'blur', message: '请输入验证码'}
             },
             accountLoginRules: {
                 account: [
                     {required: true, trigger: 'blur', message: '请输入账号'}, {trigger: 'blur', validator: validateAccount}],
-                password: [{required: true, trigger: 'blur', validator: validatePassword}]
+                password: [
+                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    {
+                        pattern: constants.passwordReg,
+                        message: constants.passwordRegDesc
+                    }
+                ]
             },
             accountForm: {
                 email: '',

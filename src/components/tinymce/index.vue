@@ -35,7 +35,7 @@ export default {
             let conf = {
                 selector: `#${this.tinymceId}`,
                 language: 'zh_CN',
-                menubar: 'file edit insert view format table',
+                menubar: 'false',
                 plugins,
                 toolbar,
                 height: 300,
