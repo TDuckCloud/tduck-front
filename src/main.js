@@ -10,7 +10,7 @@ import router from './router/index'
 import api from './api'
 import store from './store/index'
 import '@/assets/styles/index.scss' // global css
-
+import '@/utils/plugins'
 // 全局组件自动注册
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
