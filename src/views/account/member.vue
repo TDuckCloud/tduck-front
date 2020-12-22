@@ -108,7 +108,18 @@
                             <span v-if="userInfo.wxName">
                                 {{ userInfo.wxName }}(已绑定)
                             </span>
-                            <el-link v-else type="primary" @click="redirectUrl(qqLoginAuthorizeUrl)">绑定</el-link>
+                            <el-link v-else type="primary" @click="bindWxHandle">绑定</el-link>
+                            <el-dialog title="微信扫描二维码绑定"
+                                       width="400px"
+                                       center
+                                       :visible.sync="bindWxDialogVisible"
+                            >
+                                <el-image
+                                    style="width: 150px; height: 150px; display: block; margin: 0 auto;"
+                                    :src="bindWxQrcode"
+                                    fit="fill"
+                                />
+                            </el-dialog>
                         </div>
                         <div class="account-icon-view">
                             <font-icon class="fa fa-qq icon" :style="{color:userInfo.qqName?'#078DF0':''}" />
@@ -216,7 +227,7 @@
                 width="450px"
                 center
             >
-                <el-form ref="form"
+                <el-form ref="updateEmailForm"
                          style="width: 80%;"
                          :model="userInfoForm" :rules="userInfoRules" label-width="80px"
                 >
@@ -225,7 +236,8 @@
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary"
+                    <el-button v-prevent-re-click
+                               type="primary"
                                @click="()=>{this.pwdDialogVisible = false;this.sendUpdateEmail()}"
                     >发送验证邮件</el-button>
                 </span>
@@ -329,6 +341,8 @@ export default {
                     {required: true, trigger: 'blur', validator: validateRePass}
                 ]
             },
+            bindWxDialogVisible: false,
+            bindWxQrcode: false,
             editNameDialogVisible: false,
             pwdDialogVisible: false,
             phoneDialogVisible: false,
@@ -341,12 +355,17 @@ export default {
                 password: '',
                 repeatPassword: ''
             },
-            showUploadAvatar: false
+            showUploadAvatar: false,
+            bindWxTimer: null
         }
     },
     created() {
         this.queryUserInfo()
         this.getQQLoginAuthorizeUrl()
+        this.getBindWxQrCode()
+    },
+    destroyed() {
+        clearInterval(this.bindWxTimer)
     },
     methods: {
         queryUserInfo() {
@@ -364,6 +383,11 @@ export default {
         getUploadUrl() {
             return `${process.env.VUE_APP_API_ROOT}/user/file/upload`
         },
+        getBindWxQrCode() {
+            this.$api.get('/user/bind/wx/qrcode').then(res => {
+                this.bindWxQrcode = res.data
+            })
+        },
         updateUserPwdHandle() {
             this.$refs['updatePassWordForm'].validate(valid => {
                 if (valid) {
@@ -380,10 +404,13 @@ export default {
 
         },
         sendUpdateEmail() {
-            this.$api.get('/user/update-email/msg', {params: {email: this.userInfoForm.email}}).then(res => {
-                if (res.data) {
-                    this.msgSuccess('发送成功')
-
+            this.$refs['updateEmailForm'].validateField('email', err => {
+                if (!err) {
+                    this.$api.get('/user/update-email/msg', {params: {email: this.userInfoForm.email}}).then(res => {
+                        if (res.data) {
+                            this.msgSuccess('发送成功,请去您的邮箱查看')
+                        }
+                    })
                 }
             })
         },
@@ -432,6 +459,21 @@ export default {
                     })
                 }
             })
+        },
+        bindWxHandle() {
+            this.bindWxDialogVisible = true
+            this.bindWxTimer = setInterval(() => {
+                this.$api.get('/user/current/detail').then(res => {
+                    if (res.data) {
+                        let {wxName} = res.data
+                        if (wxName) {
+                            this.msgSuccess('绑定成功')
+                            this.userInfo.wxName = wxName
+                            this.bindWxDialogVisible = false
+                        }
+                    }
+                })
+            }, 5 * 1000)
         },
         cropUploadSuccess(res) {
             console.log(res)
@@ -526,7 +568,11 @@ export default {
     ul li:last-child {
         border-bottom: none;
     }
+    ul li:hover {
+        background-color: transparent;
+    }
     .is-active {
+        background-color: transparent;
         font-weight: bold;
     }
 }

@@ -4,7 +4,6 @@ import Vue from 'vue';
 const preventReClick= Vue.directive('preventReClick', {
     inserted (el, binding) {
         el.addEventListener('click', () => {
-            console.log('aaa')
             if (!el.disabled) {
                 el.disabled = true
                 setTimeout(() => {

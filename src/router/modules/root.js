@@ -30,6 +30,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
             },
             {
+                path: '/account/validate',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/validate')
+            },
+            {
                 path: '/enterprise',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/enterprise')
