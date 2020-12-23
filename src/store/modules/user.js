@@ -25,6 +25,16 @@ const actions = {
             resolve()
         })
     },
+    update(context, payload) {
+        return new Promise(resolve => {
+            // 模拟登录成功，写入 token 信息
+            context.commit('setData', {
+                token: state.token,
+                userInfo: payload
+            })
+            resolve()
+        })
+    },
     logout(context) {
         context.commit('delData')
     }
@@ -38,6 +48,8 @@ const mutations = {
         state.userInfo = JSON.stringify(data.userInfo)
     },
     delData() {
+        state.token = null
+        state.userInfo = null
         localStorage.removeItem('token')
         localStorage.removeItem('userInfo')
     }

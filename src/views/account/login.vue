@@ -349,7 +349,7 @@ export default {
         },
         // qq登录授权地址
         getQQLoginAuthorizeUrl() {
-            let reUrl = getCurrentDomain() + '/redirect'
+            let reUrl = getCurrentDomain() + '/redirect/qqlogin'
             this.$api.get('/login/qq/authorize/url', {params: {redirectUri: reUrl}}).then(res => {
                 this.qqLoginAuthorizeUrl = res.data
             })

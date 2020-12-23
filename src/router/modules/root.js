@@ -2,12 +2,17 @@ export default [
     {
         path: '/test',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/test')
+        component: () => import(/* webpackChunkName: 'root' */ '@/components/tinymce/example/Index')
     },
     {
-        path: '/redirect',
+        path: '/redirect/:type',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/redirect')
+    },
+    {
+        path: '/account/validate',
+        meta: {requireLogin: true},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/account/validate')
     },
     {
         path: '/',
@@ -25,14 +30,9 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login.vue')
             },
             {
-                path: '/forget/password',
+                path: 'forget/password',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
-            },
-            {
-                path: '/account/validate',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/validate')
             },
             {
                 path: '/enterprise',
@@ -50,7 +50,8 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/proposal')
             }
         ]
-    }, {
+    },
+    {
         path: '/home',
         meta: {requireLogin: true},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),

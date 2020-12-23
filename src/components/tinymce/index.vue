@@ -36,6 +36,8 @@ export default {
                 selector: `#${this.tinymceId}`,
                 language: 'zh_CN',
                 menubar: 'false',
+                skin_url: '/tinymce/skins/ui/tduck',
+                content_css : '/tinymce/skins/content/tduck' ,
                 plugins,
                 toolbar,
                 height: 300,

@@ -110,9 +110,6 @@ export default {
         },
         getUserInfo() {
             let user = JSON.parse(this.getStore.getters['user/userInfo'])
-            if (!user) {
-                this.logoutHandle()
-            }
             return user
         }
     },
@@ -129,13 +126,21 @@ export default {
             this.menuIndex = routerPath
         },
         logoutHandle() {
-            this.$store.dispatch('user/logout').then(() => {
-                router.push({
-                    path: '/login',
-                    query: {
-                        redirect: router.currentRoute.fullPath
-                    }
+            this.$confirm('您确定要退出登录吗？', '退出确认', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                this.$store.dispatch('user/logout').then(() => {
+                    router.push({
+                        path: '/login',
+                        query: {
+                            redirect: router.currentRoute.fullPath
+                        }
+                    })
                 })
+            }).catch(() => {
+
             })
         }
     }

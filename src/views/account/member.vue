@@ -342,7 +342,7 @@ export default {
                 ]
             },
             bindWxDialogVisible: false,
-            bindWxQrcode: false,
+            bindWxQrcode: '',
             editNameDialogVisible: false,
             pwdDialogVisible: false,
             phoneDialogVisible: false,
@@ -372,6 +372,9 @@ export default {
             this.$api.get('/user/current/detail').then(res => {
                 if (res.data) {
                     this.userInfo = res.data
+                    this.$store.dispatch('user/update', this.userInfo).then(() => {
+
+                    })
                 }
             })
         },
@@ -409,6 +412,7 @@ export default {
                     this.$api.get('/user/update-email/msg', {params: {email: this.userInfoForm.email}}).then(res => {
                         if (res.data) {
                             this.msgSuccess('发送成功,请去您的邮箱查看')
+                            this.emailDialogVisible = false
                         }
                     })
                 }
@@ -437,18 +441,19 @@ export default {
                 if (res.data) {
                     this.msgSuccess('保存成功')
                     this.queryUserInfo()
+
                 }
             })
         },
         // qq登录授权地址
         getQQLoginAuthorizeUrl() {
-            let reUrl = getCurrentDomain() + '/redirect'
+            let reUrl = getCurrentDomain() + '/redirect/bindqq'
             this.$api.get('/login/qq/authorize/url', {params: {redirectUri: reUrl}}).then(res => {
                 this.qqLoginAuthorizeUrl = res.data
             })
         },
         redirectUrl(url) {
-            location.href = url
+            window.open(url)
         },
         updateUserPhoneHandle() {
             this.$refs['updatePhoneForm'].validateField(['phoneNumber', 'code'], err => {
@@ -468,6 +473,7 @@ export default {
                         let {wxName} = res.data
                         if (wxName) {
                             this.msgSuccess('绑定成功')
+                            clearInterval(this.bindWxTimer)
                             this.userInfo.wxName = wxName
                             this.bindWxDialogVisible = false
                         }
@@ -476,7 +482,6 @@ export default {
             }, 5 * 1000)
         },
         cropUploadSuccess(res) {
-            console.log(res)
             this.userInfoForm.avatar = res.data
             this.updateUserHandle()
         }
