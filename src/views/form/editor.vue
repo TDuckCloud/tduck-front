@@ -48,7 +48,7 @@
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
-                            <Tinymce v-model="formConf.description" :height="300" placeholder="请输入表单描述" />
+                            <Tinymce v-model="formConf.description" @input="saveProjectInfo" placeholder="请输入表单描述" />
 <!--                            <p class="form-name-text" contenteditable="true"-->
 <!--                               @blur="(event)=>{-->
 <!--                                   formConf.description=event.target.innerText;-->
