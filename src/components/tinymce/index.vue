@@ -38,10 +38,12 @@ export default {
                 menubar: 'false',
                 skin_url: '/tinymce/skins/ui/tduck',
                 content_css : '/tinymce/skins/content/tduck' ,
+                toolbar_mode:'floating',
+                cache_suffix: '?v='+new Date(),
                 plugins,
                 toolbar,
                 height: 200,
-                fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                // fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
                 branding: false,
                 object_resizing: false,
                 end_container_on_empty_block: true,
@@ -52,6 +54,7 @@ export default {
                 advlist_number_styles: 'default',
                 default_link_target: '_blank',
                 link_title: false,
+                statusbar: false,
                 nonbreaking_force_tab: true
             }
             conf = Object.assign(conf, this.$attrs)
@@ -78,6 +81,9 @@ export default {
 
             editor.on('change keyup undo redo', () => {
                 this.$emit('input', editor.getContent())
+            })
+            editor.on('blur', () => {
+                this.$emit('blur')
             })
         },
         destroyTinymce() {

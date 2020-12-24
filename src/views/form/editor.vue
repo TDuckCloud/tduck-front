@@ -34,7 +34,6 @@
             </el-scrollbar>
         </div>
         <div class="center-board">
-
             <el-scrollbar class="center-scrollbar">
                 <el-row class="center-board-row" :gutter="formConf.gutter">
                     <el-row type="flex" justify="center" align="middle">
@@ -47,8 +46,14 @@
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
-                        <el-col :span="20" style="text-align: center">
-                            <Tinymce v-model="formConf.description" @input="saveProjectInfo" placeholder="请输入表单描述" />
+                        <el-col :span="23" style="text-align: center">
+
+                            <Tinymce v-model="formConf.description" @input="saveProjectInfo"
+                                     v-if="editDescription"
+                                     @blur="editDescription=false" placeholder="请输入表单描述" />
+                            <div v-else v-html="formConf.description" @click="editDescription=true">
+
+                            </div>
 <!--                            <p class="form-name-text" contenteditable="true"-->
 <!--                               @blur="(event)=>{-->
 <!--                                   formConf.description=event.target.innerText;-->
@@ -137,6 +142,7 @@ export default {
         return {
             idGlobal,
             formConf,
+            editDescription:true,
             inputComponents,
             selectComponents,
             labelWidth: 100,

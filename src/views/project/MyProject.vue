@@ -68,6 +68,7 @@
         </div>
         <div v-if="dataShowType=='gird'" class="project-grid-container">
             <div
+                v-if="projectList.length"
                 class="project-grid-view"
             >
                 <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer" :span="4">
@@ -105,8 +106,8 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!projectList||projectList.length==0" class="project-grid-container">
-                <div />
+            <div v-else>
+                <data-empty />
             </div>
         </div>
         <div v-if="dataShowType=='table'" class="project-table-view">
@@ -192,6 +193,7 @@
     </div>
 </template>
 <script>
+import DataEmpty from '@/components/DataEmpty'
 let projectStatusList = [
     {code: 1, name: '未发布', color: '#006EFF'},
     {code: 2, name: '收集中', color: '#34C82A'},
@@ -200,7 +202,7 @@ let projectStatusList = [
 
 export default {
     name: 'MyProject',
-    components: {},
+    components: {DataEmpty},
     data() {
         return {
             dataShowType: 'gird',
