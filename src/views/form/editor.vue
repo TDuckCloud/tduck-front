@@ -46,14 +46,14 @@
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
-                        <el-col :span="23" style="text-align: center">
+                        <el-col :span="23" >
+                                <Tinymce v-model="formConf.description" @input="saveProjectInfo"
+                                         v-if="editDescription"
+                                         @blur="editDescription=false" placeholder="请输入表单描述" />
+                                <div v-else v-html="formConf.description" class="form-name-text"
+                                     @click="editDescription=true" style="min-height: 100px">
 
-                            <Tinymce v-model="formConf.description" @input="saveProjectInfo"
-                                     v-if="editDescription"
-                                     @blur="editDescription=false" placeholder="请输入表单描述" />
-                            <div v-else v-html="formConf.description" @click="editDescription=true">
-
-                            </div>
+                                </div>
 <!--                            <p class="form-name-text" contenteditable="true"-->
 <!--                               @blur="(event)=>{-->
 <!--                                   formConf.description=event.target.innerText;-->

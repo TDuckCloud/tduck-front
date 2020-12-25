@@ -6,6 +6,7 @@
 import loadTinymce from '@/utils/loadTinymce'
 import {plugins, toolbar} from './config'
 import {debounce} from 'throttle-debounce'
+import constants from '@/utils/constants'
 
 let num = 1
 
@@ -29,7 +30,10 @@ export default {
         }
     },
     mounted() {
+
         loadTinymce(tinymce => {
+            let token= this.getUserToken();
+            let uploadUrl= constants.userUploadUrl
             // eslint-disable-next-line global-require
             require('./zh_CN')
             let conf = {
@@ -55,7 +59,31 @@ export default {
                 default_link_target: '_blank',
                 link_title: false,
                 statusbar: false,
-                nonbreaking_force_tab: true
+                nonbreaking_force_tab: true,
+                images_upload_handler: function (blobInfo, succFun, failFun) {
+                    var xhr, formData;
+                    var file = blobInfo.blob();//转化为易于理解的file对象
+                    xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', uploadUrl);
+                    xhr.setRequestHeader("token", token);
+                    xhr.onload = function() {
+                        var json;
+                        if (xhr.status != 200) {
+                            failFun('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+                        json = JSON.parse(xhr.responseText);
+                        if (!json || typeof json.data != 'string') {
+                            failFun('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        succFun(json.data);
+                    };
+                    formData = new FormData();
+                    formData.append('file', file, file.name );//此处与源文档不一样
+                    xhr.send(formData);
+                }
             }
             conf = Object.assign(conf, this.$attrs)
             conf.init_instance_callback = editor => {
@@ -85,6 +113,9 @@ export default {
             editor.on('blur', () => {
                 this.$emit('blur')
             })
+        },
+        getUserToken() {
+            return this.$store.getters['user/isLogin']
         },
         destroyTinymce() {
             if (!window.tinymce) return

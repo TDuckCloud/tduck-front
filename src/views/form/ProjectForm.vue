@@ -15,9 +15,10 @@
             <h4 class="form-name-text" v-if="projectTheme.showTitle" style="text-align: center">
                 {{ formConf.title }}
             </h4>
-            <p class="form-name-text" v-if="projectTheme.showDescribe" style="text-align: center">
-                {{ formConf.description }}
-            </p>
+            <div
+                v-show="projectTheme.showDescribe"
+                class="form-name-text" v-html="formConf.description" >
+            </div>
             <el-divider>
             </el-divider>
             <parser v-if="startParser" :form-conf="formConf" @submit="submitForm"/>

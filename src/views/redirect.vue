@@ -13,8 +13,6 @@ export default {
     created() {
         // 重定向类型
         let type = this.$route.params.type
-        // eslint-disable-next-line no-debugger
-        debugger
         if (type == 'qqlogin') {
             this.qqLoginHandle()
         } else if (type == 'bindqq') {
@@ -36,36 +34,36 @@ export default {
                     }
                 })
             }
-        }
-    },
-    qqLoginHandle() {
-        // qq 登录重定向
-        let code = getQueryString('code')
-        let state = getQueryString('state')
-        if (code && state) {
-            let reUrl = getCurrentDomain() + '/redirect/qqlogin'
-            this.$api.post('/login/qq', {authorizeCode: code, redirectUri: reUrl}).then(res => {
-                if (res.data) {
-                    this.msgSuccess('登录成功')
-                    this.$store.dispatch('user/login', res.data).then(() => {
-                        // 重置状态
-                        this.$store.dispatch('global/loginExpired', false).then(() => {
-                        })
-                        // 登录成功后路由跳回
-                        if (this.$route.query.redirect) {
-                            this.$router.replace({
-                                path: this.$route.query.redirect
+        },
+        qqLoginHandle() {
+            // qq 登录重定向
+            let code = getQueryString('code')
+            let state = getQueryString('state')
+            if (code && state) {
+                let reUrl = getCurrentDomain() + '/redirect/qqlogin'
+                this.$api.post('/login/qq', {authorizeCode: code, redirectUri: reUrl}).then(res => {
+                    if (res.data) {
+                        this.msgSuccess('登录成功')
+                        this.$store.dispatch('user/login', res.data).then(() => {
+                            // 重置状态
+                            this.$store.dispatch('global/loginExpired', false).then(() => {
                             })
-                        } else {
-                            if (window.history.length <= 1) {
-                                this.$router.push({path: '/home'})
+                            // 登录成功后路由跳回
+                            if (this.$route.query.redirect) {
+                                this.$router.replace({
+                                    path: this.$route.query.redirect
+                                })
                             } else {
-                                this.$router.push({path: '/home'})
+                                if (window.history.length <= 1) {
+                                    this.$router.push({path: '/home'})
+                                } else {
+                                    this.$router.push({path: '/home'})
+                                }
                             }
-                        }
-                    })
-                }
-            })
+                        })
+                    }
+                })
+            }
         }
     }
 }
