@@ -2,7 +2,7 @@ export default [
     {
         path: '/test',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/components/tinymce/example/Index')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/test')
     },
     {
         path: '/redirect/:type',

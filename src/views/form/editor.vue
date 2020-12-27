@@ -280,9 +280,9 @@ export default {
                 this.activeData = tempActiveData
                 this.activeId = this.idGlobal
             }
+            this.onItemEnd(obj)
         },
         onItemEnd(obj) {
-            console.log(obj)
             let params = {'projectKey': this.projectKey}
             if (this.drawingList[obj.newIndex - 1]) {
                 let sort1 = this.drawingList[obj.newIndex - 1].sort

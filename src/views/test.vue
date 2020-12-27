@@ -1,23 +1,26 @@
 <template>
     <div>
-        <Verify
-            ref="verify"
-            :mode="'pop'"
-            :captcha-type="'blockPuzzle'"
-            :img-size="{ width: '330px', height: '155px' }"
-            @success="success"
-        />
-        <button @click="useVerify">调用验证组件</button>
+        <el-radio-group v-model="radio">
+            <el-radio :label="3">备选项</el-radio>
+            <el-radio :label="6">备选项</el-radio>
+            <el-radio :label="9">备选项</el-radio>
+            <el-radio :label="0">其他<input/>
+            </el-radio>
+        </el-radio-group>
     </div>
 </template>
 
 <script>
 // 引入组件
-import Verify from '@/components/verifition/Verify'
+// import Verify from '@/components/verifition/Verify'
 export default {
     name: 'App',
     components: {
-        Verify
+    },
+    data() {
+        return {
+            radio: 3
+        }
     },
     created() {
     },
@@ -34,3 +37,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.el-radio {
+    display: block;
+}
+</style>

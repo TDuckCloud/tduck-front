@@ -54,6 +54,7 @@ export function dbDataConvertForItemJson(data) {
             _.set(jsonItem, param[key], value)
         })
     }
+    jsonItem.sort = data.sort
     jsonItem.typeId = data.type
     jsonItem.__config__.formId = data.formItemId
     jsonItem.__config__.label = data.label

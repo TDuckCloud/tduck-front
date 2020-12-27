@@ -69,6 +69,7 @@
         <div v-if="dataShowType=='gird'" class="project-grid-container">
             <div
                 v-if="projectList.length"
+                v-loading="projectListLoading"
                 class="project-grid-view"
             >
                 <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer" :span="4">
@@ -194,6 +195,7 @@
 </template>
 <script>
 import DataEmpty from '@/components/DataEmpty'
+
 let projectStatusList = [
     {code: 1, name: '未发布', color: '#006EFF'},
     {code: 2, name: '收集中', color: '#34C82A'},
@@ -216,7 +218,8 @@ export default {
                 status: null
             },
             projectStatusList: projectStatusList,
-            projectList: []
+            projectList: [],
+            projectListLoading: true
         }
     },
     computed: {
@@ -241,6 +244,7 @@ export default {
             this.$router.push({path: '/project/form', query: {key: key, active: type}})
         },
         queryProjectPage() {
+
             this.$api.get('/user/project/page', {
                 params: this.queryParams
             }).then(res => {
@@ -248,6 +252,7 @@ export default {
                 this.projectList = records
                 this.total = total
                 this.queryParams.size = size
+                this.projectListLoading = false
             })
         }
     }

@@ -160,19 +160,44 @@ function setValue(event, config, scheme) {
     setValueLabel.call(this, event, config, scheme)
 }
 
+/**
+ * radio checkbox 其他输入框值处理
+ */
+function setOtherValueLabel(event, config) {
+    let value = this[this.formConf.formModel][config.__vModel__]
+    this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}other`, event)
+    setValueLabel.call(this, value, config.__config__, config)
+}
+
+/**
+ * 保存选项的label值
+ * @param event
+ * @param config
+ * @param scheme
+ */
 function setValueLabel(event, config, scheme) {
     let tagOptionKey = processType[config.tag]
     if (tagOptionKey) {
         if (event instanceof Array) {
-            let labelStr = ''
+            let labelArr = new Array()
             event.forEach(item => {
-                let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
-                labelStr += label + ','
+                //拼到头部
+                if (item === 0) {
+                    labelArr.push(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
+                }else{
+                    let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
+                    labelArr.push(label)
+                }
             })
-            this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, labelStr)
+            this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, labelArr.join(','))
         } else {
-            let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
-            this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+            //多选 单选 其他自定义输入
+            if (event == 0) {
+                this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}`, this[this.formConf.labelFormModel][`${config.__vModel__}other`])
+            } else {
+                let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
+                this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+            }
         }
     } else if (config.tag === 'el-upload') {
         this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, event)
@@ -206,7 +231,7 @@ function buildListeners(scheme) {
     listeners.input = event => setValue.call(this, event, config, scheme)
     listeners.upload = (response, file, fileList) => setUpload.call(this, config, scheme, response, file, fileList)
     listeners.deleteUpload = (file, fileList) => deleteUpload.call(this, config, scheme, file, fileList)
-
+    listeners.selectOtherChange = (event, config) => setOtherValueLabel.call(this, event, config)
     return listeners
 }
 
@@ -328,3 +353,31 @@ export default {
     }
 }
 </script>
+<style scoped>
+/deep/ .el-radio-group {
+    margin-left: 10px;
+}
+
+/deep/ .el-radio {
+    display: block;
+    height: 23px;
+    line-height: 23px;
+}
+
+/deep/ .el-checkbox-group {
+    margin-left: 10px;
+}
+
+/deep/ .el-checkbox {
+    display: block;
+}
+
+/deep/ .item-other-input {
+    margin-left: 20px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+/deep/ .item-other-input:focus {
+    outline: none;
+}
+</style>

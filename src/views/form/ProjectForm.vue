@@ -17,7 +17,7 @@
             </h4>
             <div
                 v-show="projectTheme.showDescribe"
-                class="form-name-text" v-html="formConf.description" >
+                class="form-name-text" v-html="formConf.description">
             </div>
             <el-divider>
             </el-divider>
