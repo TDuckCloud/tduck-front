@@ -18,7 +18,7 @@
                     </el-col>
                 </el-row>
                 <el-row
-                    style="width: 719px; height: 416px; border-radius: 10px; border: 1px solid rgba(187, 187, 187, 100);"
+                    style="width: 719px; height: 450px; border-radius: 10px; border: 1px solid rgba(187, 187, 187, 100);"
                 >
                     <el-row style="height: 50px;" />
                     <el-row>
@@ -38,27 +38,28 @@
                         </el-row>
                         <el-row type="flex" justify="space-around">
                             <el-col :offset="2" :span="5">
-                                <h4>
+                                <count-to style="font-size: 20px;">
                                     1231
-                                </h4>
+                                </count-to>
                             </el-col>
                             <el-col :span="5">
-                                <h4>
+                                <count-to style="font-size: 20px;">
                                     3921
-                                </h4>
+                                </count-to>
                             </el-col>
                             <el-col :span="5">
-                                <h4>28%</h4>
+                                <count-to style="font-size: 20px;">
+                                    28
+                                </count-to>
+                                %
                             </el-col>
                             <el-col :span="5">
-                                <h4>12分16秒</h4>
+                                <span style="font-size: 20px;">  12分16秒</span>
                             </el-col>
                         </el-row>
                     </el-row>
                     <el-row>
-                        <img style="width: 719px; height: 252px;"
-                             src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2cdrp.png"
-                        >
+                        <line-chart :chart-data="lineChartData" />
                     </el-row>
                 </el-row>
             </el-col>
@@ -70,9 +71,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="18">
-                        <img style="height: 215px;"
-                             src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2cdw0.png"
-                        >
+                        <map-chart />
                     </el-col>
                 </el-row>
                 <el-row type="flex" justify="space-around">
@@ -83,9 +82,7 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <img style="height: 160px;"
-                                 src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2cdta.png"
-                            >
+                            <bar-chart />
                         </el-row>
                     </el-col>
                     <el-col :span="12">
@@ -95,9 +92,7 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <img style="height: 160px;"
-                                 src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/v2_q2cdo2.png"
-                            >
+                            <pie-chart />
                         </el-row>
                     </el-col>
                 </el-row>
@@ -107,8 +102,43 @@
     </el-row>
 </template>
 <script>
+import PieChart from '@/components/echarts/PieChart'
+import LineChart from '@/components/echarts/LineChart'
+import MapChart from '@/components/echarts/MapChart'
+import CountTo from '@/components/CountTo'
+import BarChart from '@/components/echarts/BarChart'
+const lineChartData = {
+    newVisitis: {
+        expectedData: [100, 120, 161, 134, 105, 160, 165],
+        actualData: [120, 82, 91, 154, 162, 140, 145]
+    },
+    messages: {
+        expectedData: [200, 192, 120, 144, 160, 130, 140],
+        actualData: [180, 160, 151, 106, 145, 150, 130]
+    },
+    purchases: {
+        expectedData: [80, 100, 121, 104, 105, 90, 100],
+        actualData: [120, 90, 100, 138, 142, 130, 130]
+    },
+    shoppings: {
+        expectedData: [130, 140, 141, 142, 145, 150, 160],
+        actualData: [120, 82, 91, 154, 162, 140, 130]
+    }
+}
 export default {
-    name: 'HomeDashboard'
+    name: 'HomeDashboard',
+    components: {
+        CountTo,
+        PieChart,
+        MapChart,
+        BarChart,
+        LineChart
+    },
+    data() {
+        return {
+            lineChartData: lineChartData.newVisitis
+        }
+    }
 }
 </script>
 

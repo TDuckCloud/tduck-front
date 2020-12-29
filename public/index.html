@@ -15,6 +15,15 @@
         <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="external nofollow preload" as="script">
     <% } %>
   </head>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?8dd57964085e37a5e056c35faa6c5df9";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
   <body>
     <noscript>
         <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
@@ -34,3 +43,4 @@
     <% } %>
 </body>
 </html>
+

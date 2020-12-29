@@ -88,10 +88,17 @@ export default {
         })
     },
     mounted() {
+        this.viewProjectHandle()
     },
     components: {
         ProjectForm
     }, methods: {
+        viewProjectHandle(){
+            //是否能进入填写
+            this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
+
+            })
+        },
         queryProjectSettingStatus() {
             //是否能进入填写
             this.$api.get(`/user/project/setting/status`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {

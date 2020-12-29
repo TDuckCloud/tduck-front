@@ -1,28 +1,26 @@
 <template>
     <div>
-        <el-radio-group v-model="radio">
-            <el-radio :label="3">备选项</el-radio>
-            <el-radio :label="6">备选项</el-radio>
-            <el-radio :label="9">备选项</el-radio>
-            <el-radio :label="0">其他<input/>
-            </el-radio>
-        </el-radio-group>
+        <map-chart />
     </div>
 </template>
 
 <script>
 // 引入组件
 // import Verify from '@/components/verifition/Verify'
+import MapChart from '@/components/echarts/MapChart'
+
 export default {
     name: 'App',
     components: {
+        MapChart
     },
     data() {
         return {
             radio: 3
         }
     },
-    created() {
+    mounted() {
+
     },
     methods: {
         success(params) {

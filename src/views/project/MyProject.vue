@@ -107,7 +107,7 @@
                     </div>
                 </div>
             </div>
-            <div v-else>
+            <div v-else v-loading="projectListLoading">
                 <data-empty />
             </div>
         </div>

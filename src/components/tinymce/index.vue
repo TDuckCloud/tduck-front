@@ -42,7 +42,7 @@ export default {
                 menubar: 'false',
                 skin_url: '/tinymce/skins/ui/tduck',
                 content_css : '/tinymce/skins/content/tduck' ,
-                cache_suffix: '?v='+new Date(),
+                cache_suffix: '?v=0.0.1',
                 plugins,
                 toolbar,
                 toolbar_drawer:'sliding',

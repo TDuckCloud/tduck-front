@@ -487,7 +487,7 @@
                                 </p>
                             </div>
                             <div>
-                                <img :src="userProjectSettingData.shareImg" style="width: 49px;height: 46px;"/>
+                                <img :src="userProjectSettingData.shareImg"  v-if="userProjectSettingData.shareImg" style="width: 49px;height: 46px;"/>
                             </div>
                         </div>
                         <div>
