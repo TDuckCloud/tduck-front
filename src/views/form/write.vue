@@ -1,5 +1,6 @@
 <template>
     <div class="write-container">
+        <h1 id="inActiveTime" style="display: none"></h1>
         <div v-if="writeStatus==0" class="title-icon-view">
             <div class="icon-view">
                 <i class="el-icon-check success-icon"/>
@@ -38,13 +39,14 @@ import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
 import {getCurrentDomain, getQueryString} from '@/utils'
 
+require('@/utils/ut')
 let wx
-
 export default {
     name: 'WriteView',
     props: {},
     data() {
         return {
+            inActiveTime: 0,
             projectConfig: {
                 projectKey: '',
                 preview: false,
@@ -86,6 +88,7 @@ export default {
             this.wxSignature = res.data
             this.setWxConfig()
         })
+
     },
     mounted() {
         this.viewProjectHandle()
@@ -93,7 +96,7 @@ export default {
     components: {
         ProjectForm
     }, methods: {
-        viewProjectHandle(){
+        viewProjectHandle() {
             //是否能进入填写
             this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
 
@@ -216,7 +219,10 @@ export default {
             }
         },
         submitForm(data) {
+            //完成时间
+            let inActiveTime = document.getElementById('inActiveTime').innerText
             this.$api.post('/user/project/result/create', {
+                'completeTime': inActiveTime,
                 'projectKey': this.projectConfig.projectKey,
                 'originalData': data.formModel,
                 'processData': data.labelFormModel

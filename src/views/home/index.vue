@@ -165,7 +165,7 @@ export default {
 .home-header-view {
     line-height: 92px;
     height: 92px;
-    min-width: 960px;
+    min-width: 1024px;
     background-color: rgba(255, 255, 255, 100);
     color: rgba(16, 16, 16, 100);
     font-size: 14px;
@@ -206,6 +206,7 @@ export default {
 }
 .home-main-view {
     height: calc(100vh - 92px);
+    min-width: 1024px;
     background-color: #f7f7f7;
     padding: 0;
 }

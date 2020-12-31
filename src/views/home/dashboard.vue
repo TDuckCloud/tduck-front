@@ -1,5 +1,5 @@
 <template>
-    <el-row>
+    <el-row style="min-width: 1024px;">
         <el-row type="flex" align="top" justify="space-around">
             <el-col :offset="1" :span="11">
                 <el-row type="flex" align="middle" justify="center">
@@ -7,12 +7,15 @@
                         <p class="tagTitle">回收概览</p>
                     </el-col>
                     <el-col :offset="1" :span="21">
-                        <el-select v-model="value" placeholder="请选择">
+                        <el-select v-model="activeProjectKey"
+                                   placeholder="请选择"
+                                   @change="projectChangeHandle"
+                        >
                             <el-option
-                                v-for="item in ['表单1']"
-                                :key="item"
-                                :label="item"
-                                :value="item"
+                                v-for="item in projectListData"
+                                :key="item.key"
+                                :label="item.name"
+                                :value="item.key"
                             />
                         </el-select>
                     </el-col>
@@ -33,28 +36,24 @@
                                 <span>回收率</span>
                             </el-col>
                             <el-col :span="5">
-                                <span>平局完成时间</span>
+                                <span>平均完成时间</span>
                             </el-col>
                         </el-row>
                         <el-row type="flex" justify="space-around">
                             <el-col :offset="2" :span="5">
-                                <count-to style="font-size: 20px;">
-                                    1231
-                                </count-to>
+                                <count-to :end-val="projectStats.completeCount" style="font-size: 20px; text-align: center;" />
                             </el-col>
                             <el-col :span="5">
-                                <count-to style="font-size: 20px;">
-                                    3921
-                                </count-to>
+                                <count-to :end-val="projectStats.viewCount" style="font-size: 20px;" />
                             </el-col>
                             <el-col :span="5">
-                                <count-to style="font-size: 20px;">
-                                    28
-                                </count-to>
+                                <count-to :end-val="projectStats.completeRate" style="font-size: 20px;" />
                                 %
                             </el-col>
                             <el-col :span="5">
-                                <span style="font-size: 20px;">  12分16秒</span>
+                                <span style="font-size: 20px;">
+                                    {{ projectStats.avgCompleteFormatStr }}
+                                </span>
                             </el-col>
                         </el-row>
                     </el-row>
@@ -107,6 +106,7 @@ import LineChart from '@/components/echarts/LineChart'
 import MapChart from '@/components/echarts/MapChart'
 import CountTo from '@/components/CountTo'
 import BarChart from '@/components/echarts/BarChart'
+import {timeFormat} from '@/utils/index'
 const lineChartData = {
     newVisitis: {
         expectedData: [100, 120, 161, 134, 105, 160, 165],
@@ -136,9 +136,49 @@ export default {
     },
     data() {
         return {
+            projectListData: null,
+            projectStats: {
+                avgCompleteTime: 0,
+                avgCompleteFormatStr: 0,
+                viewCount: 0,
+                completeCount: 0,
+                completeRate: 0
+            },
+            projectSituation: null,
+            activeProjectKey: null,
             lineChartData: lineChartData.newVisitis
         }
+    },
+    created() {
+        this.$api.get('/user/project/list', {params: {status: 2}}).then(res => {
+            this.projectListData = res.data
+            if (res.data) {
+                this.activeProjectKey = res.data[0].key
+                this.projectChangeHandle()
+            }
+        })
+    }, methods: {
+        projectChangeHandle() {
+            this.getProjectStats()
+            this.getProjectSituation()
+        },
+        getProjectStats() {
+            this.$api.get('/user/project/report/stats', {params: {projectKey: this.activeProjectKey}}).then(res => {
+                this.projectStats = res.data
+                if (this.projectStats.completeCount) {
+                    let rate = this.projectStats.completeCount / this.projectStats.viewCount
+                    this.projectStats.completeRate = rate > 1 ? 100 : rate * 100
+                    this.projectStats.avgCompleteFormatStr = timeFormat(this.projectStats.avgCompleteTime)
+                }
+            })
+        },
+        getProjectSituation() {
+            this.$api.get('/user/project/report/situation', {params: {projectKey: this.activeProjectKey}}).then(res => {
+                this.projectSituation = res.data
+            })
+        }
     }
+
 }
 </script>
 

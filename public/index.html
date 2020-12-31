@@ -14,7 +14,7 @@
         <!-- 使用CDN的JS文件 -->
         <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="external nofollow preload" as="script">
     <% } %>
-  </head>
+    <!--百度访问统计-->
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -24,12 +24,13 @@
             s.parentNode.insertBefore(hm, s);
         })();
     </script>
+  </head>
   <body>
     <noscript>
         <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
+    <!-- built files will be auto injected 移动端调试工具-->
     <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
         <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>
@@ -41,6 +42,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
         <script>new VConsole();</script>
     <% } %>
-</body>
+ </body>
 </html>
 
