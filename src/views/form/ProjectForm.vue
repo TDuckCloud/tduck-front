@@ -47,7 +47,9 @@ export default {
     props: {
         projectConfig: {
             projectKey: '',
-            showBtns: true
+            showBtns: true,
+            // 项目种类  1 普通  2模板
+            projectKind: 1
         }
     },
     data() {
@@ -62,6 +64,7 @@ export default {
             formConf: {
                 fields: [],
                 projectKey: '',
+                projectKind: 1,
                 __methods__: {},
                 formRef: 'elForm',
                 formModel: 'formData',
@@ -90,16 +93,25 @@ export default {
     created() {
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.formConf.projectKey = this.projectConfig.projectKey
-            // this.formConf.formBtns = this.projectConfig.showBtns
-            //不存去路由中尝试获取 iframe
+            if (this.projectConfig.projectKind) {
+                this.formConf.projectKind = this.projectConfig.projectKind
+            }
         } else if (this.$route.query.key) {
+            //不存去路由中尝试获取 iframe
             this.formConf.projectKey = this.$route.query.key
+            if (this.$route.query.kind) {
+                this.formConf.projectKind = this.$route.query.kind
+            }
             this.formConf.formBtns = true
         }
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
     mounted() {
-        this.$api.get(`/user/project/details/${this.formConf.projectKey}`).then(res => {
+        let url = `/user/project/details/${this.formConf.projectKey}`
+        if (this.formConf.projectKind == 2) {
+            url = `/project/template/details/${this.formConf.projectKey}`
+        }
+        this.$api.get(url).then(res => {
             if (res.data) {
                 let serialNumber = 1
                 let fields = res.data.projectItems.map(item => {

@@ -72,7 +72,7 @@
                 v-loading="projectListLoading"
                 class="project-grid-view"
             >
-                <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer" :span="4">
+                <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer">
                     <el-row type="flex" align="middle" justify="center">
                         <el-col :span="5">
                             <span
@@ -244,7 +244,6 @@ export default {
             this.$router.push({path: '/project/form', query: {key: key, active: type}})
         },
         queryProjectPage() {
-
             this.$api.get('/user/project/page', {
                 params: this.queryParams
             }).then(res => {

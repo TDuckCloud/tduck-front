@@ -224,6 +224,9 @@ export default {
             this.$api.post('/user/project/result/create', {
                 'completeTime': inActiveTime,
                 'projectKey': this.projectConfig.projectKey,
+                'submitOs': ua.os.name,
+                'submitBrowser': ua.browser.name,
+                'submitUa': ua,
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
             }).then(res => {
@@ -241,6 +244,13 @@ export default {
     height: 100%;
     width: 100%;
 
+}
+
+.project-grid-container {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 .title-icon-view {

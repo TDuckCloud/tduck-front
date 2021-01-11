@@ -77,8 +77,12 @@ api.interceptors.response.use(
                         confirmButtonText: '重新登录',
                         cancelButtonText: '取消',
                         type: 'warning'
-                    }).then(() => {
+                    }).then(() => {     // 重置状态
+                        this.$store.dispatch('global/loginExpired', false).then(() => {
+                        })
                         toLogin()
+                    }).catch(() => {
+
                     })
                 })
             }

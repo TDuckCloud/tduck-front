@@ -61,7 +61,7 @@
                 />
             </div>
         </div>
-        <div >
+        <div>
             <el-dialog center title="自定义显示列" :visible.sync="customColumnDialogVisible">
                 <el-row>
                     <el-col :span="3">
@@ -139,7 +139,7 @@ export default {
     }, methods: {
         renderHeader(h) {
             return (
-                <i class="el-icon-setting" onClick={() => this.customColumnDialogVisible = true}></i>
+                <i class="el-icon-setting" style="color:currentColor" onClick={() => this.customColumnDialogVisible = true}></i>
             )
         },
         queryProjectResult() {
@@ -160,7 +160,11 @@ export default {
             })
         },
         getDbCheckedColumns() {
-            let {fixedCustomColumns, otherCustomColumns} = getCheckedColumn(this.projectKey)
+            let checkedColumn = getCheckedColumn(this.projectKey)
+            if (!checkedColumn) {
+                return
+            }
+            let {fixedCustomColumns, otherCustomColumns} = checkedColumn
             if (fixedCustomColumns) {
                 this.fixedCustomColumns = fixedCustomColumns
                 this.checkFixedCustomColumns = fixedCustomColumns

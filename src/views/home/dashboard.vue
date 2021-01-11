@@ -12,7 +12,6 @@
                                    @change="projectChangeHandle"
                         >
                             <el-option
-
                                 v-for="item in projectListData"
                                 :key="item.key"
                                 :label="item.name"
@@ -22,7 +21,7 @@
                     </el-col>
                 </el-row>
                 <el-row
-                    style="width: 719px; height: 450px; border-radius: 10px; border: 1px solid rgba(187, 187, 187, 100);"
+                    style="width: 730px; height: 500px; border-radius: 10px; border: 1px solid rgba(187, 187, 187, 100);"
                 >
                     <el-row style="height: 50px;" />
                     <el-row>
@@ -73,7 +72,7 @@
                 </el-row>
                 <el-row>
                     <el-col :span="18">
-                        <map-chart :chart-option="mapChartOptionData" />
+                        <map-chart :chart-option="mapChartOptionData" :height="'250px'" />
                     </el-col>
                 </el-row>
                 <el-row type="flex" justify="space-around">
@@ -84,7 +83,7 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <bar-chart :chart-option="barChartOptionData" />
+                            <pie-chart :chart-option="pieChartOptionData" :height="'250px'" />
                         </el-row>
                     </el-col>
                     <el-col :span="12">
@@ -94,7 +93,7 @@
                             </el-col>
                         </el-row>
                         <el-row>
-                            <pie-chart :chart-option="pieChartOptionData" />
+                            <bar-chart :chart-option="barChartOptionData" :height="'250px'" />
                         </el-row>
                     </el-col>
                 </el-row>
@@ -252,7 +251,7 @@ export default {
                             zoom: 1.2,
                             roam: false,
                             label: {
-                                show: true,
+                                show: false,
                                 color: 'rgb(0,0,0)'
                             },
                             data: Object.keys(res.data).map(key => {
@@ -264,89 +263,91 @@ export default {
             })
 
         },
-        // 常用设备
-        getProjectSubmitDevice() {
-            this.barChartOptionData = {
-                tooltip: {
-                    trigger: 'axis',
-                    backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
-                    color: 'black',
-                    borderWidth: '1',
-                    borderColor: 'rgb(156,209,255)',
-                    textStyle: {
-                        color: 'black'
-                    },
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: {
-                    type: 'value',
-                    boundaryGap: [0, 0.01]
-                },
-                yAxis: {
-                    type: 'category',
-                    data: ['虾米', '印尼', '美国', '印度', '中国', '世界人口(万)']
-                },
-                series: [
-                    {
-                        name: '2011年',
-                        type: 'bar',
-                        data: [18203, 23489, 29034, 104970, 131744, 630230]
-                    }
-                ]
-            }
-
-        },
         getProjectSubmitSource() {
-            this.pieChartOptionData = {
-                tooltip: {
-                    trigger: 'item',
-                    backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
-                    color: 'black',
-                    borderWidth: '1',
-                    borderColor: 'rgb(156,209,255)',
-                    textStyle: {
-                        color: 'black'
-                    }
-                },
-                series: [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['50%', '70%'],
-                        avoidLabelOverlap: false,
-                        label: {
-                            show: false,
-                            position: 'center'
+            this.$api.get('/user/project/report/source', {params: {projectKey: this.activeProjectKey}}).then(res => {
+                this.barChartOptionData = {
+                    tooltip: {
+                        trigger: 'axis',
+                        backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
+                        color: 'black',
+                        borderWidth: '1',
+                        borderColor: 'rgb(156,209,255)',
+                        textStyle: {
+                            color: 'black'
                         },
-                        emphasis: {
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: res.data.map(item => {
+                            return item.browserName ? item.browserName : '其他'
+                        })
+                    },
+                    series: [
+                        {
+                            barWidth: 30,
+                            name: '数量',
+                            type: 'bar',
+                            data: res.data.map(item => {
+                                return item.count
+                            })
+                        }
+                    ]
+                }
+            })
+        },
+        getProjectSubmitDevice() {
+            this.$api.get('/user/project/report/device', {params: {projectKey: this.activeProjectKey}}).then(res => {
+                this.pieChartOptionData = {
+                    tooltip: {
+                        trigger: 'item',
+                        backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
+                        color: 'black',
+                        borderWidth: '1',
+                        borderColor: 'rgb(156,209,255)',
+                        textStyle: {
+                            color: 'black'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '设备类型',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
                             label: {
-                                show: true,
-                                fontSize: '30',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {
-                            show: false
-                        },
-                        data: [
-                            {value: 335, name: '直接访问'},
-                            {value: 310, name: '邮件营销'},
-                            {value: 234, name: '联盟广告'},
-                            {value: 135, name: '视频广告'},
-                            {value: 1548, name: '搜索引擎'}
-                        ]
-                    }
-                ]
-            }
-
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: res.data.map(item => {
+                                return {value: item.count, name: item.osName ? item.osName : '其他'}
+                            })
+                        }
+                    ]
+                }
+            })
         }
     }
 }

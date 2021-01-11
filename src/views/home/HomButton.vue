@@ -11,7 +11,9 @@
             </el-button>
         </el-col>
         <el-col :span="5">
-            <el-button class="home-fun-btn">行业模板<i class="el-icon-s-management" /></el-button>
+            <el-button class="home-fun-btn" @click="$router.push({path:'/project/create'})">
+                行业模板<i class="el-icon-s-management" />
+            </el-button>
         </el-col>
         <el-col :span="5">
             <el-button class="home-fun-btn">回收站<i class="el-icon-delete-solid" /></el-button>

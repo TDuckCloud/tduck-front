@@ -138,6 +138,9 @@ let dataParams = {
         'step': 'step'
     },//时间选择
     11: {},
+    15: {
+        'max': 'max',
+    },
     //文件上传
     17: {
         'buttonText': '__config__.buttonText',
