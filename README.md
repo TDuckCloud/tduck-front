@@ -56,7 +56,7 @@ https://www.ydyno.com/archives/1219.html
 
 - 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
 
-- 感谢 (https://gitee.com/TDuckApp/form-generator) 表单生成器
+- 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
 
 
 

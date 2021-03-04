@@ -9,11 +9,15 @@
                         >
                     </el-col>
                     <el-col :span="10">
-                        <el-menu :default-active="menuIndex" mode="horizontal" :router="true" text-color="#205BB5"
+                        <el-menu :default-active="menuIndex" mode="horizontal"
+                                 text-color="#205BB5"
                                  active-text-color="#205BB5"
+                                 @select="activeMenuHandle"
                         >
-                            <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
-                                          :route="item.routerPath" class="menu-item"
+                            <el-menu-item v-for="(item, index) in menuRouters"
+                                          :key="index"
+                                          :index="item.routerPath"
+                                          class="menu-item"
                             >
                                 {{ item.title }}
                             </el-menu-item>
@@ -81,6 +85,7 @@
 import store from '@/store/index.js'
 import FontIcon from '@/components/FontIcon'
 import router from '@/router'
+import {openUrl, checkIsUrl} from '@/utils/index'
 
 export default {
     name: 'Home',
@@ -90,15 +95,15 @@ export default {
             menuIndex: null,
             menuRouters: [
                 {
-                    routerPath: '/proposal',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=1',
                     title: '免费模板'
                 },
                 {
-                    routerPath: '/sources',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform',
                     title: '开源项目'
                 },
                 {
-                    routerPath: '/enterprise',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform/issues',
                     title: '提出建议'
                 }
             ]
@@ -113,17 +118,16 @@ export default {
             return user
         }
     },
-    watch: {
-        $route(to) {
-            this.menuIndex = to.path
-        }
-    },
     mounted() {
         this.menuIndex = this.$route.path
     },
     methods: {
         activeMenuHandle(routerPath) {
-            this.menuIndex = routerPath
+            if (checkIsUrl(routerPath)) {
+                openUrl(routerPath)
+            } else {
+                this.menuIndex = routerPath
+            }
         },
         logoutHandle() {
             this.$confirm('您确定要退出登录吗？', '退出确认', {

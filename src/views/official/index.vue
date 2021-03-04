@@ -12,8 +12,9 @@
                 <el-col class="header-col" :span="12" :offset="2">
                     <el-menu :default-active="menuIndex" mode="horizontal"
                              style="width: 100%;"
-                             :router="true" text-color="#205BB5"
+                             text-color="#205BB5"
                              active-text-color="#205BB5"
+                             @select="activeMenuHandle"
                     >
                         <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
                                       :route="item.routerPath" class="menu-item"
@@ -39,6 +40,7 @@
 </template>
 <script>
 import store from '@/store/index.js'
+import {checkIsUrl, openUrl} from '@/utils'
 
 export default {
     name: 'Official',
@@ -51,15 +53,15 @@ export default {
                     title: '首页'
                 },
                 {
-                    routerPath: '/proposal',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform/issues',
                     title: '提出建议'
                 },
                 {
-                    routerPath: '/sources',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=2',
                     title: '开源版本'
                 },
                 {
-                    routerPath: '/enterprise',
+                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=1',
                     title: '企业部署'
                 }
 
@@ -81,6 +83,14 @@ export default {
     },
     mounted() {
         this.menuIndex = this.$route.path
+    }, methods: {
+        activeMenuHandle(routerPath) {
+            if (checkIsUrl(routerPath)) {
+                openUrl(routerPath)
+            } else {
+                this.menuIndex = routerPath
+            }
+        }
     }
 }
 </script>

@@ -241,3 +241,32 @@ export function timeFormat(ms)
 function addZero(n) {
     return n < 10 ? '0' + n : n
 }
+
+/**
+ * 判断是否是Url
+ * @param str
+ * @returns {boolean}
+ */
+export function checkIsUrl(str) {
+    let oRegUrl = new RegExp()
+    //aa.bb.com
+    oRegUrl.compile('^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\?\/.=]+$')
+    if (!oRegUrl.test(str)) {
+        return false
+    }
+    return true
+}
+
+/**
+ * 打开
+ * @param url
+ */
+export function openUrl(url) {
+    var a = document.createElement('a')
+    a.setAttribute('href', url)
+    a.setAttribute('target', '_blank')
+    a.setAttribute('id', 'd2admin-link-temp')
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(document.getElementById('d2admin-link-temp'))
+}

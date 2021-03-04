@@ -80,7 +80,6 @@
                     <img style="height: 478px;"
                          src="@/assets/images/official/v2_q2wxu6.gif"
                     >
-                    >
                 </div>
             </div>
             <div class="introduction-footer">
@@ -132,9 +131,11 @@
                     </el-col>
                 </el-row>
                 <el-divider />
-                <p class="subtitle" style="text-align: center;">
-                    Copyright © 2020 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1 湖南省众达数蔚信息技术有限公司 版权所有
-                </p>
+                <div class="copyright">
+                    <p class="subtitle" style="text-align: center;">
+                        Copyright © 2020 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1 湖南省众达数蔚信息技术有限公司 版权所有
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -237,7 +238,7 @@ export default {
     border: 1px solid rgba(255, 255, 255, 100);
 }
 .introduction-footer {
-    height: 350px;
+    height: 370px;
     line-height: 20px;
     background-color: rgba(32, 91, 181, 100);
     text-align: center;
@@ -253,5 +254,8 @@ export default {
     color: rgba(255, 255, 255, 100);
     font-size: 14px;
     text-align: left;
+}
+.copyright {
+    height: 35px;
 }
 </style>
