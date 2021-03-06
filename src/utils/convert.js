@@ -68,8 +68,8 @@ export function dbDataConvertForItemJson(data) {
             jsonItem.__config__.defaultValue = data.defaultValue.value
         }
     }
-    //不同项目地址区分
-    if (jsonItem.tag === 'el-upload') {
+    //不同项目地址区分 动态修改上传地址
+    if (jsonItem.__config__.tag === 'el-upload') {
         jsonItem.action = jsonItem.action + data.projectKey
     }
     jsonItem.regList = data.regList
