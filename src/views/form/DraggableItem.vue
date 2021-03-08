@@ -127,22 +127,24 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-radio-group {
+/deep/ .el-radio-group, /deep/ .el-checkbox-group {
     margin-left: 10px;
 }
 
-/deep/ .el-radio {
+/deep/ .el-radio, /deep/ .el-checkbox {
     display: block;
-    height: 23px;
+    min-height: 23px;
     line-height: 23px;
 }
 
-/deep/ .el-checkbox-group {
-    margin-left: 10px;
-}
-
-/deep/ .el-checkbox {
-    display: block;
+/deep/ .el-radio__label, /deep/ .el-checkbox__label {
+    font-size: 14px;
+    padding-left: 10px;
+    text-overflow: ellipsis;
+    white-space: normal;
+    min-height: 18px;
+    vertical-align: middle;
+    display: inline-block;
 }
 
 /deep/ .item-other-input {

@@ -86,7 +86,7 @@
                                 accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                                 :headers="getUploadHeader"
                                 :on-success="uploadLogoHandle"
-                                action="/user/file/upload"
+                                :action="getUploadUrl"
                                 :show-file-list="false">
                                 <el-link slot="trigger" size="small" type="primary">上传Logo</el-link>
                             </el-upload>
@@ -112,6 +112,11 @@
                         </el-col>
                         <el-col :span="8" :offset="8">
                             <el-switch
+                                @change="()=>{
+                                        this.userProjectTheme.backgroundImg=''
+                                        this.userProjectTheme.backgroundColor=''
+                                        this.saveUserTheme()
+                                    }"
                                 v-model="showSettings.backgroundSetting">
                             </el-switch>
                         </el-col>
@@ -126,7 +131,6 @@
                                     @change="()=>{
                                         this.userProjectTheme.backgroundImg=''
                                         this.userProjectTheme.backgroundColor=''
-
                                     }"
                                     v-model="showSettings.backgroundType" size="mini">
                                     <el-radio-button label="color">颜色</el-radio-button>
@@ -160,7 +164,7 @@
                                     accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                                     :headers="getUploadHeader"
                                     :on-success="uploadBackgroundHandle"
-                                    action="/user/file/upload"
+                                    :action="getUploadUrl"
                                     :show-file-list="false">
                                     <el-link slot="trigger" size="small" type="primary">上传背景</el-link>
                                 </el-upload>
@@ -301,7 +305,10 @@ export default {
             return {
                 'token': this.$store.getters['user/isLogin']
             }
-        }
+        },
+        getUploadUrl() {
+            return `${process.env.VUE_APP_API_ROOT}/user/file/upload`
+        },
     },
     methods: {
         uploadBackgroundHandle(response, file, fileList) {

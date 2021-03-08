@@ -7,6 +7,7 @@ const echarts = require('echarts')
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
+const china = require('./china.json')
 
 export default {
     mixins: [resize],
@@ -55,11 +56,9 @@ export default {
     },
     methods: {
         initChart() {
-            this.$api.get('https://unpkg.com/echarts@3.6.2/map/json/china.json').then(res=>{
-                echarts.registerMap('china', res);
-                this.chart = echarts.init(this.$el, 'macarons')
-                this.setOptions(this.chartOption)
-            })
+            echarts.registerMap('china', china)
+            this.chart = echarts.init(this.$el, 'macarons')
+            this.setOptions(this.chartOption)
         },
         setOptions(chartOption) {
             if (!this.chart) {
