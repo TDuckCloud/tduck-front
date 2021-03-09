@@ -280,8 +280,10 @@ export default {
                     if (tagOptionKey && defaultValue) {
                         if (defaultValue instanceof Array) {
                             defaultValue.forEach(item => {
-                                let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)
-                                labelStr += label + ','
+                                if(item){
+                                    let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)
+                                    labelStr += label + ','
+                                }
                             })
                             formData[cur.__vModel__] = labelStr
                         } else {
