@@ -181,10 +181,10 @@ function setValueLabel(event, config, scheme) {
         if (event instanceof Array) {
             let labelArr = new Array()
             event.forEach(item => {
-                //拼到头部
+                //拼到头部 其他选项
                 if (item === 0) {
                     labelArr.push(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
-                }else{
+                }else if(item){
                     let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
                     labelArr.push(label)
                 }
@@ -340,7 +340,16 @@ export default {
         },
         submitForm() {
             this.$refs[this.formConf.formRef].validate(valid => {
-                if (!valid) return false
+                if (!valid){
+                    if(document.getElementsByClassName('el-form-item__error').length>0){
+
+                    }
+                    setTimeout(()=>{
+                        let isError= document.getElementsByClassName("is-error");
+                        isError[0].querySelector('input').focus();
+                    },100);
+                    return false;
+                }
                 // 触发sumit事件
                 this.$emit('submit', {
                     formModel: this[this.formConf.formModel],
