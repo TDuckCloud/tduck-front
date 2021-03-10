@@ -61,7 +61,7 @@
                 />
             </div>
         </div>
-        <div>
+        <div  class="custom-col-container">
             <el-dialog center title="自定义显示列" :visible.sync="customColumnDialogVisible">
                 <el-row>
                     <el-col :span="3">
@@ -198,6 +198,17 @@ export default {
     min-height: 85vh;
     background-color: #F7F7F7;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+
+.custom-col-container >>> .el-checkbox__label {
+    width: 200px;
+    min-height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .result-table-view {
