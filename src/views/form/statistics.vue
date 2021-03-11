@@ -26,19 +26,23 @@
         <div class="result-table-view">
             <el-table
                 stripe
+                header-cell-class-name="data-table-header"
                 :data="projectResultList">
                 <el-table-column
                     type="selection"
                     width="55">
                 </el-table-column>
-                <el-table-column v-for="col in fixedCustomColumns" :key="`t${col}`"
-                                 :label="fixedDefaultLabelFormColumn[col]">
+                <el-table-column
+                    v-for="col in fixedCustomColumns" :key="`t${col}`"
+                    :label="fixedDefaultLabelFormColumn[col]">
                     <template slot-scope="scope">
                         {{ scope.row[col] }}
                     </template>
                 </el-table-column>
-                <el-table-column v-for="col in otherCustomColumns" :key="col"
-                                 :label="projectItemColumns[col]">
+                <el-table-column
+                    show-overflow-tooltip
+                    v-for="col in otherCustomColumns" :key="col"
+                    :label="projectItemColumns[col]">
                     <template slot-scope="scope">
                         {{ scope.row['processData'][col] }}
                     </template>
@@ -61,7 +65,7 @@
                 />
             </div>
         </div>
-        <div  class="custom-col-container">
+        <div class="custom-col-container">
             <el-dialog center title="自定义显示列" :visible.sync="customColumnDialogVisible">
                 <el-row>
                     <el-col :span="3">
@@ -139,7 +143,8 @@ export default {
     }, methods: {
         renderHeader(h) {
             return (
-                <i class="el-icon-setting" style="color:currentColor" onClick={() => this.customColumnDialogVisible = true}></i>
+                <i class="el-icon-setting" style="color:currentColor"
+                   onClick={() => this.customColumnDialogVisible = true}></i>
             )
         },
         queryProjectResult() {
@@ -225,5 +230,10 @@ export default {
     font-size: 24px;
     line-height: 25px;
     color: white;
+}
+
+/deep/ .data-table-header .cell {
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
 }
 </style>
