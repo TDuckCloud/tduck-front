@@ -26,6 +26,9 @@
         <div class="result-table-view">
             <el-table
                 stripe
+                @row-dblclick="(row, column, event)=>{
+                    this.openDetailDrawerHandle(row)
+                }"
                 header-cell-class-name="data-table-header"
                 :data="projectResultList">
                 <el-table-column
