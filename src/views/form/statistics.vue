@@ -51,8 +51,29 @@
                     width="50"
                     fixed="right"
                     :render-header="renderHeader">
+                    <template slot-scope="scope">
+                        <el-button @click="openDetailDrawerHandle(scope.row)" type="text" size="small">查看</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
+            <el-drawer
+                :with-header="false"
+                :visible.sync="detailDrawer">
+                <el-scrollbar style="height:100%">
+                    <el-card class="box-card" >
+                        <div slot="header" class="clearfix">
+                            <span>提交详情</span>
+                        </div>
+                        <div>
+                            <div v-for="item in projectItemList">
+                                <h4>{{ item.label }}</h4>
+                                <el-tag>      {{activeResultRow?
+                                    activeResultRow['processData'][`field${item.formItemId}`]:'' }}</el-tag>
+                            </div>
+                        </div>
+                    </el-card>
+                </el-scrollbar>
+            </el-drawer>
             <div style="display: flex;justify-content: center;margin-top: 10px">
                 <el-pagination
                     v-if="total>10"
@@ -131,6 +152,8 @@ export default {
             projectItemList: [],
             projectItemColumns: {},
             total: 0,
+            detailDrawer: false,
+            activeResultRow: false,
             //查询条件
             queryConditions: {
                 current: 1,
@@ -146,6 +169,10 @@ export default {
                 <i class="el-icon-setting" style="color:currentColor"
                    onClick={() => this.customColumnDialogVisible = true}></i>
             )
+        },
+        openDetailDrawerHandle(row) {
+            this.activeResultRow = row
+            this.detailDrawer=true
         },
         queryProjectResult() {
             this.$api.get(`/user/project/result/page`, {params: this.queryConditions}).then(res => {
@@ -236,4 +263,16 @@ export default {
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
 }
+
+/*1.显示滚动条：当内容超出容器的时候，可以拖动：*/
+/deep/ .el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+/deep/ .el-drawer__container ::-webkit-scrollbar{
+    display: none;
+}
+
 </style>
