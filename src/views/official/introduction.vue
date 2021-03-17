@@ -132,8 +132,17 @@
                 </el-row>
                 <el-divider />
                 <div class="copyright">
+                    <a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+                        <img
+                            style="height: 30px;"
+                            src="http://tduck.test.upcdn.net/%E5%8F%88%E6%8B%8D%E4%BA%91_logo2.png"
+                        >
+                    </a>
                     <p class="subtitle" style="text-align: center;">
-                        Copyright © 2020 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1 湖南省众达数蔚信息技术有限公司 版权所有
+                        本站由 又拍云 提供CDN加速/云储存服务
+                    </p>
+                    <p class="subtitle" style="text-align: center;">
+                        Copyright © 2021 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1  版权所有
                     </p>
                 </div>
             </div>
@@ -238,7 +247,7 @@ export default {
     border: 1px solid rgba(255, 255, 255, 100);
 }
 .introduction-footer {
-    height: 370px;
+    height: 420px;
     line-height: 20px;
     background-color: rgba(32, 91, 181, 100);
     text-align: center;
@@ -256,6 +265,6 @@ export default {
     text-align: left;
 }
 .copyright {
-    height: 35px;
+    height: 95px;
 }
 </style>
