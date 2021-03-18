@@ -20,6 +20,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="queryProjectResult">查询</el-button>
+                    <el-button type="success" @click="exportProjectResult">导出</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -63,15 +64,18 @@
                 :with-header="false"
                 :visible.sync="detailDrawer">
                 <el-scrollbar style="height:100%">
-                    <el-card class="box-card" >
+                    <el-card class="box-card">
                         <div slot="header" class="clearfix">
                             <span>提交详情</span>
                         </div>
                         <div>
                             <div v-for="item in projectItemList">
                                 <h4>{{ item.label }}</h4>
-                                <el-tag>      {{activeResultRow?
-                                    activeResultRow['processData'][`field${item.formItemId}`]:'' }}</el-tag>
+                                <el-tag> {{
+                                        activeResultRow ?
+                                            activeResultRow['processData'][`field${item.formItemId}`] : ''
+                                    }}
+                                </el-tag>
                             </div>
                         </div>
                     </el-card>
@@ -123,6 +127,8 @@
 
 <script>
 import _ from 'lodash'
+import {jsonToParam} from '@/utils/index'
+
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
 const fixedDefaultFormColumn = ['serialNumber', 'submitAddress', 'createTime']
@@ -138,7 +144,7 @@ export default {
         this.queryConditions.projectKey = this.projectKey
         this.queryProjectResult()
         this.queryProjectItems()
-
+        this.queryProject()
     },
     data() {
         return {
@@ -153,6 +159,7 @@ export default {
             otherCustomColumns: [],
             projectResultList: [],
             projectItemList: [],
+            projectData: null,
             projectItemColumns: {},
             total: 0,
             detailDrawer: false,
@@ -175,7 +182,12 @@ export default {
         },
         openDetailDrawerHandle(row) {
             this.activeResultRow = row
-            this.detailDrawer=true
+            this.detailDrawer = true
+        },
+        queryProject() {
+            this.$api.get(`/user/project/${this.projectKey}`).then(res => {
+                this.projectData = res.data
+            })
         },
         queryProjectResult() {
             this.$api.get(`/user/project/result/page`, {params: this.queryConditions}).then(res => {
@@ -208,6 +220,23 @@ export default {
                 this.otherCustomColumns = otherCustomColumns
                 this.checkOtherCustomColumns = otherCustomColumns
             }
+        },
+        exportProjectResult() {
+            this.$api.get('user/project/result/export', {
+                params: this.queryConditions,
+                responseType: 'blob'
+            }).then(res => {
+                console.log(res)
+                let blob = res
+                let downloadElement = document.createElement('a')
+                let href = window.URL.createObjectURL(blob) //创建下载的链接
+                downloadElement.href = href
+                downloadElement.download = this.projectData.name + '.xls' //下载后文件名
+                document.body.appendChild(downloadElement)
+                downloadElement.click() //点击下载
+                document.body.removeChild(downloadElement) //下载完成移除元素
+                window.URL.revokeObjectURL(href) //释放掉blob对象
+            })
         },
         queryProjectItems() {
             this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
@@ -274,7 +303,7 @@ export default {
 }
 
 /*2.隐藏滚动条，太丑了*/
-/deep/ .el-drawer__container ::-webkit-scrollbar{
+/deep/ .el-drawer__container ::-webkit-scrollbar {
     display: none;
 }
 

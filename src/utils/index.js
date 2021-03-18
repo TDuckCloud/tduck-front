@@ -177,6 +177,11 @@ export function getQueryString(name) {
     return context == null || context == '' || context == 'undefined' ? '' : context
 }
 
+/**
+ * 获取当前域名
+ *  http://www.baidu.com
+ * @returns {string}
+ */
 export function getCurrentDomain() {
     return window.location.protocol + '//' + window.location.host
 }
@@ -269,4 +274,19 @@ export function openUrl(url) {
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(document.getElementById('tduck-link-temp'))
+}
+
+/**
+ * json对象转url参数
+ * @param json
+ * @returns {string|*}
+ */
+export function jsonToParam(json) {
+    if (!json) return ''
+    return Object.keys(json).map(key => {
+        if (json[key] === undefined)
+            return ''
+        return encodeURIComponent(key) +
+            '=' + encodeURIComponent(json[key])
+    }).join('&')
 }

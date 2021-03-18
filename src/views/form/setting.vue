@@ -487,7 +487,8 @@
                                 </p>
                             </div>
                             <div>
-                                <img :src="userProjectSettingData.shareImg"  v-if="userProjectSettingData.shareImg" style="width: 49px;height: 46px;"/>
+                                <img :src="userProjectSettingData.shareImg" v-if="userProjectSettingData.shareImg"
+                                     class="share-preview-img"/>
                             </div>
                         </div>
                         <div>
@@ -821,6 +822,12 @@ export default {
     height: 60px;
     width: 155px;
     text-align: left;
+}
+
+.share-preview-img {
+    width: 49px;
+    height: 46px;
+    margin-right: 5px;
 }
 
 .share-user-avatar {
