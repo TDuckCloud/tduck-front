@@ -90,7 +90,6 @@ export default {
             this.wxSignature = res.data
             this.setWxConfig()
         })
-        console.log(ua)
     },
     mounted() {
         this.viewProjectHandle()
@@ -99,7 +98,7 @@ export default {
         ProjectForm
     }, methods: {
         viewProjectHandle() {
-            //是否能进入填写
+            // 查看次数记录
             this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
 
             })
@@ -201,9 +200,9 @@ export default {
                     if (res.data && res.data.wxWrite) {
                         //记录微信用户信息
                         if (res.data.recordWxUser && !this.wxAuthorizationCode) {
-                            console.log(this.wxAuthorizationUrl)
                             location.href = this.wxAuthorizationUrl
                         } else {
+                            //仅在微信打开
                             this.onlyWxOpenHandle()
                         }
                     }
@@ -230,7 +229,17 @@ export default {
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
             }).then(res => {
+                //填写完后跳转
+                let submitJumpUrl = this.userProjectSetting.submitJumpUrl
+                if (submitJumpUrl) {
+                    //如果不是以https或者http开头 则添加
+                    if (!submitJumpUrl.startsWith('http') || !submitJumpUrl.startsWith('http')) {
+                        submitJumpUrl = 'http://' + submitJumpUrl
+                    }
+                    window.location.href = submitJumpUrl
+                }
                 this.writeStatus = 2
+
             })
         }
     }
