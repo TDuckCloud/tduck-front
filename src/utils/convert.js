@@ -124,8 +124,10 @@ let dataParams = {
         'filterable': 'filterable',
         'multiple': 'props.props.multiple'
     },
-    //单选框组
+    //多选框组
     8: {
+        'optionType': '__config__.optionType',
+        'size': 'size',
         'options': '__slot__.options',
         'max': 'max',
         'min': 'min'
@@ -139,7 +141,7 @@ let dataParams = {
     },//时间选择
     11: {},
     15: {
-        'max': 'max',
+        'max': 'max'
     },
     //文件上传
     17: {

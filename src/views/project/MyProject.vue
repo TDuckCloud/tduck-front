@@ -44,10 +44,10 @@
                         style="width: 20%; margin-left: 20px;" type="text" placeholder="请输入项目名称"
                     />
                     <el-button style="margin-left: 20px;" type="primary" @click="queryProjectPage">查询</el-button>
-                    <el-button style="margin-left: 20px;">
-                        <font-icon class="fas fa-plus-square" />
-                        新建文件夹
-                    </el-button>
+                    <!--                    <el-button style="margin-left: 20px;">-->
+                    <!--                        <font-icon class="fas fa-plus-square" />-->
+                    <!--                        新建文件夹-->
+                    <!--                    </el-button>-->
                     <el-button style="margin-left: 10px;">
                         <font-icon class="fas fa-recycle" />
                         回收站
@@ -91,7 +91,7 @@
                     <img class="project-grid-view-preimg"
                          src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/pic%20(1).png"
                     >
-                    <p class="project-grid-view-time">创建时间：2020/12/8</p>
+                    <p class="project-grid-view-time">创建时间：{{ p.createTime | formatDate }}</p>
                     <div class="gird-operating-btns">
                         <el-button type="text" @click="toProjectHandle(p.key,1)">
                             <i class="el-icon-edit" />
@@ -173,7 +173,9 @@
                         >
                             统计
                         </el-link>
-                        <el-link type="danger" style="margin: 2px;">
+                        <el-link
+                            type="danger" style="margin: 2px;" @click="deleteProject(scope.row.key)"
+                        >
                             删除
                         </el-link>
                     </template>
@@ -195,6 +197,7 @@
 </template>
 <script>
 import DataEmpty from '@/components/DataEmpty'
+import dayjs from 'dayjs'
 
 let projectStatusList = [
     {code: 1, name: '未发布', color: '#006EFF'},
@@ -205,6 +208,11 @@ let projectStatusList = [
 export default {
     name: 'MyProject',
     components: {DataEmpty},
+    filters: {
+        formatDate(time) {
+            return  dayjs(time).format('YYYY/MM/DD')
+        }
+    },
     data() {
         return {
             dataShowType: 'gird',
@@ -242,6 +250,14 @@ export default {
         },
         toProjectHandle(key, type) {
             this.$router.push({path: '/project/form', query: {key: key, active: type}})
+        },
+        deleteProject(key) {
+
+            this.$api.post('/user/project/delete', {'key': key}).then(res => {
+                if (res.data) {
+                    this.msgSuccess('刪除成功')
+                }
+            })
         },
         queryProjectPage() {
             this.$api.get('/user/project/page', {

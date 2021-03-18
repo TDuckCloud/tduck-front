@@ -59,12 +59,7 @@ export default {
                 {
                     routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=2',
                     title: '开源版本'
-                },
-                {
-                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=1',
-                    title: '企业部署'
                 }
-
             ]
         }
     },

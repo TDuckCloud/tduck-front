@@ -24,18 +24,18 @@
                         </el-menu>
                     </el-col>
                     <el-col :span="1">
-                        <el-button round>升级</el-button>
+                        <!-- <el-button round>升级</el-button>-->
                     </el-col>
                     <el-col :span="1">
                         <div style="display: flex;
                         align-items: center;
                         justify-content: center;"
                         >
-                            <svg-icon name="loginWx" style="width: 24px; height: 24px;" />
+                            <!--     <svg-icon name="loginWx" style="width: 24px; height: 24px;" />-->
                         </div>
                     </el-col>
                     <el-col :span="1">
-                        <el-link href="https://element.eleme.io" target="_blank">帮助</el-link>
+                        <el-link href="https://gitee.com/TDuckApp/tduck-platform/wikis/%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C?sort_id=3681729" target="_blank">帮助</el-link>
                     </el-col>
                     <el-col :span="3">
                         <el-popover

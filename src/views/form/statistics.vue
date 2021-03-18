@@ -226,12 +226,11 @@ export default {
                 params: this.queryConditions,
                 responseType: 'blob'
             }).then(res => {
-                console.log(res)
                 let blob = res
                 let downloadElement = document.createElement('a')
                 let href = window.URL.createObjectURL(blob) //创建下载的链接
                 downloadElement.href = href
-                downloadElement.download = this.projectData.name + '.xls' //下载后文件名
+                downloadElement.download = this.projectData.name +this.$dayjs().format('YYYYMMDDHHMM')+ '.xls' //下载后文件名
                 document.body.appendChild(downloadElement)
                 downloadElement.click() //点击下载
                 document.body.removeChild(downloadElement) //下载完成移除元素
