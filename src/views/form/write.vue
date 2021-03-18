@@ -43,7 +43,6 @@ const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
 
 require('@/utils/ut')
-let wx
 export default {
     name: 'WriteView',
     props: {},
@@ -86,10 +85,11 @@ export default {
         this.queryProjectSettingStatus()
         this.queryProjectSetting()
         //加载微信相关 获取签名
-        this.$api.get('/wx/jsapi/signature', {params: {url: getCurrentDomain()}}).then(res => {
+        this.$api.get('/wx/jsapi/signature', {params: {url: window.location.href}}).then(res => {
             this.wxSignature = res.data
             this.setWxConfig()
         })
+        console.log(ua)
     },
     mounted() {
         this.viewProjectHandle()
@@ -98,7 +98,7 @@ export default {
         ProjectForm
     }, methods: {
         viewProjectHandle() {
-            // 查看次数记录
+            //是否能进入填写
             this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
 
             })
@@ -136,9 +136,9 @@ export default {
             })
         },
         setWxConfig() {
+            let that = this
             let signature = this.wxSignature
-            loadWXJs(val => {
-                wx = val
+            loadWXJs(wx => {
                 wx.config({
                     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                     appId: signature.appId, // 必填，公众号的唯一标识
@@ -148,48 +148,71 @@ export default {
                     jsApiList: [
                         'updateAppMessageShareData',
                         'updateTimelineShareData',
+                        'onMenuShareAppMessage',
+                        'onMenuShareTimeline',
                         'showMenuItems',
                         'hideMenuItems',
                         'chooseWXPay'
                     ] // 必填，需要使用的JS接口列表
                 })
-                this.setWxProjectShare()
+                //sdk准备完成之后调用
+                wx.ready(function() {
+                    //需在用户可能点击分享按钮前就先调用
+                    console.log('ready')
+                    that.setWxProjectShare(wx)
+                })
             })
         },
         /**
          * 微信分享
          */
-        setWxProjectShare() {
+        setWxProjectShare(wx) {
             let {shareImg, shareTitle, shareDesc} = this.userProjectSetting
-            console.log(wx)
-            wx.ready(function() {   //需在用户可能点击分享按钮前就先调用
-                console.log('ready')
-                wx.updateAppMessageShareData({
-                    title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
-                    desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
-                    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
-                    success: function() {
-                        // 设置成功
-                        console.log('succcess')
-                    },
-                    fail: function() {
-                        console.log('fail')
-                    }
-                })
-                wx.updateTimelineShareData({
-                    title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
-                    desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
-                    link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
-                    success: function() {
-                        // 设置成功
-                        console.log('succcess')
-                    },
-                    fail: function() {
-                        console.log('fail')
-                    }
-                })
+            wx.updateAppMessageShareData({
+                title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
+                desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
+                success: function() {
+                    // 设置成功
+                    console.log('succcess')
+                },
+                fail: function() {
+                    console.log('fail')
+                }
+            })
+            wx.updateTimelineShareData({
+                title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
+                desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
+                success: function() {
+                    // 设置成功
+                    console.log('succcess')
+                },
+                fail: function() {
+                    console.log('fail')
+                }
+            })
+            wx.onMenuShareTimeline({
+                title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
+                desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
+                success: function() {
+                    // 设置成功
+                    console.log('succcess')
+                }
+            })
+            wx.onMenuShareAppMessage({
+                title: shareTitle ? shareTitle : defaultValue.projectShareTitle, // 分享标题
+                desc: shareDesc ? shareDesc : defaultValue.projectShareDesc, // 分享描述
+                link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                imgUrl: shareImg ? shareImg : defaultValue.projectShareImg, // 分享图标
+                success: function() {
+                    // 设置成功
+                    console.log('succcess')
+                }
             })
         },
         queryProjectSetting() {
@@ -200,9 +223,9 @@ export default {
                     if (res.data && res.data.wxWrite) {
                         //记录微信用户信息
                         if (res.data.recordWxUser && !this.wxAuthorizationCode) {
+                            console.log(this.wxAuthorizationUrl)
                             location.href = this.wxAuthorizationUrl
                         } else {
-                            //仅在微信打开
                             this.onlyWxOpenHandle()
                         }
                     }
@@ -229,17 +252,7 @@ export default {
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
             }).then(res => {
-                //填写完后跳转
-                let submitJumpUrl = this.userProjectSetting.submitJumpUrl
-                if (submitJumpUrl) {
-                    //如果不是以https或者http开头 则添加
-                    if (!submitJumpUrl.startsWith('http') || !submitJumpUrl.startsWith('http')) {
-                        submitJumpUrl = 'http://' + submitJumpUrl
-                    }
-                    window.location.href = submitJumpUrl
-                }
                 this.writeStatus = 2
-
             })
         }
     }

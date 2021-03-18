@@ -17,7 +17,7 @@ export default function loadWXJs(cb) {
         background: 'rgba(255, 255, 255, 0.5)'
     })
 
-    loadScript('http://res.wx.qq.com/open/js/jweixin-1.6.0.js', () => {
+    loadScript('https://res.wx.qq.com/open/js/jweixin-1.6.0.js', () => {
         loading.close()
         // eslint-disable-next-line no-undef
         wxObj = wx
