@@ -88,7 +88,7 @@
                                 :on-success="uploadLogoHandle"
                                 :action="getUploadUrl"
                                 :show-file-list="false">
-                                <el-link slot="trigger" size="small" type="primary">上传Logo</el-link>
+                                <el-button  slot="trigger" size="small" type="text">上传Logo</el-button>
                             </el-upload>
                         </el-col>
                     </el-row>
@@ -166,7 +166,7 @@
                                     :on-success="uploadBackgroundHandle"
                                     :action="getUploadUrl"
                                     :show-file-list="false">
-                                    <el-link slot="trigger" size="small" type="primary">上传背景</el-link>
+                                    <el-button slot="trigger" size="small" type="text">上传背景</el-button>
                                 </el-upload>
                             </el-col>
                         </el-row>

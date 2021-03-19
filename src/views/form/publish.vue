@@ -23,10 +23,16 @@
                             <p class="link-text"> {{ writeLink }}</p>
                         </div>
                         <el-row>
-                            <el-col :span="6" :offset="6">
+
+                            <el-col :span="6" :offset="3">
                                 <el-button v-clipboard:copy="writeLink"
                                            v-clipboard:success="()=>{this.msgSuccess('复制成功')}"
                                            v-clipboard:error="()=>{this.msgError('复制失败')}" type="primary">复制链接
+                                </el-button>
+                            </el-col>
+                            <el-col :span="6" >
+                                <el-button
+                                    type="danger">停止发布
                                 </el-button>
                             </el-col>
                             <el-col :span="6">
@@ -82,7 +88,7 @@ export default {
     }, methods: {
         getProjectStatus() {
             this.$api.get(`/user/project/${this.projectKey}`).then(res => {
-                if (res.data.status != 1) {
+                if (res.data.status == 2) {
                     this.publishStatus = true
                 }
             })

@@ -159,25 +159,45 @@
                 />
                 <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-link type="primary"
-                                 style="margin: 2px;"
-                                 @click="toProjectHandle(scope.row.key,1)"
+                        <el-button type="text"
+                                   @click="toProjectHandle(scope.row.key,1)"
                         >
                             编辑
-                        </el-link>
-                        <el-link
-                            v-if="scope.row.status!=1"
-                            type="success"
-                            style="margin: 2px;"
-                            @click="toProjectHandle(scope.row.key,5)"
+                        </el-button>
+                        <span>
+                            <el-button
+                                v-if="scope.row.status!=1"
+                                type="text"
+                                class="green-text-btn"
+                                @click="toProjectHandle(scope.row.key,5)"
+                            >
+                                统计
+                            </el-button>
+                        </span>
+                        <el-popconfirm
+                            v-if="scope.row.status==2"
+                            title="确定停止收集该项目吗？"
+                            @confirm="stopProject(scope.row.key)"
                         >
-                            统计
-                        </el-link>
-                        <el-link
-                            type="danger" style="margin: 2px;" @click="deleteProject(scope.row.key)"
+                            <el-button slot="reference"
+                                       class="pink-text-btn"
+                                       type="text"
+                            >
+                                停止
+                            </el-button>
+                        </el-popconfirm>
+                        <el-popconfirm
+                            v-if="scope.row.status==3"
+                            title="确定删除该项目吗？"
+                            @confirm="deleteProject(scope.row.key)"
                         >
-                            删除
-                        </el-link>
+                            <el-button slot="reference"
+                                       class="pink-text-btn"
+                                       type="text"
+                            >
+                                删除
+                            </el-button>
+                        </el-popconfirm>
                     </template>
                 </el-table-column>
             </el-table>
@@ -202,7 +222,7 @@ import dayjs from 'dayjs'
 let projectStatusList = [
     {code: 1, name: '未发布', color: '#006EFF'},
     {code: 2, name: '收集中', color: '#34C82A'},
-    {code: 4, name: '已结束', color: '#955A45'}
+    {code: 3, name: '已结束', color: '#955A45'}
 ]
 
 export default {
@@ -252,10 +272,18 @@ export default {
             this.$router.push({path: '/project/form', query: {key: key, active: type}})
         },
         deleteProject(key) {
-
             this.$api.post('/user/project/delete', {'key': key}).then(res => {
                 if (res.data) {
                     this.msgSuccess('刪除成功')
+                    this.queryProjectPage()
+                }
+            })
+        },
+        stopProject(key) {
+            this.$api.post('/user/project/stop', {'key': key}).then(res => {
+                if (res.data) {
+                    this.msgSuccess('停止成功')
+                    this.queryProjectPage()
                 }
             })
         },

@@ -51,31 +51,33 @@
                                 <td width="80" style="text-align: right;">用户名：</td>
                                 <td>
                                     {{ userInfo.name }}
-                                    <el-link type="primary" @click="editNameDialogVisible=true">修改</el-link>
+                                    <el-button type="text" @click="editNameDialogVisible=true">
+                                        修改
+                                    </el-button>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="80" style="text-align: right;">账号邮箱：</td>
                                 <td>
                                     {{ userInfo.email }}
-                                    <el-link type="primary" @click="emailDialogVisible=true">绑定</el-link>
+                                    <el-button type="text" @click="emailDialogVisible=true">绑定</el-button>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="80" style="text-align: right;">密码：</td>
                                 <td>
                                     ******
-                                    <el-link type="primary" @click="pwdDialogVisible=true">修改</el-link>
+                                    <el-button type="text" @click="pwdDialogVisible=true">修改</el-button>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="80" style="text-align: right;">手机号：</td>
                                 <td>
                                     {{ userInfo.phoneNumber }}
-                                    <el-link v-if="userInfo.phoneNumber" type="primary" @click="phoneDialogVisible=true">
+                                    <el-button v-if="userInfo.phoneNumber" type="text" @click="phoneDialogVisible=true">
                                         修改
-                                    </el-link>
-                                    <el-link v-else type="primary" @click="phoneDialogVisible=true">绑定</el-link>
+                                    </el-button>
+                                    <el-button v-else type="text" @click="phoneDialogVisible=true">绑定</el-button>
                                 </td>
                             </tr>
                         </tbody>
@@ -108,7 +110,7 @@
                             <span v-if="userInfo.wxName">
                                 {{ userInfo.wxName }}(已绑定)
                             </span>
-                            <el-link v-else type="primary" @click="bindWxHandle">绑定</el-link>
+                            <el-button v-else type="text" @click="bindWxHandle">绑定</el-button>
                             <el-dialog title="微信扫描二维码绑定"
                                        width="400px"
                                        center
@@ -126,14 +128,14 @@
                             <span v-if="userInfo.qqName">
                                 {{ userInfo.qqName }}(已绑定)
                             </span>
-                            <el-link v-else type="primary" @click="redirectUrl(qqLoginAuthorizeUrl)">绑定</el-link>
+                            <el-button v-else type="text" @click="redirectUrl(qqLoginAuthorizeUrl)">绑定</el-button>
                         </div>
                         <div class="account-icon-view">
                             <font-icon class="fa fa-weibo icon" />
                             <span v-if="userInfo.wbName">
                                 {{ userInfo.wbName }}(已绑定)
                             </span>
-                            <el-link v-else type="primary">绑定</el-link>
+                            <el-button v-else type="text">绑定</el-button>
                         </div>
                     </div>
                 </div>
@@ -150,19 +152,19 @@
                             <tr>
                                 <td width="80" style="text-align: right;">企业logo：</td>
                                 <td>
-                                    <el-link type="primary">上传Logo</el-link>
+                                    <el-button type="text">上传Logo</el-button>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="100" style="text-align: right;">自定义域名：</td>
                                 <td>
-                                    www.zjtd.com.cn
+                                    xxxx
                                 </td>
                             </tr>
                             <tr>
                                 <td width="80" style="text-align: right;">所在地址：</td>
                                 <td>
-                                    上海市闵行区漕河泾创意产业园1812号1654号
+                                    xxxxx
                                 </td>
                             </tr>
                         </tbody>

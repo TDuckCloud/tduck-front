@@ -34,7 +34,7 @@
                         :on-success="uploadSubmitPromptHandle"
                         :action="getUploadUrl"
                         :show-file-list="false">
-                        <el-link slot="trigger" size="small" type="primary">请上传提示图片 *</el-link>
+                        <el-button slot="trigger" size="small" type="text">请上传提示图片 *</el-button>
                     </el-upload>
                 </div>
                 <el-row type="flex" align="middle">
