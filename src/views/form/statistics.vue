@@ -222,6 +222,10 @@ export default {
             }
         },
         exportProjectResult() {
+            if(!this.total){
+                this.$message.error("无表单有效反馈结果，无法导出")
+                return
+            }
             this.$api.get('user/project/result/export', {
                 params: this.queryConditions,
                 responseType: 'blob'

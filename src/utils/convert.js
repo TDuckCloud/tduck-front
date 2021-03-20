@@ -7,7 +7,6 @@ import {jsonClone} from '@/utils/index'
  * @param item
  */
 export function formItemConvertData(item, projectKey) {
-    console.log(item)
     let data = {
         'type': item.typeId,
         'formItemId': item.__config__.formId,
@@ -17,6 +16,7 @@ export function formItemConvertData(item, projectKey) {
         'placeholder': item.placeholder,
         'regList': item.__config__.regList,
         'showLabel': item.__config__.showLabel,
+        'span': item.__config__.span,
         'projectKey': projectKey
     }
     let expand = {}
@@ -56,6 +56,7 @@ export function dbDataConvertForItemJson(data) {
     }
     jsonItem.sort = data.sort
     jsonItem.typeId = data.type
+    jsonItem.__config__.span =  data.span
     jsonItem.__config__.formId = data.formItemId
     jsonItem.__config__.label = data.label
     jsonItem.__config__.required = data.required
