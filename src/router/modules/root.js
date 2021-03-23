@@ -83,6 +83,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject.vue')
             },
             {
+                path: 'recycle',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/RecycleBin.vue')
+            },
+            {
                 path: 'template/preview',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/TemplatePreview.vue')

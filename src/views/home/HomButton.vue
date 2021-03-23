@@ -16,7 +16,9 @@
             </el-button>
         </el-col>
         <el-col :span="5">
-            <el-button class="home-fun-btn">回收站<i class="el-icon-delete-solid" /></el-button>
+            <el-button class="home-fun-btn" @click="$router.push({path:'/project/recycle'})">
+                回收站<i class="el-icon-delete-solid" />
+            </el-button>
         </el-col>
     </el-row>
 </template>

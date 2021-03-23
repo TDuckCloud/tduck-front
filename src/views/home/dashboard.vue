@@ -140,7 +140,7 @@ export default {
     created() {
         this.$api.get('/user/project/list', {params: {status: 2}}).then(res => {
             this.projectListData = res.data
-            if (res.data) {
+            if (res.data && res.data[0]) {
                 this.activeProjectKey = res.data[0].key
                 this.projectChangeHandle()
             }

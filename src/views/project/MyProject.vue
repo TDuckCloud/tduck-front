@@ -48,7 +48,7 @@
                     <!--                        <font-icon class="fas fa-plus-square" />-->
                     <!--                        新建文件夹-->
                     <!--                    </el-button>-->
-                    <el-button style="margin-left: 10px;">
+                    <el-button style="margin-left: 10px;" @click="$router.push({path:'/project/recycle'})">
                         <font-icon class="fas fa-recycle" />
                         回收站
                     </el-button>
@@ -97,13 +97,40 @@
                             <i class="el-icon-edit" />
                             编辑
                         </el-button>
-                        <el-button
-                            v-if="p.status!=1"
-                            type="text" @click="toProjectHandle(p.key,5)"
+                        <span>
+                            <el-button
+                                v-if="p.status!=1" type="text" @click="toProjectHandle(p.key,5)"
+                            >
+                                <i class="el-icon-data-analysis" />
+                                统计
+                            </el-button>
+                        </span>
+                        <el-popconfirm
+                            v-if="p.status==2"
+                            title="确定停止收集该项目吗？"
+                            @confirm="stopProject(p.key)"
                         >
-                            <i class="el-icon-data-analysis" />
-                            统计
-                        </el-button>
+                            <el-button slot="reference"
+                                       class="pink-text-btn"
+                                       type="text"
+                            >
+                                <i class="el-icon-video-pause" />
+                                停止
+                            </el-button>
+                        </el-popconfirm>
+                        <el-popconfirm
+                            v-if="p.status==3"
+                            title="确定删除该项目吗？"
+                            @confirm="deleteProject(p.key)"
+                        >
+                            <el-button slot="reference"
+                                       class="pink-text-btn"
+                                       type="text"
+                            >
+                                <i class="el-icon-delete" />
+                                删除
+                            </el-button>
+                        </el-popconfirm>
                     </div>
                 </div>
             </div>

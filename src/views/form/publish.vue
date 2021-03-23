@@ -32,6 +32,7 @@
                             </el-col>
                             <el-col :span="6" >
                                 <el-button
+                                    @click="stopPublishProject"
                                     type="danger">停止发布
                                 </el-button>
                             </el-col>
@@ -90,6 +91,8 @@ export default {
             this.$api.get(`/user/project/${this.projectKey}`).then(res => {
                 if (res.data.status == 2) {
                     this.publishStatus = true
+                }else{
+                    this.publishStatus = false
                 }
             })
         },
@@ -97,6 +100,14 @@ export default {
             this.$api.post(`/user/project/publish`, {key: this.projectKey}).then(res => {
                 this.publishStatus = true
                 this.msgSuccess('发布成功')
+            })
+        },
+        stopPublishProject() {
+            this.$api.post('/user/project/stop', {'key': this.projectKey}).then(res => {
+                if (res.data) {
+                    this.msgSuccess('停止成功')
+                    this.getProjectStatus()
+                }
             })
         },
         qrCodeGenSuccess(dataUrl, id) {
