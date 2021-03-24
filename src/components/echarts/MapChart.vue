@@ -7,7 +7,7 @@ const echarts = require('echarts')
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
-const china = require('./china.json')
+const china = require('./china.js')
 
 export default {
     mixins: [resize],
@@ -56,7 +56,6 @@ export default {
     },
     methods: {
         initChart() {
-            echarts.registerMap('china', china)
             this.chart = echarts.init(this.$el, 'macarons')
             this.setOptions(this.chartOption)
         },
