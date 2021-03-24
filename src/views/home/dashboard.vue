@@ -340,26 +340,30 @@ export default {
         },
         getProjectSubmitSource() {
             this.$api.get('/user/project/report/source', {params: {projectKey: this.activeProjectKey}}).then(res => {
-                this.barChartOptionData.yAxis.data = res.data.map(item => {
-                    return item.browserName ? item.browserName : '其他'
-                })
-                this.barChartOptionData.series = [
-                    {
-                        barWidth: 30,
-                        name: '数量',
-                        type: 'bar',
-                        data: res.data.map(item => {
-                            return item.count
-                        })
-                    }
-                ]
+                if (res.data && res.data.length) {
+                    this.barChartOptionData.yAxis.data = res.data.map(item => {
+                        return item.browserName ? item.browserName : '其他'
+                    })
+                    this.barChartOptionData.series = [
+                        {
+                            barWidth: 30,
+                            name: '数量',
+                            type: 'bar',
+                            data: res.data.map(item => {
+                                return item.count
+                            })
+                        }
+                    ]
+                }
             })
         },
         getProjectSubmitDevice() {
             this.$api.get('/user/project/report/device', {params: {projectKey: this.activeProjectKey}}).then(res => {
-                this.pieChartOptionData.series[0].data = res.data.map(item => {
-                    return {value: item.count, name: item.osName ? item.osName : '其他'}
-                })
+                if (res.data && res.data.length) {
+                    this.pieChartOptionData.series[0].data = res.data.map(item => {
+                        return {value: item.count, name: item.osName ? item.osName : '其他'}
+                    })
+                }
             })
         }
     }
