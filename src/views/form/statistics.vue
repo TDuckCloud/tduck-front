@@ -71,7 +71,15 @@
                         <div>
                             <div v-for="item in projectItemList">
                                 <h4>{{ item.label }}</h4>
-                                <el-tag> {{
+                                <!--  如果是文件输入-->
+                                <div v-if="item.type==17 &&activeResultRow">
+                                    <el-link
+                                        :href="file.url" target="_blank"  type="primary"
+                                        v-for="file in JSON.parse(activeResultRow['processData'][`field${item.formItemId}`]['files'])">
+                                        {{file.fileName}}
+                                    </el-link>
+                                </div>
+                                <el-tag v-else> {{
                                         activeResultRow ?
                                             activeResultRow['processData'][`field${item.formItemId}`] : ''
                                     }}
@@ -127,7 +135,7 @@
 
 <script>
 import _ from 'lodash'
-import {jsonToParam} from '@/utils/index'
+import {jsonToParam, isJsonString} from '@/utils/index'
 
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
@@ -163,7 +171,7 @@ export default {
             projectItemColumns: {},
             total: 0,
             detailDrawer: false,
-            activeResultRow: false,
+            activeResultRow: null,
             //查询条件
             queryConditions: {
                 current: 1,
@@ -180,6 +188,7 @@ export default {
                    onClick={() => this.customColumnDialogVisible = true}></i>
             )
         },
+
         openDetailDrawerHandle(row) {
             this.activeResultRow = row
             this.detailDrawer = true
@@ -222,8 +231,8 @@ export default {
             }
         },
         exportProjectResult() {
-            if(!this.total){
-                this.$message.error("无表单有效反馈结果，无法导出")
+            if (!this.total) {
+                this.$message.error('无表单有效反馈结果，无法导出')
                 return
             }
             this.$api.get('user/project/result/export', {
@@ -234,7 +243,7 @@ export default {
                 let downloadElement = document.createElement('a')
                 let href = window.URL.createObjectURL(blob) //创建下载的链接
                 downloadElement.href = href
-                downloadElement.download = this.projectData.name +this.$dayjs().format('YYYYMMDDHHMM')+ '.xls' //下载后文件名
+                downloadElement.download = this.projectData.name + this.$dayjs().format('YYYYMMDDHHMM') + '.xls' //下载后文件名
                 document.body.appendChild(downloadElement)
                 downloadElement.click() //点击下载
                 document.body.removeChild(downloadElement) //下载完成移除元素

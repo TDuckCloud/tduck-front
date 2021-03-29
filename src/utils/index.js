@@ -270,10 +270,10 @@ export function openUrl(url) {
     var a = document.createElement('a')
     a.setAttribute('href', url)
     a.setAttribute('target', '_blank')
-    a.setAttribute('id', 'tduck-link-temp')
+    a.setAttribute('id', 'd2admin-link-temp')
     document.body.appendChild(a)
     a.click()
-    document.body.removeChild(document.getElementById('tduck-link-temp'))
+    document.body.removeChild(document.getElementById('d2admin-link-temp'))
 }
 
 /**
@@ -289,4 +289,19 @@ export function jsonToParam(json) {
         return encodeURIComponent(key) +
             '=' + encodeURIComponent(json[key])
     }).join('&')
+}
+
+/**
+ * 是否是json
+ * @param str
+ * @returns {boolean}
+ */
+function isJsonString(str) {
+    try {
+        if (typeof JSON.parse(str) == 'object') {
+            return true
+        }
+    } catch (e) {
+    }
+    return false
 }

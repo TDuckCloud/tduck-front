@@ -501,7 +501,7 @@ export const selectComponents = [
         __slot__: {
             'list-type': true
         },
-        action: '/tduck-api/project/file/upload/',
+        action: process.env.VUE_APP_API_ROOT + '/project/file/upload/',
         disabled: false,
         accept: '',
         name: 'file',
