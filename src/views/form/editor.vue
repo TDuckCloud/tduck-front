@@ -40,18 +40,18 @@
                         <el-col :span="20" style="text-align: center">
                             <h4 class="form-name-text" contenteditable="true"
                                 @blur="(event)=>{
-                                    formConf.title=event.target.innerText;
+                                    this.formConf.title=event.target.innerText;
                                     this.saveProjectInfo()}">
                                 {{ formConf.title }}</h4>
                         </el-col>
                     </el-row>
                     <el-row type="flex" justify="center" align="middle">
-                        <el-col :span="23" >
-                                <Tinymce v-model="formConf.description" @input="saveProjectInfo"
-                                         v-if="editDescription"
-                                         @blur="editDescription=false" placeholder="请输入表单描述" />
-                                <div v-else v-html="formConf.description" class="form-name-text"
-                                     @click="editDescription=true" style="min-height: 100px">
+                        <el-col :span="23">
+                            <Tinymce v-model="formConf.description" @input="saveProjectInfo"
+                                     v-if="editDescription"
+                                     @blur="editDescription=false" placeholder="请输入表单描述"/>
+                            <div v-else v-html="formConf.description" class="form-name-text"
+                                 @click="editDescription=true" style="min-height: 100px">
 
                                 </div>
 <!--                            <p class="form-name-text" contenteditable="true"-->
@@ -113,7 +113,7 @@ import {
     inputComponents, selectComponents, formConf
 } from '@/components/generator/config'
 import {
-    exportDefault, beautifierConf, isNumberStr, titleCase, deepClone
+    exportDefault, beautifierConf, isNumberStr, titleCase, deepClone, jsonClone
 } from '@/utils/index'
 import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
@@ -141,8 +141,8 @@ export default {
     data() {
         return {
             idGlobal,
-            formConf,
-            editDescription:true,
+            formConf: null,
+            editDescription: true,
             inputComponents,
             selectComponents,
             labelWidth: 100,
@@ -204,6 +204,8 @@ export default {
         }
     },
     mounted() {
+        // 复制对象 避免修改改变原始对象
+        this.formConf = JSON.parse(JSON.stringify(formConf))
         //项目key
         let projectKey = this.projectKey
         //如果是编辑 从服务端读取数据
