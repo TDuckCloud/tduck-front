@@ -39,6 +39,10 @@ let typeMap = new Map()
  * @param data
  */
 export function dbDataConvertForItemJson(data) {
+    let {required,placeholder}=data
+    if (required&&!placeholder) {//必填项目验证未填默认提示语
+        data.placeholder="此题为必填项目"
+    }
     if (!typeMap.size > 0) {
         //根据类型获取默认数据
         _.concat(inputComponents, selectComponents).forEach(item => {
