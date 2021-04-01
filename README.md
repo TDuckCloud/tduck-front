@@ -14,6 +14,8 @@ TDuck 前端源码
 ``` bash
 # 配置镜像加速
 https://www.ydyno.com/archives/1219.html
+或者镜像全家桶(常用的全部加速了)
+npm i -g mirror-config-china --registry=https://registry.npm.taobao.org
 
 # 安装依赖
 npm install
