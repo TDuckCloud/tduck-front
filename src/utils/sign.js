@@ -49,8 +49,6 @@ export default class sign {
         let jsonObj = _.merge(urlParams, requestParams)
         jsonObj = _.merge(jsonObj, dataParams)
         let requestBody = this.sortAsc(jsonObj)
-        console.log(constants.signSecret + JSON.stringify(requestBody))
-        console.log(CryptoJS.MD5(constants.signSecret + JSON.stringify(requestBody)).toString().toLowerCase())
         return CryptoJS.MD5(constants.signSecret + JSON.stringify(requestBody)).toString().toLowerCase()
     }
 

@@ -35,7 +35,9 @@
                     <el-form-item v-if="activeData.__config__.componentName!==undefined" label="组件名">
                         {{ activeData.__config__.componentName }}
                     </el-form-item>
-                    <el-form-item v-if="activeData.__config__.label!==undefined" label="标题">
+                    <el-form-item
+                        v-if="activeData.__config__.label!==undefined&&activeData.__config__.showLabel!==false"
+                        label="标题">
                         <el-input v-model="activeData.__config__.label" placeholder="请输入标题" @input="changeRenderKey"/>
                     </el-form-item>
                     <el-form-item v-if="activeData.placeholder!==undefined" label="占位提示">
@@ -79,14 +81,16 @@
                             <el-radio-button label="bottom"/>
                         </el-radio-group>
                     </el-form-item>
-                    <el-form-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">
-                        <el-input v-model.number="activeData.__config__.labelWidth" type="number"
-                                  placeholder="请输入标签宽度"/>
-                    </el-form-item>
-                    <el-form-item v-if="activeData.style&&activeData.style.width!==undefined" label="组件宽度">
-                        <el-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable/>
-                    </el-form-item>
-                    <el-form-item v-if="activeData.__vModel__!==undefined" label="默认值">
+                    <!--                    <el-form-item v-if="activeData.__config__.labelWidth!==undefined" label="标签宽度">-->
+                    <!--                        <el-input v-model.number="activeData.__config__.labelWidth" type="number"-->
+                    <!--                                  placeholder="请输入标签宽度"/>-->
+                    <!--                    </el-form-item>-->
+                    <!--                    <el-form-item v-if="activeData.style&&activeData.style.width!==undefined" label="组件宽度">-->
+                    <!--                        <el-input v-model="activeData.style.width" placeholder="请输入组件宽度" clearable/>-->
+                    <!--                    </el-form-item>-->
+                    <el-form-item
+                        v-if="activeData.__vModel__!==undefined&&activeData.__config__.showDefaultValue!==false"
+                        label="默认值">
                         <el-input
                             :value="setDefaultValue(activeData.__config__.defaultValue)"
                             placeholder="请输入默认值"
@@ -522,7 +526,7 @@
                     <el-form-item v-if="activeData.__config__.tag === 'el-cascader'" label="可否筛选">
                         <el-switch v-model="activeData.filterable"/>
                     </el-form-item>
-                    <el-form-item v-if="activeData.clearable !== undefined" label="能否清空">
+                    <el-form-item v-if="activeData.clearable !== undefined&&showClearable" label="能否清空">
                         <el-switch v-model="activeData.clearable"/>
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.showTip !== undefined" label="显示提示">
@@ -549,7 +553,24 @@
                     <el-form-item v-if="activeData.__config__.tag === 'el-select'" label="是否多选">
                         <el-switch v-model="activeData.multiple" @change="multipleChange"/>
                     </el-form-item>
-                    <el-form-item v-if="activeData.__config__.required !== undefined" label="是否必填">
+                    <el-form-item v-if="activeData.__config__.tag === 'el-image'" label="图片地址">
+                        <el-input v-model="activeData.src" placeholder="请输入图片url地址"/>
+                        <el-upload
+                            style="text-align: center"
+                            ref="logoUpload"
+                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                            :headers="getUploadHeader"
+                            :on-success="(response, file, fileList)=>{
+                                   activeData.src = response.data
+                            }"
+                            :action="getUploadUrl"
+                            :show-file-list="false">
+                            <el-button slot="trigger"  size="small" type="text">点击上传图片 *</el-button>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item
+                        v-if="activeData.__config__.required !== undefined&&activeData.__config__.showRequired!==false"
+                        label="是否必填">
                         <el-switch v-model="activeData.__config__.required"/>
                     </el-form-item>
 
@@ -571,7 +592,8 @@
                         </el-tree>
                     </template>
 
-                    <template v-if="Array.isArray(activeData.__config__.regList)">
+                    <template
+                        v-if="Array.isArray(activeData.__config__.regList)&&activeData.__config__.showRegList!==false">
                         <el-divider>正则校验</el-divider>
                         <div
                             v-for="(item, index) in activeData.__config__.regList"
@@ -820,6 +842,14 @@ export default {
         },
         isShowStep() {
             return ['el-input-number', 'el-slider'].indexOf(this.activeTag) > -1
+        },
+        getUploadHeader() {
+            return {
+                'token': this.$store.getters['user/isLogin']
+            }
+        },
+        getUploadUrl() {
+            return `${process.env.VUE_APP_API_ROOT}/user/file/upload`
         }
     },
     watch: {

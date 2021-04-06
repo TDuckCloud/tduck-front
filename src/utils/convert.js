@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import {inputComponents, selectComponents} from '@/components/generator/config'
+import {imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
 import {jsonClone} from '@/utils/index'
 
 /**
@@ -45,7 +45,7 @@ export function dbDataConvertForItemJson(data) {
     }
     if (!typeMap.size > 0) {
         //根据类型获取默认数据
-        _.concat(inputComponents, selectComponents).forEach(item => {
+        _.concat(inputComponents, selectComponents,imageComponents).forEach(item => {
             typeMap.set(item.typeId, item)
         })
     }
@@ -158,6 +158,11 @@ let dataParams = {
         'limit': 'limit',
         'multiple': 'multiple'
 
+    },
+    //图片
+    18: {
+        'src': 'src',
+        'alt': 'alt'
     }
 }
 

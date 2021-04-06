@@ -341,6 +341,7 @@ export default {
         submitForm() {
             this.$refs[this.formConf.formRef].validate(valid => {
                 if (!valid){
+                    // 未选中自动高亮
                     if(document.getElementsByClassName('el-form-item__error').length>0){
 
                     }
