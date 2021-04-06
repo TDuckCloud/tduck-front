@@ -811,7 +811,7 @@ export default {
     margin: 3px;
     color: rgba(16, 16, 16, 100);
     font-size: 14px;
-    text-align: center;
+    text-align: left;
 }
 
 .share-preview-msg-desc {

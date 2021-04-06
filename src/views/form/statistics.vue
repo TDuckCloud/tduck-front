@@ -72,11 +72,11 @@
                             <div v-for="item in projectItemList">
                                 <h4>{{ item.label }}</h4>
                                 <!--  如果是文件输入-->
-                                <div v-if="item.type==17 &&activeResultRow">
+                                <div v-if="item.type==17 &&activeResultRow&&activeResultRow['processData'][`field${item.formItemId}`]">
                                     <el-link
-                                        :href="file.url" target="_blank"  type="primary"
+                                        :href="file.url" target="_blank" type="primary"
                                         v-for="file in JSON.parse(activeResultRow['processData'][`field${item.formItemId}`]['files'])">
-                                        {{file.fileName}}
+                                        {{ file.fileName }}
                                     </el-link>
                                 </div>
                                 <el-tag v-else> {{

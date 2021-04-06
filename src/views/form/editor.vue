@@ -35,7 +35,7 @@
         </div>
         <div class="center-board">
             <el-scrollbar class="center-scrollbar">
-                <el-row class="center-board-row" :gutter="formConf.gutter">
+                <el-row class="center-board-row" v-if="formConf" :gutter="formConf.gutter">
                     <el-row type="flex" justify="center" align="middle">
                         <el-col :span="20" style="text-align: center">
                             <h4 class="form-name-text" contenteditable="true"
@@ -53,13 +53,13 @@
                             <div v-else v-html="formConf.description" class="form-name-text"
                                  @click="editDescription=true" style="min-height: 100px">
 
-                                </div>
-<!--                            <p class="form-name-text" contenteditable="true"-->
-<!--                               @blur="(event)=>{-->
-<!--                                   formConf.description=event.target.innerText;-->
-<!--                                   this.saveProjectInfo()}">-->
-<!--                                {{ formConf.description }}-->
-<!--                            </p>-->
+                            </div>
+                            <!--                            <p class="form-name-text" contenteditable="true"-->
+                            <!--                               @blur="(event)=>{-->
+                            <!--                                   formConf.description=event.target.innerText;-->
+                            <!--                                   this.saveProjectInfo()}">-->
+                            <!--                                {{ formConf.description }}-->
+                            <!--                            </p>-->
                         </el-col>
                     </el-row>
                     <el-divider></el-divider>
@@ -208,23 +208,9 @@ export default {
         this.formConf = JSON.parse(JSON.stringify(formConf))
         //项目key
         let projectKey = this.projectKey
-        //如果是编辑 从服务端读取数据
-        if (this.isEdit) {
-            this.queryProjectItems()
-        } else {
-            //表单内容 如果表单为空 使用默认表单
-            drawingListInDB = getDrawingList(projectKey)
-            if (Array.isArray(drawingListInDB) && drawingListInDB.length > 0) {
-                this.drawingList = drawingListInDB
-            } else {
-                this.drawingList = drawingDefalut
-            }
-        }
-        if (this.drawingList.length) {
-            this.activeFormItem(this.drawingList[0])
-        }
+        //从服务端获取
+        this.queryProjectItems()
         //获取表单配置
-        //获取服务端数据
         this.$api.get(`/user/project/${projectKey}`).then(res => {
             this.formConf.title = res.data.name
             this.formConf.description = res.data.describe
@@ -397,7 +383,7 @@ export default {
 }
 </script>
 
-<style lang='scss' >
+<style lang='scss'>
 @import '@/assets/styles/form/home';
 @import '@/assets/styles/form/index';
 </style>

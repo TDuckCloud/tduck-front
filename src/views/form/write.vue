@@ -16,19 +16,19 @@
                 v-if="projectConfig.projectKey"/>
         </div>
         <div v-if="writeStatus==2" class="title-icon-view">
+            <div class="icon-view">
+                <i clas="el-icon-check success-icon"/>
+            </div>
+            <p style="text-align: center">
+                <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
+                <span v-else>{{ globalDefaultValue.projectSubmitPromptText }}</span>
+            </p>
             <div>
                 <el-image
                     v-if="userProjectSetting.submitPromptImg"
                     :src="userProjectSetting.submitPromptImg"
                     fit="cover"></el-image>
             </div>
-            <div class="icon-view">
-                <i class="el-icon-check success-icon"/>
-            </div>
-            <p style="text-align: center">
-                <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
-                <span v-else>{{ globalDefaultValue.projectSubmitPromptText }}</span>
-            </p>
         </div>
     </div>
 </template>
