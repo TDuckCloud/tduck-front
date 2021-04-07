@@ -17,7 +17,7 @@
         </div>
         <div v-if="writeStatus==2" class="title-icon-view">
             <div class="icon-view">
-                <i clas="el-icon-check success-icon"/>
+                <i class="el-icon-check success-icon"/>
             </div>
             <p style="text-align: center">
                 <span v-if="userProjectSetting.submitPromptText">{{ userProjectSetting.submitPromptText }}</span>
