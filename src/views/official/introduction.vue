@@ -97,18 +97,18 @@
                         <p class="title"> 项目地址</p>
                         <p class="subtitle">
                             <svg-icon name="gitee" style="width: 14px; height: 14px;" />
-                            码云
+                            <a href="https://gitee.com/TDuckApp/tduck-platform" target="_blank"> 码云</a>
                         </p>
                         <p class="subtitle">
                             <svg-icon name="github" style="width: 12px; height: 12px;" />
-                            Gitee
+                            <a href="https://github.com/TDuckCloud/tduck-platform" target="_blank"> Github</a>
                         </p>
                     </el-col>
                     <el-col :span="4">
                         <p class="title"> 联系方式</p>
                         <p class="subtitle">
                             <i class="el-icon-message" />
-                            TDuckServer@tduckcloud.com
+                            pr@tduckapp.com
                         </p>
                         <p class="subtitle">
                             <i class="el-icon-phone" /> +86 15080929435
@@ -142,7 +142,7 @@
                         本站由 又拍云 提供CDN加速/云储存服务
                     </p>
                     <p class="subtitle" style="text-align: center;">
-                        Copyright © 2021 TDuckCloud. All Rights Reserved. 湘ICP备19005498号-1  版权所有
+                        Copyright © 2021 TDuckApp. All Rights Reserved. 湘ICP备18023961号-2  版权所有
                     </p>
                 </div>
             </div>

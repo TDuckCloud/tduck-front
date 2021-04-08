@@ -263,17 +263,11 @@ export default {
 .write-container {
     margin: 0;
     padding: 0;
-    height: 100%;
+    //height: 100%;
     width: 100%;
-
 }
 
-.project-grid-container {
-    margin-top: 20px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-}
+
 
 .title-icon-view {
     display: flex;

@@ -49,7 +49,7 @@
                                 </el-col>
                             </el-row>
                             <el-divider style="width: 100px;" />
-                            <p class="login-tip">关于TDuckCloud登录</p>
+                            <p class="login-tip">关于TDuckApp登录</p>
                             <p class="login-tip">
                                 若微信扫码失败，请打开 微信授权页面 登录
                                 若QQ登录填鸭云异常，可查阅 帮助文档

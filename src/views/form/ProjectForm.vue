@@ -186,7 +186,6 @@ export default {
 @media screen and (max-width: 750px) {
     .project-form {
         margin: 0px;
-        height: 100%;
         width: 100% !important;
         background-color: white;
     }
