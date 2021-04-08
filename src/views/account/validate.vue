@@ -11,6 +11,17 @@
             />
             <el-button style="width: 50%;" @click="$router.push({path: '/home'})">返回首页</el-button>
         </div>
+        <div v-else style="display: flex; flex-direction: column; align-items: center;">
+            <el-alert
+                title="绑定成功"
+                type="success"
+                :closable="false"
+                :center="true"
+                description="你现在可以通过邮箱登录"
+                show-icon
+            />
+            <el-button style="width: 50%;" @click="$router.push({path: '/home'})">返回首页</el-button>
+        </div>
     </div>
 </template>
 
@@ -22,7 +33,7 @@ export default {
     name: 'Redirect',
     data() {
         return {
-            bindEmailErr: ''
+            bindEmailErr: true
         }
     },
     created() {
@@ -32,9 +43,7 @@ export default {
             let code = this.$route.query.code
             let email = this.$route.query.email
             this.$api.post('/user/update/email', {email: email, key: code}).then(res => {
-                if (!res.data) {
-                    this.bindEmailErr = true
-                }
+                this.bindEmailErr = !res.data
             })
         }
     },
@@ -52,7 +61,8 @@ export default {
     justify-items: center;
     align-items: center;
 }
-.el-alert--error.is-light {
+.el-alert--error.is-light,
+.el-alert--success.is-light {
     background-color: transparent;
 }
 .el-alert {

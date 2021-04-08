@@ -11,7 +11,7 @@ export default [
     },
     {
         path: '/account/validate',
-        meta: {requireLogin: true},
+        meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/account/validate')
     },
     {
