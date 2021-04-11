@@ -110,21 +110,18 @@ import render from '@/components/render/render'
 import RightPanel from './RightPanel'
 
 import {
-    inputComponents, selectComponents, formConf
+    inputComponents, selectComponents, formConf, imageComponents
 } from '@/components/generator/config'
 import {
-    exportDefault, beautifierConf, isNumberStr, titleCase, deepClone, jsonClone
+    deepClone
 } from '@/utils/index'
 import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
 import DraggableItem from './DraggableItem'
-import {
-    getDrawingList, saveDrawingList, getIdGlobal, saveIdGlobal, getFormConf
-} from '@/utils/db'
+import {saveDrawingList, saveIdGlobal} from '@/utils/db'
 
 let oldActiveId
 let tempActiveData
-let drawingListInDB
 let idGlobal
 
 export default {
@@ -160,6 +157,10 @@ export default {
                 {
                     title: '输入型组件',
                     list: inputComponents
+                },
+                {
+                    title: '图片型组件',
+                    list: imageComponents
                 },
                 {
                     title: '选择型组件',
