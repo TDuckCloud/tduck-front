@@ -526,7 +526,7 @@
                     <el-form-item v-if="activeData.__config__.tag === 'el-cascader'" label="可否筛选">
                         <el-switch v-model="activeData.filterable"/>
                     </el-form-item>
-                    <el-form-item v-if="activeData.clearable !== undefined&&showClearable" label="能否清空">
+                    <el-form-item v-if="activeData.clearable !== undefined" label="能否清空">
                         <el-switch v-model="activeData.clearable"/>
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.showTip !== undefined" label="显示提示">
@@ -565,7 +565,7 @@
                             }"
                             :action="getUploadUrl"
                             :show-file-list="false">
-                            <el-button slot="trigger"  size="small" type="text">点击上传图片 *</el-button>
+                            <el-button slot="trigger" size="small" type="text">点击上传图片 *</el-button>
                         </el-upload>
                     </el-form-item>
                     <el-form-item
@@ -683,6 +683,7 @@ import TreeNodeDialog from '@/views/form/TreeNodeDialog'
 import {isNumberStr} from '@/utils/index'
 import IconsDialog from './IconsDialog'
 import {
+    imageComponents,
     inputComponents, selectComponents
 } from '@/components/generator/config'
 import DraggableItem from './DraggableItem'
@@ -824,6 +825,10 @@ export default {
                 {
                     label: '输入型组件',
                     options: inputComponents
+                },
+                {
+                    label: '图片型组件',
+                    options: imageComponents
                 },
                 {
                     label: '选择型组件',
@@ -1046,6 +1051,7 @@ export default {
     top: 0;
     padding-top: 3px;
     background-color: #FFFFFF;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
     .field-box {
         position: relative;

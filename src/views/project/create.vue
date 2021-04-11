@@ -2,7 +2,7 @@
     <div class="create-wrapper">
         <div class="back-view">
             <el-button size="mini" round @click="$router.back(-1)">
-                <i class="el-icon-arrow-left" />
+                <i class="el-icon-arrow-left"/>
                 返回
             </el-button>
         </div>
@@ -20,8 +20,7 @@
                         <el-form-item>
                             <el-button type="primary"
                                        class="search-template-btn"
-                                       @click="queryTemplatePage"
-                            >
+                                       @click="queryTemplatePage">
                                 查询
                             </el-button>
                         </el-form-item>
@@ -34,12 +33,10 @@
                              style="background-color: transparent;"
                              mode="horizontal" @select="(index)=>{
                                  this.queryParams.type=index
-                                 this.queryTemplatePage()}"
-                    >
+                                 this.queryTemplatePage()}">
                         <el-menu-item :`index`="null">全部</el-menu-item>
                         <el-menu-item v-for="(item, index) in templateTypeList" :key="index"
-                                      :index="item.id.toString()"
-                        >
+                                      :index="item.id.toString()">
                             {{ item.name }}
                         </el-menu-item>
                     </el-menu>
@@ -52,14 +49,12 @@
             </el-row>
             <div class="project-grid-container">
                 <div
-                    class="project-grid-view"
-                >
+                    class="project-grid-view">
                     <div class="project-template-view"
                          style="display: flex; align-items: center;"
-                         @click="createBlankTemplate"
-                    >
+                         @click="createBlankTemplate">
                         <div style="flex: 1;">
-                            <i style="font-size: 40px; align-items: center;" class="el-icon-plus" />
+                            <i style="font-size: 40px; align-items: center;" class="el-icon-plus"/>
                             <p style="font-size: 14px;">创建一个空白模板</p>
                         </div>
                     </div>
@@ -70,15 +65,14 @@
                         </p>
                         <p style="color: rgba(189, 188, 188, 100); font-size: 12px; margin: 0;">
                             {{ template.likeCount }}人喜欢
-                            <svg-icon name="like" style="width: 12px; height: 12px;" />
+                            <svg-icon name="like" style="width: 12px; height: 12px;"/>
                         </p>
                         <div class="project-template-use-view">
                             <div
                                 class="project-template-use-view-btn"
-                                @click="toProjectTemplate(template.key)"
-                            >
+                                @click="toProjectTemplate(template.key)">
                                 <div>
-                                    <font-icon class="fa fa-eye" style="font-size: 40px;" />
+                                    <font-icon class="fa fa-eye" style="font-size: 40px;"/>
                                 </div>
                                 <el-button type="text">查看</el-button>
                             </div>
@@ -87,7 +81,7 @@
                 </div>
             </div>
         </el-row>
-        <el-row style="height: 20px;" />
+        <el-row style="height: 20px;"/>
         <div>
             <el-pagination
                 v-if="total>10"
@@ -189,7 +183,9 @@ export default {
     border-radius: 3px;
     text-align: center;
     margin: 20px;
-    border: 1px solid rgba(187, 187, 187, 100);
+    //border: 1px solid rgba(187, 187, 187, 100);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+    background: white;
     position: relative;
 }
 .project-template-view:hover .project-template-use-view {

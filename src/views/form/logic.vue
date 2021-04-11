@@ -24,14 +24,14 @@
                     </el-row>
                 </div>
                 <div v-else>
-                    <el-row>
-                        <el-col :span="12">
+                    <el-row type="flex" align="middle" justify="center">
+                        <el-col :span="11" :offset="1">
                             <p style="font-size: 14px;color: #aaa">共 {{ logicList.length + 1 }}. 条显示逻辑</p>
                         </el-col>
                         <el-col :span="6" :offset="6">
                             <el-button type="primary" size="mini" @click="addLogicHandle">
                                 <i class="el-icon-plus"></i>
-                                <span style="font-size: 18px">添加逻辑</span>
+                                <span style="font-size: 15px">添加逻辑</span>
                             </el-button>
                         </el-col>
                     </el-row>
@@ -193,7 +193,7 @@ export default {
             let index = conditionProjectItemList.findIndex(item => item.id == showFormItemId)
             conditionProjectItemList = _.slice(conditionProjectItemList, 0, index)
             conditionProjectItemList = conditionProjectItemList.filter((item) => {
-                return ['RADIO'].includes(item.type)
+                return ['RADIO','CHECKBOX','SELECT'].includes(item.type)
             })
             return conditionProjectItemList
         },

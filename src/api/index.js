@@ -92,6 +92,11 @@ api.interceptors.response.use(
         return Promise.resolve(res)
     },
     error => {
+        Message({
+            message: '服务开小差了，请稍后再试',
+            type: 'error',
+            duration: 5 * 1000
+        })
         return Promise.reject(error)
     }
 )

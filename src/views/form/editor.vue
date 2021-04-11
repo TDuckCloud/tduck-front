@@ -67,8 +67,7 @@
                         :size="formConf.size"
                         :label-position="formConf.labelPosition"
                         :disabled="formConf.disabled"
-                        :label-width="formConf.labelWidth + 'px'"
-                    >
+                        :label-width="formConf.labelWidth + 'px'">
                         <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
                                    @end="onItemEnd">
                             <draggable-item
@@ -245,11 +244,15 @@ export default {
 
             })
         },
-        saveProjectItemInfo(item) {
+        async saveProjectItemInfo(item) {
+            let isSuccess = false
             let params = formItemConvertData(item, this.projectKey)
-            this.$api.post('/user/project/item/create', params).then(res => {
-                item.sort = res.data.sort
+            let pItem = item
+            await this.$api.post('/user/project/item/create', params).then(res => {
+                pItem.sort = res.data.sort
+                isSuccess = true
             })
+            return isSuccess
         },
         queryProjectItems() {
             this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
@@ -268,8 +271,10 @@ export default {
             if (obj.from !== obj.to) {
                 this.activeData = tempActiveData
                 this.activeId = this.idGlobal
+                this.saveProjectItemInfo(tempActiveData).then(res => {
+                    this.onItemEnd(obj)
+                })
             }
-            this.onItemEnd(obj)
         },
         onItemEnd(obj) {
             let params = {'projectKey': this.projectKey}
@@ -288,19 +293,17 @@ export default {
         },
         addComponent(item) {
             const clone = this.cloneComponent(item)
+            this.saveProjectItemInfo(clone)
             this.drawingList.push(clone)
             this.activeFormItem(clone)
         },
-        cloneComponent(origin, save = true) {
+        cloneComponent(origin) {
             const clone = deepClone(origin)
             const config = clone.__config__
             config.span = this.formConf.span // 生成代码时，会根据span做精简判断
             this.createIdAndKey(clone)
             clone.placeholder !== undefined && (clone.placeholder += config.label)
             tempActiveData = clone
-            if (save) {
-                this.saveProjectItemInfo(clone)
-            }
             return tempActiveData
         },
         createIdAndKey(item) {
@@ -347,7 +350,7 @@ export default {
             this.deleteProjectItemInfo(item)
         },
         tagChange(newTag) {
-            newTag = this.cloneComponent(newTag, false)
+            newTag = this.cloneComponent(newTag)
             const config = newTag.__config__
             newTag.__vModel__ = this.activeData.__vModel__
             newTag.sort = this.activeData.sort
