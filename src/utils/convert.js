@@ -90,19 +90,19 @@ export function dbDataConvertForItemJson(data) {
 
 let dataParams = {
     //单行文本
-    1: {
+    'INPUT': {
         'prepend': '__slot__.prepend',
         'maxlength': 'maxlength',
         'append': '__slot__.append'
     },
     // 多行文本
-    2: {
+    'TEXTAREA': {
         'minRows': 'autosize.minRows',
         'maxRows': 'autosize.maxRows',
         'maxlength': 'maxlength'
     },
     //计数器
-    4: {
+    'NUMBER_INPUT': {
         'min': 'min',
         'max': 'max',
         'maxlength': 'maxlength',
@@ -112,44 +112,44 @@ let dataParams = {
         'controls-position': 'controls-position'
     },
     //下拉选择
-    5: {
+    'SELECT': {
         'options': '__slot__.options',
         'filterable': 'filterable',
         'multiple': 'multiple'
     },
     //级联选择
-    6: {
+    'CASCADER': {
         'options': 'options',
         'filterable': 'filterable',
         'multiple': 'props.props.multiple'
     },
     //单选框组
-    7: {
+    'RADIO': {
         'options': '__slot__.options',
         'filterable': 'filterable',
         'multiple': 'props.props.multiple'
     },
     //多选框组
-    8: {
+    'CHECKBOX': {
         'optionType': '__config__.optionType',
         'size': 'size',
         'options': '__slot__.options',
         'max': 'max',
         'min': 'min'
     }, //开关
-    9: {},
+    'SWITCH': {},
     //滑块
-    10: {
+    'SLIDER': {
         'min': 'min',
         'max': 'max',
         'step': 'step'
     },//时间选择
-    11: {},
-    15: {
+    'TIME': {},
+    'RATE': {
         'max': 'max'
     },
     //文件上传
-    17: {
+    'UPLOAD': {
         'buttonText': '__config__.buttonText',
         'showTip': '__config__.showTip',
         'fileSize': '__config__.fileSize',
@@ -160,7 +160,7 @@ let dataParams = {
 
     },
     //图片
-    18: {
+    'IMAGE': {
         'src': 'src',
         'alt': 'alt'
     }

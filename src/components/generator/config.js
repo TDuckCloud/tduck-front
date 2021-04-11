@@ -20,7 +20,7 @@ export const formConf = {
 export const inputComponents = [
     {
         // 组件的自定义配置
-        typeId: 1,
+        typeId: 'INPUT',
         __config__: {
             label: '单行文本',
             labelWidth: null,
@@ -53,7 +53,7 @@ export const inputComponents = [
         disabled: false
     },
     {
-        typeId: 2,
+        typeId: 'TEXTAREA',
         __config__: {
             label: '多行文本',
             labelWidth: null,
@@ -113,7 +113,7 @@ export const inputComponents = [
     //     disabled: false
     // },
     {
-        typeId: 4,
+        typeId: 'NUMBER_INPUT',
         __config__: {
             label: '计数器',
             showLabel: true,
@@ -142,7 +142,7 @@ export const inputComponents = [
 // 选择型组件 【左面板】
 export const selectComponents = [
     {
-        typeId: 5,
+        typeId: 'SELECT',
         __config__: {
             label: '下拉选择',
             showLabel: true,
@@ -173,7 +173,7 @@ export const selectComponents = [
         multiple: false
     },
     {
-        typeId: 6,
+        typeId: 'CASCADER',
         __config__: {
             label: '级联选择',
             url: 'https://www.fastmock.site/mock/f8d7a54fb1e60561e2f720d5a810009d/fg/cascaderList',
@@ -219,7 +219,7 @@ export const selectComponents = [
         separator: '/'
     },
     {
-        typeId: 7,
+        typeId: 'RADIO',
         __config__: {
             label: '单选框组',
             labelWidth: null,
@@ -250,7 +250,7 @@ export const selectComponents = [
         disabled: false
     },
     {
-        typeId: 8,
+        typeId: 'CHECKBOX',
         __config__: {
             label: '多选框组',
             tag: 'el-checkbox-group',
@@ -283,7 +283,7 @@ export const selectComponents = [
         disabled: false
     },
     {
-        typeId: 9,
+        typeId: 'SWITCH',
         __config__: {
             label: '开关',
             tag: 'el-switch',
@@ -308,7 +308,7 @@ export const selectComponents = [
         'inactive-value': false
     },
     {
-        typeId: 10,
+        typeId: 'SLIDER',
         __config__: {
             label: '滑块',
             tag: 'el-slider',
@@ -331,7 +331,7 @@ export const selectComponents = [
         range: false
     },
     {
-        typeId: 11,
+        typeId: 'TIME',
         __config__: {
             label: '时间选择',
             tag: 'el-time-picker',
@@ -357,7 +357,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
-        typeId: 12,
+        typeId: 'TIME_RANGE',
         __config__: {
             label: '时间范围',
             tag: 'el-time-picker',
@@ -383,7 +383,7 @@ export const selectComponents = [
         'value-format': 'HH:mm:ss'
     },
     {
-        typeId: 13,
+        typeId: 'DATE',
         __config__: {
             label: '日期选择',
             tag: 'el-date-picker',
@@ -408,7 +408,7 @@ export const selectComponents = [
         readonly: false
     },
     {
-        typeId: 14,
+        typeId: 'DATE_RANGE',
         __config__: {
             label: '日期范围',
             tag: 'el-date-picker',
@@ -435,7 +435,7 @@ export const selectComponents = [
         readonly: false
     },
     {
-        typeId: 15,
+        typeId: 'RATE',
         __config__: {
             label: '评分',
             tag: 'el-rate',
@@ -458,7 +458,7 @@ export const selectComponents = [
         disabled: false
     },
     {
-        typeId: 16,
+        typeId: 'COLOR',
         __config__: {
             label: '颜色选择',
             tag: 'el-color-picker',
@@ -479,7 +479,7 @@ export const selectComponents = [
         size: 'medium'
     },
     {
-        typeId: 17,
+        typeId: 'UPLOAD',
         __config__: {
             label: '上传',
             tag: 'el-upload',
@@ -516,7 +516,7 @@ export const selectComponents = [
 // 布局型组件 【左面板】
 export const imageComponents = [
     {
-        typeId: 18,
+        typeId: 'IMAGE',
         __config__: {
             label: '图片展示',
             showLabel: false,

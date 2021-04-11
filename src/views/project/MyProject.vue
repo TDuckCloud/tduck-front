@@ -93,13 +93,13 @@
                     >
                     <p class="project-grid-view-time">创建时间：{{ p.createTime | formatDate }}</p>
                     <div class="gird-operating-btns">
-                        <el-button type="text" @click="toProjectHandle(p.key,1)">
+                        <el-button type="text" @click="toProjectHandle(p.key,'editor')">
                             <i class="el-icon-edit" />
                             编辑
                         </el-button>
                         <span>
                             <el-button
-                                v-if="p.status!=1" type="text" @click="toProjectHandle(p.key,5)"
+                                v-if="p.status!=1" type="text" @click="toProjectHandle(p.key,'statistics')"
                             >
                                 <i class="el-icon-data-analysis" />
                                 统计
@@ -187,7 +187,7 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="text"
-                                   @click="toProjectHandle(scope.row.key,1)"
+                                   @click="toProjectHandle(scope.row.key,'editor')"
                         >
                             编辑
                         </el-button>
@@ -196,7 +196,7 @@
                                 v-if="scope.row.status!=1"
                                 type="text"
                                 class="green-text-btn"
-                                @click="toProjectHandle(scope.row.key,5)"
+                                @click="toProjectHandle(scope.row.key,'statistics')"
                             >
                                 统计
                             </el-button>

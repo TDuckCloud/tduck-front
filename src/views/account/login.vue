@@ -60,9 +60,10 @@
                     <el-tab-pane label="账号密码登录" name="account">
                         <el-form ref="accountLoginForm" label-position="top" size="small" :model="accountForm"
                                  :rules="accountLoginRules"
+                                 status-icon
+                                 hide-required-asterisk
                                  class="account-login-form"
-
-                                 status-icon hide-required-asterisk @key.enter.native="loginHandle"
+                                 @keyup.enter="loginHandle"
                         >
                             <el-form-item label="手机号/邮箱登录" prop="account">
                                 <el-input v-model="accountForm.account" placeholder="请输入手机号/邮箱" autocomplete="off" />
@@ -86,7 +87,9 @@
                                         </el-link>
                                     </el-col>
                                     <el-col :span="6" :offset="1">
-                                        <el-link :underline="false" type="primary" class="protocol-tip" @click="toForgetPwdHandle">
+                                        <el-link :underline="false" type="primary" class="protocol-tip"
+                                                 @click="toForgetPwdHandle"
+                                        >
                                             忘记密码？
                                         </el-link>
                                     </el-col>
@@ -302,9 +305,7 @@ export default {
             qqLoginAuthorizeUrl: ''
         }
     },
-    watch: {
-
-    },
+    watch: {},
     created() {
         this.getLoginWxQrCode()
         this.refreshWxQrcodeTimer = setInterval(() => {

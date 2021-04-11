@@ -108,6 +108,9 @@ export function jsonClone(obj) {
     return parse(stringify(obj))
 }
 
+export function jsonSimpleClone(obj){
+    return JSON.parse(JSON.stringify(obj))
+}
 // 深拷贝对象
 export function deepClone(obj) {
     const _toString = Object.prototype.toString

@@ -121,9 +121,10 @@ export default {
                     return projectItem
                 })
                 this.formConf.fields = fields
-                this.formConf.title = res.data.project.name
-                this.formConf.description = res.data.project.describe
-                this.formConf.description = res.data.project.describe
+                if (res.data.project) {
+                    this.formConf.title = res.data.project.name
+                    this.formConf.description = res.data.project.describe
+                }
                 if (res.data.userProjectTheme) {
                     this.projectTheme = res.data.userProjectTheme
                     let {submitBtnText, showNumber, btnsColor} = res.data.userProjectTheme

@@ -74,7 +74,7 @@ export default {
         document.getElementsByTagName('head')[0].appendChild(meta)
     },
     created() {
-        let key = this.$route.query.key
+        let key = this.$route.query.key || this.$route.params.key
         this.projectConfig.projectKey = key
         let wxCode = getQueryString('code')
         if (wxCode) {
@@ -89,7 +89,6 @@ export default {
             this.wxSignature = res.data
             this.setWxConfig()
         })
-        console.log(ua)
     },
     mounted() {
         this.viewProjectHandle()
@@ -263,10 +262,9 @@ export default {
 .write-container {
     margin: 0;
     padding: 0;
-    //height: 100%;
+    height: 100%;
     width: 100%;
 }
-
 
 
 .title-icon-view {

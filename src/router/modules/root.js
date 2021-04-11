@@ -108,6 +108,11 @@ export default [
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/ProjectForm.vue')
     },
     {
+        path: '/s/:key',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write.vue')
+    },
+    {
         path: '/project/write',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write.vue')

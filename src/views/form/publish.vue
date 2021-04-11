@@ -30,7 +30,7 @@
                                            v-clipboard:error="()=>{this.msgError('复制失败')}" type="primary">复制链接
                                 </el-button>
                             </el-col>
-                            <el-col :span="6" >
+                            <el-col :span="6">
                                 <el-button
                                     @click="stopPublishProject"
                                     type="danger">停止发布
@@ -77,7 +77,7 @@ export default {
     },
     mounted() {
         let url = window.location.protocol + '//' + window.location.host
-        this.writeLink = `${url}/project/write?key=${this.projectKey}`
+        this.writeLink = `${url}/s/${this.projectKey}`
         this.getProjectStatus()
     },
     data() {
@@ -91,7 +91,7 @@ export default {
             this.$api.get(`/user/project/${this.projectKey}`).then(res => {
                 if (res.data.status == 2) {
                     this.publishStatus = true
-                }else{
+                } else {
                     this.publishStatus = false
                 }
             })
@@ -117,7 +117,7 @@ export default {
             let aLink = document.createElement('a')
             let blob = this.base64ToBlob(content) //new Blob([content]);
             let evt = document.createEvent('HTMLEvents')
-            evt.initEvent('click', true, true)//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+                 evt.initEvent('click', true, true)//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
             aLink.download = fileName
             aLink.href = URL.createObjectURL(blob)
             // aLink.dispatchEvent(evt);
@@ -152,7 +152,6 @@ export default {
     padding: 0px;
     margin: 0;
     background-color: #F7F7F7;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
     min-height: 84vh;
     display: flex;
     align-items: center;
