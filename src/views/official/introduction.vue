@@ -13,7 +13,7 @@
                                 <p class="body-detail">简单易用，灵活的反馈数据筛选；统计图表一目了然</p>
                                 <div>
                                     <el-button class="body-btn primary" type="primary"
-                                               @click="$router.push({path:'/login'})"
+                                               @click="$router.push({path:'/login2'})"
                                     >
                                         免费使用
                                     </el-button>
