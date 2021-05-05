@@ -29,6 +29,7 @@
 <script>
 import Parser from '@/components/parser/Parser'
 import {dbDataConvertForItemJson} from '@/utils/convert'
+import {getExpression} from '@/utils/expression'
 
 window.onload = function() {
     document.addEventListener('touchstart', function(event) {
@@ -54,6 +55,7 @@ export default {
     },
     data() {
         return {
+            logicShowTriggerRule: {},
             startParser: false,
             projectTheme: {
                 headImgUrl: '',
@@ -63,6 +65,7 @@ export default {
             },
             formConf: {
                 fields: [],
+                logicShowRule: {},
                 projectKey: '',
                 projectKind: 1,
                 __methods__: {},
@@ -106,17 +109,29 @@ export default {
         }
         this.formConf.size = window.innerWidth < 480 ? 'medium' : 'small'
     },
-    mounted() {
+    async mounted() {
         let url = `/user/project/details/${this.formConf.projectKey}`
         if (this.formConf.projectKind == 2) {
             url = `/project/template/details/${this.formConf.projectKey}`
         }
+        let logicItemList = []
+        //处理逻辑表单
+        if (this.formConf.projectKind == 1) {
+            let res = await this.queryLogicItemList()
+            logicItemList = res.data
+        }
+        let logicItemMap = new Map()
+        logicItemList.forEach(item => {
+            logicItemMap.set(item.formItemId, item)
+            this.logicShowTriggerHandle(item)
+        })
         this.$api.get(url).then(res => {
             if (res.data) {
                 let serialNumber = 1
                 let fields = res.data.projectItems.map(item => {
                     let projectItem = dbDataConvertForItemJson(item)
                     projectItem.serialNumber = serialNumber
+                    projectItem.logicShow = logicItemMap.get(projectItem.formItemId) ? false : true
                     serialNumber++
                     return projectItem
                 })
@@ -125,18 +140,14 @@ export default {
                     this.formConf.title = res.data.project.name
                     this.formConf.description = res.data.project.describe
                 }
+                this.formConf.logicShowRule = this.logicShowTriggerRule
+                // 主题数据
                 if (res.data.userProjectTheme) {
                     this.projectTheme = res.data.userProjectTheme
                     let {submitBtnText, showNumber, btnsColor} = res.data.userProjectTheme
-                    if (submitBtnText) {
-                        this.formConf.submitBtnText = submitBtnText
-                    }
-                    if (showNumber) {
-                        this.formConf.showNumber = showNumber
-                    }
-                    if (btnsColor) {
-                        this.formConf.submitBtnColor = btnsColor
-                    }
+                    if (submitBtnText) this.formConf.submitBtnText = submitBtnText
+                    if (showNumber) this.formConf.showNumber = showNumber
+                    if (btnsColor) this.formConf.submitBtnColor = btnsColor
                 }
                 this.startParser = true
 
@@ -144,6 +155,38 @@ export default {
         })
     },
     methods: {
+        /**
+         * 处理逻辑显示数据
+         */
+        logicShowTriggerHandle(logicItem) {
+            if (!logicItem) {
+                return
+            }
+            //建立触发关系 该字段值发生变化时 哪些问题需要进行逻辑判断 确定是否显示
+            logicItem.conditionList.forEach(item => {
+                let rules = this.logicShowTriggerRule[item.formItemId]
+                if (!rules) {
+                    rules = new Set()
+                }
+                rules.add({
+                    //触发的字段
+                    triggerFormItemId: logicItem.formItemId,
+                    logicExpression: getExpression(logicItem.conditionList, logicItem.expression)
+                })
+                this.logicShowTriggerRule[item.formItemId] = rules
+            })
+        },
+        // 统一处理axios请求
+        queryLogicItemList() {
+            return new Promise((resolve, reject) => {
+                this.$api.get('/user/project/logic/list', {params: {projectKey: this.formConf.projectKey}})
+                    .then((res) => {
+                        resolve(res)
+                    }).catch((err) => {
+                    reject(err)
+                })
+            })
+        },
         submitForm(data) {
             this.$emit('submit', data)
         }

@@ -1,6 +1,9 @@
+/**
+ *  处理项目数据
+ *
+ */
 import _ from 'lodash'
 import {imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
-import {jsonClone} from '@/utils/index'
 
 /**
  * 表单json转换为后台需要的对象
@@ -39,13 +42,13 @@ let typeMap = new Map()
  * @param data
  */
 export function dbDataConvertForItemJson(data) {
-    let {required,placeholder}=data
-    if (required&&!placeholder) {//必填项目验证未填默认提示语
-        data.placeholder="此题为必填项目"
+    let {required, placeholder} = data
+    if (required && !placeholder) {//必填项目验证未填默认提示语
+        data.placeholder = '此题为必填项目'
     }
     if (!typeMap.size > 0) {
         //根据类型获取默认数据
-        _.concat(inputComponents, selectComponents,imageComponents).forEach(item => {
+        _.concat(inputComponents, selectComponents, imageComponents).forEach(item => {
             typeMap.set(item.typeId, item)
         })
     }
@@ -58,9 +61,10 @@ export function dbDataConvertForItemJson(data) {
             _.set(jsonItem, param[key], value)
         })
     }
+    jsonItem.dId = data.id
     jsonItem.sort = data.sort
     jsonItem.typeId = data.type
-    jsonItem.__config__.span =  data.span
+    jsonItem.__config__.span = data.span
     jsonItem.__config__.formId = data.formItemId
     jsonItem.__config__.label = data.label
     jsonItem.__config__.required = data.required
@@ -79,16 +83,17 @@ export function dbDataConvertForItemJson(data) {
     }
     jsonItem.regList = data.regList
     jsonItem.placeholder = data.placeholder
+    jsonItem.formItemId = data.formItemId
     jsonItem.__vModel__ = 'field' + data.formItemId
     return jsonItem
 }
 
 /**
- * 不同属性的存在json的位置不用 使用变量记录key 通过lodash表达式获取 1 2 3 4 为typeId
+ *
  * @type {{'1': {maxlength: string, prepend: string, append: string}}}
+ *
  */
-
-let dataParams = {
+const dataParams = {
     //单行文本
     'INPUT': {
         'prepend': '__slot__.prepend',

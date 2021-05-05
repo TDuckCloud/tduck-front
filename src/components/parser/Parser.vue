@@ -1,5 +1,6 @@
 <script>
 import {deepClone, jsonClone} from '@/utils/index'
+import {evalExpression} from '@/utils/expression'
 import render from '@/components/render/render.js'
 import _ from 'lodash'
 
@@ -33,8 +34,11 @@ const layouts = {
         if (formConfCopy.showNumber) {
             label = scheme.serialNumber + ': ' + label
         }
+
+        this.$set(this[this.formConf.formModel], scheme.__vModel__, [])
+        let colStyle = scheme.logicShow ? '' : 'display:none'
         return (
-            <el-col span={config.span}>
+            <el-col span={config.span} style={colStyle}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
                               label={config.showLabel ? label : ''}>
                     <render conf={scheme} {...{on: listeners}} />
@@ -155,9 +159,15 @@ function deleteUpload(config, scheme, file, fileList) {
 }
 
 function setValue(event, config, scheme) {
+    console.log(event)
+    console.log(config)
+    console.log(scheme)
+    console.log(this[this.formConf.formModel])
+
     this.$set(config, 'defaultValue', event)
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
     setValueLabel.call(this, event, config, scheme)
+    const {formConfCopy} = this
 }
 
 /**
@@ -184,7 +194,7 @@ function setValueLabel(event, config, scheme) {
                 //拼到头部 其他选项
                 if (item === 0) {
                     labelArr.push(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
-                }else if(item){
+                } else if (item) {
                     let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
                     labelArr.push(label)
                 }
@@ -280,7 +290,7 @@ export default {
                     if (tagOptionKey && defaultValue) {
                         if (defaultValue instanceof Array) {
                             defaultValue.forEach(item => {
-                                if(item){
+                                if (item) {
                                     let {label} = getObject(_.get(cur, tagOptionKey), 'value', item)
                                     labelStr += label + ','
                                 }
@@ -340,16 +350,16 @@ export default {
         },
         submitForm() {
             this.$refs[this.formConf.formRef].validate(valid => {
-                if (!valid){
+                if (!valid) {
                     // 未选中自动高亮
-                    if(document.getElementsByClassName('el-form-item__error').length>0){
+                    if (document.getElementsByClassName('el-form-item__error').length > 0) {
 
                     }
-                    setTimeout(()=>{
-                        let isError= document.getElementsByClassName("is-error");
-                        isError[0].querySelector('input').focus();
-                    },100);
-                    return false;
+                    setTimeout(() => {
+                        let isError = document.getElementsByClassName('is-error')
+                        isError[0].querySelector('input').focus()
+                    }, 100)
+                    return false
                 }
                 // 触发sumit事件
                 this.$emit('submit', {

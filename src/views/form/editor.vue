@@ -15,14 +15,12 @@
                             :clone="cloneComponent"
                             draggable=".components-item"
                             :sort="false"
-                            @end="onEnd"
-                        >
+                            @end="onEnd">
                             <div
                                 v-for="(element, index) in item.list"
                                 :key="index"
                                 class="components-item"
-                                @click="addComponent(element)"
-                            >
+                                @click="addComponent(element)">
                                 <div class="components-body">
                                     <svg-icon :name="element.__config__.tagIcon"/>
                                     {{ element.__config__.label }}

@@ -1,7 +1,7 @@
 <template>
     <div class="project-logic-container">
-        <el-scrollbar style="height: 90vh;">
-            <el-row type="flex" style="width: 230px" justify="center" align="middle">
+        <el-scrollbar class="scrollbar-container">
+            <el-row type="flex" class="header-row" justify="center" align="middle">
                 <el-col :span="12">
                     <p class="logic_title">显示逻辑</p>
                 </el-col>
@@ -13,25 +13,25 @@
                 </el-col>
             </el-row>
             <div class="show-logic-container">
-                <div v-if="!logicList.length">
+                <div v-if="!logicList.length" class="not-logic-container">
                     <el-row>
                         <el-col :offset="10">
                             <el-button type="text" @click="addLogicHandle">
-                                <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
-                                <span style="font-size: 18px">添加逻辑</span>
+                                <i class="el-icon-circle-plus-outline"></i>
+                                <span class="label">添加逻辑</span>
                             </el-button>
                         </el-col>
                     </el-row>
                 </div>
-                <div v-else>
+                <div v-else class="logic-item-container">
                     <el-row type="flex" align="middle" justify="center">
                         <el-col :span="11" :offset="1">
-                            <p style="font-size: 14px;color: #aaa">共 {{ logicList.length + 1 }}. 条显示逻辑</p>
+                            <p>共 {{ logicList.length  }}. 条显示逻辑</p>
                         </el-col>
                         <el-col :span="6" :offset="6">
                             <el-button type="primary" size="mini" @click="addLogicHandle">
                                 <i class="el-icon-plus"></i>
-                                <span style="font-size: 15px">添加逻辑</span>
+                                <span class="label">添加逻辑</span>
                             </el-button>
                         </el-col>
                     </el-row>
@@ -40,15 +40,15 @@
                          :key="index">
                         <el-row type="flex" align="middle" justify="center">
                             <el-col :offset="1" :span="6">
-                                <span style="margin-right: 8px">{{ index + 1 }}.</span>
+                                <span class="mr-10">{{ index + 1 }}.</span>
                                 <el-select
-                                    :disabled="!!logicItem.showFormItemId"
-                                    v-model="logicItem.showFormItemId" placeholder="请选择问题">
+                                    :disabled="!!logicItem.formItemId"
+                                    v-model="logicItem.formItemId" placeholder="请选择问题">
                                     <el-option
-                                        v-for="item in getProjectItemList() "
+                                        v-for="item in getProjectItemList(logicItem.formItemId) "
                                         :key="item.id"
                                         :label="item.label"
-                                        :value="item.id">
+                                        :value="item.formItemId">
                                     </el-option>
                                 </el-select>
                             </el-col>
@@ -56,7 +56,7 @@
                                 <span>符合以下</span>
                             </el-col>
                             <el-col :span="4">
-                                <el-select v-model="logicItem.showExpression" placeholder="请选择">
+                                <el-select v-model="logicItem.expression" placeholder="请选择">
                                     <el-option
                                         v-for="item in questionOptions"
                                         :key="item.value"
@@ -73,14 +73,14 @@
                             v-for="(cItem,cIndex) in logicItem.conditionList"
                             :key="cIndex"
                             :gutter="20"
-                            style="margin-top: 5px" type="flex" align="middle" justify="center">
+                            class="mt-5" type="flex" align="middle" justify="center">
                             <el-col :offset="1" :span="6">
                                 <el-select v-model="cItem.formItemId" placeholder="请选择题目">
                                     <el-option
                                         v-for="item in getConditionProjectItemList(logicItem)"
                                         :key="item.id"
                                         :label="item.label"
-                                        :value="item.id">
+                                        :value="item.formItemId">
                                     </el-option>
                                 </el-select>
                             </el-col>
@@ -106,14 +106,12 @@
                             </el-col>
                             <el-col :span="9">
                                 <el-button type="text" @click="addConditionHandle(logicItem)">
-                                    <i class="el-icon-circle-plus-outline"
-                                       style="font-size: 24px"/>
+                                    <i class="el-icon-circle-plus-outline"/>
                                 </el-button>
                                 <el-button type="text"
-                                           style="color: #ff4949"
+                                           class="remove"
                                            @click="removeConditionHandle(logicItem,index,cIndex)">
-                                    <i class="el-icon-remove-outline"
-                                       style="font-size: 24px"/>
+                                    <i class="el-icon-remove-outline"/>
                                 </el-button>
 
                             </el-col>
@@ -138,13 +136,14 @@ export default {
     },
     mounted() {
         this.queryProjectItems()
+        this.queryProjectLogics()
     },
     data() {
         return {
             //默认逻辑项
             defaultLogicItem: {
-                showFormItemId: null,
-                showExpression: 'all',
+                formItemId: null,
+                expression: 1,
                 conditionList: [
                     {
                         formItemId: null,
@@ -154,72 +153,113 @@ export default {
                 ]
             },
             conditionOptions: [{
-                value: 'checked',
+                value: 'eq',
                 label: '选中'
             }, {
-                value: 'unchecked',
+                value: 'ne',
                 label: '未选中'
             }],
             questionOptions: [{
-                value: 'all',
+                value: 1,
                 label: '全部'
             }, {
-                value: 'any',
+                value: 2,
                 label: '任意'
             }],
             allProjectItemList: [],
             logicList: []
         }
-    }, methods: {
+    },
+    watch: {
+        getLogicList: {
+            handler(val, oldVal) {
+                //找出发生变化的值
+                let updateVal = _.differenceWith(val, oldVal, (arrVal, othVal) => {
+                    if (JSON.stringify(arrVal) == JSON.stringify(othVal)) {
+                        return true
+                    }
+                    return false
+                })
+                console.log(updateVal)
+                if (updateVal && updateVal[0] && updateVal[0].conditionList.length) {
+                    let updateData = updateVal[0]
+                    updateData.projectKey = this.projectKey
+                    if (updateData.formItemId) {
+                        this.saveProjectLogic(updateData)
+                    }
+                }
+            },
+            deep: true
+        }
+    },
+    computed: {
+        // 解决 vue watch监听数据，新老值一样
+        getLogicList() {
+            return JSON.parse(JSON.stringify(this.logicList))
+        }
+    },
+    methods: {
         addConditionHandle(logicItem) {
             logicItem.conditionList.push({})
         },
         removeConditionHandle(logicItem, logicIndex, index) {
             logicItem.conditionList.splice(index, 1)
             if (logicItem.conditionList.length == 0) {
-                this.logicList.splice(logicIndex, 1)
+                this.$api.post(`/user/project/logic/delete`, logicItem).then(res => {
+                    this.logicList.splice(logicIndex, 1)
+                })
             }
         },
         addLogicHandle() {
             this.logicList.push(jsonSimpleClone(this.defaultLogicItem))
         },
         getConditionProjectItemList(logicItem) {
-            let showFormItemId = logicItem.showFormItemId
+            let showFormItemId = logicItem.formItemId
             if (!showFormItemId) {
                 return
             }
             //控制显示的条件只能使用在显示问题的前面
             let conditionProjectItemList = jsonSimpleClone(this.allProjectItemList)
-            let index = conditionProjectItemList.findIndex(item => item.id == showFormItemId)
+            let index = conditionProjectItemList.findIndex(item => item.formItemId == showFormItemId)
             conditionProjectItemList = _.slice(conditionProjectItemList, 0, index)
             conditionProjectItemList = conditionProjectItemList.filter((item) => {
-                return ['RADIO','CHECKBOX','SELECT'].includes(item.type)
+                return ['RADIO', 'CHECKBOX', 'SELECT'].includes(item.type)
             })
             return conditionProjectItemList
         },
-        getProjectItemList() {
+        getProjectItemList(formItemId) {
             //每个问题只能有一个逻辑设置项 已经设置不允许选择
-            let selectedFormItemList = this.logicList.map(item => item.showFormItemId)
+            let selectedFormItemList = this.logicList.map(item => item.formItemId)
             let projectItemList = jsonSimpleClone(this.allProjectItemList)
+            //第一个问题不允许隐藏
             projectItemList.shift()
             return projectItemList.filter((item) => {
-                return !selectedFormItemList.includes(item.id)
+                return !selectedFormItemList.includes(item.id) || item.formItemId == formItemId
             })
         },
         getFormItemOptions(formItemId) {
-            let formItem = this.allProjectItemList.find(item => item.id == formItemId)
+            let formItem = this.allProjectItemList.find(item => item.formItemId == formItemId)
             if (formItem) {
                 return formItem.expand.options
             }
             return []
         },
+        queryProjectLogics() {
+            this.$api.get(`/user/project/logic/list`, {params: {projectKey: this.projectKey}}).then(res => {
+                this.logicList = res.data
+            })
+        },
         queryProjectItems() {
             this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
                 this.allProjectItemList = res.data
-                // //可以控制被隐藏的问题 除了第一个问题 都可以被隐藏
-                // let projectItemList = res.data
-                // projectItemList.shift()
-                // this.projectItemList = projectItemList
+            })
+        },
+        saveProjectLogic(data) {
+            this.$api.post(`/user/project/logic/save`, data).then(res => {
+                if (!data.id) {
+                    let index = _.findIndex(this.logicList, {formItemId: data.formItemId})
+                    this.logicList[index].id = res.data.id
+                }
             })
         }
     }
@@ -227,25 +267,56 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .project-logic-container {
     width: 100%;
-    padding: 0px;
-    margin: 0;
     background-color: #F7F7F7;
     min-height: 84vh;
     min-width: 80vw;
     display: flex;
     justify-content: center;
+
+    .scrollbar-container {
+        height: 90vh;
+    }
+
+    .header-row {
+        width: 230px;
+    }
+
+    .logic_title {
+        font-size: 18px;
+        height: 45px;
+        line-height: 45px;
+        color: #484848;
+        text-indent: 20px;
+        padding-top: 20px;
+    }
 }
 
-.project-logic-container .logic_title {
-    font-size: 18px;
-    height: 45px;
-    line-height: 45px;
-    color: #484848;
-    text-indent: 20px;
-    padding-top: 20px;
+.not-logic-container {
+    .el-icon-circle-plus-outline {
+        font-size: 20px;
+    }
+
+    .label {
+        font-size: 18px
+    }
+}
+
+.logic-item-container {
+    .tips {
+        font-size: 14px;
+        color: #aaa
+    }
+
+    .label {
+        font-size: 15px
+    }
+
+    .remove {
+        color: #ff4949
+    }
 }
 
 .el-icon-question {
@@ -264,6 +335,10 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
+
+.el-icon-circle-plus-outline, .el-icon-remove-outline {
+    font-size: 24px
+}
 </style>
 <style>
 .question-popper.el-tooltip__popper[x-placement^="top"] .popper__arrow {
