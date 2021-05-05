@@ -26,7 +26,7 @@
                 <el-col class="header-col" :span="3">
                     <el-button v-if="isLogin" class="header-btn" @click="$router.push({path:'/home'})">控 制 台</el-button>
                     <el-button v-if="!isLogin&&this.$route.path!='/login' " class="header-btn"
-                               @click="$router.push({path:'/login'})"
+                               @click="$router.push({path:'/login   '})"
                     >
                         登 录
                     </el-button>
@@ -110,14 +110,18 @@ export default {
 }
 .header-logo {
     cursor: pointer;
-    height: 60px;
+    height: 40px;
     float: left;
+    position: relative;
+    left: 230px;
 }
 .menu-item {
     line-height: 90px;
     height: 90px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 900;
+    position: relative;
+    left: 200px;
 }
 .header-btn {
     margin: 35px 0 35px 20px;
