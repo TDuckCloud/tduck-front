@@ -166,9 +166,9 @@ export default {
             logicItem.conditionList.forEach(item => {
                 let rules = this.logicShowTriggerRule[item.formItemId]
                 if (!rules) {
-                    rules = new Set()
+                    rules = new Array()
                 }
-                rules.add({
+                rules.push({
                     //触发的字段
                     triggerFormItemId: logicItem.formItemId,
                     logicExpression: getExpression(logicItem.conditionList, logicItem.expression)

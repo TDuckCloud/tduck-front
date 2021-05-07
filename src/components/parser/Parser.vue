@@ -34,11 +34,11 @@ const layouts = {
         if (formConfCopy.showNumber) {
             label = scheme.serialNumber + ': ' + label
         }
-
         this.$set(this[this.formConf.formModel], scheme.__vModel__, [])
         let colStyle = scheme.logicShow ? '' : 'display:none'
+        let cidAttr = config.formId
         return (
-            <el-col span={config.span} style={colStyle}>
+            <el-col span={config.span} style={colStyle} cid={cidAttr}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
                               label={config.showLabel ? label : ''}>
                     <render conf={scheme} {...{on: listeners}} />
@@ -159,15 +159,23 @@ function deleteUpload(config, scheme, file, fileList) {
 }
 
 function setValue(event, config, scheme) {
-    console.log(event)
-    console.log(config)
-    console.log(scheme)
-    console.log(this[this.formConf.formModel])
-
     this.$set(config, 'defaultValue', event)
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
     setValueLabel.call(this, event, config, scheme)
-    const {formConfCopy} = this
+    let logicShowRule = this.formConfCopy.logicShowRule
+    //找到该问题需要触发显示的问题 判断逻辑是否成立
+    let rules = _.get(logicShowRule, config.formId)
+    if (rules && Array.isArray(rules)) {
+        rules.forEach(r => {
+            //成立让该对应的显示出来
+            let flag = evalExpression(this[this.formConf.formModel], r.logicExpression)
+            if (flag) {
+                document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = ''
+            }else{
+                document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = 'none'
+            }
+        })
+    }
 }
 
 /**
