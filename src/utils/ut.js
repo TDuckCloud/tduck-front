@@ -1,21 +1,21 @@
-var uaParser = require('ua-parser-js')
-//https://afantasy.ninja/2017/05/08/user-tracking-iii/
+const uaParser = require('ua-parser-js')
+// https://afantasy.ninja/2017/05/08/user-tracking-iii/
 // 用户停留时间
 // addEvent() 是包装了 `window.addEventListener` 和 `window.attachEvent` 的事件监听函数
-var r = window.requestAnimationFrame
-var c = window.cancelAnimationFrame
-var h
-var lt = 0
-var ltStart
-var inActiveTime
-var inActiveThreshold = 60 * 60 * 100
+const r = window.requestAnimationFrame
+const c = window.cancelAnimationFrame
+let h
+let lt = 0
+let ltStart
+let inActiveTime
+const inActiveThreshold = 60 * 60 * 100
 // 创建一个心跳闭包，负责向 lifetime 增加累计时间
-var h = (function() {
-    var timer
+h = (function() {
+    let timer
 
     function beat() {
-        var now = new Date()
-        var diff = now - ltStart
+        const now = new Date()
+        const diff = now - ltStart
         lt = lt + diff
         inActiveTime = inActiveTime + diff
         ltStart = now
@@ -60,12 +60,12 @@ if ('onfocusin' in document) {
     window.onblur = onBlur
 }
 // 在移动端使用 Page Visibility API 检查页面是否 active
-var prefixes = ['', 'webkit', 'moz', 'ms', 'o']
-var pf
-var hiddenKey
-var eventKey
+const prefixes = ['', 'webkit', 'moz', 'ms', 'o']
+let pf
+let hiddenKey
+let eventKey
 if (isMobile) {
-    for (var i = 0; i < prefixes.length; i++) {
+    for (let i = 0; i < prefixes.length; i++) {
         pf = prefixes[i]
         hiddenKey = pf ? (pf + 'Hidden') : 'hidden'
         if (hiddenKey in document) {
@@ -106,5 +106,4 @@ function addEvent(element, event, callback) {
         event.slice(0, 2) !== 'on' ? element['on' + event] = callback : element[event] = callback
     }
 }
-
 

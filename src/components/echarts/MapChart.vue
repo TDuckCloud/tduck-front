@@ -1,5 +1,5 @@
 <template>
-    <div :class="className" :style="{height:height,width:width}"/>
+    <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ const echarts = require('echarts')
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
-const china = require('./china.js')
+require('./china.js')
 
 export default {
     mixins: [resize],

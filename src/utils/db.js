@@ -59,7 +59,7 @@ export function saveCheckedColumn(key, obj) {
     if (key) localStorage.setItem(`${CHECKED_COLUMNS}:${key}`, JSON.stringify(obj))
 }
 
-export function getCheckedColumn(key, obj) {
+export function getCheckedColumn(key) {
     const str = localStorage.getItem(`${CHECKED_COLUMNS}:${key}`)
     if (str) return JSON.parse(str)
     return null

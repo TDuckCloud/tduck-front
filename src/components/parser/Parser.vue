@@ -1,5 +1,5 @@
 <script>
-import {deepClone, jsonClone} from '@/utils/index'
+import {deepClone} from '@/utils/index'
 import {evalExpression} from '@/utils/expression'
 import render from '@/components/render/render.js'
 import _ from 'lodash'
@@ -27,7 +27,7 @@ const layouts = {
     colFormItem(h, scheme) {
         const config = scheme.__config__
         const listeners = buildListeners.call(this, scheme)
-        const {formConfCopy, serialNumber} = this
+        const {formConfCopy} = this
         let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null
         if (config.showLabel === false) labelWidth = '0'
         let label = config.label
@@ -40,7 +40,7 @@ const layouts = {
         return (
             <el-col span={config.span} style={colStyle} cid={cidAttr}>
                 <el-form-item label-width={labelWidth} prop={scheme.__vModel__}
-                              label={config.showLabel ? label : ''}>
+                    label={config.showLabel ? label : ''}>
                     <render conf={scheme} {...{on: listeners}} />
                 </el-form-item>
             </el-col>
@@ -85,7 +85,7 @@ function renderFrom(h) {
     )
 }
 
-function formBtns(h) {
+function formBtns() {
     const {formConfCopy} = this
     let style = {
         'background-color': formConfCopy.submitBtnColor,
@@ -111,7 +111,7 @@ function formBtns(h) {
             <el-row type="flex" justify="center">
                 <el-col span={btnSpan}>
                     <el-button style={style} type="primary"
-                               onClick={this.submitForm}>{this.formConfCopy.submitBtnText}</el-button>
+                        onClick={this.submitForm}>{this.formConfCopy.submitBtnText}</el-button>
                 </el-col>
             </el-row>
         </el-form-item>
@@ -138,6 +138,7 @@ function renderChildren(h, scheme) {
 }
 
 function setUpload(config, scheme, response, file, fileList) {
+    console.log(fileList)
     let newValue = JSON.parse(this[this.formConf.formModel][scheme.__vModel__])
     if (!newValue) {
         newValue = []
@@ -163,15 +164,15 @@ function setValue(event, config, scheme) {
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
     setValueLabel.call(this, event, config, scheme)
     let logicShowRule = this.formConfCopy.logicShowRule
-    //找到该问题需要触发显示的问题 判断逻辑是否成立
+    // 找到该问题需要触发显示的问题 判断逻辑是否成立
     let rules = _.get(logicShowRule, config.formId)
     if (rules && Array.isArray(rules)) {
         rules.forEach(r => {
-            //成立让该对应的显示出来
+            // 成立让该对应的显示出来
             let flag = evalExpression(this[this.formConf.formModel], r.logicExpression)
             if (flag) {
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = ''
-            }else{
+            } else {
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = 'none'
             }
         })
@@ -199,7 +200,7 @@ function setValueLabel(event, config, scheme) {
         if (event instanceof Array) {
             let labelArr = new Array()
             event.forEach(item => {
-                //拼到头部 其他选项
+                // 拼到头部 其他选项
                 if (item === 0) {
                     labelArr.push(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
                 } else if (item) {
@@ -209,7 +210,7 @@ function setValueLabel(event, config, scheme) {
             })
             this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, labelArr.join(','))
         } else {
-            //多选 单选 其他自定义输入
+            // 多选 单选 其他自定义输入
             if (event == 0) {
                 this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}`, this[this.formConf.labelFormModel][`${config.__vModel__}other`])
             } else {
@@ -263,17 +264,6 @@ export default {
             required: true
         }
     },
-    watch: {
-        formConf: {
-            handler(val) {
-                this.formConfCopy = val
-                this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
-                this.initLabelFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
-                this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
-            },
-            deep: true
-        }
-    },
     data() {
         const data = {
             formConfCopy: deepClone(this.formConf),
@@ -286,9 +276,20 @@ export default {
         this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
         return data
     },
+    watch: {
+        formConf: {
+            handler(val) {
+                this.formConfCopy = val
+                this.initFormData(this.data.formConfCopy.fields, this.data[this.formConf.formModel])
+                this.initLabelFormData(this.data.formConfCopy.fields, this.data[this.formConf.labelFormModel])
+                this.buildRules(this.data.formConfCopy.fields, this.data[this.formConf.formRules])
+            },
+            deep: true
+        }
+    },
     methods: {
         initLabelFormData(componentList, formData) {
-            //设置默认值
+            // 设置默认值
             componentList.forEach(cur => {
                 let temConfig = cur.__config__
                 if (cur.__vModel__) {
@@ -314,7 +315,7 @@ export default {
             })
         },
         initFormData(componentList, formData) {
-            //设置默认值
+            // 设置默认值
             componentList.forEach(cur => {
                 const config = cur.__config__
                 if (cur.__vModel__) {
@@ -360,9 +361,9 @@ export default {
             this.$refs[this.formConf.formRef].validate(valid => {
                 if (!valid) {
                     // 未选中自动高亮
-                    if (document.getElementsByClassName('el-form-item__error').length > 0) {
-
-                    }
+                    // if (document.getElementsByClassName('el-form-item__error').length > 0) {
+                    //
+                    // }
                     setTimeout(() => {
                         let isError = document.getElementsByClassName('is-error')
                         isError[0].querySelector('input').focus()
@@ -384,17 +385,18 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-radio-group, /deep/ .el-checkbox-group {
+/deep/ .el-radio-group,
+/deep/ .el-checkbox-group {
     margin-left: 10px;
 }
-
-/deep/ .el-radio, /deep/ .el-checkbox {
+/deep/ .el-radio,
+/deep/ .el-checkbox {
     display: block;
     min-height: 23px;
     line-height: 23px;
 }
-
-/deep/ .el-radio__label, /deep/ .el-checkbox__label {
+/deep/ .el-radio__label,
+/deep/ .el-checkbox__label {
     font-size: 14px;
     padding-left: 10px;
     text-overflow: ellipsis;
@@ -403,13 +405,10 @@ export default {
     vertical-align: middle;
     display: inline-block;
 }
-
-
 /deep/ .item-other-input {
     margin-left: 20px;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-
 /deep/ .item-other-input:focus {
     outline: none;
 }

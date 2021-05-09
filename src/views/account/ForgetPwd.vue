@@ -1,45 +1,43 @@
 <template>
     <div class="app-container">
         <div v-if="retrieveStep===1" class="pwd-container">
-            <div style="width: 350px;">
+            <div>
                 <h4 class="title">找回密码</h4>
                 <el-tabs
                     v-model="retrieveType" class="login-form"
                 >
                     <el-tab-pane label="手机找回" name="phone">
-                        <el-form ref="phoneForm" :model="retrieveAccountForm" label-width="0px" :rules="phoneRules">
-                            <el-form-item label="" prop="phoneNumber">
-                                <el-input v-model="retrieveAccountForm.phoneNumber" placeholder="请输入手机号"
-                                          autocomplete="off"
+                        <el-form ref="phoneForm" :model="retrieveAccountForm" :rules="phoneRules" label-width="0px">
+                            <el-form-item prop="phoneNumber">
+                                <el-input v-model="retrieveAccountForm.phoneNumber" autocomplete="off"
+                                          placeholder="请输入手机号"
                                 />
                             </el-form-item>
                             <el-form-item label="" prop="code">
-                                <el-input v-model="retrieveAccountForm.code" style="width: 150px;" placeholder="请输入验证码"
-                                          autocomplete="off"
-                                />
-                                <el-button style="margin-left: 20px;" type="primary" :disabled="emailValidateCodeBtn"
+                                <el-input v-model="retrieveAccountForm.code" autocomplete="off" placeholder="请输入验证码" />
+                                <el-button :disabled="emailValidateCodeBtn" class="ml-20" type="primary"
                                            @click="sendPhoneValidateCodeHandle"
                                 >
                                     {{ emailValidateCodeBtnText }}
                                 </el-button>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" style="width: 100%;" @click="phoneRetrievePassWordHandle">
+                                <el-button type="primary" @click="phoneRetrievePassWordHandle">
                                     找回密码
                                 </el-button>
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
                     <el-tab-pane label="邮箱找回" name="email">
-                        <el-form ref="emailForm" status-icon :model="retrieveAccountForm"
-                                 :rules="emailRules"
+                        <el-form ref="emailForm" :model="retrieveAccountForm" :rules="emailRules"
                                  label-width="0px"
+                                 status-icon
                         >
                             <el-form-item label="" prop="email">
-                                <el-input v-model="retrieveAccountForm.email" placeholder="请输入邮箱" autocomplete="off" />
+                                <el-input v-model="retrieveAccountForm.email" autocomplete="off" placeholder="请输入邮箱" />
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" style="width: 100%;" @click="sendEmailValidateHandle">
+                                <el-button type="primary" @click="sendEmailValidateHandle">
                                     找回密码
                                 </el-button>
                             </el-form-item>
@@ -49,25 +47,25 @@
             </div>
         </div>
         <div v-if="retrieveStep===2" class="reset-pwd-view">
-            <div style="width: 350px;">
+            <div>
                 <h4 class="title">重置密码</h4>
                 <div class="rest-pwd-user-view">
                     <i class="el-icon-user" />
                     <span>{{ resetAccount }}</span>
                 </div>
-                <el-form ref="resetPwdForm" :model="resetPwdForm" label-width="0px" :rules="pwdRules">
+                <el-form ref="resetPwdForm" :model="resetPwdForm" :rules="pwdRules" label-width="0px">
                     <el-form-item label="" prop="password">
-                        <el-input v-model="resetPwdForm.password" show-password placeholder="请输入密码"
-                                  autocomplete="off"
+                        <el-input v-model="resetPwdForm.password" autocomplete="off" placeholder="请输入密码"
+                                  show-password
                         />
                     </el-form-item>
                     <el-form-item label="" prop="rePassword">
-                        <el-input v-model="resetPwdForm.rePassword" show-password placeholder="请再次输入密码"
-                                  autocomplete="off"
+                        <el-input v-model="resetPwdForm.rePassword" autocomplete="off" placeholder="请再次输入密码"
+                                  show-password
                         />
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" style="width: 100%;" @click="resetPasswordHandle">
+                        <el-button  type="primary" @click="resetPasswordHandle">
                             提交
                         </el-button>
                     </el-form-item>
@@ -82,9 +80,9 @@
         </div>
         <Verify
             ref="verify"
-            :mode="'pop'"
             :captcha-type="'blockPuzzle'"
             :img-size="{ width: '330px', height: '155px' }"
+            :mode="'pop'"
             @success="verifySuccessHandle"
         />
     </div>
@@ -278,24 +276,32 @@ export default {
     width: 20%;
     height: 50%;
     align-content: center;
-}
-.rest-pwd-user-view {
-    line-height: 80px;
-    height: 100px;
-    padding: 10px;
-    .el-icon-user {
-        display: inline-block;
-        width: 20%;
-        color: #717171;
-        text-align: left;
-        font-size: 50px;
+    div {
+        width: 350px;
     }
-    span {
-        color: #4c4c4c;
-        display: inline-block;
-        text-align: center;
-        font-size: 19px;
-        width: 80%;
+}
+.reset-pwd-view {
+    div {
+        width: 350px;
+        .rest-pwd-user-view {
+            line-height: 80px;
+            height: 100px;
+            padding: 10px;
+            .el-icon-user {
+                display: inline-block;
+                width: 20%;
+                color: #717171;
+                text-align: left;
+                font-size: 50px;
+            }
+            span {
+                color: #4c4c4c;
+                display: inline-block;
+                text-align: center;
+                font-size: 19px;
+                width: 80%;
+            }
+        }
     }
 }
 .msg-view {

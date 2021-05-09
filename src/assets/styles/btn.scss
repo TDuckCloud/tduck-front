@@ -18,11 +18,9 @@
 .red-btn {
     @include colorBtn($red);
 }
-
 .pink-text-btn {
     color: $pink;
 }
-
 .pink-btn {
     @include colorBtn($pink);
 }
@@ -32,7 +30,6 @@
 .green-text-btn {
     color: $green;
 }
-
 .tiffany-btn {
     @include colorBtn($tiffany);
 }

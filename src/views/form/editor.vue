@@ -9,18 +9,20 @@
                             {{ item.title }}
                         </div>
                         <draggable
-                            class="components-draggable"
-                            :list="item.list"
-                            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
                             :clone="cloneComponent"
-                            draggable=".components-item"
+                            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+                            :list="item.list"
                             :sort="false"
-                            @end="onEnd">
+                            class="components-draggable"
+                            draggable=".components-item"
+                            @end="onEnd"
+                        >
                             <div
                                 v-for="(element, index) in item.list"
                                 :key="index"
                                 class="components-item"
-                                @click="addComponent(element)">
+                                @click="addComponent(element)"
+                            >
                                 <div class="components-body">
                                     <svg-icon :name="element.__config__.tagIcon"/>
                                     {{ element.__config__.label }}
@@ -33,25 +35,27 @@
         </div>
         <div class="center-board">
             <el-scrollbar class="center-scrollbar">
-                <el-row class="center-board-row" v-if="formConf" :gutter="formConf.gutter">
-                    <el-row type="flex" justify="center" align="middle">
-                        <el-col :span="20" style="text-align: center">
+                <el-row v-if="formConf" :gutter="formConf.gutter" class="center-board-row">
+                    <el-row align="middle" justify="center" type="flex">
+                        <el-col :span="20" class="text-center">
                             <h4 class="form-name-text" contenteditable="true"
                                 @blur="(event)=>{
                                     this.formConf.title=event.target.innerText;
-                                    this.saveProjectInfo()}">
-                                {{ formConf.title }}</h4>
+                                    this.saveProjectInfo()}"
+                            >
+                                {{ formConf.title }}
+                            </h4>
                         </el-col>
                     </el-row>
-                    <el-row type="flex" justify="center" align="middle">
+                    <el-row align="middle" justify="center" type="flex">
                         <el-col :span="23">
-                            <Tinymce v-model="formConf.description" @input="saveProjectInfo"
-                                     v-if="editDescription"
-                                     @blur="editDescription=false" placeholder="请输入表单描述"/>
-                            <div v-else v-html="formConf.description" class="form-name-text"
-                                 @click="editDescription=true" style="min-height: 100px">
-
-                            </div>
+                            <Tinymce v-if="editDescription" v-model="formConf.description"
+                                     placeholder="请输入表单描述"
+                                     @blur="editDescription=false" @input="saveProjectInfo"
+                            />
+                            <div v-else class="form-name-text"
+                                 @click="editDescription=true" v-html="formConf.description"
+                            />
                             <!--                            <p class="form-name-text" contenteditable="true"-->
                             <!--                               @blur="(event)=>{-->
                             <!--                                   formConf.description=event.target.innerText;-->
@@ -60,22 +64,24 @@
                             <!--                            </p>-->
                         </el-col>
                     </el-row>
-                    <el-divider></el-divider>
+                    <el-divider/>
                     <el-form
-                        :size="formConf.size"
-                        :label-position="formConf.labelPosition"
                         :disabled="formConf.disabled"
-                        :label-width="formConf.labelWidth + 'px'">
-                        <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup"
-                                   @end="onItemEnd">
+                        :label-position="formConf.labelPosition"
+                        :label-width="formConf.labelWidth + 'px'"
+                        :size="formConf.size"
+                    >
+                        <draggable :animation="340" :list="drawingList" class="drawing-board" group="componentsGroup"
+                                   @end="onItemEnd"
+                        >
                             <draggable-item
                                 v-for="(item, index) in drawingList"
                                 :key="item.renderKey"
-                                :drawing-list="drawingList"
-                                :current-item="item"
-                                :index="index"
                                 :active-id="activeId"
+                                :current-item="item"
+                                :drawing-list="drawingList"
                                 :form-conf="formConf"
+                                :index="index"
                                 @activeItem="activeFormItem"
                                 @changeLabel="changeLabel"
                                 @copyItem="drawingItemCopy"
@@ -103,15 +109,10 @@
 <script>
 import draggable from 'vuedraggable'
 import {debounce} from 'throttle-debounce'
-import render from '@/components/render/render'
 import RightPanel from './RightPanel'
 
-import {
-    inputComponents, selectComponents, formConf, imageComponents
-} from '@/components/generator/config'
-import {
-    deepClone
-} from '@/utils/index'
+import {formConf, imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
+import {deepClone} from '@/utils/index'
 import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
 import DraggableItem from './DraggableItem'
@@ -124,13 +125,11 @@ let idGlobal
 export default {
     components: {
         draggable,
-        render,
         RightPanel,
         DraggableItem
     },
     props: {
-        projectKey: '',
-        isEdit: true //是编辑状态进入
+        projectKey: null
     },
     data() {
         return {
@@ -204,21 +203,19 @@ export default {
     mounted() {
         // 复制对象 避免修改改变原始对象
         this.formConf = JSON.parse(JSON.stringify(formConf))
-        //项目key
+        // 项目key
         let projectKey = this.projectKey
-        //从服务端获取
+        // 从服务端获取
         this.queryProjectItems()
-        //获取表单配置
+        // 获取表单配置
         this.$api.get(`/user/project/${projectKey}`).then(res => {
             this.formConf.title = res.data.name
             this.formConf.description = res.data.describe
         })
-        //全局组件Id
-        this.$api.get(`/user/project/item/max-form-id`, {params: {key: this.projectKey}}).then(res => {
+        // 全局组件Id
+        this.$api.get('/user/project/item/max-form-id', {params: {key: this.projectKey}}).then(res => {
             this.idGlobal = res.data ? res.data : 100
         })
-        this.projectKey = projectKey
-
     },
     methods: {
         saveProjectInfo: debounce(430, true, function() {
@@ -226,19 +223,19 @@ export default {
                 'key': this.projectKey,
                 'name': this.formConf.title,
                 'describe': this.formConf.description
-            }).then((res) => {
+            }).then(() => {
 
             })
         }),
         updateProjectItemInfo(val) {
             let data = formItemConvertData(val, this.projectKey)
-            this.$api.post('/user/project/item/update', data).then((res) => {
+            this.$api.post('/user/project/item/update', data).then(() => {
 
             })
         },
         deleteProjectItemInfo(val) {
             let data = formItemConvertData(val, this.projectKey)
-            this.$api.post('/user/project/item/delete', data).then((res) => {
+            this.$api.post('/user/project/item/delete', data).then(() => {
 
             })
         },
@@ -253,7 +250,7 @@ export default {
             return isSuccess
         },
         queryProjectItems() {
-            this.$api.get(`/user/project/item/list`, {params: {key: this.projectKey}}).then(res => {
+            this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {
                 this.drawingList = res.data.map(item => dbDataConvertForItemJson(item))
             })
         },
@@ -269,7 +266,7 @@ export default {
             if (obj.from !== obj.to) {
                 this.activeData = tempActiveData
                 this.activeId = this.idGlobal
-                this.saveProjectItemInfo(tempActiveData).then(res => {
+                this.saveProjectItemInfo(tempActiveData).then(() => {
                     this.onItemEnd(obj)
                 })
             }

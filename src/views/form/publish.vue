@@ -1,19 +1,22 @@
 <template>
     <div class="publish-container">
         <div>
-            <div class="publish-btn-view" v-if="!publishStatus">
+            <div v-if="!publishStatus" class="publish-btn-view">
                 <el-button
-                    @click="publishProject"
-                    size="medium"
                     class="publish-btn"
-                    type="primary"><i class="el-icon-document-checked el-icon--right">开始发布</i></el-button>
+                    size="medium"
+                    type="primary"
+                    @click="publishProject"
+                >
+                    <i class="el-icon-document-checked el-icon--right">开始发布</i>
+                </el-button>
             </div>
-            <div class="publish-finish-view" v-if="publishStatus">
-                <el-row type="flex" align="middle">
-                    <el-col :span="20" style="">
-                        <div style="display: flex;justify-content: center">
+            <div v-if="publishStatus" class="publish-finish-view">
+                <el-row align="middle" type="flex">
+                    <el-col :span="20">
+                        <div style="display: flex; justify-content: center;">
                             <div class="icon-view">
-                                <i class="el-icon-check success-icon"/>
+                                <i class="el-icon-check success-icon" />
                             </div>
                         </div>
                         <div>
@@ -23,36 +26,44 @@
                             <p class="link-text"> {{ writeLink }}</p>
                         </div>
                         <el-row>
-
-                            <el-col :span="6" :offset="3">
+                            <el-col :offset="3" :span="6">
                                 <el-button v-clipboard:copy="writeLink"
-                                           v-clipboard:success="()=>{this.msgSuccess('复制成功')}"
-                                           v-clipboard:error="()=>{this.msgError('复制失败')}" type="primary">复制链接
+                                           v-clipboard:error="()=>{this.msgError('复制失败')}"
+                                           v-clipboard:success="()=>{this.msgSuccess('复制成功')}" type="primary"
+                                >
+                                    复制链接
                                 </el-button>
                             </el-col>
                             <el-col :span="6">
                                 <el-button
+                                    type="danger"
                                     @click="stopPublishProject"
-                                    type="danger">停止发布
+                                >
+                                    停止发布
                                 </el-button>
                             </el-col>
                             <el-col :span="6">
                                 <el-button
+                                    type="warning"
                                     @click="toFeedbackPageHandle"
-                                    type="warning">查看反馈
+                                >
+                                    查看反馈
                                 </el-button>
                             </el-col>
                         </el-row>
                     </el-col>
                     <el-col :span="6">
                         <div>
-                            <vue-qr v-if="writeLink" :callback="qrCodeGenSuccess" :text="writeLink"
-                                    :size="194"></vue-qr>
+                            <vue-qr v-if="writeLink" :callback="qrCodeGenSuccess" :size="194"
+                                    :text="writeLink"
+                            />
                         </div>
-                        <div style="text-align: center">
+                        <div style="text-align: center;">
                             <el-link type="primary" @click="()=>{
                                 this.downloadFile('qrcode.png',this.qrCodeUrl)
-                            }">下载分享二维码
+                            }"
+                            >
+                                下载分享二维码
                             </el-link>
                         </div>
                     </el-col>
@@ -60,7 +71,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -68,17 +78,12 @@ import VueQr from 'vue-qr'
 import {getCurrentDomain} from '@/utils'
 
 export default {
-    name: 'projectPublish',
+    name: 'ProjectPublish',
     components: {
         VueQr
     },
     props: {
-        projectKey: ''
-    },
-    mounted() {
-        let url = window.location.protocol + '//' + window.location.host
-        this.writeLink = `${url}/s/${this.projectKey}`
-        this.getProjectStatus()
+        projectKey: null
     },
     data() {
         return {
@@ -86,6 +91,11 @@ export default {
             writeLink: '',
             qrCodeUrl: ''
         }
+    },
+    mounted() {
+        let url = window.location.protocol + '//' + window.location.host
+        this.writeLink = `${url}/s/${this.projectKey}`
+        this.getProjectStatus()
     }, methods: {
         getProjectStatus() {
             this.$api.get(`/user/project/${this.projectKey}`).then(res => {
@@ -97,7 +107,7 @@ export default {
             })
         },
         publishProject() {
-            this.$api.post(`/user/project/publish`, {key: this.projectKey}).then(res => {
+            this.$api.post('/user/project/publish', {key: this.projectKey}).then(() => {
                 this.publishStatus = true
                 this.msgSuccess('发布成功')
             })
@@ -110,20 +120,20 @@ export default {
                 }
             })
         },
-        qrCodeGenSuccess(dataUrl, id) {
+        qrCodeGenSuccess(dataUrl) {
             this.qrCodeUrl = dataUrl
         },
         downloadFile(fileName, content) {
             let aLink = document.createElement('a')
-            let blob = this.base64ToBlob(content) //new Blob([content]);
+            let blob = this.base64ToBlob(content) // new Blob([content]);
             let evt = document.createEvent('HTMLEvents')
-                 evt.initEvent('click', true, true)//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+            evt.initEvent('click', true, true)// initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
             aLink.download = fileName
             aLink.href = URL.createObjectURL(blob)
             // aLink.dispatchEvent(evt);
             aLink.click()
         },
-        //base64转blob
+        // base64转blob
         base64ToBlob(code) {
             let parts = code.split(';base64,')
             let contentType = parts[0].split(':')[1]
@@ -149,44 +159,38 @@ export default {
 .publish-container {
     width: 100%;
     height: 100%;
-    padding: 0px;
+    padding: 0;
     margin: 0;
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
     min-height: 84vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-
 .publish-finish-view {
     width: 500px;
     height: 200px;
     text-align: center;
-
     .icon-view {
         width: 59px;
         height: 59px;
         border-radius: 100px;
-        background-color: #0076FF;
+        background-color: #0076ff;
         display: flex;
         align-items: center;
         align-content: center;
         justify-items: center;
         justify-content: center;
     }
-
     .success-icon {
         text-align: center;
         color: white;
         font-size: 30px;
     }
-
     .success-title {
         color: rgba(16, 16, 16, 100);
         font-size: 28px;
     }
-
     .link-text {
         color: rgba(16, 16, 16, 100);
         font-size: 14px;

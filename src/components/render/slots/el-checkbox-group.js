@@ -7,7 +7,7 @@ export default {
             } else {
                 if (item.value == 0) {
                     list.push(<el-checkbox label={item.value}
-                                           border={conf.border}>{item.label}
+                        border={conf.border}>{item.label}
                         <input class='item-other-input' onChange={event => {
                             that.$emit('selectOtherChange', event.target.value, conf)
                         }}/></el-checkbox>)

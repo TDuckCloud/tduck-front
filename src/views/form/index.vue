@@ -1,15 +1,16 @@
 <template>
-    <div class="container" style="overflow-y: hidden!important;">
+    <div class="container" style="overflow-y: hidden !important;">
         <el-row type="flex" align="middle" justify="justify">
             <el-col :offset="1" :span="4">
                 <el-button size="mini" round @click="$router.back(-1)">
-                    <i class="el-icon-arrow-left"/>
+                    <i class="el-icon-arrow-left" />
                     返回
                 </el-button>
             </el-col>
             <el-col :span="10" :offset="3">
-                <el-menu :default-active="activeTab" @select="handleSelect" style="background-color: transparent"
-                         mode="horizontal">
+                <el-menu :default-active="activeTab" style="background-color: transparent;" mode="horizontal"
+                         @select="handleSelect"
+                >
                     <el-menu-item index="editor">编辑</el-menu-item>
                     <el-menu-item index="logic">逻辑</el-menu-item>
                     <el-menu-item index="theme">外观</el-menu-item>
@@ -20,12 +21,12 @@
             </el-col>
         </el-row>
         <div v-if="projectKey">
-            <editor :projectKey="projectKey" :is-edit="isEdit" v-if="activeTab=='editor'"/>
-            <logic :projectKey="projectKey" v-if="activeTab=='logic'"/>
-            <theme :projectKey="projectKey" v-if="activeTab=='theme'"/>
-            <setting :projectKey="projectKey" v-if="activeTab=='setting'"/>
-            <publish :projectKey="projectKey" v-if="activeTab=='publish'"/>
-            <statistics :projectKey="projectKey" v-if="activeTab=='statistics'"/>
+            <editor v-if="activeTab=='editor'" :project-key="projectKey" :is-edit="isEdit" />
+            <logic v-if="activeTab=='logic'" :project-key="projectKey" />
+            <theme v-if="activeTab=='theme'" :project-key="projectKey" />
+            <setting v-if="activeTab=='setting'" :project-key="projectKey" />
+            <publish v-if="activeTab=='publish'" :project-key="projectKey" />
+            <statistics v-if="activeTab=='statistics'" :project-key="projectKey" />
         </div>
     </div>
 </template>

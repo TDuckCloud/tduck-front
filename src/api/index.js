@@ -39,7 +39,7 @@ api.interceptors.request.use(
         }
         let timestamp = new Date().getTime()
         request.params.timestamp = '' + timestamp
-        let sign = signMd5Utils.getSign(request.url, request, timestamp)
+        let sign = signMd5Utils.getSign(request.url, request)
         request.params.sign = sign
         return request
     }

@@ -16,38 +16,40 @@ keys.forEach(key => {
 
 function vModel(dataObject, defaultValue) {
     let config = dataObject.attrs.__config__
-    //表单组件特殊处理
+    // 表单组件特殊处理
     if (config.tag === 'el-upload') {
-        //增加上传回调事件
+        // 增加上传回调事件
         dataObject.attrs['on-success'] = (response, file, fileList) => {
             this.$emit('upload', response, file, fileList)
         }
         dataObject.attrs['on-remove'] = (file, fileList) => {
+            // eslint-disable-next-line vue/custom-event-name-casing
             this.$emit('deleteUpload', file, fileList)
         }
+        // eslint-disable-next-line no-unused-vars
         dataObject.attrs['on-exceed'] = (files, fileList) => {
             this.$message.error(`最多上传${config.limit}个文件`)
         },
-            dataObject.attrs['before-upload'] = (file) => {
-                let sizeUnitNum = 1
-                //文件大小判断
-                switch (config.sizeUnit) {
-                    case 'KB':
-                        sizeUnitNum = 1024
-                        break
-                    case 'MB':
-                        sizeUnitNum = 1024 * 1024
-                        break
-                    case 'GB':
-                        sizeUnitNum = 1024 * 1024 * 1024
-                        break
-                }
-                let totalSize = config.fileSize * sizeUnitNum
-                if (file.size > totalSize) {
-                    this.$message.error(`上传图片大小不能超过${config.fileSize}${config.sizeUnit}`)
-                    return false
-                }
+        dataObject.attrs['before-upload'] = file => {
+            let sizeUnitNum = 1
+            // 文件大小判断
+            switch (config.sizeUnit) {
+                case 'KB':
+                    sizeUnitNum = 1024
+                    break
+                case 'MB':
+                    sizeUnitNum = 1024 * 1024
+                    break
+                case 'GB':
+                    sizeUnitNum = 1024 * 1024 * 1024
+                    break
             }
+            let totalSize = config.fileSize * sizeUnitNum
+            if (file.size > totalSize) {
+                this.$message.error(`上传图片大小不能超过${config.fileSize}${config.sizeUnit}`)
+                return false
+            }
+        }
     } else {
         dataObject.props.value = defaultValue
 

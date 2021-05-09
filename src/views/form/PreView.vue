@@ -1,12 +1,12 @@
 <template>
     <div class="preview-container">
-        <el-tabs type="card" v-if="projectConfig.projectKey">
+        <el-tabs v-if="projectConfig.projectKey" type="card">
             <el-tab-pane>
-            <span slot="label"><i class="el-icon-mobile"></i>
-                手机
-            </span>
+                <span slot="label"><i class="el-icon-mobile" />
+                    手机
+                </span>
                 <div class="preview-layer">
-                    <div class="preview-bg"/>
+                    <div class="preview-bg" />
                     <div class="preview-phone">
                         <iframe id="preview-html"
                                 scrolling="auto"
@@ -18,18 +18,18 @@
                 </div>
             </el-tab-pane>
             <el-tab-pane>
-            <span slot="label"><i class="el-icon-monitor"></i>
-                电脑
-            </span>
-                <el-scrollbar style="height: 77vh">
+                <span slot="label"><i class="el-icon-monitor" />
+                    电脑
+                </span>
+                <el-scrollbar style="height: 77vh;">
                     <project-form
-                        :projectConfig="projectConfig"
-                        v-if="projectConfig.projectKey"/>
+                        v-if="projectConfig.projectKey"
+                        :project-config="projectConfig"
+                    />
                 </el-scrollbar>
             </el-tab-pane>
         </el-tabs>
     </div>
-
 </template>
 
 <script>
@@ -37,6 +37,9 @@ import ProjectForm from './ProjectForm'
 
 export default {
     name: 'PreView',
+    components: {
+        ProjectForm
+    },
     props: {
         projectKey: ''
     },
@@ -53,9 +56,6 @@ export default {
         let url = window.location.protocol + '//' + window.location.host
         this.mobilePreviewUrl = `${url}/project/view?key=${this.projectKey}`
         this.$set(this.projectConfig, 'projectKey', this.projectKey)
-    },
-    components: {
-        ProjectForm
     }
 }
 </script>
@@ -67,18 +67,15 @@ export default {
     padding: 0;
     background-color: #f7f7f7;
 }
-
 /deep/ .el-tabs__header {
     width: 300px;
     margin: 0 auto;
     border: none;
 }
-
 /deep/ .el-tabs--card > .el-tabs__header .el-tabs__item {
     background-color: white;
     border: 1px solid white;
 }
-
 div.preview-layer {
     width: 500px;
     height: 100%;
@@ -86,7 +83,6 @@ div.preview-layer {
     right: 0;
     text-align: center;
 }
-
 div.preview-layer .preview-bg {
     width: 500px;
     height: 100%;
@@ -94,7 +90,6 @@ div.preview-layer .preview-bg {
     z-index: 999;
     opacity: 0.7;
 }
-
 div.preview-layer .preview-phone {
     width: 372px;
     height: 744px;
@@ -102,7 +97,6 @@ div.preview-layer .preview-phone {
     background-size: 372px 744px;
     z-index: 1000;
 }
-
 .preview-html {
     width: 345px !important;
     height: 568px !important;
@@ -114,10 +108,10 @@ div.preview-layer .preview-phone {
     border-style: inset;
     border-color: initial;
     border-image: initial;
-    border-top-width: 0px;
-    border-right-width: 0px;
-    border-bottom-width: 0px;
-    border-left-width: 0px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
 }
 
 </style>

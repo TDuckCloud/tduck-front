@@ -2,16 +2,11 @@
     <div class="official-container">
         <div class="header-container">
             <el-row type="flex" align="middle">
-                <el-col class="header-col" :span="3" :offset="2">
-                    <div>
-                        <img src="@/assets/images/indexLogo.png" class="header-logo"
-                             @click="$router.push({path:'/home'})"
-                        >
-                    </div>
+                <el-col class="header-col" :span="3" :offset="6">
+                    <img src="@/assets/images/indexLogo.png" class="header-logo" @click="$router.push({path:'/home'})">
                 </el-col>
-                <el-col class="header-col" :span="12" :offset="2">
+                <el-col class="header-col" :span="6" :offset="1">
                     <el-menu :default-active="menuIndex" mode="horizontal"
-                             style="width: 100%;"
                              text-color="#205BB5"
                              active-text-color="#205BB5"
                              @select="activeMenuHandle"
@@ -100,6 +95,7 @@ export default {
     width: 100%;
     min-width: 960px;
     top: 0;
+    height: 102px;
     z-index: 100;
 }
 .main-container {
@@ -110,10 +106,7 @@ export default {
 }
 .header-logo {
     cursor: pointer;
-    height: 40px;
-    float: left;
-    position: relative;
-    left: 230px;
+    width: 175px;
 }
 .menu-item {
     line-height: 90px;

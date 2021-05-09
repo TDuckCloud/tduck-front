@@ -1,16 +1,16 @@
 <template>
-    <div class="login-container" style=" border-top: 1px solid #205bb5;">
+    <div class="login-container">
         <el-row class="login-body">
             <el-col :span="5" :offset="4">
-                <img class="login-img" src="http://qiniu.smileyi.top/login-banner">
+                <img class="login-img" src="@/assets/images/5b968a75b5e42.png">
             </el-col>
-            <el-col :offset="3" :span="12">
-                <el-tabs v-if="formType=='login'" v-model="loginType" class="login-form-tab" style="width: 320px;"
-                         @tab-click="loginTypeHandleClick"
+            <el-col :offset="3" :span="10">
+                <el-tabs v-if="formType=='login'"
+                         v-model="loginType" class="login-form-tab"
                 >
                     <el-tab-pane label="微信扫码登录" name="wx">
                         <div class="wx-login">
-                            <div style="text-align: center;">
+                            <div>
                                 <el-image
                                     v-loading="wxQrCodeLoading"
                                     class="wx-login-qrcode"
@@ -21,7 +21,7 @@
                                     }"
                                 />
                             </div>
-                            <div style="text-align: center;">
+                            <div>
                                 <el-link icon="el-icon-refresh-left"
                                          :underline="false"
                                          @click="getLoginWxQrCode"
@@ -29,7 +29,7 @@
                                     刷新二维码
                                 </el-link>
                             </div>
-                            <el-divider style="width: 100px;" />
+                            <el-divider class="divider-width" />
                             <el-row>
                                 <el-col :span="6">
                                     <el-link class="login-tip" @click="toForgetPwdHandle">忘记密码</el-link>
@@ -44,11 +44,10 @@
                                         <span @click="redirectUrl(qqLoginAuthorizeUrl)">
                                             <svg-icon name="loginQQ" class="other-login-icon" />
                                         </span>
-                                        <!--                                        <svg-icon name="loginWx" class="other-login-icon" />-->
                                     </div>
                                 </el-col>
                             </el-row>
-                            <el-divider style="width: 100px;" />
+                            <el-divider class="divider-width" />
                             <p class="login-tip">关于TDuckApp登录</p>
                             <p class="login-tip">
                                 若微信扫码失败，请打开 微信授权页面 登录
@@ -63,7 +62,7 @@
                                  status-icon
                                  hide-required-asterisk
                                  class="account-login-form"
-                                 @keyup.enter="loginHandle"
+                                 @keyup.enter.native="loginHandle"
                         >
                             <el-form-item label="手机号/邮箱登录" prop="account">
                                 <el-input v-model="accountForm.account" placeholder="请输入手机号/邮箱" autocomplete="off" />
@@ -96,7 +95,7 @@
                                 </el-row>
                             </el-form-item>
                             <el-form-item>
-                                <el-button style="width: 100%;" type="primary" @click="loginHandle">登录</el-button>
+                                <el-button class="width-full" type="primary" @click="loginHandle">登录</el-button>
                             </el-form-item>
                             <el-form-item>
                                 <el-row type="flex" align="middle">
@@ -120,7 +119,7 @@
                                             <svg-icon name="loginWx"
                                                       class="other-login-icon"
                                                       @click="()=>{
-                                                          this.formType='login',
+                                                          this.formType='login'
                                                           this.loginType='wx'
                                                       }"
                                             />
@@ -132,7 +131,7 @@
                     </el-tab-pane>
                 </el-tabs>
                 <el-tabs
-                    v-if="formType==='reg'" v-model="regType" class="login-form" style="width: 300px;"
+                    v-if="formType==='reg'" v-model="regType" class="register-form"
                     @tab-click="registerHandleClick"
                 >
                     <el-tab-pane label="手机号注册" name="regPhone">
@@ -146,17 +145,17 @@
                                 />
                             </el-form-item>
                             <el-form-item label="" prop="code">
-                                <el-input v-model="accountForm.code" style="width: 150px;" placeholder="请输入验证码"
+                                <el-input v-model="accountForm.code" class="code-input" placeholder="请输入验证码"
                                           autocomplete="off"
                                 />
-                                <el-button style="margin-left: 20px;" :disabled="phoneValidateCodeBtn" type="primary"
+                                <el-button class="ml-20" :disabled="phoneValidateCodeBtn" type="primary"
                                            @click="sendPhoneCodeHandle"
                                 >
                                     {{ phoneValidateCodeBtnText }}
                                 </el-button>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" style="width: 100%;" @click="phoneRegHandle">确定</el-button>
+                                <el-button type="primary" class="width-full" @click="phoneRegHandle">确定</el-button>
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
@@ -174,23 +173,23 @@
                             </el-form-item>
                             <el-form-item label="" prop="code">
                                 <el-input v-model="accountForm.code" oninput="value=value.replace(/[^\d]/g,'')"
-                                          style="width: 150px;" maxlength="4" placeholder="请输入验证码"
+                                          class="code-input" maxlength="4" placeholder="请输入验证码"
                                           autocomplete="off"
                                 />
-                                <el-button style="margin-left: 20px;" :disabled="emailValidateCodeBtn" type="primary"
+                                <el-button class="ml-20" :disabled="emailValidateCodeBtn" type="primary"
                                            @click="sendEmailCodeHandle"
                                 >
                                     {{ emailValidateCodeBtnText }}
                                 </el-button>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" style="width: 100%;" @click="emailRegHandle">确定</el-button>
+                                <el-button type="primary" class="width-full" @click="emailRegHandle">确定</el-button>
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
-                    <div style="display: flex; flex-direction: row;">
-                        <el-link style="margin-left: 20px;" @click="toForgetPwdHandle">忘记密码</el-link>
-                        <el-link style="margin-left: 20px;" @click="registerHandleClick">立即注册</el-link>
+                    <div class="flex-row">
+                        <el-link class="ml-20" @click="toForgetPwdHandle">忘记密码</el-link>
+                        <el-link class="ml-20" @click="registerHandleClick">立即注册</el-link>
                         <div class="other-login">
                             <span @click="redirectUrl(qqLoginAuthorizeUrl)">
                                 <svg-icon name="loginQQ" class="other-login-icon" />
@@ -472,17 +471,17 @@ export default {
 <style lang="scss" scoped>
 
 .login-body {
-    font-familyly: "Helvetica Neue", helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", arial, sans-serif;
-    margin: 90px 0 0 0;
+    padding-top: 90px;
 }
 .login-img {
-    width: 489px;
+    width: 559px;
     height: 447px;
 }
 .login-form-tab {
     margin-left: 100px;
     height: 500px;
-    width: 520px;
+    width: 320px;
+    text-align: center;
 }
 .wx-login-qrcode {
     width: 194px;
@@ -498,6 +497,21 @@ export default {
     font-weight: 400;
     text-align: left;
     line-height: 20px;
+}
+.register-form {
+    width: 300px;
+}
+.divider-width {
+    width: 300px;
+}
+.code-input {
+    width: 150px;
+}
+.width-full {
+    width: 100%;
+}
+.account-login-form {
+    text-align: left;
 }
 .account-login-form .el-form-item--small.el-form-item {
     margin-bottom: 8px;

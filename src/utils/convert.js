@@ -34,7 +34,7 @@ export function formItemConvertData(item, projectKey) {
     return data
 }
 
-//类型关系map
+// 类型关系map
 let typeMap = new Map()
 
 /**
@@ -43,11 +43,11 @@ let typeMap = new Map()
  */
 export function dbDataConvertForItemJson(data) {
     let {required, placeholder} = data
-    if (required && !placeholder) {//必填项目验证未填默认提示语
+    if (required && !placeholder) { // 必填项目验证未填默认提示语
         data.placeholder = '此题为必填项目'
     }
     if (!typeMap.size > 0) {
-        //根据类型获取默认数据
+        // 根据类型获取默认数据
         _.concat(inputComponents, selectComponents, imageComponents).forEach(item => {
             typeMap.set(item.typeId, item)
         })
@@ -77,7 +77,7 @@ export function dbDataConvertForItemJson(data) {
             jsonItem.__config__.defaultValue = data.defaultValue.value
         }
     }
-    //不同项目地址区分 动态修改上传地址
+    // 不同项目地址区分 动态修改上传地址
     if (jsonItem.__config__.tag === 'el-upload') {
         jsonItem.action = jsonItem.action + data.projectKey
     }
@@ -94,7 +94,7 @@ export function dbDataConvertForItemJson(data) {
  *
  */
 const dataParams = {
-    //单行文本
+    // 单行文本
     'INPUT': {
         'prepend': '__slot__.prepend',
         'maxlength': 'maxlength',
@@ -106,7 +106,7 @@ const dataParams = {
         'maxRows': 'autosize.maxRows',
         'maxlength': 'maxlength'
     },
-    //计数器
+    // 计数器
     'NUMBER_INPUT': {
         'min': 'min',
         'max': 'max',
@@ -116,44 +116,44 @@ const dataParams = {
         'precision': 'precision',
         'controls-position': 'controls-position'
     },
-    //下拉选择
+    // 下拉选择
     'SELECT': {
         'options': '__slot__.options',
         'filterable': 'filterable',
         'multiple': 'multiple'
     },
-    //级联选择
+    // 级联选择
     'CASCADER': {
         'options': 'options',
         'filterable': 'filterable',
         'multiple': 'props.props.multiple'
     },
-    //单选框组
+    // 单选框组
     'RADIO': {
         'options': '__slot__.options',
         'filterable': 'filterable',
         'multiple': 'props.props.multiple'
     },
-    //多选框组
+    // 多选框组
     'CHECKBOX': {
         'optionType': '__config__.optionType',
         'size': 'size',
         'options': '__slot__.options',
         'max': 'max',
         'min': 'min'
-    }, //开关
+    }, // 开关
     'SWITCH': {},
-    //滑块
+    // 滑块
     'SLIDER': {
         'min': 'min',
         'max': 'max',
         'step': 'step'
-    },//时间选择
+    }, // 时间选择
     'TIME': {},
     'RATE': {
         'max': 'max'
     },
-    //文件上传
+    // 文件上传
     'UPLOAD': {
         'buttonText': '__config__.buttonText',
         'showTip': '__config__.showTip',
@@ -164,17 +164,10 @@ const dataParams = {
         'multiple': 'multiple'
 
     },
-    //图片
+    // 图片
     'IMAGE': {
         'src': 'src',
         'alt': 'alt'
     }
 }
-
-
-
-
-
-
-
 

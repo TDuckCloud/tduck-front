@@ -1,8 +1,8 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
 // 防重复点击(指令实现)
-const preventReClick= Vue.directive('preventReClick', {
-    inserted (el, binding) {
+const preventReClick = Vue.directive('preventReClick', {
+    inserted(el, binding) {
         el.addEventListener('click', () => {
             if (!el.disabled) {
                 el.disabled = true
@@ -13,7 +13,6 @@ const preventReClick= Vue.directive('preventReClick', {
         })
     }
 })
-
 
 export default {
     preventReClick

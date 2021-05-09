@@ -2,8 +2,5 @@ dist/
 node_modules/
 src/assets/sprites/
 src/theme/
-src/utils/sign.js
-src/views/form/
-src/utils/
-src/components/
-src/assets/
+src/components/FontIcon/
+src/components/verifition

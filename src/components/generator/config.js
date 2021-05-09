@@ -512,7 +512,6 @@ export const selectComponents = [
     }
 ]
 
-
 // 布局型组件 【左面板】
 export const imageComponents = [
     {
@@ -522,24 +521,24 @@ export const imageComponents = [
             showLabel: false,
             labelWidth: null,
             showDefaultValue: false,
-            showRequired:false,
-            showClearable:false,
-            showRegList:false,
+            showRequired: false,
+            showClearable: false,
+            showRegList: false,
             tag: 'el-image',
             tagIcon: 'image',
             layout: 'colFormItem',
             span: 24,
             required: true,
             regList: [],
-            changeTag: true,
+            changeTag: true
         },
         __slot__: {
-            'error':'image'
+            'error': 'image'
         },
         style: {width: '100%'},
         src: '',
-        fit	: 'contain',
-        alt:'',
+        fit: 'contain',
+        alt: ''
     }
 ]
 

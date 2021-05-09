@@ -1,5 +1,5 @@
 <template>
-    <div :class="className" :style="{height:height,width:width}"/>
+    <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
@@ -27,17 +27,17 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            chart: null
+        }
+    },
     watch: {
         chartOption: {
             deep: true,
             handler(val) {
                 this.setOptions(val)
             }
-        }
-    },
-    data() {
-        return {
-            chart: null
         }
     },
     mounted() {

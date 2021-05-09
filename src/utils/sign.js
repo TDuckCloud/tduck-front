@@ -24,13 +24,12 @@ export default class sign {
         return sortObj
     }
 
-
     /**
      * @param url 请求的url,应该包含请求参数(url的?后面的参数)
      * @param requestParams 请求参数(POST的JSON参数)
      * @returns {string} 获取签名
      */
-    static getSign(url, request, timestamp) {
+    static getSign(url, request) {
         let requestParams = {}
         if (request.params) {
             // get 请求所有参数转成string类型 用于签名计算
@@ -57,7 +56,7 @@ export default class sign {
      * @returns {{}} 将url中请求参数组装成json对象(url的?后面的参数)
      */
     static parseQueryString(url) {
-        let urlReg = /^[^\?]+\?([\w\W]+)$/,
+        let urlReg = /^[^?]+\?([\w\W]+)$/,
             paramReg = /([^&=]+)=([\w\W]*?)(&|$|#)/g,
             urlArray = urlReg.exec(url),
             result = {}

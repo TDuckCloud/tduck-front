@@ -108,7 +108,7 @@ export function jsonClone(obj) {
     return parse(stringify(obj))
 }
 
-export function jsonSimpleClone(obj){
+export function jsonSimpleClone(obj) {
     return JSON.parse(JSON.stringify(obj))
 }
 // 深拷贝对象
@@ -171,7 +171,7 @@ export function uuid() {
 
 export function getQueryString(name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
-    let r = window.location.search.substr(1).match(reg)  //获取url中"?"符后的字符串并正则匹配
+    let r = window.location.search.substr(1).match(reg)  // 获取url中"?"符后的字符串并正则匹配
     let context = ''
     if (r != null)
         context = r[2]
@@ -204,11 +204,13 @@ export function debounce(func, wait, immediate) {
 
         // 上次被包装函数被调用时间间隔 last 小于设定时间间隔 wait
         if (last < wait && last > 0) {
+            // eslint-disable-next-line no-unused-vars
             timeout = setTimeout(later, wait - last)
         } else {
             timeout = null
             // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
             if (!immediate) {
+                // eslint-disable-next-line no-unused-vars
                 result = func.apply(context, args)
                 if (!timeout) context = args = null
             }
@@ -222,8 +224,7 @@ export function debounce(func, wait, immediate) {
  * @param ms 毫秒数
  * @returns {string}
  */
-export function timeFormat(ms)
-{
+export function timeFormat(ms) {
     let h = Math.floor(ms / 1000 / 60 / 60)
     let m = Math.floor(ms / 1000 / 60)
     let s = Math.floor(ms / 1000)
@@ -257,8 +258,8 @@ function addZero(n) {
  */
 export function checkIsUrl(str) {
     let oRegUrl = new RegExp()
-    //aa.bb.com
-    oRegUrl.compile('^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\?\/.=]+$')
+    // aa.bb.com
+    oRegUrl.compile('^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&?/.=]+$')
     if (!oRegUrl.test(str)) {
         return false
     }
@@ -299,11 +300,13 @@ export function jsonToParam(json) {
  * @param str
  * @returns {boolean}
  */
+// eslint-disable-next-line no-unused-vars
 function isJsonString(str) {
     try {
         if (typeof JSON.parse(str) == 'object') {
             return true
         }
+        // eslint-disable-next-line no-empty
     } catch (e) {
     }
     return false

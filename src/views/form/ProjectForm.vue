@@ -1,27 +1,29 @@
 <template>
     <div class="project-form"
          :style="{backgroundColor:projectTheme.backgroundColor,
-          background:projectTheme.backgroundImg?'url('+projectTheme.backgroundImg+')  no-repeat center':''}">
+                  background:projectTheme.backgroundImg?'url('+projectTheme.backgroundImg+')  no-repeat center':''}"
+    >
         <div class="">
             <div :style="{textAlign:projectTheme.logoPosition}">
                 <img
-                    :src="projectTheme.logoImg" class="logo-img">
+                    :src="projectTheme.logoImg" class="logo-img"
+                >
             </div>
             <el-image
                 v-if="projectTheme.headImgUrl"
                 :src="projectTheme.headImgUrl"
-                style="width: 100%"
-                fit="scale-down"></el-image>
-            <h4 class="form-name-text" v-if="projectTheme.showTitle" style="text-align: center">
+                style="width: 100%;"
+                fit="scale-down"
+            />
+            <h4 v-if="projectTheme.showTitle" class="form-name-text" style="text-align: center;">
                 {{ formConf.title }}
             </h4>
             <div
                 v-show="projectTheme.showDescribe"
-                class="form-name-text" v-html="formConf.description">
-            </div>
-            <el-divider>
-            </el-divider>
-            <parser v-if="startParser" :form-conf="formConf" @submit="submitForm"/>
+                class="form-name-text" v-html="formConf.description"
+            />
+            <el-divider />
+            <parser v-if="startParser" :form-conf="formConf" @submit="submitForm" />
         </div>
     </div>
 </template>
@@ -100,7 +102,7 @@ export default {
                 this.formConf.projectKind = this.projectConfig.projectKind
             }
         } else if (this.$route.query.key) {
-            //不存去路由中尝试获取 iframe
+            // 不存去路由中尝试获取 iframe
             this.formConf.projectKey = this.$route.query.key
             if (this.$route.query.kind) {
                 this.formConf.projectKind = this.$route.query.kind
@@ -115,7 +117,7 @@ export default {
             url = `/project/template/details/${this.formConf.projectKey}`
         }
         let logicItemList = []
-        //处理逻辑表单
+        // 处理逻辑表单
         if (this.formConf.projectKind == 1) {
             let res = await this.queryLogicItemList()
             logicItemList = res.data
@@ -131,7 +133,7 @@ export default {
                 let fields = res.data.projectItems.map(item => {
                     let projectItem = dbDataConvertForItemJson(item)
                     projectItem.serialNumber = serialNumber
-                    projectItem.logicShow = logicItemMap.get(projectItem.formItemId) ? false : true
+                    projectItem.logicShow = !logicItemMap.get(projectItem.formItemId)
                     serialNumber++
                     return projectItem
                 })
@@ -162,14 +164,14 @@ export default {
             if (!logicItem) {
                 return
             }
-            //建立触发关系 该字段值发生变化时 哪些问题需要进行逻辑判断 确定是否显示
+            // 建立触发关系 该字段值发生变化时 哪些问题需要进行逻辑判断 确定是否显示
             logicItem.conditionList.forEach(item => {
                 let rules = this.logicShowTriggerRule[item.formItemId]
                 if (!rules) {
                     rules = new Array()
                 }
                 rules.push({
-                    //触发的字段
+                    // 触发的字段
                     triggerFormItemId: logicItem.formItemId,
                     logicExpression: getExpression(logicItem.conditionList, logicItem.expression)
                 })
@@ -180,11 +182,11 @@ export default {
         queryLogicItemList() {
             return new Promise((resolve, reject) => {
                 this.$api.get('/user/project/logic/list', {params: {projectKey: this.formConf.projectKey}})
-                    .then((res) => {
+                    .then(res => {
                         resolve(res)
-                    }).catch((err) => {
-                    reject(err)
-                })
+                    }).catch(err => {
+                        reject(err)
+                    })
             })
         },
         submitForm(data) {
@@ -203,37 +205,29 @@ export default {
     background-repeat: repeat;
     background-color: rgba(229, 239, 247, 0.87);
 }
-
 .project-body::-webkit-scrollbar {
     width: 0 !important;
     background: transparent;
 }
-
 .project-body {
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
-
-
 .logo-img {
     max-height: 120px;
 }
-
 .submit-btn-form-item {
     text-align: left;
 }
-
 .submit-btn-form-item button {
     width: 20%;
 }
-
 @media screen and (max-width: 750px) {
     .project-form {
-        margin: 0px;
+        margin: 0;
         width: 100% !important;
         background-color: white;
     }
-
     .logo-img {
         max-height: 2.94rem;
     }
@@ -244,7 +238,6 @@ export default {
         width: 80%;
     }
 }
-
 @media screen and (max-width: 500px) {
     .el-message {
         min-width: 300px !important;

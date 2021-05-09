@@ -10,14 +10,14 @@ const components = {
                 copyItem(currentItem, list)
                 event.stopPropagation()
             }}>
-        <i class="el-icon-copy-document"/>
-      </span>,
+                <i class="el-icon-copy-document"/>
+            </span>,
             <span class="drawing-item-delete" title="删除" onClick={event => {
                 deleteItem(index, list)
                 event.stopPropagation()
             }}>
-        <i class="el-icon-delete"/>
-      </span>
+                <i class="el-icon-delete"/>
+            </span>
         ]
     }
 }
@@ -32,12 +32,12 @@ const layouts = {
         if (config.showLabel === false) labelWidth = '0'
         return (
             <el-col span={config.span} class={className}
-                    nativeOnClick={event => {
-                        activeItem(currentItem)
-                        event.stopPropagation()
-                    }}>
+                nativeOnClick={event => {
+                    activeItem(currentItem)
+                    event.stopPropagation()
+                }}>
                 <el-form-item label-width={labelWidth}
-                              label={config.showLabel ? config.label : ''} required={config.required}>
+                    label={config.showLabel ? config.label : ''} required={config.required}>
                     <render key={config.renderKey} conf={currentItem} onInput={event => {
                         this.$set(config, 'defaultValue', event)
                     }}>
@@ -63,13 +63,13 @@ const layouts = {
         return (
             <el-col span={config.span}>
                 <el-row gutter={config.gutter} class={className}
-                        nativeOnClick={event => {
-                            activeItem(currentItem)
-                            event.stopPropagation()
-                        }}>
+                    nativeOnClick={event => {
+                        activeItem(currentItem)
+                        event.stopPropagation()
+                    }}>
                     <span class="component-name">{config.componentName}</span>
                     <draggable list={config.children || []} animation={340}
-                               group="componentsGroup" class="drag-wrapper">
+                        group="componentsGroup" class="drag-wrapper">
                         {child}
                     </draggable>
                     {components.itemBtns.apply(this, arguments)}
@@ -127,17 +127,18 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-radio-group, /deep/ .el-checkbox-group {
+/deep/ .el-radio-group,
+/deep/ .el-checkbox-group {
     margin-left: 10px;
 }
-
-/deep/ .el-radio, /deep/ .el-checkbox {
+/deep/ .el-radio,
+/deep/ .el-checkbox {
     display: block;
     min-height: 23px;
     line-height: 23px;
 }
-
-/deep/ .el-radio__label, /deep/ .el-checkbox__label {
+/deep/ .el-radio__label,
+/deep/ .el-checkbox__label {
     font-size: 14px;
     padding-left: 10px;
     text-overflow: ellipsis;
@@ -146,12 +147,10 @@ export default {
     vertical-align: middle;
     display: inline-block;
 }
-
 /deep/ .item-other-input {
     margin-left: 20px;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-
 /deep/ .item-other-input:focus {
     outline: none;
 }

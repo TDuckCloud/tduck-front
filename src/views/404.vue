@@ -1,7 +1,5 @@
 <template>
-    <div class=""
-         style="display: flex; height: 100vh; align-items: center; justify-content: center; justify-items: center;"
-    >
+    <div class="status-container">
         <p class="title"> 404，联系一下开发者 </p>
     </div>
 </template>
@@ -17,10 +15,18 @@ export default {
     methods: {}
 }
 </script>
-<style>
-.title {
-    color: rgba(32, 91, 181, 100);
-    font-size: 84px;
-    text-align: left;
+<style lang="scss" scoped>
+.status-container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    .title {
+        color: rgba(32, 91, 181, 100);
+        font-size: 84px;
+        text-align: left;
+    }
 }
+
 </style>

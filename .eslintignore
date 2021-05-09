@@ -3,8 +3,7 @@ node_modules/
 babel.config.js
 vue.config.js
 .eslintrc.js
-src/utils/sign.js
-src/views/form/
-src/utils/
-src/components/
-src/assets/
+src/components/echarts/china.js
+src/components/render/
+src/components/verifition/
+src/components/tinymce/

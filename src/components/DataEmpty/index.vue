@@ -1,12 +1,14 @@
 <template>
     <div class="data-empty">
         <div class="image"
-             :style="{height:size}">
+             :style="{height:size}"
+        >
             <img :src="image"
-                 alt="">
+                 alt=""
+            >
         </div>
         <p class="desc">{{ desc }}</p>
-        <slot></slot>
+        <slot />
     </div>
 </template>
 
@@ -36,18 +38,15 @@ export default {
     font-size: 14px;
     line-height: 22px;
     text-align: center;
-
     &__image {
         height: 100px;
         margin-bottom: 8px;
-
         img {
             height: 100%;
             vertical-align: middle;
             border-style: none;
         }
     }
-
     &__desc {
         color: rgba(0, 0, 0, 0.65);
     }

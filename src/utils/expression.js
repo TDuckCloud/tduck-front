@@ -40,20 +40,20 @@ export function getExpression(conditionList, connector) {
  */
 export function evalExpression(context, expression) {
     let exArray = expression.split(/[|][&]/)
-    //获取是& 还是|
-    let and = exArray.indexOf('|') ? false : true
+    // 获取是& 还是|
+    let and = !exArray.indexOf('|')
     let flag = false
     console.log(exArray)
     for (let i = 0; i < exArray.length; i++) {
         let itemExpArr = exArray[i].split(' ')
         console.log(itemExpArr)
-        //截取字段名
+        // 截取字段名
         let varName = itemExpArr[0]
-        //条件 等于 不等于
+        // 条件 等于 不等于
         let sp = itemExpArr[1]
         // 值
         let value = itemExpArr[2]
-        //比较是否成立
+        // 比较是否成立
         console.log(varName)
         let filedValue = _.get(context, varName)
         console.log(filedValue)

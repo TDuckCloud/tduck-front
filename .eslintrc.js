@@ -19,6 +19,7 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
+
         // 代码风格
         'block-spacing': [2, 'always'],
         'brace-style': [2, '1tbs', {
@@ -83,6 +84,9 @@ module.exports = {
         'vue/this-in-template': 0,
         'vue/script-indent': [2, 4, {
             'switchCase': 1
-        }]
+        }],
+        // 'vue/no-static-inline-styles': ['error', {
+        //     'allowBinding': false
+        // }]
     }
-};
+}

@@ -1,6 +1,6 @@
 <template>
     <span>
-      {{ displayValue }}
+        {{ displayValue }}
     </span>
 </template>
 <script>
@@ -103,7 +103,11 @@ export default {
         if (this.autoplay) {
             this.start()
         }
+        // eslint-disable-next-line vue/custom-event-name-casing
         this.$emit('mountedCallback')
+    },
+    destroyed() {
+        cancelAnimationFrame(this.rAF)
     },
     methods: {
         start() {
@@ -185,9 +189,6 @@ export default {
             }
             return this.prefix + x1 + x2 + this.suffix
         }
-    },
-    destroyed() {
-        cancelAnimationFrame(this.rAF)
     }
 }
 </script>
