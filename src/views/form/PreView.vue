@@ -9,10 +9,10 @@
                     <div class="preview-bg" />
                     <div class="preview-phone">
                         <iframe id="preview-html"
-                                scrolling="auto"
-                                name="preview-html" class="preview-html"
-                                frameborder="0"
                                 :src="mobilePreviewUrl"
+                                class="preview-html" frameborder="0"
+                                name="preview-html"
+                                scrolling="auto"
                         />
                     </div>
                 </div>
@@ -41,7 +41,7 @@ export default {
         ProjectForm
     },
     props: {
-        projectKey: ''
+        projectKey: null
     },
     data() {
         return {

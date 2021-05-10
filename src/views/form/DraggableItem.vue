@@ -22,7 +22,9 @@ const components = {
     }
 }
 const layouts = {
+    // eslint-disable-next-line no-unused-vars
     colFormItem(h, currentItem, index, list) {
+        // eslint-disable-next-line no-unused-vars
         const {activeItem, changeLabel} = this.$listeners
         const config = currentItem.__config__
         const child = renderChildren.apply(this, arguments)
@@ -48,6 +50,7 @@ const layouts = {
             </el-col>
         )
     },
+    // eslint-disable-next-line no-unused-vars
     rowFormItem(h, currentItem, index, list) {
         const {activeItem} = this.$listeners
         const config = currentItem.__config__
@@ -77,6 +80,7 @@ const layouts = {
             </el-col>
         )
     },
+    // eslint-disable-next-line no-unused-vars
     raw(h, currentItem, index, list) {
         const config = currentItem.__config__
         const child = renderChildren.apply(this, arguments)
@@ -88,6 +92,7 @@ const layouts = {
     }
 }
 
+// eslint-disable-next-line no-unused-vars
 function renderChildren(h, currentItem, index, list) {
     const config = currentItem.__config__
     if (!Array.isArray(config.children)) return null

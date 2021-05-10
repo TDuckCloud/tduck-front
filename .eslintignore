@@ -7,3 +7,4 @@ src/components/echarts/china.js
 src/components/render/
 src/components/verifition/
 src/components/tinymce/
+src/views/form/RightPanel.vue
