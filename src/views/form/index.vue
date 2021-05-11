@@ -65,7 +65,7 @@ export default {
         }
     },
     methods: {
-        handleSelect(type, keyPath) {
+        handleSelect(type) {
             if (type) {
                 this.activeTab = type
                 this.$router.replace({path: '/project/form', query: {key: this.projectKey, active: type}})

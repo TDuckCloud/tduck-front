@@ -53,20 +53,20 @@ export default [
     },
     {
         path: '/home',
-        meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),
-        children: [
-            {
-                path: '/',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/home/HomeView')
-            },
-            {
-                path: 'member',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/member')
-            }
-        ]
+        // meta: {requireLogin: true},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/newIndex.vue')
+        // children: [
+        //     {
+        //         path: '/',
+        //         meta: {requireLogin: true},
+        //         component: () => import(/* webpackChunkName: 'root' */ '@/views/home/HomeView')
+        //     },
+        //     {
+        //         path: 'member',
+        //         meta: {requireLogin: true},
+        //         component: () => import(/* webpackChunkName: 'root' */ '@/views/account/member')
+        //     }
+        // ]
     }, {
         path: '/project',
         meta: {requireLogin: true},

@@ -1,12 +1,12 @@
 <template>
     <div class="project-logic-container">
         <el-scrollbar class="scrollbar-container">
-            <el-row type="flex" class="header-row" justify="center" align="middle">
+            <el-row align="middle" class="header-row" justify="center" type="flex">
                 <el-col :span="12">
                     <p class="logic_title">显示逻辑</p>
                 </el-col>
                 <el-col :span="12">
-                    <el-tooltip popper-class="question-popper" placement="top">
+                    <el-tooltip placement="top" popper-class="question-popper">
                         <div slot="content">符合某项条件，则显示某道题<br>点击查看帮助</div>
                         <i class="el-icon-question" />
                     </el-tooltip>
@@ -24,12 +24,12 @@
                     </el-row>
                 </div>
                 <div v-else class="logic-item-container">
-                    <el-row type="flex" align="middle" justify="center">
-                        <el-col :span="11" :offset="1">
+                    <el-row align="middle" justify="center" type="flex">
+                        <el-col :offset="1" :span="11">
                             <p>共 {{ logicList.length }}. 条显示逻辑</p>
                         </el-col>
-                        <el-col :span="6" :offset="6">
-                            <el-button type="primary" size="mini" @click="addLogicHandle">
+                        <el-col :offset="6" :span="6">
+                            <el-button size="mini" type="primary" @click="addLogicHandle">
                                 <i class="el-icon-plus" />
                                 <span class="label">添加逻辑</span>
                             </el-button>
@@ -39,7 +39,7 @@
                     <div v-for="(logicItem,index) in logicList"
                          :key="index"
                     >
-                        <el-row type="flex" align="middle" justify="center">
+                        <el-row align="middle" justify="center" type="flex">
                             <el-col :offset="1" :span="6">
                                 <span class="mr-10">{{ index + 1 }}.</span>
                                 <el-select
@@ -75,7 +75,7 @@
                             v-for="(cItem,cIndex) in logicItem.conditionList"
                             :key="cIndex"
                             :gutter="20"
-                            class="mt-5" type="flex" align="middle" justify="center"
+                            align="middle" class="mt-5" justify="center" type="flex"
                         >
                             <el-col :offset="1" :span="6">
                                 <el-select v-model="cItem.formItemId" placeholder="请选择题目">
@@ -111,8 +111,8 @@
                                 <el-button type="text" @click="addConditionHandle(logicItem)">
                                     <i class="el-icon-circle-plus-outline" />
                                 </el-button>
-                                <el-button type="text"
-                                           class="remove"
+                                <el-button class="remove"
+                                           type="text"
                                            @click="removeConditionHandle(logicItem,index,cIndex)"
                                 >
                                     <i class="el-icon-remove-outline" />
@@ -135,7 +135,7 @@ export default {
     name: 'ProjectLogic',
     components: {},
     props: {
-        projectKey: ''
+        projectKey: null
     },
     data() {
         return {
@@ -208,7 +208,7 @@ export default {
         removeConditionHandle(logicItem, logicIndex, index) {
             logicItem.conditionList.splice(index, 1)
             if (logicItem.conditionList.length == 0) {
-                this.$api.post('/user/project/logic/delete', logicItem).then(res => {
+                this.$api.post('/user/project/logic/delete', logicItem).then(() => {
                     this.logicList.splice(logicIndex, 1)
                 })
             }

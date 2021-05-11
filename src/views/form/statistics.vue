@@ -5,17 +5,17 @@
                 <el-form-item label="提交时间" prop="endDateTime">
                     <el-date-picker
                         v-model="queryConditions.beginDateTime"
+                        placeholder="开始时间"
                         type="datetime"
                         value-format="yyyy-MM-dd HH:mm:ss"
-                        placeholder="开始时间"
                     />
                     <span> 至 </span>
                     <el-date-picker
                         v-model="queryConditions.endDateTime"
-                        type="datetime"
-                        value-format="yyyy-MM-dd HH:mm:ss"
                         :default-time="'23:59:59'"
                         placeholder="结束时间"
+                        type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
                     />
                 </el-form-item>
                 <el-form-item>
@@ -26,9 +26,9 @@
         </div>
         <div class="result-table-view">
             <el-table
-                stripe
-                header-cell-class-name="data-table-header"
                 :data="projectResultList"
+                header-cell-class-name="data-table-header"
+                stripe
                 @row-dblclick="(row, column, event)=>{
                     this.openDetailDrawerHandle(row)
                 }"
@@ -47,26 +47,26 @@
                 </el-table-column>
                 <el-table-column
                     v-for="col in otherCustomColumns"
-                    :key="col" show-overflow-tooltip
-                    :label="projectItemColumns[col]"
+                    :key="col" :label="projectItemColumns[col]"
+                    show-overflow-tooltip
                 >
                     <template slot-scope="scope">
                         {{ scope.row['processData'][col] }}
                     </template>
                 </el-table-column>
                 <el-table-column
-                    width="50"
-                    fixed="right"
                     :render-header="renderHeader"
+                    fixed="right"
+                    width="50"
                 >
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="openDetailDrawerHandle(scope.row)">查看</el-button>
+                        <el-button size="small" type="text" @click="openDetailDrawerHandle(scope.row)">查看</el-button>
                     </template>
                 </el-table-column>
             </el-table>
             <el-drawer
-                :with-header="false"
                 :visible.sync="detailDrawer"
+                :with-header="false"
             >
                 <el-scrollbar style="height: 100%;">
                     <el-card class="box-card">
@@ -74,15 +74,19 @@
                             <span>提交详情</span>
                         </div>
                         <div>
-                            <div v-for="item in projectItemList">
+                            <div v-for="item in projectItemList" :key="item.id">
                                 <h4>{{ item.label }}</h4>
                                 <!--  如果是文件输入-->
-                                <div v-if="item.type==17 &&activeResultRow&&activeResultRow['processData'][`field${item.formItemId}`]">
+                                <div
+                                    v-if="item.type==17 &&activeResultRow&&activeResultRow['processData'][`field${item.formItemId}`]"
+                                >
                                     <el-link
-                                        v-for="file in JSON.parse(activeResultRow['processData'][`field${item.formItemId}`]['files'])" :href="file.url" target="_blank"
+                                        v-for="file in JSON.parse(activeResultRow['processData'][`field${item.formItemId}`]['files'])"
+                                        :key="file"
+                                        :href="file.url" target="_blank"
                                         type="primary"
                                     >
-                                        {{ file.fileName }}
+                                        <span> {{ file.fileName }}</span>
                                     </el-link>
                                 </div>
                                 <el-tag v-else>
@@ -99,17 +103,17 @@
             <div style="display: flex; justify-content: center; margin-top: 10px;">
                 <el-pagination
                     v-if="total>10"
-                    background
-                    :page-size.sync="queryConditions.size"
                     :current-page.sync="queryConditions.current"
-                    layout="total, prev, pager, next"
+                    :page-size.sync="queryConditions.size"
                     :total="total"
+                    background
+                    layout="total, prev, pager, next"
                     @current-change="queryProjectResult"
                 />
             </div>
         </div>
         <div class="custom-col-container">
-            <el-dialog center title="自定义显示列" :visible.sync="customColumnDialogVisible">
+            <el-dialog :visible.sync="customColumnDialogVisible" center title="自定义显示列">
                 <el-row>
                     <el-col :span="3">
                         <span>显示列：</span>
@@ -118,7 +122,7 @@
                 <el-divider />
                 <el-checkbox-group v-model="checkFixedCustomColumns">
                     <el-row>
-                        <el-col v-for="(val, key, index) in fixedDefaultLabelFormColumn" :key="key" :span="4">
+                        <el-col v-for="(val, key) in fixedDefaultLabelFormColumn" :key="key" :span="4">
                             <el-checkbox :label="key">{{ val }}</el-checkbox>
                         </el-col>
                     </el-row>
@@ -126,7 +130,7 @@
                 <el-divider />
                 <el-checkbox-group v-model="checkOtherCustomColumns">
                     <el-row>
-                        <el-col v-for="(val, key, index) in projectItemColumns" :key="key" :span="8">
+                        <el-col v-for="(val, key) in projectItemColumns" :key="key" :span="8">
                             <el-checkbox :label="key">{{ val }}</el-checkbox>
                         </el-col>
                     </el-row>
@@ -142,7 +146,6 @@
 
 <script>
 import _ from 'lodash'
-import {jsonToParam, isJsonString} from '@/utils/index'
 
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
@@ -153,7 +156,7 @@ export default {
     name: 'ProjectStatistics',
     components: {},
     props: {
-        projectKey: ''
+        projectKey: null
     },
     data() {
         return {
@@ -189,7 +192,7 @@ export default {
         this.queryProjectItems()
         this.queryProject()
     }, methods: {
-        renderHeader(h) {
+        renderHeader() {
             return (
                 <i class="el-icon-setting" style="color:currentColor"
                     onClick={() => this.customColumnDialogVisible = true}></i>
@@ -280,7 +283,6 @@ export default {
     padding: 0;
     min-height: 85vh;
     background-color: #f7f7f7;
-    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 .custom-col-container >>> .el-checkbox__label {
     width: 200px;

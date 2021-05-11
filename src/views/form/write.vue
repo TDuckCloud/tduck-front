@@ -39,7 +39,7 @@
 import ProjectForm from './ProjectForm'
 import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
-import {getCurrentDomain, getQueryString} from '@/utils'
+import { getQueryString} from '@/utils'
 
 const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
@@ -100,7 +100,7 @@ export default {
     }, methods: {
         viewProjectHandle() {
             // 是否能进入填写
-            this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
+            this.$api.post(`/user/project/result/view/${this.projectConfig.projectKey}`, {params: {projectKey: this.projectConfig.projectKey}}).then(() => {
 
             })
         },
@@ -252,7 +252,7 @@ export default {
                 'submitUa': ua,
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
-            }).then(res => {
+            }).then(() => {
                 this.writeStatus = 2
             })
         }

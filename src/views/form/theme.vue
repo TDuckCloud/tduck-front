@@ -246,7 +246,6 @@
 
 <script>
 import PreView from './PreView'
-import store from '@/store'
 
 export default {
     name: 'Theme',
@@ -322,12 +321,12 @@ export default {
         this.queryUserProjectTheme()
     },
     methods: {
-        uploadBackgroundHandle(response, file, fileList) {
+        uploadBackgroundHandle(response) {
             this.userProjectTheme.backgroundImg = response.data
             this.userProjectTheme.backgroundColor = ''
             this.saveUserTheme()
         },
-        uploadLogoHandle(response, file, fileList) {
+        uploadLogoHandle(response) {
             this.userProjectTheme.logoImg = response.data
             this.saveUserTheme()
         },
@@ -338,7 +337,7 @@ export default {
         saveUserTheme() {
             this.userProjectTheme.projectKey = this.projectKey
             this.userProjectTheme.themeId = this.activeTheme ? this.activeTheme.id : ''
-            this.$api.post('/user/project/theme/save', this.userProjectTheme).then(res => {
+            this.$api.post('/user/project/theme/save', this.userProjectTheme).then(() => {
                 this.projectFormKey = +new Date()
             })
         },
