@@ -54,7 +54,7 @@ export default [
     {
         path: '/home',
         // meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/newIndex.vue')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue')
         // children: [
         //     {
         //         path: '/',
