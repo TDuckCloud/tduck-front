@@ -20,12 +20,12 @@ export default [
         component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),
         children: [
             {
-                path: '/',
+                path: '',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/introduction.vue')
             },
             {
-                path: '/login',
+                path: 'login',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login.vue')
             },
@@ -54,7 +54,7 @@ export default [
     {
         path: '/home1',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/newIndex')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex')
     },
     {
         path: '/home',

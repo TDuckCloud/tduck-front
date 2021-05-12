@@ -21,7 +21,7 @@
                 <el-col class="header-col" :span="3">
                     <el-button v-if="isLogin" class="header-btn" @click="$router.push({path:'/home'})">控 制 台</el-button>
                     <el-button v-if="!isLogin&&this.$route.path!='/login' " class="header-btn"
-                               @click="$router.push({path:'/login   '})"
+                               @click="$router.push({path:'/login'})"
                     >
                         登 录
                     </el-button>

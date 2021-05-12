@@ -15,7 +15,7 @@
             <div class="show-logic-container">
                 <div v-if="!logicList.length" class="not-logic-container">
                     <el-row>
-                        <el-col :offset="10">
+                        <el-col :offset="10" :span="5">
                             <el-button type="text" @click="addLogicHandle">
                                 <i class="el-icon-circle-plus-outline" />
                                 <span class="label">添加逻辑</span>
@@ -25,7 +25,7 @@
                 </div>
                 <div v-else class="logic-item-container">
                     <el-row align="middle" justify="center" type="flex">
-                        <el-col :offset="1" :span="11">
+                        <el-col :offset="1" :span="10">
                             <p>共 {{ logicList.length }}. 条显示逻辑</p>
                         </el-col>
                         <el-col :offset="6" :span="6">
@@ -273,13 +273,14 @@ export default {
 <style lang="scss" scoped>
 .project-logic-container {
     width: 100%;
-    background-color: #f7f7f7;
-    min-height: 84vh;
-    min-width: 80vw;
+    height: 100%;
+    padding: 0;
     display: flex;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
     .scrollbar-container {
-        height: 90vh;
+        height: 100%;
     }
     .header-row {
         width: 230px;

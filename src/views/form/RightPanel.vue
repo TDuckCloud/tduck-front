@@ -1063,12 +1063,13 @@ export default {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     .field-box {
         position: relative;
-        height: calc(100vh - 242px);
+        height: calc(100vh - 70px);
         box-sizing: border-box;
         overflow: hidden;
     }
     .el-scrollbar {
         height: 100%;
+        padding-bottom: 50px;
     }
 }
 .select-item {

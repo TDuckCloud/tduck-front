@@ -65,7 +65,7 @@
                         />
                     </el-form-item>
                     <el-form-item>
-                        <el-button  type="primary" @click="resetPasswordHandle">
+                        <el-button type="primary" @click="resetPasswordHandle">
                             提交
                         </el-button>
                     </el-form-item>
@@ -260,6 +260,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/mixin.scss';
 .app-container {
     height: 100%;
     width: 100%;

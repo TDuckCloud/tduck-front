@@ -1,3 +1,4 @@
+@import '../element-variables.scss';
 $editorTabsborderColor: #121315;
 body,
 html {
@@ -120,7 +121,7 @@ textarea {
         margin-left: 6px;
     }
     .el-icon-plus {
-        color: #409eff;
+        color: $--color-primary;
     }
     .el-icon-delete {
         color: #157a0c;

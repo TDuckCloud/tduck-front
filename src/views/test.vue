@@ -30,7 +30,6 @@ export default {
     methods: {
         success(params) {
             // eslint-disable-next-line no-debugger
-            debugger
             // params 返回的二次验证参数, 和登录参数一起回传给登录接口，方便后台进行二次验证
             console.log(params)
         },
