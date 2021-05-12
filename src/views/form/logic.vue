@@ -294,6 +294,9 @@ export default {
         padding-top: 20px;
     }
 }
+::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden;
+}
 .not-logic-container {
     .el-icon-circle-plus-outline {
         font-size: 20px;

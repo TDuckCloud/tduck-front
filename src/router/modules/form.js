@@ -10,9 +10,29 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/editor')
             },
             {
+                path: 'editor',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/editor')
+            },
+            {
                 path: 'logic',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/logic')
+            },
+            {
+                path: 'preview',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView')
+            },
+            {
+                path: 'setting',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/setting')
+            },
+            {
+                path: 'publish',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/publish')
             },
             {
                 path: 'statistics',
