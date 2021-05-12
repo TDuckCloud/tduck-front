@@ -168,7 +168,7 @@ function setValue(event, config, scheme) {
     let rules = _.get(logicShowRule, config.formId)
     if (rules && Array.isArray(rules)) {
         rules.forEach(r => {
-            // 成立让该对应的显示出来
+            // 成立让该对应的问题显示出来
             let flag = evalExpression(this[this.formConf.formModel], r.logicExpression)
             if (flag) {
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = ''

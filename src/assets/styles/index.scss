@@ -88,6 +88,20 @@ div:focus {
     display: flex;
     flex-direction: row;
 }
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.desc-text {
+    color: rgba(155, 155, 155, 100);
+    font-size: 14px;
+    text-align: left;
+}
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .clearfix {
     &::after {
         visibility: hidden;

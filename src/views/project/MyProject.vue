@@ -1,11 +1,5 @@
 <template>
     <div class="my-project-container">
-        <div class="back-view">
-            <el-button size="mini" round @click="$router.back(-1)">
-                <i class="el-icon-arrow-left" />
-                返回
-            </el-button>
-        </div>
         <div class="filter-view">
             <div>
                 <span @click="switchDataShowTypeHandle('gird')">
