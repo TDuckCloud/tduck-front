@@ -82,17 +82,16 @@ export default {
     components: {
         VueQr
     },
-    props: {
-        projectKey: null
-    },
     data() {
         return {
             publishStatus: false,
+            projectKey: null,
             writeLink: '',
             qrCodeUrl: ''
         }
     },
     mounted() {
+        this.projectKey = this.$route.query.key
         let url = window.location.protocol + '//' + window.location.host
         this.writeLink = `${url}/s/${this.projectKey}`
         this.getProjectStatus()

@@ -713,8 +713,8 @@ export default {
     width: 100%;
     height: 100%;
     min-height: 85vh;
-    padding: 0;
-    margin: 10px 0 0 0;
+    padding-top: 30px;
+    margin: 0;
     background-color: #f7f7f7;
 }
 .project-setting-view {

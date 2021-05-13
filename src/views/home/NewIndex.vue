@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="right-container">
-                <el-button type="primary">新建项目</el-button>
+                <el-button type="primary" @click="createBlankTemplate">新建项目</el-button>
                 <el-button>新建项目</el-button>
                 <my-project />
             </div>
@@ -52,11 +52,22 @@
 
 <script>
 import MyProject from '@/views/project/MyProject'
+import {formConf} from '@/components/generator/config'
 
 export default {
     name: 'NewIndex',
     components: {
         MyProject
+    }, methods: {
+        createBlankTemplate() {
+            this.$api.post('/user/project/create', {
+                'describe': formConf.description,
+                'name': formConf.title
+            }).then(res => {
+                console.log(res)
+                this.$router.push({path: '/project/form', query: {key: res.data}})
+            })
+        }
     }
 }
 </script>

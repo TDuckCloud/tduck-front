@@ -2,8 +2,8 @@
     <div class="form-index-container">
         <el-card class="header-container">
             <el-row align="middle" type="flex">
-                <el-col :offset="1" :span="1">
-                    <i class="el-icon-back" />
+                <el-col :span="2">
+                    <i class="el-icon-back" @click="$router.back(-1)" />
                 </el-col>
                 <el-col :span="3">
                     <img class="header-logo" src="@/assets/images/indexLogo.png" @click="$router.push({path:'/home'})">
@@ -14,50 +14,21 @@
                 <el-col :span="2">
                     <el-button type="success">保存为模板</el-button>
                 </el-col>
-                <el-col :span="1">
-                    <el-button plain type="primary">主题</el-button>
-                </el-col>
-                <el-col :span="1">
-                    <el-button plain type="success">设置</el-button>
-                </el-col>
-                <el-col :span="1">
-                    <el-button plain type="info">逻辑</el-button>
-                </el-col>
-                <el-col :span="1">
-                    <el-button plain type="warning">统计</el-button>
-                </el-col>
             </el-row>
         </el-card>
         <div class="main-container">
             <div class="left-menu-container">
-                <el-menu :collapse="isCollapse" class="el-menu-vertical" :router="true" default-active="editor">
-                    <el-menu-item index="editor">
-                        <i class="el-icon-edit" />
-                        <span slot="title">编辑</span>
-                    </el-menu-item>
-                    <el-menu-item index="logic">
-                        <i class="el-icon-menu" />
-                        <span slot="title">逻辑</span>
-                    </el-menu-item>
-                    <el-menu-item index="preview">
-                        <i class="el-icon-view" />
-                        <span slot="title">预览</span>
-                    </el-menu-item>
-                    <el-menu-item index="setting">
-                        <i class="el-icon-video-play" />
-                        <span slot="title">发布</span>
-                    </el-menu-item>
-                    <el-menu-item index="setting">
-                        <i class="el-icon-setting" />
-                        <span slot="title">设置</span>
-                    </el-menu-item>
-                    <el-menu-item index="statistics">
-                        <i class="el-icon-data-line" />
-                        <span slot="title">统计</span>
+                <el-menu :collapse="isCollapse" class="el-menu-vertical"
+                         :default-active="defaultActiveMenu"
+                         @select="menuSelectHandle"
+                >
+                    <el-menu-item v-for="menuItem in menuItemList" :key="menuItem.route" :index="menuItem.route">
+                        <i :class="menuItem.icon" />
+                        <span slot="title">{{ menuItem.title }}</span>
                     </el-menu-item>
                 </el-menu>
-                <i v-if="!isCollapse" class="el-icon-d-arrow-left" @click="isCollapse=!isCollapse" />
-                <i v-else class="el-icon-d-arrow-right" @click="isCollapse=!isCollapse" />
+                <i v-if="!isCollapse" class="el-icon-d-arrow-left" @click="collapseHandle" />
+                <i v-else class="el-icon-d-arrow-right" @click="collapseHandle" />
             </div>
             <div class="right-content-container">
                 <router-view />
@@ -72,7 +43,55 @@ export default {
     components: {},
     data() {
         return {
-            isCollapse: false
+            defaultActiveMenu: 'editor',
+            projectKey: null,
+            isCollapse: false,
+            menuItemList: [
+                {
+                    title: '编辑',
+                    icon: 'el-icon-edit',
+                    route: '/project/form/editor'
+                },
+                {
+                    title: '逻辑',
+                    icon: 'el-icon-menu',
+                    route: '/project/form/logic'
+                }, {
+                    title: '预览',
+                    icon: 'el-icon-view',
+                    route: '/project/form/preview'
+                },
+                {
+                    title: '设置',
+                    icon: 'el-icon-setting',
+                    route: '/project/form/setting'
+                },
+                {
+                    title: '发布',
+                    icon: 'el-icon-video-play',
+                    route: '/project/form/publish'
+                }, {
+                    title: '统计',
+                    icon: 'el-icon-data-line',
+                    route: '/project/form/statistics'
+                }
+            ]
+        }
+    },
+    created() {
+        this.projectKey = this.$route.query.key
+        this.defaultActiveMenu = this.$route.path
+        this.isCollapse = this.$store.state.form.isCollapse
+    },
+    methods: {
+        menuSelectHandle(index) {
+            this.$router.replace({path: index, query: {key: this.projectKey}})
+        },
+        collapseHandle() {
+            let isCollapse = !this.isCollapse
+            this.$store.dispatch('form/setIsCollapse', isCollapse).then(() => {
+                this.isCollapse = isCollapse
+            })
         }
     }
 }
@@ -98,6 +117,7 @@ export default {
         font-weight: 550;
         cursor: pointer;
         color: #000;
+        margin-left: 40px;
         &:hover {
             color: rgb(32, 160, 255);
         }

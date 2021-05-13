@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/form1',
+        path: '/project/form',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/newIndex.vue'),
         children: [

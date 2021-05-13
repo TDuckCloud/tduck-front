@@ -52,6 +52,7 @@ export default {
     methods: {
         onChange(e) {
             console.log(e)
+            console.log(JSON.stringify(this.options))
             this.$emit('change', e)
         }
     }

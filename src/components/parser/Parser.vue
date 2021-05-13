@@ -85,7 +85,8 @@ function renderFrom(h) {
     )
 }
 
-function formBtns() {
+// eslint-disable-next-line no-unused-vars
+function formBtns(h) {
     const {formConfCopy} = this
     let style = {
         'background-color': formConfCopy.submitBtnColor,

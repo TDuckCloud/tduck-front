@@ -539,6 +539,35 @@ export const imageComponents = [
         src: '',
         fit: 'contain',
         alt: ''
+    },
+    {
+        typeId: 'IMAGE',
+        __config__: {
+            label: '图片选择',
+            showLabel: false,
+            labelWidth: null,
+            defaultValue: 1,
+            showDefaultValue: false,
+            showRequired: false,
+            showClearable: false,
+            showRegList: false,
+            tag: 'image-select',
+            tagIcon: 'image',
+            layout: 'colFormItem',
+            span: 24,
+            required: true,
+            regList: [],
+            changeTag: true
+        },
+        multiple: false,
+        options: [{
+            label: '选项2',
+            value: 1
+        }, {
+            label: '选项二',
+            value: 2
+        }],
+        style: {width: '100%'}
     }
 ]
 

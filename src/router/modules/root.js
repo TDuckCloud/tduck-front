@@ -51,15 +51,15 @@ export default [
             }
         ]
     },
-    {
-        path: '/home1',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex')
-    },
+    // {
+    //     path: '/home1',
+    //     meta: {requireLogin: false},
+    //     component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex')
+    // },
     {
         path: '/home',
         meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex'),
         children: [
             {
                 path: '/',
@@ -96,12 +96,12 @@ export default [
                 path: 'template/preview',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/TemplatePreview.vue')
-            },
-            {
-                path: 'form',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index.vue')
             }
+            // {
+            //     path: 'form',
+            //     meta: {requireLogin: true},
+            //     component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index.vue')
+            // }
         ]
     }, {
         path: '/project/preview',

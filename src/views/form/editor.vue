@@ -5,7 +5,7 @@
                 <div class="components-list">
                     <div v-for="(item, listIndex) in leftComponents" :key="listIndex">
                         <div class="components-title">
-                            <svg-icon name="component"/>
+                            <svg-icon name="component" />
                             {{ item.title }}
                         </div>
                         <draggable
@@ -24,7 +24,7 @@
                                 @click="addComponent(element)"
                             >
                                 <div class="components-body">
-                                    <svg-icon :name="element.__config__.tagIcon"/>
+                                    <svg-icon :name="element.__config__.tagIcon" />
                                     {{ element.__config__.label }}
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                             <!--                            </p>-->
                         </el-col>
                     </el-row>
-                    <el-divider/>
+                    <el-divider />
                     <el-form
                         :disabled="formConf.disabled"
                         :label-position="formConf.labelPosition"
@@ -128,11 +128,9 @@ export default {
         RightPanel,
         DraggableItem
     },
-    props: {
-        projectKey: null
-    },
     data() {
         return {
+
             idGlobal,
             formConf: null,
             editDescription: true,
@@ -149,6 +147,7 @@ export default {
             activeData: drawingDefalut ? drawingDefalut[0] : null,
             saveDrawingListDebounce: debounce(340, saveDrawingList),
             saveIdGlobalDebounce: debounce(340, saveIdGlobal),
+            projectKey: null,
             leftComponents: [
                 {
                     title: '输入型组件',
@@ -204,11 +203,11 @@ export default {
         // 复制对象 避免修改改变原始对象
         this.formConf = JSON.parse(JSON.stringify(formConf))
         // 项目key
-        let projectKey = this.projectKey
+        this.projectKey = this.$route.query.key
         // 从服务端获取
         this.queryProjectItems()
         // 获取表单配置
-        this.$api.get(`/user/project/${projectKey}`).then(res => {
+        this.$api.get(`/user/project/${this.projectKey}`).then(res => {
             this.formConf.title = res.data.name
             this.formConf.description = res.data.describe
         })

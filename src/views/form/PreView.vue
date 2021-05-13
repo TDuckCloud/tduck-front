@@ -40,11 +40,9 @@ export default {
     components: {
         ProjectForm
     },
-    props: {
-        projectKey: null
-    },
     data() {
         return {
+            projectKey: null,
             mobilePreviewUrl: '',
             projectConfig: {
                 projectKey: '',
@@ -53,6 +51,7 @@ export default {
         }
     },
     mounted() {
+        this.projectKey = this.$route.query.key
         let url = window.location.protocol + '//' + window.location.host
         this.mobilePreviewUrl = `${url}/project/view?key=${this.projectKey}`
         this.$set(this.projectConfig, 'projectKey', this.projectKey)
@@ -64,7 +63,7 @@ export default {
 
 .preview-container {
     margin: 0;
-    padding: 0;
+    padding-top: 30px;
     background-color: #f7f7f7;
 }
 /deep/ .el-tabs__header {

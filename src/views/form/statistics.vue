@@ -155,11 +155,9 @@ const fixedDefaultLabelFormColumn = {serialNumber: '提交序号', submitAddress
 export default {
     name: 'ProjectStatistics',
     components: {},
-    props: {
-        projectKey: null
-    },
     data() {
         return {
+            projectKey: null,
             customColumnDialogVisible: false,
             // 固定自定义列 如序号等
             fixedCustomColumns: fixedDefaultFormColumn,
@@ -187,6 +185,7 @@ export default {
         }
     },
     mounted() {
+        this.projectKey = this.$route.query.key
         this.queryConditions.projectKey = this.projectKey
         this.queryProjectResult()
         this.queryProjectItems()
@@ -280,7 +279,7 @@ export default {
 .statistics-container {
     width: 100%;
     height: 100%;
-    padding: 0;
+    padding-top: 30px;
     min-height: 85vh;
     background-color: #f7f7f7;
 }

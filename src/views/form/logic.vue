@@ -134,11 +134,9 @@ import {jsonSimpleClone} from '@/utils/index'
 export default {
     name: 'ProjectLogic',
     components: {},
-    props: {
-        projectKey: null
-    },
     data() {
         return {
+            projectKey: '',
             // 默认逻辑项
             defaultLogicItem: {
                 formItemId: null,
@@ -198,6 +196,7 @@ export default {
         }
     },
     mounted() {
+        this.projectKey = this.$route.query.key
         this.queryProjectItems()
         this.queryProjectLogics()
     },
