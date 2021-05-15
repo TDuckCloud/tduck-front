@@ -35,6 +35,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/publish')
             },
             {
+                path: 'theme',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/theme')
+            },
+            {
                 path: 'statistics',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/statistics')

@@ -56,10 +56,10 @@ export default {
                     title: '逻辑',
                     icon: 'el-icon-menu',
                     route: '/project/form/logic'
-                }, {
-                    title: '预览',
+                },  {
+                    title: '外观',
                     icon: 'el-icon-view',
-                    route: '/project/form/preview'
+                    route: '/project/form/theme'
                 },
                 {
                     title: '设置',

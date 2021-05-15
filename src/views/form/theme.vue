@@ -2,7 +2,7 @@
     <div class="theme-container">
         <el-row>
             <el-col :span="5" :offset="1">
-                <el-scrollbar style="height: 77vh;">
+                <el-scrollbar>
                     <div class="left-container">
                         <p class="theme-title">外观主题</p>
                         <el-row>
@@ -404,9 +404,9 @@ export default {
     line-height: 20px;
     border-radius: 7px;
     text-align: center;
-    padding: 30px;
     border: 1px solid rgba(255, 255, 255, 100);
     background-color: white;
+    height: 90vh;
 }
 .style-btn {
     line-height: 30px;

@@ -69,7 +69,7 @@
                 :with-header="false"
             >
                 <el-scrollbar style="height: 100%;">
-                    <el-card class="box-card">
+                    <el-card class="detail-container">
                         <div slot="header" class="clearfix">
                             <span>提交详情</span>
                         </div>
@@ -295,6 +295,9 @@ export default {
 .result-table-view {
     width: 80%;
     margin: 6px auto;
+}
+.detail-container {
+    padding: 10px;
 }
 .filter-table-view {
     width: 80%;

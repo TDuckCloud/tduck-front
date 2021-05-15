@@ -80,38 +80,6 @@ export const inputComponents = [
         readonly: false,
         disabled: false
     },
-    // },
-    // {
-    //     typeId: 3,
-    //     __config__: {
-    //         label: '密码',
-    //         showLabel: true,
-    //         labelWidth: null,
-    //         changeTag: true,
-    //         tag: 'el-input',
-    //         tagIcon: 'password',
-    //         defaultValue: undefined,
-    //         layout: 'colFormItem',
-    //         span: 24,
-    //         required: true,
-    //         regList: [],
-    //         document: 'https://element.eleme.cn/#/zh-CN/component/input'
-    //     },
-    //     __slot__: {
-    //         prepend: '',
-    //         append: ''
-    //     },
-    //     placeholder: '请输入',
-    //     'show-password': true,
-    //     style: {width: '100%'},
-    //     clearable: true,
-    //     'prefix-icon': '',
-    //     'suffix-icon': '',
-    //     maxlength: null,
-    //     'show-word-limit': false,
-    //     readonly: false,
-    //     disabled: false
-    // },
     {
         typeId: 'NUMBER_INPUT',
         __config__: {
@@ -224,6 +192,7 @@ export const selectComponents = [
             label: '单选框组',
             labelWidth: null,
             showLabel: true,
+            showRegList: false,
             tag: 'el-radio-group',
             tagIcon: 'radio',
             changeTag: true,
@@ -258,6 +227,7 @@ export const selectComponents = [
             defaultValue: [],
             span: 24,
             showLabel: true,
+            showRegList: false,
             labelWidth: null,
             layout: 'colFormItem',
             optionType: 'default',
@@ -290,6 +260,7 @@ export const selectComponents = [
             tagIcon: 'switch',
             defaultValue: false,
             span: 24,
+            showRegList: false,
             showLabel: true,
             labelWidth: null,
             layout: 'colFormItem',
@@ -314,6 +285,7 @@ export const selectComponents = [
             tag: 'el-slider',
             tagIcon: 'slider',
             defaultValue: null,
+            showRegList: false,
             span: 24,
             showLabel: true,
             layout: 'colFormItem',
@@ -339,6 +311,7 @@ export const selectComponents = [
             defaultValue: null,
             span: 24,
             showLabel: true,
+            showRegList: false,
             layout: 'colFormItem',
             labelWidth: null,
             required: true,
@@ -414,6 +387,7 @@ export const selectComponents = [
             tag: 'el-date-picker',
             tagIcon: 'date-range',
             defaultValue: null,
+            showRegList: false,
             span: 24,
             showLabel: true,
             labelWidth: null,
@@ -443,6 +417,7 @@ export const selectComponents = [
             defaultValue: 0,
             span: 24,
             showLabel: true,
+            showRegList: false,
             labelWidth: null,
             layout: 'colFormItem',
             required: true,
@@ -466,6 +441,7 @@ export const selectComponents = [
             span: 24,
             defaultValue: null,
             showLabel: true,
+            showRegList: false,
             labelWidth: null,
             layout: 'colFormItem',
             required: true,
@@ -487,6 +463,7 @@ export const selectComponents = [
             layout: 'colFormItem',
             defaultValue: null,
             showLabel: true,
+            showRegList: false,
             labelWidth: null,
             required: true,
             span: 24,
@@ -541,14 +518,41 @@ export const imageComponents = [
         alt: ''
     },
     {
-        typeId: 'IMAGE',
+        typeId: 'IMAGE_CAROUSEL',
         __config__: {
-            label: '图片选择',
-            showLabel: false,
+            label: '图片轮播',
+            showLabel: true,
             labelWidth: null,
-            defaultValue: 1,
+            defaultValue: null,
             showDefaultValue: false,
             showRequired: false,
+            showClearable: false,
+            showRegList: false,
+            tag: 'el-carousel',
+            tagIcon: 'image',
+            layout: 'colFormItem',
+            span: 24,
+            required: true,
+            regList: [],
+            changeTag: true
+        },
+        __slot__: {
+            options: [{
+                label: '文字',
+                image: 'https://qiniu.smileyi.top/757b505cfd34c64c85ca5b5690ee5293/b128cf03901945d6b6df46cf6acbfa01.jpg'
+            }]
+        },
+        style: {width: '100%'}
+    },
+    {
+        typeId: 'IMAGE_SELECT',
+        __config__: {
+            label: '图片选择',
+            showLabel: true,
+            labelWidth: null,
+            defaultValue: null,
+            showDefaultValue: true,
+            showRequired: true,
             showClearable: false,
             showRegList: false,
             tag: 'image-select',
@@ -560,128 +564,12 @@ export const imageComponents = [
             changeTag: true
         },
         multiple: false,
-        options: [{
-            label: '选项2',
-            value: 1
-        }, {
-            label: '选项二',
-            value: 2
-        }],
+        __slot__: {
+            options: [{
+                label: '选项1',
+                value: 1
+            }]
+        },
         style: {width: '100%'}
     }
 ]
-
-// // 布局型组件 【左面板】
-// export const layoutComponents = [
-//     {
-//         __config__: {
-//             layout: 'rowFormItem',
-//             tagIcon: 'row',
-//             label: '行容器',
-//             layoutTree: true,
-//             document: 'https://element.eleme.cn/#/zh-CN/component/layout#row-attributes'
-//         },
-//         type: 'default',
-//         justify: 'start',
-//         align: 'top'
-//     },
-//     {
-//         __config__: {
-//             label: '按钮',
-//             showLabel: true,
-//             changeTag: true,
-//             labelWidth: null,
-//             tag: 'el-button',
-//             tagIcon: 'button',
-//             span: 24,
-//             layout: 'colFormItem',
-//             document: 'https://element.eleme.cn/#/zh-CN/component/button'
-//         },
-//         __slot__: {
-//             default: '主要按钮'
-//         },
-//         type: 'primary',
-//         icon: 'el-icon-search',
-//         round: false,
-//         size: 'medium',
-//         plain: false,
-//         circle: false,
-//         disabled: false
-//     },
-//     {
-//         __config__: {
-//             layout: 'colFormItem',
-//             tagIcon: 'table',
-//             tag: 'el-table',
-//             document: 'https://element.eleme.cn/#/zh-CN/component/table',
-//             span: 24,
-//             formId: 101,
-//             renderKey: 1595761764203,
-//             componentName: 'row101',
-//             showLabel: true,
-//             changeTag: true,
-//             labelWidth: null,
-//             label: '表格[开发中]',
-//             children: [{
-//                 __config__: {
-//                     layout: 'raw',
-//                     tag: 'el-table-column',
-//                     renderKey: 15957617660153
-//                 },
-//                 prop: 'date',
-//                 label: '日期'
-//             }, {
-//                 __config__: {
-//                     layout: 'raw',
-//                     tag: 'el-table-column',
-//                     renderKey: 15957617660152
-//                 },
-//                 prop: 'address',
-//                 label: '地址'
-//             }, {
-//                 __config__: {
-//                     layout: 'raw',
-//                     tag: 'el-table-column',
-//                     renderKey: 15957617660151
-//                 },
-//                 prop: 'name',
-//                 label: '名称'
-//             }, {
-//                 __config__: {
-//                     layout: 'raw',
-//                     tag: 'el-table-column',
-//                     renderKey: 1595774496335,
-//                     children: [
-//                         {
-//                             __config__: {
-//                                 label: '按钮',
-//                                 tag: 'el-button',
-//                                 tagIcon: 'button',
-//                                 layout: 'raw',
-//                                 renderKey: 1595779809901
-//                             },
-//                             __slot__: {
-//                                 default: '主要按钮'
-//                             },
-//                             type: 'primary',
-//                             icon: 'el-icon-search',
-//                             round: false,
-//                             size: 'medium'
-//                         }
-//                     ]
-//                 },
-//                 label: '操作'
-//             }]
-//         },
-//         data: [{
-//             date: '2016-05-02',
-//             name: '王小虎',
-//             address: '上海市普陀区金沙江路 1518 弄'
-//         }],
-//         border: true,
-//         type: 'default',
-//         justify: 'start',
-//         align: 'top'
-//     }
-// ]
-//

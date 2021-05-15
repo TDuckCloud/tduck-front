@@ -82,6 +82,7 @@ export default {
 .el-radio-group,
 .el-checkbox-group {
     display: flex !important;
+    flex-wrap: wrap;
 }
 .img-radio-item {
     display: flex;

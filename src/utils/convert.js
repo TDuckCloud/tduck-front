@@ -168,6 +168,15 @@ const dataParams = {
     'IMAGE': {
         'src': 'src',
         'alt': 'alt'
+    },
+    // 图片选择
+    'IMAGE_SELECT': {
+        'options': '__slot__.options',
+        'multiple': 'multiple'
+    },
+    // 图片轮播
+    'IMAGE_CAROUSEL': {
+        'options': '__slot__.options'
     }
 }
 

@@ -507,9 +507,6 @@ export default {
 .code-input {
     width: 150px;
 }
-.width-full {
-    width: 100%;
-}
 .account-login-form {
     text-align: left;
 }

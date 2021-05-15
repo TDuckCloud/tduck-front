@@ -75,7 +75,6 @@
 
 <script>
 import VueQr from 'vue-qr'
-import {getCurrentDomain} from '@/utils'
 
 export default {
     name: 'ProjectPublish',
@@ -145,9 +144,7 @@ export default {
             return new Blob([uInt8Array], {type: contentType})
         },
         toFeedbackPageHandle() {
-            let currentDomain = getCurrentDomain()
-            let url = `${currentDomain}/project/form?key=${this.projectKey}&active=5`
-            window.location.href = url
+            this.$router.replace({path: '/project/form/statistics', query: {key: this.projectKey}})
         }
     }
 

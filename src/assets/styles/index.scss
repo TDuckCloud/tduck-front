@@ -87,15 +87,20 @@ div:focus {
 .flex-row {
     display: flex;
     flex-direction: row;
+    box-sizing: border-box;
 }
 .flex-column {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 .desc-text {
     color: rgba(155, 155, 155, 100);
     font-size: 14px;
     text-align: left;
+}
+.width-full {
+    width: 100% !important;
 }
 .text-overflow {
     overflow: hidden;
