@@ -7,7 +7,7 @@
             <el-scrollbar class="right-scrollbar">
                 <!-- 组件属性 -->
                 <el-form v-show="currentTab==='field' && showField" size="small" label-width="90px">
-                    <el-form-item v-if="activeData.__config__.changeTag" label="组件类型">
+                    <el-form-item v-if="activeData.__config__.changeTag" label="组件类型" >
                         <el-select
                             v-model="activeData.__config__.tagIcon"
                             placeholder="请选择组件类型"
@@ -365,7 +365,7 @@
                     </template>
 
                     <template
-                        v-if="['image-select','el-carousel'].indexOf(activeData.__config__.tag) > -1"
+                        v-if="['el-carousel'].indexOf(activeData.__config__.tag) > -1"
                     >
                         <el-divider>选项</el-divider>
                         <draggable
@@ -397,6 +397,64 @@
                                             :on-success="(response, file, fileList)=>{
                                                 item.image = response.data
                                                 $set(activeData.__slot__.options,index,item)
+                                                closeUploadProgressHandle()
+                                            }"
+                                            :on-progress="uploadProgressHandle"
+                                            :action="getUploadUrl"
+                                            :show-file-list="false">
+                                            <div class=" select-line-icon" slot="trigger">
+                                                <i class="el-icon-upload"/>
+                                            </div>
+                                        </el-upload>
+                                    </div>
+                                </div>
+                            </div>
+                        </draggable>
+                        <div style="margin-left: 20px;">
+                            <el-button
+                                style="padding-bottom: 0;"
+                                icon="el-icon-circle-plus-outline"
+                                type="text"
+                                @click="addImageCarouselItem "
+                            >
+                                添加选项
+                            </el-button>
+                        </div>
+                        <el-divider/>
+                    </template>
+                    <template
+                        v-if="['image-select'].indexOf(activeData.__config__.tag) > -1"
+                    >
+                        <el-divider>选项</el-divider>
+                        <draggable
+                            :list="activeData.options"
+                            :animation="340"
+                            group="selectItem"
+                            handle=".option-drag"
+                        >
+                            <div v-for="(item, index) in activeData.options" :key="index" class="select-item">
+                                <div class="select-line-icon option-drag">
+                                    <i class="el-icon-s-operation"/>
+                                </div>
+                                <div class="width-full">
+                                    <div class="flex-row">
+                                        <el-input v-model="item.label" placeholder="选项名" size="small"/>
+                                        <div class="close-btn select-line-icon"
+                                             @click="activeData.options.splice(index, 1)"
+                                        >
+                                            <i class="el-icon-remove-outline"/>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row">
+                                        <el-input v-model="item.image" placeholder="图片" size="small"/>
+                                        <el-upload
+                                            ref="logoUpload"
+                                            style="text-align: center;"
+                                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                            :headers="getUploadHeader"
+                                            :on-success="(response, file, fileList)=>{
+                                                item.image = response.data
+                                                $set(activeData.options,index,item)
                                                 closeUploadProgressHandle()
                                             }"
                                             :on-progress="uploadProgressHandle"
@@ -617,6 +675,22 @@
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.tag === 'el-select'" label="是否多选">
                         <el-switch v-model="activeData.multiple" @change="multipleChange"/>
+                    </el-form-item>
+                    <el-form-item v-if="activeData['color'] !== undefined" label="颜色">
+                        <el-color-picker v-model="activeData['color']"/>
+                    </el-form-item>
+                    <el-form-item v-if="activeData['textAlign'] !== undefined" label="颜色">
+                        <el-radio-group v-model="activeData.textAlign">
+                            <el-radio-button label="left">
+                                左对齐
+                            </el-radio-button>
+                            <el-radio-button label="center">
+                                居中
+                            </el-radio-button>
+                            <el-radio-button label="right">
+                                右对齐
+                            </el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.tag === 'el-image'" label="图片地址">
                         <el-input v-model="activeData.src" placeholder="请输入图片url地址"/>
@@ -962,6 +1036,13 @@ export default {
             })
         },
         addImageSelectItem() {
+            this.activeData.options.push({
+                label: '',
+                image: '',
+                value: this.activeData.options.length + 1
+            })
+        },
+        addImageCarouselItem() {
             this.activeData.__slot__.options.push({
                 label: '',
                 image: '',

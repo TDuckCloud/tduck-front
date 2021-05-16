@@ -1,246 +1,238 @@
 <template>
     <div class="theme-container">
-        <el-row>
-            <el-col :span="5" :offset="1">
-                <el-scrollbar>
-                    <div class="left-container">
-                        <p class="theme-title">外观主题</p>
-                        <el-row>
-                            <el-col :span="3">
-                                <span class="theme-prompt-text">风格</span>
-                            </el-col>
-                            <el-col
-                                v-for="item in styleList"
-                                :key="item.key" :span="3"
-                            >
-                                <span
-                                    :class="{'style-btn-active':activeStyle==item.key}"
-                                    class="style-btn" @click="activeStyleHandle(item)"
-                                >{{ item.label }}</span>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <el-col :span="3">
-                                <span class="theme-prompt-text">颜色</span>
-                            </el-col>
-                            <el-col :span="3">
-                                <span
-                                    :class="{'style-btn-active':activeColor==''}"
-                                    class="style-btn" @click="activeColorHandle('')"
-                                >全部</span>
-                            </el-col>
-                            <el-col
-                                v-for="c in colorList"
-                                :key="c" :class="{'style-btn-active':activeColor==c}"
-                                :style="{backgroundColor: c}"
-                                class="color-btn"
-                                :span="3" @click.native="activeColorHandle(c)"
+        <div class="left-container">
+            <el-scrollbar class="left-scrollbar-container">
+                <p class="theme-title">外观主题</p>
+                <el-row>
+                    <el-col :span="3">
+                        <span class="theme-prompt-text">风格</span>
+                    </el-col>
+                    <el-col
+                        v-for="item in styleList"
+                        :key="item.key" :span="3"
+                    >
+                        <span
+                            :class="{'style-btn-active':activeStyle==item.key}"
+                            class="style-btn" @click="activeStyleHandle(item)"
+                        >{{ item.label }}</span>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="3">
+                        <span class="theme-prompt-text">颜色</span>
+                    </el-col>
+                    <el-col :span="3">
+                        <span
+                            :class="{'style-btn-active':activeColor==''}"
+                            class="style-btn" @click="activeColorHandle('')"
+                        >全部</span>
+                    </el-col>
+                    <el-col
+                        v-for="c in colorList"
+                        :key="c" :class="{'style-btn-active':activeColor==c}"
+                        :span="3"
+                        :style="{backgroundColor: c}"
+                        class="color-btn" @click.native="activeColorHandle(c)"
+                    />
+                </el-row>
+                <el-row>
+                    <el-col
+                        v-for="t in themeList"
+                        :key="t.id"
+                        :span="8" class="theme-img-view"
+                        @click.native="activeThemeHandle(t)"
+                    >
+                        <p :class="{'head-list-view-select':activeTheme.id==t.id}">
+                            <el-image
+                                :class="{'head-list-img-active':activeTheme.id==t.id}"
+                                :src="t.headImgUrl"
+                                class="head-list-img"
+                                fit="cover"
+                                style="width: 100px; height: 100px;"
                             />
-                        </el-row>
-                        <el-row>
-                            <el-col
-                                v-for="t in themeList"
-                                :key="t.id"
-                                class="theme-img-view" :span="8"
-                                @click.native="activeThemeHandle(t)"
-                            >
-                                <p :class="{'head-list-view-select':activeTheme.id==t.id}">
-                                    <el-image
-                                        :class="{'head-list-img-active':activeTheme.id==t.id}"
-                                        class="head-list-img"
-                                        style="width: 100px; height: 100px;"
-                                        :src="t.headImgUrl"
-                                        fit="cover"
-                                    />
-                                </p>
-                            </el-col>
-                        </el-row>
-                    </div>
-                </el-scrollbar>
-            </el-col>
-            <el-col :offset="0" :span="14">
-                <pre-view :key="projectFormKey" :project-key="projectKey" />
-            </el-col>
-            <el-col :span="4">
-                <div class="right-container">
-                    <p class="right-title">外观设置</p>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">添加logo</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="showSettings.logoSetting"
-                            />
-                        </el-col>
-                    </el-row>
-                    <el-row v-if="showSettings.logoSetting" type="flex" align="middle">
-                        <el-col :span="6">
-                            <span class="option-line-sub-title">logo设置</span>
-                        </el-col>
-                        <el-col :span="4">
-                            <img
-                                v-if="userProjectTheme.logoImg"
-                                style="width: 30px; height: 30px;"
-                                :src="userProjectTheme.logoImg"
-                            >
-                        </el-col>
-                        <el-col :span="8" :offset="6">
-                            <el-upload
-                                ref="logoUpload"
-                                accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
-                                :headers="getUploadHeader"
-                                :on-success="uploadLogoHandle"
-                                :action="getUploadUrl"
-                                :show-file-list="false"
-                            >
-                                <el-button slot="trigger" size="small" type="text">上传Logo</el-button>
-                            </el-upload>
-                        </el-col>
-                    </el-row>
-                    <el-row v-if="showSettings.logoSetting" type="flex" align="middle">
-                        <el-col :span="6">
-                            <span class="option-line-sub-title">logo位置</span>
-                        </el-col>
-                        <el-col :span="18">
-                            <el-radio-group
-                                v-model="userProjectTheme.logoPosition"
-                                size="mini" @change="saveUserTheme"
-                            >
-                                <el-radio-button label="left">左对齐</el-radio-button>
-                                <el-radio-button label="center">居中</el-radio-button>
-                                <el-radio-button label="right">右对齐</el-radio-button>
-                            </el-radio-group>
-                        </el-col>
-                    </el-row>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">背景设置</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="showSettings.backgroundSetting"
-                                @change="()=>{
-                                    this.userProjectTheme.backgroundImg=''
-                                    this.userProjectTheme.backgroundColor=''
-                                    this.saveUserTheme()
-                                }"
-                            />
-                        </el-col>
-                    </el-row>
-                    <el-row v-if="showSettings.backgroundSetting">
-                        <el-row type="flex" align="middle">
-                            <el-col :span="8">
-                                <span class="option-line-sub-title">背景类型</span>
-                            </el-col>
-                            <el-col :spvan="18">
-                                <el-radio-group
-                                    v-model="showSettings.backgroundType"
-                                    size="mini" @change="()=>{
-                                        this.userProjectTheme.backgroundImg=''
-                                        this.userProjectTheme.backgroundColor=''
-                                    }"
-                                >
-                                    <el-radio-button label="color">颜色</el-radio-button>
-                                    <el-radio-button label="img">图片</el-radio-button>
-                                </el-radio-group>
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                    <el-row v-if="showSettings.backgroundSetting&&showSettings.backgroundType=='color'">
-                        <el-row type="flex" align="middle">
-                            <el-col :span="8">
-                                <span class="option-line-sub-title">选择颜色</span>
-                            </el-col>
-                            <el-col :spvan="18">
-                                <el-color-picker
-                                    v-model=" userProjectTheme.backgroundColor"
-                                    size="mini"
-                                    @change="saveUserTheme"
-                                />
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                    <el-row v-if="showSettings.backgroundType=='img'">
-                        <el-row type="flex" align="middle">
-                            <el-col :span="8">
-                                <span class="option-line-sub-title">选择图片</span>
-                            </el-col>
-                            <el-col :spvan="18">
-                                <el-upload
-                                    ref="upload"
-                                    class="upload-demo"
-                                    accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
-                                    :headers="getUploadHeader"
-                                    :on-success="uploadBackgroundHandle"
-                                    :action="getUploadUrl"
-                                    :show-file-list="false"
-                                >
-                                    <el-button slot="trigger" size="small" type="text">上传背景</el-button>
-                                </el-upload>
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">按钮设置</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="showSettings.btnSetting"
-                            />
-                        </el-col>
-                    </el-row>
-                    <el-row v-if="showSettings.btnSetting">
-                        <el-row type="flex" align="middle">
-                            <el-col :span="12">
-                                <span class="option-line-sub-title">按钮提示文字</span>
-                            </el-col>
-                            <el-col :spvan="10">
-                                <el-input v-model="userProjectTheme.submitBtnText"
-                                          style="width: 80%;"
-                                          placeholder="请输入内容"
-                                          size="mini" @change="saveUserTheme"
-                                />
-                            </el-col>
-                        </el-row>
-                    </el-row>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">显示标题</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="userProjectTheme.showTitle"
-                                @change="saveUserTheme"
-                            />
-                        </el-col>
-                    </el-row>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">显示描述</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="userProjectTheme.showDescribe"
-                                @change="saveUserTheme"
-                            />
-                        </el-col>
-                    </el-row>
-                    <el-row class="option-line-view" type="flex" align="middle">
-                        <el-col :span="8">
-                            <span class="option-line-title">显示序号</span>
-                        </el-col>
-                        <el-col :span="8" :offset="8">
-                            <el-switch
-                                v-model="userProjectTheme.showNumber"
-                                @change="saveUserTheme"
-                            />
-                        </el-col>
-                    </el-row>
-                </div>
-            </el-col>
-        </el-row>
+                        </p>
+                    </el-col>
+                </el-row>
+            </el-scrollbar>
+        </div>
+        <pre-view :key="projectFormKey" :project-key="projectKey" />
+        <div class="right-container">
+            <p class="right-title">外观设置</p>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">添加logo</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="showSettings.logoSetting"
+                    />
+                </el-col>
+            </el-row>
+            <el-row v-if="showSettings.logoSetting" align="middle" type="flex">
+                <el-col :span="6">
+                    <span class="option-line-sub-title">logo设置</span>
+                </el-col>
+                <el-col :span="4">
+                    <img
+                        v-if="userProjectTheme.logoImg"
+                        :src="userProjectTheme.logoImg"
+                        style="width: 30px; height: 30px;"
+                    >
+                </el-col>
+                <el-col :offset="6" :span="8">
+                    <el-upload
+                        ref="logoUpload"
+                        :action="getUploadUrl"
+                        :headers="getUploadHeader"
+                        :on-success="uploadLogoHandle"
+                        :show-file-list="false"
+                        accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                    >
+                        <el-button slot="trigger" size="small" type="text">上传Logo</el-button>
+                    </el-upload>
+                </el-col>
+            </el-row>
+            <el-row v-if="showSettings.logoSetting" align="middle" type="flex">
+                <el-col :span="6">
+                    <span class="option-line-sub-title">logo位置</span>
+                </el-col>
+                <el-col :span="18">
+                    <el-radio-group
+                        v-model="userProjectTheme.logoPosition"
+                        size="mini" @change="saveUserTheme"
+                    >
+                        <el-radio-button label="left">左对齐</el-radio-button>
+                        <el-radio-button label="center">居中</el-radio-button>
+                        <el-radio-button label="right">右对齐</el-radio-button>
+                    </el-radio-group>
+                </el-col>
+            </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">背景设置</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="showSettings.backgroundSetting"
+                        @change="()=>{
+                            this.userProjectTheme.backgroundImg=''
+                            this.userProjectTheme.backgroundColor=''
+                            this.saveUserTheme()
+                        }"
+                    />
+                </el-col>
+            </el-row>
+            <el-row v-if="showSettings.backgroundSetting">
+                <el-row align="middle" type="flex">
+                    <el-col :span="8">
+                        <span class="option-line-sub-title">背景类型</span>
+                    </el-col>
+                    <el-col :spvan="18">
+                        <el-radio-group
+                            v-model="showSettings.backgroundType"
+                            size="mini" @change="()=>{
+                                this.userProjectTheme.backgroundImg=''
+                                this.userProjectTheme.backgroundColor=''
+                            }"
+                        >
+                            <el-radio-button label="color">颜色</el-radio-button>
+                            <el-radio-button label="img">图片</el-radio-button>
+                        </el-radio-group>
+                    </el-col>
+                </el-row>
+            </el-row>
+            <el-row v-if="showSettings.backgroundSetting&&showSettings.backgroundType=='color'">
+                <el-row align="middle" type="flex">
+                    <el-col :span="8">
+                        <span class="option-line-sub-title">选择颜色</span>
+                    </el-col>
+                    <el-col :spvan="18">
+                        <el-color-picker
+                            v-model=" userProjectTheme.backgroundColor"
+                            size="mini"
+                            @change="saveUserTheme"
+                        />
+                    </el-col>
+                </el-row>
+            </el-row>
+            <el-row v-if="showSettings.backgroundType=='img'">
+                <el-row align="middle" type="flex">
+                    <el-col :span="8">
+                        <span class="option-line-sub-title">选择图片</span>
+                    </el-col>
+                    <el-col :spvan="18">
+                        <el-upload
+                            ref="upload"
+                            :action="getUploadUrl"
+                            :headers="getUploadHeader"
+                            :on-success="uploadBackgroundHandle"
+                            :show-file-list="false"
+                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                            class="upload-demo"
+                        >
+                            <el-button slot="trigger" size="small" type="text">上传背景</el-button>
+                        </el-upload>
+                    </el-col>
+                </el-row>
+            </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">按钮设置</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="showSettings.btnSetting"
+                    />
+                </el-col>
+            </el-row>
+            <el-row v-if="showSettings.btnSetting">
+                <el-row align="middle" type="flex">
+                    <el-col :span="12">
+                        <span class="option-line-sub-title">按钮提示文字</span>
+                    </el-col>
+                    <el-col :spvan="10">
+                        <el-input v-model="userProjectTheme.submitBtnText"
+                                  placeholder="请输入内容"
+                                  size="mini"
+                                  style="width: 80%;" @change="saveUserTheme"
+                        />
+                    </el-col>
+                </el-row>
+            </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">显示标题</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="userProjectTheme.showTitle"
+                        @change="saveUserTheme"
+                    />
+                </el-col>
+            </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">显示描述</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="userProjectTheme.showDescribe"
+                        @change="saveUserTheme"
+                    />
+                </el-col>
+            </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">显示序号</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="userProjectTheme.showNumber"
+                        @change="saveUserTheme"
+                    />
+                </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 
@@ -399,14 +391,26 @@ export default {
     height: 100%;
     background-color: #f7f7f7;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: center;
 }
 .left-container {
     line-height: 20px;
-    border-radius: 7px;
     text-align: center;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 100);
     background-color: white;
-    height: 90vh;
+    width: 20%;
+    height: calc(100vh - 60px);
+}
+.left-scrollbar-container {
+    height: 100%;
+    margin: 20px;
+}
+::v-deep .el-scrollbar__wrap {
+    overflow-x: hidden !important;
 }
 .style-btn {
     line-height: 30px;
@@ -416,6 +420,9 @@ export default {
     font-size: 14px;
     text-align: center;
     border: 1px solid #eaeaea;
+}
+.preview-container {
+    width: 70%;
 }
 .theme-title {
     color: rgba(16, 16, 16, 100);
@@ -470,13 +477,14 @@ export default {
 }
 .right-container {
     width: 310px;
-    height: 78vh;
+    height: calc(100vh - 60px);
     line-height: 20px;
     text-align: center;
     padding: 22px;
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(255, 255, 255, 100);
     background-color: white;
+    margin-right: 5px;
 }
 .right-title {
     color: rgba(16, 16, 16, 100);

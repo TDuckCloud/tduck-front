@@ -1,46 +1,25 @@
 <template>
     <div>
-        <image-select v-model="radio" :options="options" :multiple="false" />
-        <el-radio-group v-model="radio">
-            <el-radio :label="3">备选项</el-radio>
-            <el-radio :label="6">备选项</el-radio>
-            <el-radio :label="9">备选项</el-radio>
-        </el-radio-group>
+        <sign-pad />
     </div>
 </template>
 
 <script>
+import SignPad from '@/components/form/SignPad'
 
 export default {
     name: 'App',
     components: {
+        SignPad
     },
     data() {
         return {
-            options: [{
-                'label': '选项一',
-                'value': 1,
-                'image': 'https://freebrio.oss-cn-shanghai.aliyuncs.com/05f1fb3e58764a48a5094f0bc9351bd3.png'
-            }, {
-                'label': '选项二',
-                'value': 2,
-                'image': 'https://freebrio.oss-cn-shanghai.aliyuncs.com/062cf61ad5724ac3bc99f0341b3770da.png'
-            }],
-            radio: [1]
         }
     },
     mounted() {
-
     },
     methods: {
-        success(params) {
-            // eslint-disable-next-line no-debugger
-            // params 返回的二次验证参数, 和登录参数一起回传给登录接口，方便后台进行二次验证
-            console.log(params)
-        },
-        useVerify() {
-            this.$refs.verify.show()
-        }
+
     }
 }
 </script>

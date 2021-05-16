@@ -1,5 +1,5 @@
 <template>
-    <p>
+    <p :style="{'color':color,'text-align':textAlign}">
         {{ value }}
     </p>
 </template>
@@ -11,10 +11,16 @@ export default {
         value: {
             type: String,
             default: ''
+        },
+        color: {
+            type: String,
+            default: '#000000'
+        },
+        textAlign: {
+            type: String,
+            default: 'left'
         }
     },
-    methods: {
-
-    }
+    methods: {}
 }
 </script>

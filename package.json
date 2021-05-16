@@ -22,6 +22,7 @@
         "file-saver": "^2.0.2",
         "js-cookie": "^2.2.1",
         "nprogress": "^0.2.0",
+        "signature_pad": "^3.0.0-beta.4",
         "ua-parser-js": "^0.7.23",
         "vue": "^2.6.12",
         "vue-clipboard2": "^0.3.1",

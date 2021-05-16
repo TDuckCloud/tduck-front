@@ -3,7 +3,7 @@
  *
  */
 import _ from 'lodash'
-import {imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
+import {assistComponents, imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
 
 /**
  * 表单json转换为后台需要的对象
@@ -48,7 +48,7 @@ export function dbDataConvertForItemJson(data) {
     }
     if (!typeMap.size > 0) {
         // 根据类型获取默认数据
-        _.concat(inputComponents, selectComponents, imageComponents).forEach(item => {
+        _.concat(inputComponents, selectComponents, imageComponents, assistComponents).forEach(item => {
             typeMap.set(item.typeId, item)
         })
     }
@@ -171,7 +171,7 @@ const dataParams = {
     },
     // 图片选择
     'IMAGE_SELECT': {
-        'options': '__slot__.options',
+        'options': 'options',
         'multiple': 'multiple'
     },
     // 图片轮播

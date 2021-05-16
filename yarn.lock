@@ -9528,6 +9528,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
 
+signature_pad@^3.0.0-beta.4:
+  version "3.0.0-beta.4"
+  resolved "https://registry.npm.taobao.org/signature_pad/download/signature_pad-3.0.0-beta.4.tgz#2a8441559e9f439e7f2f525da3ee630ef973ecf6"
+  integrity sha1-KoRBVZ6fQ55/L1Jdo+5jDvlz7PY=
+
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.npm.taobao.org/simple-swizzle/download/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"

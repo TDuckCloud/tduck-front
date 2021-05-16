@@ -489,7 +489,7 @@ export const selectComponents = [
     }
 ]
 
-// 布局型组件 【左面板】
+// 图片型组件 【左面板】
 export const imageComponents = [
     {
         typeId: 'IMAGE',
@@ -529,7 +529,7 @@ export const imageComponents = [
             showClearable: false,
             showRegList: false,
             tag: 'el-carousel',
-            tagIcon: 'image',
+            tagIcon: 'image-carousel',
             layout: 'colFormItem',
             span: 24,
             required: true,
@@ -556,7 +556,7 @@ export const imageComponents = [
             showClearable: false,
             showRegList: false,
             tag: 'image-select',
-            tagIcon: 'image',
+            tagIcon: 'image-select',
             layout: 'colFormItem',
             span: 24,
             required: true,
@@ -564,12 +564,35 @@ export const imageComponents = [
             changeTag: true
         },
         multiple: false,
-        __slot__: {
-            options: [{
-                label: '选项1',
-                value: 1
-            }]
+        options: [{
+            label: '选项1',
+            value: 1
+        }],
+        style: {width: '100%'}
+    }
+]
+
+// 辅助型组件 【左面板】
+export const assistComponents = [
+    {
+        typeId: 'DESC_TEXT',
+        __config__: {
+            label: '文字描述',
+            defaultValue: '描述文字',
+            showDefaultValue: true,
+            showRequired: false,
+            showClearable: false,
+            showRegList: false,
+            tag: 'desc-text',
+            tagIcon: 'text',
+            layout: 'colFormItem',
+            span: 24,
+            required: true,
+            regList: [],
+            changeTag: false
         },
+        color: '',
+        textAlign: 'left',
         style: {width: '100%'}
     }
 ]

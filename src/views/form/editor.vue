@@ -111,7 +111,13 @@ import draggable from 'vuedraggable'
 import {debounce} from 'throttle-debounce'
 import RightPanel from './RightPanel'
 
-import {formConf, imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
+import {
+    assistComponents,
+    formConf,
+    imageComponents,
+    inputComponents,
+    selectComponents
+} from '@/components/generator/config'
 import {deepClone} from '@/utils/index'
 import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
@@ -156,6 +162,10 @@ export default {
                 {
                     title: '图片型组件',
                     list: imageComponents
+                },
+                {
+                    title: '辅助型组件',
+                    list: assistComponents
                 },
                 {
                     title: '选择型组件',
@@ -281,9 +291,11 @@ export default {
                 params.afterPosition = sort2
             }
             params.formItemId = this.drawingList[obj.newIndex].__config__.formId
-            this.$api.post('/user/project/item/sort', params).then(res => {
-                this.drawingList[obj.newIndex].sort = res.data.sort
-            })
+            if (params.beforePosition || params.afterPosition) {
+                this.$api.post('/user/project/item/sort', params).then(res => {
+                    this.drawingList[obj.newIndex].sort = res.data.sort
+                })
+            }
         },
         addComponent(item) {
             const clone = this.cloneComponent(item)
