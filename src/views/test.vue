@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SignPad from '@/components/form/SignPad'
+import SignPad from '../components/form/SignPad'
 
 export default {
     name: 'App',

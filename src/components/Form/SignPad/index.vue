@@ -1,6 +1,6 @@
 <template>
     <div id="signature-pad" class="signature-pad">
-        <div class="signature-pad--body">
+        <div class="signature-pad--body" style="min-height: 300px; width: 100%;">
             <canvas v-show="!signImageUrl" class="canvasId" style="border: 2px dashed #f7f7f7;" />
         </div>
         <img v-if="signImageUrl" :src="signImageUrl">
