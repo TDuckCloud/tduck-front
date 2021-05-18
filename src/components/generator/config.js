@@ -532,7 +532,7 @@ export const imageComponents = [
             tagIcon: 'image-carousel',
             layout: 'colFormItem',
             span: 24,
-            required: true,
+            required: false,
             regList: [],
             changeTag: true
         },
@@ -559,7 +559,7 @@ export const imageComponents = [
             tagIcon: 'image-select',
             layout: 'colFormItem',
             span: 24,
-            required: true,
+            required: false,
             regList: [],
             changeTag: true
         },
@@ -584,6 +584,28 @@ export const assistComponents = [
             showClearable: false,
             showRegList: false,
             tag: 'desc-text',
+            tagIcon: 'text',
+            layout: 'colFormItem',
+            span: 24,
+            required: false,
+            regList: [],
+            changeTag: false
+        },
+        color: '',
+        textAlign: 'left',
+        style: {width: '100%'}
+    },
+    {
+        typeId: 'SIGN_PAD',
+        __config__: {
+            label: '手写签名',
+            defaultValue: '手写签名',
+            showLabel: true,
+            showDefaultValue: true,
+            showRequired: true,
+            showClearable: false,
+            showRegList: false,
+            tag: 'sign-pad',
             tagIcon: 'text',
             layout: 'colFormItem',
             span: 24,

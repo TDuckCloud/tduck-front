@@ -2,8 +2,8 @@
     <div id="signature-pad" class="signature-pad">
         <div class="signature-pad--body" style="min-height: 300px; width: 100%;">
             <canvas v-show="!signImageUrl" class="canvasId" style="border: 2px dashed #f7f7f7;" />
+            <img v-if="signImageUrl" :src="signImageUrl">
         </div>
-        <img v-if="signImageUrl" :src="signImageUrl">
         <p class="desc-text">请在上面区域完成签名 然后点击确"确认"按钮</p>
         <div v-if="!signImageUrl">
             <el-button plain size="mini" type="danger" @click="clear">清除</el-button>
@@ -22,6 +22,12 @@ import SignaturePad from 'signature_pad'
 export default {
     name: 'SignPad',
     components: {},
+    props: {
+        value: {
+            type: String,
+            default: ''
+        }
+    },
     data() {
         return {
             signaturePad: null,
@@ -94,6 +100,7 @@ export default {
             }
             this.$api.post('/project/file/upload/77f1648542af4caf98deb8345a3d0406', param, config).then(res => {
                 this.signImageUrl = res.data
+                this.$emit('input', res.data)
             })
         },
         reSign() {
