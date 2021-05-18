@@ -26,6 +26,15 @@ export default {
         value: {
             type: String,
             default: ''
+        },
+        color: {
+            type: String,
+            default: ''
+        },
+        // 文件上传地址
+        action: {
+            type: String,
+            default: ''
         }
     },
     data() {
@@ -36,7 +45,7 @@ export default {
             config: {
                 minWidth: 1,
                 maxWidth: 3,
-                penColor: 'rgb(66, 133, 244)'
+                penColor: this.color
             }
         }
     },
@@ -98,7 +107,7 @@ export default {
             let config = {
                 headers: {'Content-Type': 'multipart/form-data'}
             }
-            this.$api.post('/project/file/upload/77f1648542af4caf98deb8345a3d0406', param, config).then(res => {
+            this.$api.post(this.action, param, config).then(res => {
                 this.signImageUrl = res.data
                 this.$emit('input', res.data)
             })

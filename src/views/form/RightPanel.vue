@@ -679,7 +679,7 @@
                     <el-form-item v-if="activeData['color'] !== undefined" label="颜色">
                         <el-color-picker v-model="activeData['color']"/>
                     </el-form-item>
-                    <el-form-item v-if="activeData['textAlign'] !== undefined" label="颜色">
+                    <el-form-item v-if="activeData['textAlign'] !== undefined" label="对齐方式">
                         <el-radio-group v-model="activeData.textAlign">
                             <el-radio-button label="left">
                                 左对齐

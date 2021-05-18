@@ -596,6 +596,28 @@ export const assistComponents = [
         style: {width: '100%'}
     },
     {
+        typeId: 'DIVIDER',
+        __config__: {
+            label: '分割线',
+            defaultValue: '分割线',
+            showLabel: false,
+            showDefaultValue: false,
+            showRequired: false,
+            showClearable: false,
+            showRegList: false,
+            tag: 'el-divider',
+            tagIcon: 'divider',
+            layout: 'colFormItem',
+            span: 24,
+            required: false,
+            regList: [],
+            changeTag: false
+        },
+        color: '#000000',
+        style: {width: '100%'},
+        action: '/project/file/upload/'
+    },
+    {
         typeId: 'SIGN_PAD',
         __config__: {
             label: '手写签名',
@@ -606,15 +628,35 @@ export const assistComponents = [
             showClearable: false,
             showRegList: false,
             tag: 'sign-pad',
-            tagIcon: 'text',
+            tagIcon: 'sign-pad',
             layout: 'colFormItem',
             span: 24,
             required: true,
             regList: [],
             changeTag: false
         },
-        color: '',
-        textAlign: 'left',
+        color: '#000000',
+        style: {width: '100%'},
+        action: '/project/file/upload/'
+    },
+    {
+        typeId: 'PAGINATION',
+        __config__: {
+            label: '分页',
+            defaultValue: '分页',
+            showLabel: false,
+            showDefaultValue: false,
+            showRequired: false,
+            showClearable: false,
+            showRegList: false,
+            tag: 'pagination',
+            tagIcon: 'page',
+            layout: 'colFormItem',
+            span: 24,
+            required: false,
+            regList: [],
+            changeTag: false
+        },
         style: {width: '100%'}
     }
 ]

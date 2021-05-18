@@ -78,7 +78,7 @@ export function dbDataConvertForItemJson(data) {
         }
     }
     // 不同项目地址区分 动态修改上传地址
-    if (jsonItem.__config__.tag === 'el-upload') {
+    if (jsonItem.action) {
         jsonItem.action = jsonItem.action + data.projectKey
     }
     jsonItem.regList = data.regList
@@ -177,6 +177,15 @@ const dataParams = {
     // 图片轮播
     'IMAGE_CAROUSEL': {
         'options': '__slot__.options'
+    },
+    // 文字描述
+    'DESC_TEXT': {
+        'color': 'color',
+        'textAlign': 'textAlign'
+    },
+    // 手写签名
+    'SIGN_PAD': {
+        'color': 'color'
     }
 }
 
