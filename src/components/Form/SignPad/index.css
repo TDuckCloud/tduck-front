@@ -15,24 +15,11 @@
     font-size: 10px;
     width: 100%;
     height: 100%;
-    max-width: 700px;
+    max-width: 900px;
     max-height: 460px;
-    border: 1px solid #e8e8e8;
     background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
     border-radius: 4px;
     padding: 16px;
-}
-.signature-pad::before,
-.signature-pad::after {
-    position: absolute;
-    z-index: -1;
-    content: "";
-    width: 40%;
-    height: 10px;
-    bottom: 10px;
-    background: transparent;
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
 }
 .signature-pad::before {
     left: 20px;
@@ -59,19 +46,4 @@
     height: 100%;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
-}
-.signature-pad--footer {
-    color: #c3c3c3;
-    text-align: center;
-    font-size: 1.2em;
-    margin-top: 8px;
-}
-.signature-pad--actions {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    margin-top: 8px;
 }
