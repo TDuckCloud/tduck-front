@@ -256,7 +256,18 @@ export default {
                 pItem.sort = res.data.sort
                 isSuccess = true
             })
+            if (item.typeId === 'PAGINATION') {
+                this.updatePaginationList()
+            }
             return isSuccess
+        },
+        updatePaginationList() {
+            // 页总数
+            const length = this.drawingList.filter(item => item.typeId === 'PAGINATION').length
+            this.drawingList.forEach(item => {
+                console.log(item)
+                console.log(length)
+            })
         },
         queryProjectItems() {
             this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {

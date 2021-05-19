@@ -657,6 +657,11 @@ export const assistComponents = [
             regList: [],
             changeTag: false
         },
+        prev: true,
+        currPage: true,
+        totalPage: true,
+        currPageNum: 1,
+        totalPageNum: 1,
         style: {width: '100%'}
     }
 ]
