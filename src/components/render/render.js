@@ -30,7 +30,7 @@ function vModel(dataObject, defaultValue) {
         // eslint-disable-next-line no-unused-vars
         dataObject.attrs['on-exceed'] = (files, fileList) => {
             this.$message.error(`最多上传${config.limit}个文件`)
-        },
+        }
         dataObject.attrs['before-upload'] = file => {
             let sizeUnitNum = 1
             // 文件大小判断
@@ -50,6 +50,13 @@ function vModel(dataObject, defaultValue) {
                 this.$message.error(`上传图片大小不能超过${config.fileSize}${config.sizeUnit}`)
                 return false
             }
+        }
+    } else if (config.tag === 'pagination') {
+        dataObject.on.prev = val => {
+            console.log(val)
+        }
+        dataObject.on.next = val => {
+            console.log(val)
         }
     } else {
         dataObject.props.value = defaultValue
@@ -118,7 +125,7 @@ function makeDataObject() {
 }
 
 export default {
-    components:{
+    components: {
         SignPad
     },
     props: {

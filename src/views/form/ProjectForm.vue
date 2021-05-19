@@ -84,7 +84,7 @@ export default {
                 formBtns: true,
                 resetBtn: false,
                 submitBtnText: '提交',
-                submitBtnColor: '#205bb5',
+                submitBtnColor: '#409EFF',
                 showNumber: false,
                 unFocusedComponentBorder: true
             }

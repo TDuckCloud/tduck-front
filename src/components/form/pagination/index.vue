@@ -1,8 +1,14 @@
 <template>
     <div class="page-container">
         <div>
-            <el-button v-if="prev&&currPage!==1" size="mini" type="primary" icon="el-icon-arrow-left">上一页</el-button>
-            <el-button size="mini" type="primary">下一页<i class="el-icon-arrow-right el-icon--right" /></el-button>
+            <el-button v-if="prev&&currPageNum!==1" icon="el-icon-arrow-left" size="mini" type="primary"
+                       @click="prevClick"
+            >
+                上一页
+            </el-button>
+            <el-button size="mini" type="primary">
+                下一页<i class="el-icon-arrow-right el-icon--right" @click="nextClick" />
+            </el-button>
         </div>
         <div style="text-align: center;">
             <span v-if="currPage" class="desc-text">第{{ currPageNum }}页，</span>
@@ -37,6 +43,14 @@ export default {
         totalPageNum: {
             type: Number,
             default: 1
+        }
+    },
+    methods: {
+        prevClick() {
+            this.$emit('prev', this.currPageNum)
+        },
+        nextClick() {
+            this.$emit('next', this.currPageNum)
         }
     }
 }

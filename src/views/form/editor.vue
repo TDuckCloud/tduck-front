@@ -264,9 +264,14 @@ export default {
         updatePaginationList() {
             // 页总数
             const length = this.drawingList.filter(item => item.typeId === 'PAGINATION').length
-            this.drawingList.forEach(item => {
-                console.log(item)
-                console.log(length)
+            let curr = 1
+            this.drawingList.forEach((item, index) => {
+                if (item.typeId === 'PAGINATION') {
+                    console.log(index)
+                    item.totalPageNum = length
+                    item.currPageNum = curr++
+                    this.$set(this.drawingList, index, item)
+                }
             })
         },
         queryProjectItems() {
