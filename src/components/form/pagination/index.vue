@@ -6,8 +6,8 @@
             >
                 上一页
             </el-button>
-            <el-button size="mini" type="primary">
-                下一页<i class="el-icon-arrow-right el-icon--right" @click="nextClick" />
+            <el-button v-if="currPageNum!==totalPageNum" size="mini" type="primary" @click="nextClick">
+                下一页<i class="el-icon-arrow-right el-icon--right" />
             </el-button>
         </div>
         <div style="text-align: center;">

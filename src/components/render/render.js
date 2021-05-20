@@ -51,12 +51,13 @@ function vModel(dataObject, defaultValue) {
                 return false
             }
         }
+    // 分页组件
     } else if (config.tag === 'pagination') {
         dataObject.on.prev = val => {
-            console.log(val)
+            this.$emit('prev', val)
         }
         dataObject.on.next = val => {
-            console.log(val)
+            this.$emit('next', val)
         }
     } else {
         dataObject.props.value = defaultValue

@@ -34,7 +34,12 @@ const layouts = {
         if (formConfCopy.showNumber) {
             label = scheme.serialNumber + ': ' + label
         }
-        this.$set(this[this.formConf.formModel], scheme.__vModel__, [])
+        // 分页返回上一页时把值设置回表单
+        let value = _.get(this[this.formConf.formModel], scheme.__vModel__)
+        if (value) {
+            config.defaultValue = value
+        }
+        // 控制逻辑显示隐藏
         let colStyle = scheme.logicShow ? '' : 'display:none'
         let cidAttr = config.formId
         return (
@@ -165,6 +170,9 @@ function setValue(event, config, scheme) {
     this.$set(this[this.formConf.formModel], scheme.__vModel__, event)
     setValueLabel.call(this, event, config, scheme)
     let logicShowRule = this.formConfCopy.logicShowRule
+    if (!logicShowRule) {
+        return
+    }
     // 找到该问题需要触发显示的问题 判断逻辑是否成立
     let rules = _.get(logicShowRule, config.formId)
     if (rules && Array.isArray(rules)) {
@@ -178,6 +186,36 @@ function setValue(event, config, scheme) {
             }
         })
     }
+}
+
+/**
+ * 分页下一页
+ */
+function nextPage(page) {
+    switchPage.call(this, 'next', page)
+}
+/**
+ * 分页上一页
+ */
+function prevPage(page) {
+    switchPage.call(this, 'prev', page)
+}
+/**
+ * 切换页
+ */
+function switchPage(eventName, page) {
+    this.$refs[this.formConf.formRef].validate(valid => {
+        if (!valid) {
+            setTimeout(() => {
+                let isError = document.getElementsByClassName('is-error')
+                isError[0].querySelector('input').focus()
+            }, 100)
+            return false
+        } else {
+            this.$emit(eventName, {page: page, formModel: this[this.formConf.formModel], labelFormModel: this[this.formConf.labelFormModel]})
+        }
+        return true
+    })
 }
 
 /**
@@ -252,6 +290,8 @@ function buildListeners(scheme) {
     listeners.upload = (response, file, fileList) => setUpload.call(this, config, scheme, response, file, fileList)
     listeners.deleteUpload = (file, fileList) => deleteUpload.call(this, config, scheme, file, fileList)
     listeners.selectOtherChange = (event, config) => setOtherValueLabel.call(this, event, config)
+    listeners.prev = page => prevPage.call(this, page)
+    listeners.next = page => nextPage.call(this, page)
     return listeners
 }
 
@@ -263,13 +303,21 @@ export default {
         formConf: {
             type: Object,
             required: true
+        },
+        formModel: {
+            type: Object,
+            required: false
+        },
+        labelFormModel: {
+            type: Object,
+            required: false
         }
     },
     data() {
         const data = {
             formConfCopy: deepClone(this.formConf),
-            [this.formConf.formModel]: {},
-            [this.formConf.labelFormModel]: {},
+            [this.formConf.formModel]: deepClone(this.formModel),
+            [this.formConf.labelFormModel]: deepClone(this.labelFormModel),
             [this.formConf.formRules]: {}
         }
         this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
@@ -277,23 +325,12 @@ export default {
         this.buildRules(data.formConfCopy.fields, data[this.formConf.formRules])
         return data
     },
-    watch: {
-        formConf: {
-            handler(val) {
-                this.formConfCopy = val
-                this.initFormData(this.data.formConfCopy.fields, this.data[this.formConf.formModel])
-                this.initLabelFormData(this.data.formConfCopy.fields, this.data[this.formConf.labelFormModel])
-                this.buildRules(this.data.formConfCopy.fields, this.data[this.formConf.formRules])
-            },
-            deep: true
-        }
-    },
     methods: {
         initLabelFormData(componentList, formData) {
-            // 设置默认值
+            // 获取选择项选中的显示的值
             componentList.forEach(cur => {
                 let temConfig = cur.__config__
-                if (cur.__vModel__) {
+                if (cur.__vModel__ && !formData[cur.__vModel__]) {
                     let tagOptionKey = processType[temConfig.tag]
                     let defaultValue = temConfig.defaultValue
                     let labelStr = ''
@@ -317,9 +354,12 @@ export default {
         },
         initFormData(componentList, formData) {
             // 设置默认值
+            // eslint-disable-next-line no-debugger
+            debugger
             componentList.forEach(cur => {
                 const config = cur.__config__
-                if (cur.__vModel__) {
+                if (cur.__vModel__ && !formData[cur.__vModel__]) {
+                    // 如果存在分页带回的数据 则不再设置默认
                     formData[cur.__vModel__] = config.defaultValue
                 }
                 if (config.children) this.initFormData(config.children, formData)

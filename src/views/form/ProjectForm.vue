@@ -23,7 +23,12 @@
                 class="form-name-text" v-html="formConf.description"
             />
             <el-divider />
-            <parser v-if="startParser" :form-conf="formConf" @submit="submitForm" />
+            <parser v-if="startParser"
+                    :key="parserKey"
+                    :form-model="formModel"
+                    :label-form-model="labelFormModel"
+                    :form-conf="formConf" @next="nextPage" @prev="prevPage" @submit="submitForm"
+            />
         </div>
     </div>
 </template>
@@ -32,6 +37,7 @@
 import Parser from '@/components/parser/Parser'
 import {dbDataConvertForItemJson} from '@/utils/convert'
 import {getExpression} from '@/utils/expression'
+import _ from 'lodash'
 
 window.onload = function() {
     document.addEventListener('touchstart', function(event) {
@@ -59,12 +65,17 @@ export default {
         return {
             logicShowTriggerRule: {},
             startParser: false,
+            formModel: {},
+            labelFormModel: {},
             projectTheme: {
                 headImgUrl: '',
                 logoImg: '',
                 showTitle: true,
                 showDescribe: true
             },
+            parserKey: +new Date(),
+            // 每页数据
+            perPageFields: {},
             formConf: {
                 fields: [],
                 logicShowRule: {},
@@ -137,7 +148,13 @@ export default {
                     serialNumber++
                     return projectItem
                 })
-                this.formConf.fields = fields
+                this.pageShowHandle(fields)
+                if (_.keys(this.perPageFields).length != 0) {
+                    this.formConf.fields = _.get(this.perPageFields, 1)
+                    this.formConf.formBtns = false
+                } else {
+                    this.formConf.fields = fields
+                }
                 if (res.data.project) {
                     this.formConf.title = res.data.project.name
                     this.formConf.description = res.data.project.describe
@@ -157,6 +174,46 @@ export default {
         })
     },
     methods: {
+        // 分页显示数据处理
+        pageShowHandle(allFields) {
+            // 判断是否存在分页
+            let index = allFields.findIndex(item => {
+                return item.typeId === 'PAGINATION'
+            })
+            if (index < 0) {
+                return
+            }
+            let curr = 1
+            // 每页字段
+            let perPageFields = {}
+            // 分页字段数据
+            let pageFields = {}
+            allFields.forEach(item => {
+                let fields = _.get(perPageFields, curr)
+                if (item.typeId === 'PAGINATION') {
+                    _.set(pageFields, curr, item)
+                    if (fields) {
+                        item.currPageNum = curr++
+                    }
+                } else {
+                    if (!fields || fields == undefined) {
+                        fields = new Array()
+                    }
+                    fields.push(item)
+                    _.set(perPageFields, curr, fields)
+                }
+            })
+            let len = _.keys(perPageFields).length
+            // 计算页数 添加分页
+            _.keys(perPageFields).forEach(key => {
+                let pageItem = _.get(pageFields, key)
+                let fields = _.get(perPageFields, key)
+                pageItem.totalPageNum = len
+                fields.push(pageItem)
+                _.set(perPageFields, key, fields)
+            })
+            this.perPageFields = perPageFields
+        },
         /**
          * 处理逻辑显示数据
          */
@@ -188,6 +245,20 @@ export default {
                         reject(err)
                     })
             })
+        },
+        prevPage(params) {
+            this.switchPage(params.page - 1, params)
+        },
+        nextPage(params) {
+            this.switchPage(params.page + 1, params)
+        },
+        switchPage(page, params) {
+            let {labelFormModel, formModel} = params
+            this.formModel = formModel
+            this.labelFormModel = labelFormModel
+            this.formConf.formBtns = _.keys(this.perPageFields).length == page
+            this.formConf.fields = _.get(this.perPageFields, page)
+            this.parserKey = +new Date()
         },
         submitForm(data) {
             this.$emit('submit', data)

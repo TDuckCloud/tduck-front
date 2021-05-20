@@ -115,7 +115,7 @@ import {
     assistComponents,
     formConf,
     imageComponents,
-    inputComponents,
+    inputComponents, personalInfoComponents,
     selectComponents
 } from '@/components/generator/config'
 import {deepClone} from '@/utils/index'
@@ -136,7 +136,6 @@ export default {
     },
     data() {
         return {
-
             idGlobal,
             formConf: null,
             editDescription: true,
@@ -155,6 +154,10 @@ export default {
             saveIdGlobalDebounce: debounce(340, saveIdGlobal),
             projectKey: null,
             leftComponents: [
+                {
+                    title: '联系人组件',
+                    list: personalInfoComponents
+                },
                 {
                     title: '输入型组件',
                     list: inputComponents
@@ -267,7 +270,6 @@ export default {
             let curr = 1
             this.drawingList.forEach((item, index) => {
                 if (item.typeId === 'PAGINATION') {
-                    console.log(index)
                     item.totalPageNum = length
                     item.currPageNum = curr++
                     this.$set(this.drawingList, index, item)
@@ -277,6 +279,8 @@ export default {
         queryProjectItems() {
             this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {
                 this.drawingList = res.data.map(item => dbDataConvertForItemJson(item))
+                // 更新分页
+                this.updatePaginationList()
             })
         },
         activeFormItem(currentItem) {

@@ -665,3 +665,115 @@ export const assistComponents = [
         style: {width: '100%'}
     }
 ]
+
+// 个人信息组件
+export const  personalInfoComponents = [
+    {
+        typeId: 'INPUT',
+        __config__: {
+            label: '手机号',
+            labelWidth: null,
+            showLabel: true,
+            changeTag: false,
+            tag: 'el-input',
+            tagIcon: 'input',
+            defaultValue: undefined,
+            required: true,
+            layout: 'colFormItem',
+            span: 24,
+            showRegList: false,
+            document: 'https://element.eleme.cn/#/zh-CN/component/input',
+            // 正则校验规则
+            regList: [{
+                pattern: '/^1(3|4|5|7|8|9)\\d{9}$/',
+                message: '手机号格式错误'
+            }]
+        },
+        // 组件的插槽属性
+        __slot__: {
+            prepend: '',
+            append: ''
+        },
+        placeholder: '请输入手机号',
+        style: { width: '100%' },
+        clearable: true,
+        'prefix-icon': 'el-icon-mobile',
+        'suffix-icon': '',
+        maxlength: 11,
+        'show-word-limit': true,
+        readonly: false,
+        disabled: false
+    },
+    {
+        typeId: 'INPUT',
+        __config__: {
+            label: '邮箱',
+            labelWidth: null,
+            showLabel: true,
+            changeTag: false,
+            tag: 'el-input',
+            tagIcon: 'input',
+            defaultValue: undefined,
+            required: true,
+            layout: 'colFormItem',
+            span: 24,
+            showRegList: false,
+            document: 'https://element.eleme.cn/#/zh-CN/component/input',
+            // 正则校验规则
+            regList: [{
+                pattern: '/^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$/',
+                message: '邮箱格式错误'
+            }]
+        },
+        // 组件的插槽属性
+        __slot__: {
+            prepend: '',
+            append: ''
+        },
+        placeholder: '请输入邮箱',
+        style: { width: '100%' },
+        clearable: true,
+        'prefix-icon': 'el-icon-message',
+        'suffix-icon': '',
+        maxlength: 24,
+        'show-word-limit': true,
+        readonly: false,
+        disabled: false
+    },
+    {
+        typeId: 'INPUT',
+        __config__: {
+            label: '身份证',
+            labelWidth: null,
+            showLabel: true,
+            changeTag: false,
+            tag: 'el-input',
+            tagIcon: 'input',
+            defaultValue: undefined,
+            required: true,
+            layout: 'colFormItem',
+            span: 24,
+            showRegList: false,
+            document: 'https://element.eleme.cn/#/zh-CN/component/input',
+            // 正则校验规则
+            regList: [{
+                pattern: '/(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}$)/',
+                message: '身份证格式错误'
+            }]
+        },
+        // 组件的插槽属性
+        __slot__: {
+            prepend: '',
+            append: ''
+        },
+        placeholder: '请输入身份证',
+        style: { width: '100%' },
+        clearable: true,
+        'prefix-icon': 'el-icon-postcard',
+        'suffix-icon': '',
+        maxlength: 20,
+        'show-word-limit': true,
+        readonly: false,
+        disabled: false
+    }
+]
