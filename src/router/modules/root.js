@@ -100,7 +100,7 @@ export default [
             // {
             //     path: 'form',
             //     meta: {requireLogin: true},
-            //     component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index.vue')
+            //     component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index1.vue')
             // }
         ]
     }, {

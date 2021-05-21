@@ -3,6 +3,7 @@
         <sign-pad />
         <pagination />
         <province-city />
+        <input-map />
     </div>
 </template>
 
@@ -10,12 +11,15 @@
 import SignPad from '../components/form/SignPad'
 import pagination from '../components/form/pagination'
 import ProvinceCity from '@/components/form/ProvinceCity'
+
+import InputMap from '@/components/form/InputMap'
 export default {
     name: 'App',
     components: {
         ProvinceCity,
         SignPad,
-        pagination
+        pagination,
+        InputMap
     },
     data() {
         return {
