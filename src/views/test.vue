@@ -12,7 +12,7 @@ import SignPad from '../components/form/SignPad'
 import pagination from '../components/form/pagination'
 import ProvinceCity from '@/components/form/ProvinceCity'
 
-import InputMap from '@/components/form/InputMap'
+import InputMap from '@/components/form/InputMap/index'
 export default {
     name: 'App',
     components: {
