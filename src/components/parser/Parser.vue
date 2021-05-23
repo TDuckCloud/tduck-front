@@ -194,12 +194,14 @@ function setValue(event, config, scheme) {
 function nextPage(page) {
     switchPage.call(this, 'next', page)
 }
+
 /**
  * 分页上一页
  */
 function prevPage(page) {
     switchPage.call(this, 'prev', page)
 }
+
 /**
  * 切换页
  */
@@ -212,7 +214,11 @@ function switchPage(eventName, page) {
             }, 100)
             return false
         } else {
-            this.$emit(eventName, {page: page, formModel: this[this.formConf.formModel], labelFormModel: this[this.formConf.labelFormModel]})
+            this.$emit(eventName, {
+                page: page,
+                formModel: this[this.formConf.formModel],
+                labelFormModel: this[this.formConf.labelFormModel]
+            })
         }
         return true
     })
@@ -223,19 +229,30 @@ function switchPage(eventName, page) {
  */
 function setOtherValueLabel(event, config) {
     let value = this[this.formConf.formModel][config.__vModel__]
-    this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}other`, event)
-    setValueLabel.call(this, value, config.__config__, config)
+    // 临时保存其他的选项值
+    this.$nextTick(() => {
+        console.log(this[this.formConf.labelFormModel])
+        this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}other`, event)
+        console.log(this[this.formConf.labelFormModel])
+        setValueLabel.call(this, value, config.__config__, config)
+    })
+
 }
 
 /**
+ *  this.formConf.formModel 保存表单的原始值 如checkbox radio的值是 1,2,3等
+ *  this.formConf.labelFormModel 保存显示的值 如选项一 选项二等
  * 保存选项的label值
  * @param event
  * @param config
  * @param scheme
  */
 function setValueLabel(event, config, scheme) {
+    // 需要处理的类型 如果是input等则不需要处理
     let tagOptionKey = processType[config.tag]
     if (tagOptionKey) {
+        // eslint-disable-next-line no-debugger
+        // debugger
         if (event instanceof Array) {
             let labelArr = new Array()
             event.forEach(item => {
@@ -251,7 +268,8 @@ function setValueLabel(event, config, scheme) {
         } else {
             // 多选 单选 其他自定义输入
             if (event == 0) {
-                this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}`, this[this.formConf.labelFormModel][`${config.__vModel__}other`])
+                console.log(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
+                this.$set(this[this.formConf.labelFormModel], `${scheme.__vModel__}`, this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
             } else {
                 let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
                 this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
@@ -289,7 +307,7 @@ function buildListeners(scheme) {
     listeners.input = event => setValue.call(this, event, config, scheme)
     listeners.upload = (response, file, fileList) => setUpload.call(this, config, scheme, response, file, fileList)
     listeners.deleteUpload = (file, fileList) => deleteUpload.call(this, config, scheme, file, fileList)
-    listeners.selectOtherChange = (event, config) => setOtherValueLabel.call(this, event, config)
+    listeners.otherChange = (event, config) => setOtherValueLabel.call(this, event, config)
     listeners.prev = page => prevPage.call(this, page)
     listeners.next = page => nextPage.call(this, page)
     return listeners
@@ -354,8 +372,6 @@ export default {
         },
         initFormData(componentList, formData) {
             // 设置默认值
-            // eslint-disable-next-line no-debugger
-            debugger
             componentList.forEach(cur => {
                 const config = cur.__config__
                 if (cur.__vModel__ && !formData[cur.__vModel__]) {
@@ -426,18 +442,18 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-radio-group,
-/deep/ .el-checkbox-group {
+::v-deep .el-radio-group,
+::v-deep .el-checkbox-group {
     margin-left: 10px;
 }
-/deep/ .el-radio,
-/deep/ .el-checkbox {
+::v-deep .el-radio,
+::v-deep .el-checkbox {
     display: block;
     min-height: 23px;
     line-height: 23px;
 }
-/deep/ .el-radio__label,
-/deep/ .el-checkbox__label {
+::v-deep .el-radio__label,
+::v-deep .el-checkbox__label {
     font-size: 14px;
     padding-left: 10px;
     text-overflow: ellipsis;
@@ -446,11 +462,11 @@ export default {
     vertical-align: middle;
     display: inline-block;
 }
-/deep/ .item-other-input {
-    margin-left: 20px;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+::v-deep .item-other-input {
+    margin-left: 20px !important;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
 }
-/deep/ .item-other-input:focus {
-    outline: none;
+::v-deep .item-other-input:focus {
+    outline: none !important;
 }
 </style>

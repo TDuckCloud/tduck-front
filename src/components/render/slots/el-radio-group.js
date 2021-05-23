@@ -6,12 +6,18 @@ export default {
                 list.push(<el-radio-button label={item.value}>{item.label}</el-radio-button>)
             } else {
                 if (item.value == 0) {
-                    list.push(<el-radio label={item.value} border={conf.border} >
-                        {item.label}<input class='item-other-input' onChange={event => {
-                        // eslint-disable-next-line vue/custom-event-name-casing
-                            that.$emit('selectOtherChange', event.target.value, conf)
-                        }}/>
-                    </el-radio>)
+                    list.push(
+                        <el-radio label={item.value} border={conf.border}>
+                            {item.label}
+                            <input class="item-other-input"
+                                   onInput={event => {
+                                       console.log(event)
+                                       that.$emit('otherChange', event.target.value, conf)
+                                   }}
+                                   onChange={event => {
+                                       that.$emit('otherChange', event.target.value, conf)
+                                   }}/>
+                        </el-radio>)
                 } else {
                     list.push(<el-radio label={item.value} border={conf.border}>{item.label}</el-radio>)
                 }

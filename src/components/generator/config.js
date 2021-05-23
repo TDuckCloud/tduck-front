@@ -695,7 +695,7 @@ export const  personalInfoComponents = [
             append: ''
         },
         placeholder: '请输入手机号',
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         'prefix-icon': 'el-icon-mobile',
         'suffix-icon': '',
@@ -731,7 +731,7 @@ export const  personalInfoComponents = [
             append: ''
         },
         placeholder: '请输入邮箱',
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         'prefix-icon': 'el-icon-message',
         'suffix-icon': '',
@@ -767,7 +767,7 @@ export const  personalInfoComponents = [
             append: ''
         },
         placeholder: '请输入身份证',
-        style: { width: '100%' },
+        style: {width: '100%'},
         clearable: true,
         'prefix-icon': 'el-icon-postcard',
         'suffix-icon': '',
