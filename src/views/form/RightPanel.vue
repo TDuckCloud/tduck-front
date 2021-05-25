@@ -6,12 +6,12 @@
         <div class="field-box">
             <el-scrollbar class="right-scrollbar">
                 <!-- 组件属性 -->
-                <el-form v-show="currentTab==='field' && showField" size="small" label-width="90px">
-                    <el-form-item v-if="activeData.__config__.changeTag" label="组件类型" >
+                <el-form v-show="currentTab==='field' && showField" label-width="90px" size="small">
+                    <el-form-item v-if="activeData.__config__.changeTag" label="组件类型">
                         <el-select
                             v-model="activeData.__config__.tagIcon"
-                            placeholder="请选择组件类型"
                             :style="{width: '100%'}"
+                            placeholder="请选择组件类型"
                             @change="tagChange"
                         >
                             <el-option-group v-for="group in tagList" :key="group.label" :label="group.label">
@@ -50,7 +50,7 @@
                         <el-input v-model="activeData['end-placeholder']" placeholder="请输入占位提示"/>
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.span!==undefined" label="表单栅格">
-                        <el-slider v-model="activeData.__config__.span" :max="24" :min="1" :marks="{12:''}"
+                        <el-slider v-model="activeData.__config__.span" :marks="{12:''}" :max="24" :min="1"
                                    @change="spanChange"
                         />
                     </el-form-item>
@@ -68,7 +68,7 @@
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item v-if="activeData.justify!==undefined&&activeData.type==='flex'" label="水平排列">
-                        <el-select v-model="activeData.justify" placeholder="请选择水平排列" :style="{width: '100%'}">
+                        <el-select v-model="activeData.justify" :style="{width: '100%'}" placeholder="请选择水平排列">
                             <el-option
                                 v-for="(item, index) in justifyOptions"
                                 :key="index"
@@ -103,16 +103,16 @@
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.tag==='el-checkbox-group'" label="至少应选">
                         <el-input-number
-                            :value="activeData.min"
                             :min="0"
+                            :value="activeData.min"
                             placeholder="至少应选"
                             @input="$set(activeData, 'min', $event?$event:undefined)"
                         />
                     </el-form-item>
                     <el-form-item v-if="activeData.__config__.tag==='el-checkbox-group'" label="最多可选">
                         <el-input-number
-                            :value="activeData.max"
                             :min="0"
+                            :value="activeData.max"
                             placeholder="最多可选"
                             @input="$set(activeData, 'max', $event?$event:undefined)"
                         />
@@ -214,8 +214,8 @@
                     >
                         <el-select
                             v-model="activeData.type"
-                            placeholder="请选择时间类型"
                             :style="{ width: '100%' }"
+                            placeholder="请选择时间类型"
                             @change="dateTypeChange"
                         >
                             <el-option
@@ -232,9 +232,9 @@
                     <el-form-item v-if="activeData.accept !== undefined" label="文件类型">
                         <el-select
                             v-model="activeData.accept"
-                            placeholder="请选择文件类型"
                             :style="{ width: '100%' }"
                             clearable
+                            placeholder="请选择文件类型"
                         >
                             <el-option label="图片" value="image/*"/>
                             <el-option label="视频" value="video/*"/>
@@ -319,8 +319,8 @@
                     >
                         <el-divider>选项</el-divider>
                         <draggable
-                            :list="activeData.__slot__.options"
                             :animation="340"
+                            :list="activeData.__slot__.options"
                             group="selectItem"
                             handle=".option-drag"
                         >
@@ -344,8 +344,8 @@
                         </draggable>
                         <div style="margin-left: 20px;">
                             <el-button
-                                style="padding-bottom: 0;"
                                 icon="el-icon-circle-plus-outline"
+                                style="padding-bottom: 0;"
                                 type="text"
                                 @click="addSelectItem"
                             >
@@ -353,8 +353,8 @@
                             </el-button>
                             <el-button
                                 v-if="['el-checkbox-group', 'el-radio-group'].indexOf(activeData.__config__.tag) > -1"
-                                style="padding-bottom: 0;"
                                 icon="el-icon-circle-plus-outline"
+                                style="padding-bottom: 0;"
                                 type="text"
                                 @click="addSelectOtherItem"
                             >
@@ -369,8 +369,8 @@
                     >
                         <el-divider>选项</el-divider>
                         <draggable
-                            :list="activeData.__slot__.options"
                             :animation="340"
+                            :list="activeData.__slot__.options"
                             group="selectItem"
                             handle=".option-drag"
                         >
@@ -391,18 +391,18 @@
                                         <el-input v-model="item.image" placeholder="图片" size="small"/>
                                         <el-upload
                                             ref="logoUpload"
-                                            style="text-align: center;"
-                                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                            :action="getUploadUrl"
                                             :headers="getUploadHeader"
+                                            :on-progress="uploadProgressHandle"
                                             :on-success="(response, file, fileList)=>{
                                                 item.image = response.data
                                                 $set(activeData.__slot__.options,index,item)
                                                 closeUploadProgressHandle()
                                             }"
-                                            :on-progress="uploadProgressHandle"
-                                            :action="getUploadUrl"
-                                            :show-file-list="false">
-                                            <div class=" select-line-icon" slot="trigger">
+                                            :show-file-list="false"
+                                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                            style="text-align: center;">
+                                            <div slot="trigger" class=" select-line-icon">
                                                 <i class="el-icon-upload"/>
                                             </div>
                                         </el-upload>
@@ -412,8 +412,8 @@
                         </draggable>
                         <div style="margin-left: 20px;">
                             <el-button
-                                style="padding-bottom: 0;"
                                 icon="el-icon-circle-plus-outline"
+                                style="padding-bottom: 0;"
                                 type="text"
                                 @click="addImageCarouselItem "
                             >
@@ -427,8 +427,8 @@
                     >
                         <el-divider>选项</el-divider>
                         <draggable
-                            :list="activeData.options"
                             :animation="340"
+                            :list="activeData.options"
                             group="selectItem"
                             handle=".option-drag"
                         >
@@ -449,18 +449,18 @@
                                         <el-input v-model="item.image" placeholder="图片" size="small"/>
                                         <el-upload
                                             ref="logoUpload"
-                                            style="text-align: center;"
-                                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                            :action="getUploadUrl"
                                             :headers="getUploadHeader"
+                                            :on-progress="uploadProgressHandle"
                                             :on-success="(response, file, fileList)=>{
                                                 item.image = response.data
                                                 $set(activeData.options,index,item)
                                                 closeUploadProgressHandle()
                                             }"
-                                            :on-progress="uploadProgressHandle"
-                                            :action="getUploadUrl"
-                                            :show-file-list="false">
-                                            <div class=" select-line-icon" slot="trigger">
+                                            :show-file-list="false"
+                                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                                            style="text-align: center;">
+                                            <div slot="trigger" class=" select-line-icon">
                                                 <i class="el-icon-upload"/>
                                             </div>
                                         </el-upload>
@@ -470,8 +470,8 @@
                         </draggable>
                         <div style="margin-left: 20px;">
                             <el-button
-                                style="padding-bottom: 0;"
                                 icon="el-icon-circle-plus-outline"
+                                style="padding-bottom: 0;"
                                 type="text"
                                 @click="addImageSelectItem"
                             >
@@ -530,16 +530,16 @@
                         <!-- 级联选择静态树 -->
                         <el-tree
                             v-if="activeData.__config__.dataType === 'static'"
-                            draggable="true"
                             :data="activeData.options"
-                            node-key="id"
                             :expand-on-click-node="false"
                             :render-content="renderContent"
+                            draggable="true"
+                            node-key="id"
                         />
                         <div v-if="activeData.__config__.dataType === 'static'" style="margin-left: 20px;">
                             <el-button
-                                style="padding-bottom: 0;"
                                 icon="el-icon-circle-plus-outline"
+                                style="padding-bottom: 0;"
                                 type="text"
                                 @click="addTreeItem"
                             >
@@ -589,18 +589,12 @@
                     <el-form-item v-if="activeData.range !== undefined" label="范围选择">
                         <el-switch v-model="activeData.range" @change="rangeChange"/>
                     </el-form-item>
-                    <el-form-item
-                        v-if="activeData.__config__.border !== undefined && activeData.__config__.optionType === 'default'"
-                        label="是否带边框"
-                    >
-                        <el-switch v-model="activeData.__config__.border"/>
-                    </el-form-item>
                     <el-form-item v-if="activeData.__config__.tag === 'el-color-picker'" label="颜色格式">
                         <el-select
                             v-model="activeData['color-format']"
-                            placeholder="请选择颜色格式"
                             :style="{ width: '100%' }"
                             clearable
+                            placeholder="请选择颜色格式"
                             @change="colorFormatChange"
                         >
                             <el-option
@@ -613,8 +607,8 @@
                     </el-form-item>
                     <el-form-item
                         v-if="activeData.size !== undefined &&
-                            (activeData.__config__.optionType === 'button' ||
-                                activeData.__config__.border ||
+                            (
+                        activeData.__config__.border ||
                                 activeData.__config__.tag === 'el-color-picker' ||
                                 activeData.__config__.tag === 'el-button')"
                         label="组件尺寸"
@@ -696,16 +690,16 @@
                         <el-input v-model="activeData.src" placeholder="请输入图片url地址"/>
                         <el-upload
                             ref="logoUpload"
-                            style="text-align: center;"
-                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                            :action="getUploadUrl"
                             :headers="getUploadHeader"
                             :on-progress="uploadProgressHandle"
                             :on-success="(response, file, fileList)=>{
                                 activeData.src = response.data
                                 closeUploadProgressHandle()
                             }"
-                            :action="getUploadUrl"
                             :show-file-list="false"
+                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                            style="text-align: center;"
                         >
                             <el-button slot="trigger" size="small" type="text">点击上传图片 *</el-button>
                         </el-upload>
@@ -722,9 +716,9 @@
                         <el-tree
                             :data="[activeData.__config__]"
                             :props="layoutTreeProps"
-                            node-key="renderKey"
                             default-expand-all
                             draggable="true"
+                            node-key="renderKey"
                         >
                             <span slot-scope="{ node, data }">
                                 <span class="node-label">
@@ -762,7 +756,7 @@
                         </div>
                     </template>
                 </el-form>
-                <el-form v-show="currentTab === 'form'" size="small" label-width="90px">
+                <el-form v-show="currentTab === 'form'" label-width="90px" size="small">
                     <el-form-item label="表单名">
                         <el-input v-model="formConf.formRef" placeholder="请输入表单名（ref）"/>
                     </el-form-item>
@@ -799,7 +793,7 @@
                         </el-radio-group>
                     </el-form-item>
                     <el-form-item label="标签宽度">
-                        <el-input v-model.number="formConf.labelWidth" type="number" placeholder="请输入标签宽度"/>
+                        <el-input v-model.number="formConf.labelWidth" placeholder="请输入标签宽度" type="number"/>
                     </el-form-item>
                     <el-form-item label="栅格间隔">
                         <el-input-number v-model="formConf.gutter" :min="0" placeholder="栅格间隔"/>
@@ -818,7 +812,7 @@
         </div>
 
         <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode"/>
-        <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon"/>
+        <icons-dialog :current="activeData[currentIconModel]" :visible.sync="iconsVisible" @select="setIcon"/>
     </div>
 </template>
 
@@ -827,14 +821,11 @@ import {isArray} from 'util'
 import TreeNodeDialog from '@/views/form/TreeNodeDialog'
 import {isNumberStr} from '@/utils/index'
 import IconsDialog from './IconsDialog'
-import {
-    imageComponents,
-    inputComponents, selectComponents
-} from '@/components/generator/config'
-import DraggableItem from './DraggableItem'
+import {imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
 import {saveFormConf} from '@/utils/db'
 import {debounce} from 'throttle-debounce'
 import draggable from 'vuedraggable'
+import _ from 'lodash'
 
 const dateTimeFormat = {
     date: 'yyyy-MM-dd',
@@ -859,7 +850,7 @@ export default {
     props: ['showField', 'activeData', 'formConf'],
     data() {
         return {
-            loading:null,
+            loading: null,
             currentTab: 'field',
             currentNode: null,
             dialogVisible: false,
@@ -1030,23 +1021,26 @@ export default {
             })
         },
         addSelectItem() {
+            let lastItem = _.last(this.activeData.__slot__.options)
             this.activeData.__slot__.options.push({
                 label: '',
-                value: this.activeData.__slot__.options.length + 1
+                value: lastItem ? lastItem.value + 1 : 1
             })
         },
         addImageSelectItem() {
+            let lastItem = _.last(this.activeData.__slot__.options)
             this.activeData.options.push({
                 label: '',
                 image: '',
-                value: this.activeData.options.length + 1
+                value: lastItem ? lastItem.value + 1 : 1
             })
         },
         addImageCarouselItem() {
+            let lastItem = _.last(this.activeData.__slot__.options)
             this.activeData.__slot__.options.push({
                 label: '',
                 image: '',
-                value: this.activeData.__slot__.options.length + 1
+                value: lastItem ? lastItem.value + 1 : 1
             })
         },
         addSelectOtherItem() {
@@ -1069,10 +1063,10 @@ export default {
                 background: 'rgba(0, 0, 0, 0.7)'
             })
         },
-        closeUploadProgressHandle(){
+        closeUploadProgressHandle() {
             setTimeout(() => {
-                this.loading.close();
-            }, 100);
+                this.loading.close()
+            }, 100)
         },
         addTreeItem() {
             ++this.idGlobal

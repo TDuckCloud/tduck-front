@@ -130,8 +130,11 @@ const dataParams = {
     },
     // 单选框组
     'RADIO': {
+        'optionType': '__config__.optionType',
+        'border': '__config__.border',
         'options': '__slot__.options',
         'filterable': 'filterable',
+        'size': 'size',
         'multiple': 'props.props.multiple'
     },
     // 多选框组

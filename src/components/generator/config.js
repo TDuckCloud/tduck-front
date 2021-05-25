@@ -521,7 +521,7 @@ export const imageComponents = [
         typeId: 'IMAGE_CAROUSEL',
         __config__: {
             label: '图片轮播',
-            showLabel: true,
+            showLabel: false,
             labelWidth: null,
             defaultValue: null,
             showDefaultValue: false,
@@ -539,7 +539,7 @@ export const imageComponents = [
         __slot__: {
             options: [{
                 label: '文字',
-                image: 'https://qiniu.smileyi.top/757b505cfd34c64c85ca5b5690ee5293/b128cf03901945d6b6df46cf6acbfa01.jpg'
+                image: ''
             }]
         },
         style: {width: '100%'}

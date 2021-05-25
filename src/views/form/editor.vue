@@ -115,7 +115,8 @@ import {
     assistComponents,
     formConf,
     imageComponents,
-    inputComponents, personalInfoComponents,
+    inputComponents,
+    personalInfoComponents,
     selectComponents
 } from '@/components/generator/config'
 import {deepClone} from '@/utils/index'
@@ -259,6 +260,7 @@ export default {
                 pItem.sort = res.data.sort
                 isSuccess = true
             })
+            // 如果是分页组件 刷新所有分页的页码
             if (item.typeId === 'PAGINATION') {
                 this.updatePaginationList()
             }

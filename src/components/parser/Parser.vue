@@ -231,7 +231,6 @@ function setOtherValueLabel(event, config) {
     let value = this[this.formConf.formModel][config.__vModel__]
     // 临时保存其他的选项值
     this.$nextTick(() => {
-        console.log(this[this.formConf.labelFormModel])
         this.$set(this[this.formConf.labelFormModel], `${config.__vModel__}other`, event)
         console.log(this[this.formConf.labelFormModel])
         setValueLabel.call(this, value, config.__config__, config)
@@ -251,8 +250,6 @@ function setValueLabel(event, config, scheme) {
     // 需要处理的类型 如果是input等则不需要处理
     let tagOptionKey = processType[config.tag]
     if (tagOptionKey) {
-        // eslint-disable-next-line no-debugger
-        // debugger
         if (event instanceof Array) {
             let labelArr = new Array()
             event.forEach(item => {
