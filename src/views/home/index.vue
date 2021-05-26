@@ -189,10 +189,6 @@ export default {
         cursor: pointer;
         color: rgba(32, 91, 181, 100);
     }
-    .person-menu-divider {
-        background-color: rgba(210, 210, 210, 78);
-        border: 1px solid rgba(210, 210, 210, 78);
-    }
 }
 .user-avatar {
     width: 50px;

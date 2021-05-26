@@ -3,35 +3,28 @@
         <el-container>
             <el-header class="header-container" height="38">
                 <div>
-                    <img src="@/assets/images/indexLogo.png" class="header-logo-img"
+                    <img class="header-logo-img" src="@/assets/images/indexLogo.png"
                          @click="$router.push({path:'/'})"
                     >
                 </div>
                 <div class="right-header">
+                    <el-link href="https://doc.tduckapp.com/" target="_blank">帮助文档</el-link>
                     <el-popover
                         placement="bottom-end"
-                        width="200"
                         trigger="click"
+                        width="150"
                     >
                         <div class="user-person-menu">
                             <div>
                                 <p v-if="getUserInfo" class="nick-name">{{ getUserInfo.name }}</p>
                             </div>
-                            <div class="person-menu-divider" />
+                            <el-divider />
                             <div>
                                 <p class="person-menu-item" @click="$router.push({path: '/home/member'})">
                                     <font-icon class="fab fa-get-pocket" />
                                     我的账户
                                 </p>
-                                <p class="person-menu-item">
-                                    <font-icon class="fas fa-envelope" />
-                                    站内信
-                                </p>
-                                <p class="person-menu-item">
-                                    <font-icon class="fas fa-user-circle" />
-                                    联系人
-                                </p>
-                                <div class="person-menu-divider" />
+                                <el-divider />
                                 <p class="person-menu-item" @click="logoutHandle">
                                     <font-icon class="fas fa-sign-out" />
                                     退出登录
@@ -54,7 +47,7 @@
             <el-container>
                 <el-aside width="280px">
                     <el-card>
-                        <el-button class="width80" type="primary" @click="createBlankTemplate">新建项目</el-button>
+                        <el-button class="width90" type="primary" @click="createBlankTemplate">新建项目</el-button>
                         <div class="menu-view">
                             <div v-for="menu in menuList" :key="menu.route"
                                  :class="defaultActiveMenu==menu.route?'menu-item-active menu-item':'menu-item'"
@@ -67,9 +60,9 @@
                         <div class="text-center">
                             <h5>加入社群</h5>
                             <el-image
-                                style="width: 200px; height: 200px;"
-                                src="https://oss.smileyi.top/static/wx-qrcode.png"
                                 fit="fill"
+                                src="https://oss.smileyi.top/static/wx-qrcode.png"
+                                style="width: 200px; height: 200px;"
                             />
                         </div>
                     </el-card>
@@ -103,7 +96,7 @@ export default {
             defaultActiveMenu: '',
             menuList: [
                 {
-                    route: '/home/my',
+                    route: '/home',
                     name: '工作台',
                     icon: 'fas fa-laptop'
                 },
@@ -186,6 +179,13 @@ export default {
         height: 35px;
         float: left;
     }
+    .right-header {
+        display: flex;
+        flex-direction: row;
+        > * {
+            margin: 0 20px;
+        }
+    }
     .user-avatar {
         width: 35px;
         height: 35px;
@@ -199,7 +199,7 @@ export default {
     background-color: rgba(255, 255, 255, 100);
     padding: 20px;
     .menu-item-active {
-        color: $menuActiveText;
+        color: $menuActiveText !important;
     }
     .menu-item {
         color: #333;
@@ -250,6 +250,9 @@ export default {
             cursor: pointer;
             color: $menuActiveText;
         }
+    }
+    .el-divider {
+        margin: 5px 0;
     }
     .person-menu-divider {
         background-color: rgba(210, 210, 210, 78);

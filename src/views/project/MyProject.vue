@@ -4,14 +4,14 @@
             <div>
                 <span @click="switchDataShowTypeHandle('gird')">
                     <font-icon
-                        class="fas fa-th-large show-view-type-icon "
                         :class="{'show-view-type-icon-active':dataShowType=='gird'}"
+                        class="fas fa-th-large show-view-type-icon "
                     />
                 </span>
                 <span @click="switchDataShowTypeHandle('table')">
                     <font-icon
-                        class="fas  fa-th-list show-view-type-icon"
                         :class="{'show-view-type-icon-active':dataShowType=='table'}"
+                        class="fas  fa-th-list show-view-type-icon"
                     />
                 </span>
             </div>
@@ -19,33 +19,25 @@
                 <el-form-item label="项目更新时间">
                     <el-date-picker
                         v-model="queryParams.beginDateTime"
-                        style="width: 20%;"
-                        value-format="yyyy-MM-dd HH:mm:ss"
-                        type="datetime"
                         placeholder="选择开始时间"
+                        style="width: 20%;"
+                        type="datetime"
+                        value-format="yyyy-MM-dd HH:mm:ss"
                     />
                     至
                     <el-date-picker
                         v-model="queryParams.endDateTime"
+                        :default-time="'23:59:59'"
+                        placeholder="选择结束时间"
                         style="width: 20%;"
                         type="datetime"
                         value-format="yyyy-MM-dd HH:mm:ss"
-                        :default-time="'23:59:59'"
-                        placeholder="选择结束时间"
                     />
                     <el-input
                         v-model="queryParams.name"
-                        style="width: 20%; margin-left: 20px;" type="text" placeholder="请输入项目名称"
+                        placeholder="请输入项目名称" style="width: 20%; margin-left: 20px;" type="text"
                     />
-                    <el-button style="margin-left: 20px;" type="primary" @click="queryProjectPage">查询</el-button>
-                    <!--                    <el-button style="margin-left: 20px;">-->
-                    <!--                        <font-icon class="fas fa-plus-square" />-->
-                    <!--                        新建文件夹-->
-                    <!--                    </el-button>-->
-                    <el-button style="margin-left: 10px;" @click="$router.push({path:'/project/recycle'})">
-                        <font-icon class="fas fa-recycle" />
-                        回收站
-                    </el-button>
+                    <el-button class="ml-20" type="primary" @click="queryProjectPage">查询</el-button>
                 </el-form-item>
                 <el-form-item label="项目状态">
                     <el-radio-group v-model="queryParams.status" size="small" @change="()=>{
@@ -67,7 +59,7 @@
                 class="project-grid-view"
             >
                 <div v-for="p in projectList" :key="p.id" class="project-grid-item-view pointer">
-                    <el-row type="flex" align="middle" justify="center">
+                    <el-row align="middle" justify="center" type="flex">
                         <el-col :span="5">
                             <span
                                 :style="getStatusColorStyle(p.status)"
@@ -128,31 +120,31 @@
                     </div>
                 </div>
             </div>
-            <div v-else v-loading="projectListLoading">
+            <div v-if="!projectListLoading&&!projectList">
                 <data-empty />
             </div>
         </div>
         <div v-if="dataShowType=='table'" class="project-table-view">
             <el-table
                 :data="projectList"
-                stripe
                 border
+                empty-text="暂无数据"
                 highlight-current-row
 
+                stripe
                 style="width: 100%;"
-                empty-text="暂无数据"
             >
                 <el-table-column
-                    prop="name"
-                    show-overflow-tooltip
                     align="center"
                     label="标题"
+                    prop="name"
+                    show-overflow-tooltip
                 />
                 <el-table-column
-                    show-overflow-tooltip
-                    prop="describe"
                     align="center"
                     label="描述"
+                    prop="describe"
+                    show-overflow-tooltip
                 />
                 <el-table-column
                     align="center"
@@ -170,13 +162,13 @@
                 </el-table-column>
                 <el-table-column
                     align="center"
-                    prop="createTime"
                     label="创建时间"
+                    prop="createTime"
                 />
                 <el-table-column
                     align="center"
-                    prop="updateTime"
                     label="更新时间"
+                    prop="updateTime"
                 />
                 <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -188,8 +180,8 @@
                         <span>
                             <el-button
                                 v-if="scope.row.status!=1"
-                                type="text"
                                 class="green-text-btn"
+                                type="text"
                                 @click="toProjectHandle(scope.row.key,'statistics')"
                             >
                                 统计
@@ -226,11 +218,11 @@
         <div class="project-page-view">
             <el-pagination
                 v-if="total>10"
-                background
-                :page-size.sync="queryParams.size"
                 :current-page.sync="queryParams.current"
-                layout="total, prev, pager, next"
+                :page-size.sync="queryParams.size"
                 :total="total"
+                background
+                layout="total, prev, pager, next"
                 @current-change="queryProjectPage"
             />
         </div>
@@ -249,7 +241,7 @@ export default {
     name: 'MyProject',
     filters: {
         formatDate(time) {
-            return  dayjs(time).format('YYYY/MM/DD')
+            return dayjs(time).format('YYYY/MM/DD')
         }
     },
     data() {

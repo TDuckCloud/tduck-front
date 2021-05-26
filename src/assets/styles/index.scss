@@ -73,6 +73,9 @@ div:focus {
 .ml-20 {
     margin-left: 20px;
 }
+.ml-10 {
+    margin-left: 10px;
+}
 .block {
     display: block;
 }
@@ -104,6 +107,10 @@ div:focus {
     width: 100% !important;
 }
 .width80 {
+    width: 80% !important;
+    margin: 0 auto;
+}
+.width90 {
     width: 80% !important;
     margin: 0 auto;
 }

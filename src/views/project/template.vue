@@ -1,31 +1,31 @@
 <template>
     <div class="create-wrapper">
         <el-row>
-            <el-row type="flex" justify="center">
-                <el-col :span="20">
-                    <el-form ref="form" :inline="true">
-                        <el-form-item label="">
-                            <el-input
-                                v-model="queryParams.name"
-                                @keyup.enter="queryTemplatePage"
-                            />
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary"
-                                       class="search-template-btn"
-                                       @click="queryTemplatePage"
-                            >
-                                查询
-                            </el-button>
-                        </el-form-item>
-                    </el-form>
-                </el-col>
-            </el-row>
+            <div class="filter-container">
+                <el-form ref="form" :inline="true">
+                    <el-form-item label="">
+                        <el-input
+                            v-model="queryParams.name"
+                            class="width80"
+                            placeholder="请输入模板名称"
+                            @keyup.enter="queryTemplatePage"
+                        />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button class="search-template-btn"
+                                   type="primary"
+                                   @click="queryTemplatePage"
+                        >
+                            查询
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
             <el-row>
                 <el-col :offset="6" :span="10">
                     <el-menu :default-active="queryParams.type"
-                             style="background-color: transparent;"
-                             mode="horizontal" @select="(index)=>{
+                             mode="horizontal"
+                             style="background-color: transparent;" @select="(index)=>{
                                  this.queryParams.type=index
                                  this.queryTemplatePage()}"
                     >
@@ -40,7 +40,7 @@
             </el-row>
             <el-row>
                 <el-col :span="3">
-                    <span class="tagTitle">推荐模板</span>
+                    <span class="tag-title">推荐模板</span>
                 </el-col>
             </el-row>
             <div class="project-grid-container">
@@ -52,19 +52,19 @@
                          @click="createBlankTemplate"
                     >
                         <div style="flex: 1;">
-                            <i style="font-size: 40px; align-items: center;" class="el-icon-plus" />
+                            <i class="el-icon-plus" style="font-size: 40px; align-items: center;" />
                             <p style="font-size: 14px;">创建一个空白模板</p>
                         </div>
                     </div>
                     <div v-for="template in templateList" :key="template.title" class="project-template-view">
-                        <img style="width: 144px; height: 133px;" :src="template.coverImg">
+                        <img :src="template.coverImg" style="width: 144px; height: 133px;">
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
-                        <p style="color: rgba(189, 188, 188, 100); font-size: 12px; margin: 0;">
-                            {{ template.likeCount }}人喜欢
-                            <svg-icon name="like" style="width: 12px; height: 12px;" />
-                        </p>
+                        <!--                        <p style="color: rgba(189, 188, 188, 100); font-size: 12px; margin: 0;">-->
+                        <!--                            {{ template.likeCount }}人喜欢-->
+                        <!--                            <svg-icon name="like" style="width: 12px; height: 12px;" />-->
+                        <!--                        </p>-->
                         <div class="project-template-use-view">
                             <div
                                 class="project-template-use-view-btn"
@@ -80,15 +80,14 @@
                 </div>
             </div>
         </el-row>
-        <el-row style="height: 20px;" />
         <div>
             <el-pagination
                 v-if="total>10"
-                background
-                :page-size.sync="queryParams.size"
                 :current-page.sync="queryParams.current"
-                layout="total, prev, pager, next"
+                :page-size.sync="queryParams.size"
                 :total="total"
+                background
+                layout="total, prev, pager, next"
                 @current-change="queryTemplatePage"
             />
         </div>
@@ -157,12 +156,18 @@ export default {
     flex-direction: column;
     align-items: center;
     align-content: center;
+    .el-pagination {
+        margin-top: 20px;
+    }
 }
-.back-view {
+.filter-container {
     display: flex;
-    width: 80%;
-    align-content: flex-start;
-    margin: 10px;
+    justify-content: center;
+    margin-top: 20px !important;
+    .el-input {
+        display: inline-block;
+        width: 300px !important;
+    }
 }
 .project-grid-view {
     display: flex;
@@ -170,7 +175,7 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
 }
-.tagTitle {
+.tag-title {
     font-size: 20px;
     border-bottom: 3px solid rgba(68, 68, 68, 100);
     line-height: 25px;

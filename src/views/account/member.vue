@@ -1,46 +1,5 @@
 <template>
     <div class="member-container">
-        <div class="member-left-container">
-            <el-card class="user-simple-info-view">
-                <div style="display: flex; align-content: center; flex-direction: row;">
-                    <img class="avatar" :src="userInfo.avatar">
-                    <div class="info-view">
-                        <p class="name">
-                            {{ userInfo.name }}
-                        </p>
-                        <p class="email">
-                            {{ userInfo.email }}
-                        </p>
-                        <p>
-                            <font-icon class="fab fa-weixin icon" :style="{color:userInfo.wxName?'#3F9F3F':''}" />
-                            <font-icon class="fa fa-qq icon" :style="{color:userInfo.qqName?'#078DF0':''}" />
-                            <font-icon class="fa fa-weibo icon" />
-                        </p>
-                    </div>
-                </div>
-            </el-card>
-            <el-card class="user-menu-list-view">
-                <el-menu
-                    :default-active="memberMenuActive"
-                >
-                    <el-menu-item index="1">
-                        <span slot="title">账户信息</span>
-                    </el-menu-item>
-                    <el-menu-item index="2">
-                        <span slot="title">我的资源</span>
-                    </el-menu-item>
-                    <el-menu-item index="3">
-                        <span slot="title">扩展功能</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <span slot="title">我的联系人</span>
-                    </el-menu-item>
-                    <el-menu-item index="5">
-                        <span slot="title">协作人员</span>
-                    </el-menu-item>
-                </el-menu>
-            </el-card>
-        </div>
         <el-card class="member-box-card">
             <div class="member-info-view">
                 <p class="title pl-10">个人信息</p>
@@ -138,37 +97,6 @@
                             <el-button v-else type="text">绑定</el-button>
                         </div>
                     </div>
-                </div>
-                <p class="title pl-10">企业信息</p>
-                <div v-if="userInfo" class="account-info-view">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td width="80" style="text-align: right;">企业名称：</td>
-                                <td>
-                                    字节跳动（上海研发中心）
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="80" style="text-align: right;">企业logo：</td>
-                                <td>
-                                    <el-button type="text">上传Logo</el-button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="100" style="text-align: right;">自定义域名：</td>
-                                <td>
-                                    xxxx
-                                </td>
-                            </tr>
-                            <tr>
-                                <td width="80" style="text-align: right;">所在地址：</td>
-                                <td>
-                                    xxxxx
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </el-card>
@@ -513,74 +441,6 @@ export default {
     }
     table tr {
         line-height: 30px;
-    }
-}
-.user-simple-info-view {
-    margin-top: 20px;
-    margin-right: 10px;
-    width: 370px;
-    height: 118px;
-    line-height: 20px;
-    border-radius: 10px;
-    text-align: center;
-    .avatar {
-        width: 81px;
-        height: 81px;
-        border-radius: 50px;
-        background-color: rgba(229, 229, 229, 100);
-        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
-        margin: 0 20px;
-    }
-    p {
-        margin: 0;
-    }
-    .name {
-        color: rgba(16, 16, 16, 100);
-        font-size: 20px;
-        line-height: 30px;
-        text-align: left;
-    }
-    .email {
-        color: rgba(16, 16, 16, 100);
-        font-size: 14px;
-        line-height: 20px;
-        text-align: center;
-    }
-    .info-view {
-        height: 81px;
-        text-align: left;
-    }
-    .icon {
-        margin: 5px;
-    }
-}
-.user-menu-list-view {
-    margin-top: 20px;
-    width: 370px;
-    height: 303px;
-    line-height: 20px;
-    border-radius: 10px;
-    text-align: center;
-    ul {
-        border-right: none;
-    }
-    ul li {
-        list-style: none;
-        color: rgba(16, 16, 16, 100);
-        font-size: 18px;
-        line-height: 40px;
-        text-align: center;
-        border-bottom: 1px solid rgb(234, 234, 234);
-    }
-    ul li:last-child {
-        border-bottom: none;
-    }
-    ul li:hover {
-        background-color: transparent;
-    }
-    .is-active {
-        background-color: transparent;
-        font-weight: bold;
     }
 }
 .account-info-view {
