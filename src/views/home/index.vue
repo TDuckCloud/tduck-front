@@ -53,14 +53,6 @@
                                         <font-icon class="fab fa-get-pocket" />
                                         我的账户
                                     </p>
-                                    <p class="person-menu-item">
-                                        <font-icon class="fas fa-envelope" />
-                                        站内信
-                                    </p>
-                                    <p class="person-menu-item">
-                                        <font-icon class="fas fa-user-circle" />
-                                        联系人
-                                    </p>
                                     <div class="person-menu-divider" />
                                     <p class="person-menu-item" @click="logoutHandle">
                                         <font-icon class="fas fa-sign-out" />

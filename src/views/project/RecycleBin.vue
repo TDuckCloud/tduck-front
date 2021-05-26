@@ -1,12 +1,7 @@
 <template>
     <div class="rc-bin-container">
-        <div class="back-view">
-            <el-button size="mini" round @click="$router.back(-1)">
-                <i class="el-icon-arrow-left" />
-                返回
-            </el-button>
-        </div>
         <el-table
+            v-if="projectList&&projectList.length>0"
             :data="projectList"
             stripe
             border
@@ -68,6 +63,7 @@
                 @current-change="queryRecycleProjectPage"
             />
         </div>
+        <data-empty />
     </div>
 </template>
 <script>

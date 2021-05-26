@@ -83,7 +83,7 @@
                         </el-col>
                     </el-row>
                     <img class="project-grid-view-preimg"
-                         src="https://freebrio.oss-cn-shanghai.aliyuncs.com/t/pic%20(1).png"
+                         src="https://oss.smileyi.top/static/pic%20(1).png"
                     >
                     <p class="project-grid-view-time">创建时间：{{ p.createTime | formatDate }}</p>
                     <div class="gird-operating-btns">
@@ -237,7 +237,6 @@
     </div>
 </template>
 <script>
-import DataEmpty from '@/components/DataEmpty'
 import dayjs from 'dayjs'
 
 let projectStatusList = [
@@ -248,7 +247,6 @@ let projectStatusList = [
 
 export default {
     name: 'MyProject',
-    components: {DataEmpty},
     filters: {
         formatDate(time) {
             return  dayjs(time).format('YYYY/MM/DD')
@@ -377,9 +375,9 @@ export default {
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 100);
     text-align: center;
-    box-shadow: 0 3px 6px 3px rgba(0, 0, 0, 0.12);
     margin: 10px;
     position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     .project-title {
         color: rgba(16, 16, 16, 100);
         font-size: 14px;

@@ -51,11 +51,6 @@ export default [
             }
         ]
     },
-    // {
-    //     path: '/home1',
-    //     meta: {requireLogin: false},
-    //     component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex')
-    // },
     {
         path: '/home',
         meta: {requireLogin: true},
@@ -64,7 +59,22 @@ export default [
             {
                 path: '/',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/home/HomeView')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject')
+            },
+            {
+                path: 'my',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject')
+            },
+            {
+                path: 'recycle',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/RecycleBin')
+            },
+            {
+                path: 'template',
+                meta: {requireLogin: true},
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template.vue')
             },
             {
                 path: 'member',
@@ -80,18 +90,14 @@ export default [
             {
                 path: 'create',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/create.vue')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template.vue')
             },
             {
                 path: 'my',
                 meta: {requireLogin: true},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject.vue')
             },
-            {
-                path: 'recycle',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/RecycleBin.vue')
-            },
+
             {
                 path: 'template/preview',
                 meta: {requireLogin: true},
@@ -103,7 +109,8 @@ export default [
             //     component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index1.vue')
             // }
         ]
-    }, {
+    },
+    {
         path: '/project/preview',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView.vue')

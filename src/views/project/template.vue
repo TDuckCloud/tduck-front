@@ -1,11 +1,5 @@
 <template>
     <div class="create-wrapper">
-        <div class="back-view">
-            <el-button size="mini" round @click="$router.back(-1)">
-                <i class="el-icon-arrow-left" />
-                返回
-            </el-button>
-        </div>
         <el-row>
             <el-row type="flex" justify="center">
                 <el-col :span="20">
@@ -13,7 +7,6 @@
                         <el-form-item label="">
                             <el-input
                                 v-model="queryParams.name"
-                                class="search-template-input"
                                 @keyup.enter="queryTemplatePage"
                             />
                         </el-form-item>
@@ -232,16 +225,6 @@ export default {
     height: 50px;
     line-height: 20px;
     border-radius: 10px;
-    text-align: center;
-    border: 1px solid rgba(187, 187, 187, 100);
-}
-.search-template-btn {
-    width: 132px;
-    height: 50px;
-    border-radius: 10px;
-    background-color: rgba(25, 73, 157, 100);
-    color: rgba(255, 255, 255, 100);
-    font-size: 18px;
     text-align: center;
     border: 1px solid rgba(187, 187, 187, 100);
 }
