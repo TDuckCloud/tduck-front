@@ -303,25 +303,25 @@ export default {
     width: 80%;
     margin: 0 auto;
 }
-/deep/ .el-icon-setting {
+::v-deep .el-icon-setting {
     font-size: 24px;
     line-height: 25px;
     color: white;
 }
-/deep/ .data-table-header .cell {
+::v-deep .data-table-header .cell {
     text-overflow: ellipsis !important;
     white-space: nowrap !important;
 }
 
 /* 1.显示滚动条：当内容超出容器的时候，可以拖动： */
-/deep/ .el-drawer__body {
+::v-deep .el-drawer__body {
     overflow: auto;
 
     /* overflow-x: auto; */
 }
 
 /* 2.隐藏滚动条，太丑了 */
-/deep/ .el-drawer__container ::-webkit-scrollbar {
+::v-deep .el-drawer__container ::-webkit-scrollbar {
     display: none;
 }
 

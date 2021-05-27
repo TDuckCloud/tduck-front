@@ -132,18 +132,18 @@ export default {
 }
 </script>
 <style scoped>
-/deep/ .el-radio-group,
-/deep/ .el-checkbox-group {
+::v-deep .el-radio-group,
+::v-deep .el-checkbox-group {
     margin-left: 10px;
 }
-/deep/ .el-radio,
-/deep/ .el-checkbox {
+::v-deep .el-radio,
+::v-deep .el-checkbox {
     display: block;
     min-height: 23px;
     line-height: 23px;
 }
-/deep/ .el-radio__label,
-/deep/ .el-checkbox__label {
+::v-deep .el-radio__label,
+::v-deep .el-checkbox__label {
     font-size: 14px;
     padding-left: 10px;
     text-overflow: ellipsis;
@@ -152,11 +152,11 @@ export default {
     vertical-align: middle;
     display: inline-block;
 }
-/deep/ .item-other-input {
+::v-deep .item-other-input {
     margin-left: 20px;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
-/deep/ .item-other-input:focus {
+::v-deep .item-other-input:focus {
     outline: none;
 }
 </style>

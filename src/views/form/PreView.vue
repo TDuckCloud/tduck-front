@@ -66,12 +66,12 @@ export default {
     padding-top: 30px;
     background-color: #f7f7f7;
 }
-/deep/ .el-tabs__header {
+::v-deep .el-tabs__header {
     width: 300px;
     margin: 0 auto;
     border: none;
 }
-/deep/ .el-tabs--card > .el-tabs__header .el-tabs__item {
+::v-deep .el-tabs--card > .el-tabs__header .el-tabs__item {
     background-color: white;
     border: 1px solid white;
 }

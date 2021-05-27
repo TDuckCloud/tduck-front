@@ -69,15 +69,15 @@ export default {
     display: flex;
     flex-direction: column;
 }
-/deep/ .el-alert__content {
+::v-deep .el-alert__content {
     margin-top: 20px;
     text-align: center;
 }
-/deep/ .el-alert__title {
+::v-deep .el-alert__title {
     font-size: 18px;
     line-height: 25px;
 }
-/deep/ .el-alert__icon.is-big {
+::v-deep .el-alert__icon.is-big {
     font-size: 60px;
     width: 60px;
 }

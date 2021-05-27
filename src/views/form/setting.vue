@@ -851,19 +851,19 @@ export default {
     height: 49px;
     border-radius: 6px;
 }
-/deep/ .setting-input input {
+::v-deep .setting-input input {
     border: none;
     border-bottom: 1px solid rgba(187, 187, 187, 100);
     border-radius: 0;
     line-height: 20px;
     height: 20px;
 }
-/deep/ .collection-date-picker input {
+::v-deep .collection-date-picker input {
     border: none;
     border-bottom: 1px solid rgba(187, 187, 187, 100);
     border-radius: 0;
 }
-/deep/ .el-form-item--mini.el-form-item,
+::v-deep .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {
     margin: 0;
 }
