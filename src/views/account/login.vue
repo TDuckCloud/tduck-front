@@ -132,7 +132,6 @@
                 </el-tabs>
                 <el-tabs
                     v-if="formType==='reg'" v-model="regType" class="register-form"
-                    @tab-click="registerHandleClick"
                 >
                     <el-tab-pane label="手机号注册" name="regPhone">
                         <el-form ref="phoneRegForm" :model="accountForm" :rules="phoneRegRules" label-width="0px">
@@ -206,27 +205,16 @@
                 </el-tabs>
             </el-col>
         </el-row>
-        <Verify
-            ref="verify"
-            :mode="'pop'"
-            :captcha-type="'blockPuzzle'"
-            :img-size="{ width: '330px', height: '155px' }"
-            @success="verifySuccessHandle"
-        />
     </div>
 </template>
 <script>
 
 import {getCurrentDomain} from '@/utils'
 // 引入组件
-import Verify from '@/components/verifition/Verify'
 import constants from '@/utils/constants'
 
 export default {
     name: 'Login',
-    components: {
-        Verify
-    },
     data() {
         const validateAccount = (rule, value, callback) => {
             const reg1 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
@@ -320,21 +308,6 @@ export default {
         clearInterval(this.wxQrcodeResultTimer)
     },
     methods: {
-        loginTypeHandleClick() {
-        },
-        registerHandleClick() {
-        },
-        verifySuccessHandle(params) {
-            let slideCode = params.captchaVerification
-            this.$api.request({
-                url: '/login/account',
-                method: 'post',
-                params: {slideCode},
-                data: this.accountForm
-            }).then(res => {
-                this.loginSuccessHandle(res.data)
-            })
-        },
         // 获取微信登录二维码
         getLoginWxQrCode() {
             this.wxQrCodeLoading = true
@@ -457,12 +430,12 @@ export default {
             })
         },
         loginHandle() {
-            this.$refs['accountLoginForm'].validate(valid => {
-                if (valid) {
-                    this.$refs.verify.show()
-                } else {
-                    return false
-                }
+            this.$api.request({
+                url: '/login/account',
+                method: 'post',
+                data: this.accountForm
+            }).then(res => {
+                this.loginSuccessHandle(res.data)
             })
         }
     }

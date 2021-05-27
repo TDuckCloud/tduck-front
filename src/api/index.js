@@ -1,6 +1,7 @@
 import axios from 'axios'
 // import qs from 'qs'
 import {MessageBox, Message} from 'element-ui'
+import Verification from '@/components/verifition/verification.js'
 import router from '@/router/index'
 import store from '@/store/index'
 import signMd5Utils from '@/utils/sign'
@@ -87,6 +88,12 @@ api.interceptors.response.use(
                     })
                 })
             }
+            return Promise.reject(res)
+        } else if (res.code === 416) {
+            console.log('validate')
+            Verification().then(value => {
+                console.log(value)
+            })
             return Promise.reject(res)
         }
         return Promise.resolve(res)

@@ -95,7 +95,7 @@ export default {
     data() {
         return {
             // showBox:true,
-            clickShow: false,
+            clickShow: true,
             // 内部类型
             verifyType: undefined,
             // 所用组件类型
