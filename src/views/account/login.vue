@@ -298,9 +298,9 @@ export default {
         this.refreshWxQrcodeTimer = setInterval(() => {
             this.getLoginWxQrCode()
         }, 5 * 60 * 1000)
-        this.wxQrcodeResultTimer = setInterval(() => {
-            this.getLoginWxQrCodeResult()
-        }, 5 * 1000)
+        // this.wxQrcodeResultTimer = setInterval(() => {
+        //     this.getLoginWxQrCodeResult()
+        // }, 5 * 1000)
         this.getQQLoginAuthorizeUrl()
     },
     destroyed() {

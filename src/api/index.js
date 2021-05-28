@@ -34,17 +34,21 @@ api.interceptors.request.use(
         if (store.getters['user/isLogin']) {
             request.headers.token = store.state.user.token
         }
-        // 签名验证
-        if (request.params == undefined) {
-            request.params = {}
-        }
-        let timestamp = new Date().getTime()
-        request.params.timestamp = '' + timestamp
-        let sign = signMd5Utils.getSign(request.url, request)
-        request.params.sign = sign
+        signRequest(request)
         return request
     }
 )
+
+function signRequest(request) {
+    // 签名验证
+    if (request.params == undefined) {
+        request.params = {}
+    }
+    let timestamp = new Date().getTime()
+    request.params.timestamp = '' + timestamp
+    let sign = signMd5Utils.getSign(request.url, request)
+    request.params.sign = sign
+}
 
 api.interceptors.response.use(
     response => {
@@ -56,11 +60,16 @@ api.interceptors.response.use(
          * 请求出错时 msg 会返回错误信息
          * 则代码如下
          */
+        console.log(response)
         let errCodes = [500, 405, 403]
         const res = response.data
+        // eslint-disable-next-line no-debugger
+        debugger
         if (res.code === 200) {
             return Promise.resolve(res)
         } else if (errCodes.includes(res.code)) {
+            // eslint-disable-next-line no-debugger
+            debugger
             // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
             Message({
                 message: res.msg || 'Error',
@@ -93,6 +102,13 @@ api.interceptors.response.use(
             console.log('validate')
             Verification().then(value => {
                 console.log(value)
+                setTimeout(function() {
+                    response.config.params.slideCode = value
+                    delete response.config.params.sign
+                    response.config.data = JSON.parse(response.config.data)
+                    signRequest(response.config)
+                    return axios(response.config)
+                }, 1000)
             })
             return Promise.reject(res)
         }
