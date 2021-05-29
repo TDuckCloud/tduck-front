@@ -1,48 +1,41 @@
 <template>
-    <div class="create-wrapper">
+    <div class="create-container">
         <el-row>
-            <div class="filter-container">
-                <el-form ref="form" :inline="true">
-                    <el-form-item label="">
-                        <el-input
-                            v-model="queryParams.name"
-                            class="width80"
-                            placeholder="请输入模板名称"
-                            @keyup.enter="queryTemplatePage"
-                        />
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button class="search-template-btn"
-                                   type="primary"
-                                   @click="queryTemplatePage"
-                        >
-                            查询
-                        </el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-            <el-row>
-                <el-col :offset="6" :span="10">
-                    <el-menu :default-active="queryParams.type"
-                             mode="horizontal"
-                             style="background-color: transparent;" @select="(index)=>{
-                                 this.queryParams.type=index
-                                 this.queryTemplatePage()}"
+            <div class="create-header-container">
+                <div class="filter-container">
+                    <el-form ref="form" :inline="true">
+                        <el-form-item label="">
+                            <el-input
+                                v-model="queryParams.name"
+                                class="width80"
+                                placeholder="请输入模板名称"
+                                @keyup.enter="queryTemplatePage"
+                            />
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button class="search-template-btn"
+                                       type="primary"
+                                       @click="queryTemplatePage"
+                            >
+                                查询
+                            </el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+                <el-menu :default-active="queryParams.type"
+                         mode="horizontal"
+                         style="background-color: transparent;" @select="(index)=>{
+                             this.queryParams.type=index
+                             this.queryTemplatePage()}"
+                >
+                    <el-menu-item :`index`="null">全部</el-menu-item>
+                    <el-menu-item v-for="(item, index) in templateTypeList" :key="index"
+                                  :index="item.id.toString()"
                     >
-                        <el-menu-item :`index`="null">全部</el-menu-item>
-                        <el-menu-item v-for="(item, index) in templateTypeList" :key="index"
-                                      :index="item.id.toString()"
-                        >
-                            {{ item.name }}
-                        </el-menu-item>
-                    </el-menu>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="3">
-                    <span class="tag-title">推荐模板</span>
-                </el-col>
-            </el-row>
+                        {{ item.name }}
+                    </el-menu-item>
+                </el-menu>
+            </div>
             <div class="project-grid-container">
                 <div
                     class="project-grid-view"
@@ -56,8 +49,8 @@
                             <p style="font-size: 14px;">创建一个空白模板</p>
                         </div>
                     </div>
-                    <div v-for="template in templateList" :key="template.title" class="project-template-view">
-                        <img :src="template.coverImg" style="width: 144px; height: 133px;">
+                    <div v-for="template in templateList" :key="template.id" class="project-template-view">
+                        <img  :src="template.coverImg" style="width: 144px; height: 133px;">
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
@@ -68,7 +61,7 @@
                         <div class="project-template-use-view">
                             <div
                                 class="project-template-use-view-btn"
-                                @click="toProjectTemplate(template.key)"
+                                @click="toProjectTemplate(index.key)"
                             >
                                 <div>
                                     <font-icon class="fa fa-eye" style="font-size: 40px;" />
@@ -149,7 +142,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.create-wrapper {
+.create-container {
     display: flex;
     width: 100%;
     height: 100%;
@@ -160,9 +153,14 @@ export default {
         margin-top: 20px;
     }
 }
+.create-header-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
 .filter-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-top: 20px !important;
     .el-input {
         display: inline-block;

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ProjectForm from '@/views/form/ProjectForm'
+import ProjectForm from '@/views/form/preview/ProjectForm'
 
 export default {
     name: 'TemplatePreview',

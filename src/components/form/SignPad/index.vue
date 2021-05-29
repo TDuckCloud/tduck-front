@@ -2,7 +2,7 @@
     <div id="signature-pad" class="signature-pad">
         <div class="signature-pad--body" style="min-height: 300px; width: 100%;">
             <canvas v-show="!signImageUrl" class="canvasId" style="border: 2px dashed #f7f7f7;" />
-            <img v-if="signImageUrl" :src="signImageUrl">
+            <img v-if="signImageUrl" :src="signImageUrl" style="width: 100%; height: 100%;">
         </div>
         <p class="desc-text">请在上面区域完成签名 然后点击确"确认"按钮</p>
         <div v-if="!signImageUrl">

@@ -621,7 +621,7 @@ export const assistComponents = [
         typeId: 'SIGN_PAD',
         __config__: {
             label: '手写签名',
-            defaultValue: '手写签名',
+            defaultValue: '',
             showLabel: true,
             showDefaultValue: true,
             showRequired: true,

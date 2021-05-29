@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import qs from 'qs'
-import {MessageBox, Message} from 'element-ui'
+import {Message, MessageBox} from 'element-ui'
 import Verification from '@/components/verifition/verification.js'
 import router from '@/router/index'
 import store from '@/store/index'
@@ -39,7 +39,11 @@ api.interceptors.request.use(
     }
 )
 
-function signRequest(request) {
+/**
+ * 签名请求
+ * @param request
+ */
+const signRequest = request => {
     // 签名验证
     if (request.params == undefined) {
         request.params = {}
@@ -51,7 +55,8 @@ function signRequest(request) {
 }
 
 api.interceptors.response.use(
-    response => {
+    async response => {
+        console.log(response)
         /**
          * 全局拦截请求发送后返回的数据，如果数据有报错则在这做全局的错误提示
          * 假设返回数据格式为：{"code":500,"msg":"邮箱地址不正确","data":null}
@@ -60,16 +65,11 @@ api.interceptors.response.use(
          * 请求出错时 msg 会返回错误信息
          * 则代码如下
          */
-        console.log(response)
         let errCodes = [500, 405, 403]
         const res = response.data
-        // eslint-disable-next-line no-debugger
-        debugger
         if (res.code === 200) {
             return Promise.resolve(res)
         } else if (errCodes.includes(res.code)) {
-            // eslint-disable-next-line no-debugger
-            debugger
             // 这里做错误提示，如果使用了 element ui 则可以使用 Message 进行提示
             Message({
                 message: res.msg || 'Error',
@@ -99,18 +99,17 @@ api.interceptors.response.use(
             }
             return Promise.reject(res)
         } else if (res.code === 416) {
-            console.log('validate')
-            Verification().then(value => {
-                console.log(value)
-                setTimeout(function() {
-                    response.config.params.slideCode = value
-                    delete response.config.params.sign
+            // 需要滑动验证
+            let result = {}
+            await Verification().then(async value => {
+                response.config.params.slideCode = value
+                delete response.config.params.sign
+                if (response.config.data) {
                     response.config.data = JSON.parse(response.config.data)
-                    signRequest(response.config)
-                    return axios(response.config)
-                }, 1000)
+                }
+                result = await api.request(response.config)
             })
-            return Promise.reject(res)
+            return Promise.resolve(result)
         }
         return Promise.resolve(res)
     },

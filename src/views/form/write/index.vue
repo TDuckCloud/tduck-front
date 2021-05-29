@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import ProjectForm from './ProjectForm'
+import ProjectForm from '../preview/ProjectForm'
 import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
 import { getQueryString} from '@/utils'

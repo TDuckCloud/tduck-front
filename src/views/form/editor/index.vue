@@ -119,7 +119,7 @@ import {
     personalInfoComponents,
     selectComponents
 } from '@/components/generator/config'
-import {deepClone} from '@/utils/index'
+import {deepClone} from '@/utils'
 import {dbDataConvertForItemJson, formItemConvertData} from '@/utils/convert'
 import drawingDefalut from '@/components/generator/drawingDefalut'
 import DraggableItem from './DraggableItem'

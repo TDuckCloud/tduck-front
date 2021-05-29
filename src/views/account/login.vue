@@ -294,14 +294,16 @@ export default {
     },
     watch: {},
     created() {
-        this.getLoginWxQrCode()
-        this.refreshWxQrcodeTimer = setInterval(() => {
+        if (constants.enableWx) {
             this.getLoginWxQrCode()
-        }, 5 * 60 * 1000)
-        // this.wxQrcodeResultTimer = setInterval(() => {
-        //     this.getLoginWxQrCodeResult()
-        // }, 5 * 1000)
-        this.getQQLoginAuthorizeUrl()
+            this.refreshWxQrcodeTimer = setInterval(() => {
+                this.getLoginWxQrCode()
+            }, 5 * 60 * 1000)
+            this.wxQrcodeResultTimer = setInterval(() => {
+                this.getLoginWxQrCodeResult()
+            }, 5 * 1000)
+            this.getQQLoginAuthorizeUrl()
+        }
     },
     destroyed() {
         clearInterval(this.refreshWxQrcodeTimer)

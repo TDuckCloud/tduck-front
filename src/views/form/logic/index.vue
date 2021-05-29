@@ -129,7 +129,7 @@
 
 <script>
 import _ from 'lodash'
-import {jsonSimpleClone} from '@/utils/index'
+import {jsonSimpleClone} from '@/utils'
 
 export default {
     name: 'ProjectLogic',

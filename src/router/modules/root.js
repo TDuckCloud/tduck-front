@@ -54,27 +54,12 @@ export default [
     {
         path: '/home',
         meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/NewIndex'),
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home'),
         children: [
             {
                 path: '/',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject')
-            },
-            {
-                path: 'my',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject')
-            },
-            {
-                path: 'recycle',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/RecycleBin')
-            },
-            {
-                path: 'template',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template.vue')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/my/index')
             },
             {
                 path: 'member',
@@ -82,51 +67,6 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/member')
             }
         ]
-    }, {
-        path: '/project',
-        meta: {requireLogin: true},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue'),
-        children: [
-            {
-                path: 'create',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template.vue')
-            },
-            {
-                path: 'my',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/MyProject.vue')
-            },
-
-            {
-                path: 'template/preview',
-                meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/project/TemplatePreview.vue')
-            }
-            // {
-            //     path: 'form',
-            //     meta: {requireLogin: true},
-            //     component: () => import(/* webpackChunkName: 'root' */ '@/views/form/index1.vue')
-            // }
-        ]
-    },
-    {
-        path: '/project/preview',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView.vue')
-    }, {
-        path: '/project/view',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/ProjectForm.vue')
-    },
-    {
-        path: '/s/:key',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write.vue')
-    },
-    {
-        path: '/project/write',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write.vue')
     }
+
 ]
