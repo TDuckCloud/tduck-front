@@ -6,5 +6,5 @@ export default {
     passwordRegDesc: '密码最少为6位字符',
     userUploadUrl: `${process.env.VUE_APP_API_ROOT}/user/file/upload`,
     // 启用微信功能
-    enableWx: process.env.VUE_APP_WX
+    enableWx: process.env.VUE_APP_WX == 'ON'
 }

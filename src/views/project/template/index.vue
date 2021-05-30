@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div v-for="template in templateList" :key="template.id" class="project-template-view">
-                        <img  :src="template.coverImg" style="width: 144px; height: 133px;">
+                        <img :src="template.coverImg" style="width: 144px; height: 133px;">
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
@@ -192,6 +192,7 @@ export default {
 }
 .project-template-view:hover .project-template-use-view {
     display: block;
+    cursor: pointer;
 }
 .project-template-use-view {
     position: absolute;

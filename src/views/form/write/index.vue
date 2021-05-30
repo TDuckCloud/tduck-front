@@ -40,6 +40,7 @@ import ProjectForm from '../preview/ProjectForm'
 import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
 import { getQueryString} from '@/utils'
+import constants from '@/utils/constants'
 
 const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
@@ -89,11 +90,14 @@ export default {
         this.getWxAuthorizationUrl()
         this.queryProjectSettingStatus()
         this.queryProjectSetting()
-        // 加载微信相关 获取签名
-        this.$api.get('/wx/jsapi/signature', {params: {url: window.location.href}}).then(res => {
-            this.wxSignature = res.data
-            this.setWxConfig()
-        })
+        if (constants.enableWx) {
+            // 加载微信相关 获取签名
+            this.$api.get('/wx/jsapi/signature', {params: {url: window.location.href}}).then(res => {
+                this.wxSignature = res.data
+                this.setWxConfig()
+            })
+        }
+
     },
     mounted() {
         this.viewProjectHandle()
