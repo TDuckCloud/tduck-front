@@ -4,7 +4,7 @@ export default {
         let style = 'height: 100%;'
         conf.__slot__.options.forEach(item => {
             list.push(<el-carousel-item style={'text-align: center;'}>
-                <span>{item.label}</span>
+                <p>{item.label}</p>
                 <el-image fit="contain" style={style} src={item.image}></el-image>
             </el-carousel-item>)
         })

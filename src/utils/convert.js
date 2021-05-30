@@ -20,6 +20,7 @@ export function formItemConvertData(item, projectKey) {
         'regList': item.__config__.regList,
         'showLabel': item.__config__.showLabel,
         'span': item.__config__.span,
+        'displayType': item.displayType,
         'projectKey': projectKey
     }
     let expand = {}
@@ -64,6 +65,7 @@ export function dbDataConvertForItemJson(data) {
     jsonItem.dId = data.id
     jsonItem.sort = data.sort
     jsonItem.typeId = data.type
+    jsonItem.displayType = data.displayType
     jsonItem.__config__.span = data.span
     jsonItem.__config__.formId = data.formItemId
     jsonItem.__config__.label = data.label
@@ -97,7 +99,9 @@ const dataParams = {
     // 单行文本
     'INPUT': {
         'prepend': '__slot__.prepend',
+        'prefixIcon': 'prefix-icon',
         'maxlength': 'maxlength',
+        'showWordLimit': 'show-word-limit',
         'append': '__slot__.append'
     },
     // 多行文本

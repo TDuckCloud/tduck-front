@@ -33,6 +33,11 @@ export default [
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/preview/ProjectForm.vue')
     },
     {
+        path: '/project/public/result',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/statistics/public')
+    },
+    {
         path: '/s/:key',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/write')
