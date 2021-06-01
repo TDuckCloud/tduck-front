@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="!projectListLoading&&!projectList">
+            <div v-if="!projectListLoading&&projectList.length==0">
                 <data-empty />
             </div>
         </div>

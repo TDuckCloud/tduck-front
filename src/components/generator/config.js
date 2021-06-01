@@ -496,6 +496,7 @@ export const imageComponents = [
         __config__: {
             label: '图片展示',
             showLabel: false,
+            displayType: true,
             labelWidth: null,
             showDefaultValue: false,
             showRequired: false,
@@ -505,7 +506,7 @@ export const imageComponents = [
             tagIcon: 'image',
             layout: 'colFormItem',
             span: 24,
-            required: true,
+            required: false,
             regList: [],
             changeTag: true
         },
@@ -522,6 +523,7 @@ export const imageComponents = [
         __config__: {
             label: '图片轮播',
             showLabel: false,
+            displayType: true,
             labelWidth: null,
             defaultValue: null,
             showDefaultValue: false,
@@ -579,6 +581,7 @@ export const assistComponents = [
         __config__: {
             label: '文字描述',
             defaultValue: '描述文字',
+            displayType: true,
             showDefaultValue: true,
             showRequired: false,
             showClearable: false,
@@ -600,6 +603,7 @@ export const assistComponents = [
         __config__: {
             label: '分割线',
             defaultValue: '分割线',
+            displayType: true,
             showLabel: false,
             showDefaultValue: false,
             showRequired: false,
@@ -621,7 +625,7 @@ export const assistComponents = [
         typeId: 'SIGN_PAD',
         __config__: {
             label: '手写签名',
-            defaultValue: '手写签名',
+            defaultValue: '',
             showLabel: true,
             showDefaultValue: true,
             showRequired: true,
@@ -644,6 +648,7 @@ export const assistComponents = [
         __config__: {
             label: '分页',
             defaultValue: '分页',
+            displayType: true,
             showLabel: false,
             showDefaultValue: false,
             showRequired: false,
@@ -667,7 +672,7 @@ export const assistComponents = [
 ]
 
 // 个人信息组件
-export const  personalInfoComponents = [
+export const personalInfoComponents = [
     {
         typeId: 'INPUT',
         __config__: {

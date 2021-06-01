@@ -2,7 +2,7 @@ export default [
     {
         path: '/project/form',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/form/newIndex.vue'),
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/form'),
         children: [
             {
                 path: '',
@@ -22,7 +22,7 @@ export default [
             {
                 path: 'preview',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/PreView')
+                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/preview')
             },
             {
                 path: 'setting',

@@ -72,7 +72,7 @@ div:focus {
     margin-right: 10px;
 }
 .ml-20 {
-    margin-left: 20px;
+    margin-left: 20px !important;
 }
 .ml-10 {
     margin-left: 10px;
@@ -99,6 +99,11 @@ div:focus {
     flex-direction: column;
     box-sizing: border-box;
 }
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 .desc-text {
     color: rgba(155, 155, 155, 100);
     font-size: 14px;
@@ -106,6 +111,9 @@ div:focus {
 }
 .width-full {
     width: 100% !important;
+}
+.width50 {
+    width: 50% !important;
 }
 .width80 {
     width: 80% !important;

@@ -31,15 +31,19 @@
                     fit="cover"
                 />
             </div>
+            <el-button v-if="userProjectSetting.publicResult" type="primary" @click="openPublicResultHandle">
+                查看数据
+            </el-button>
         </div>
     </div>
 </template>
 
 <script>
-import ProjectForm from './ProjectForm'
+import ProjectForm from '../preview/ProjectForm'
 import loadWXJs from '@/utils/loadWxSdk'
 import defaultValue from '@/utils/defaultValue'
-import { getQueryString} from '@/utils'
+import {getQueryString} from '@/utils'
+import constants from '@/utils/constants'
 
 const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
@@ -72,11 +76,13 @@ export default {
             wxSignature: {}
         }
     },
-    beforeCreate() {
-        let meta = document.createElement('meta')
-        meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
-        meta.name = 'viewport'
-        document.getElementsByTagName('head')[0].appendChild(meta)
+    metaInfo: {
+        meta: [
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+            }
+        ]
     },
     created() {
         let key = this.$route.query.key || this.$route.params.key
@@ -89,11 +95,14 @@ export default {
         this.getWxAuthorizationUrl()
         this.queryProjectSettingStatus()
         this.queryProjectSetting()
-        // 加载微信相关 获取签名
-        this.$api.get('/wx/jsapi/signature', {params: {url: window.location.href}}).then(res => {
-            this.wxSignature = res.data
-            this.setWxConfig()
-        })
+        if (constants.enableWx) {
+            // 加载微信相关 获取签名
+            this.$api.get('/wx/jsapi/signature', {params: {url: window.location.href}}).then(res => {
+                this.wxSignature = res.data
+                this.setWxConfig()
+            })
+        }
+
     },
     mounted() {
         this.viewProjectHandle()
@@ -233,6 +242,9 @@ export default {
                 }
             })
         },
+        /**
+         * 仅在微信打开
+         */
         onlyWxOpenHandle() {
             let wxUa = navigator.userAgent.toLowerCase()
             let isWeixin = wxUa.indexOf('micromessenger') != -1
@@ -240,6 +252,10 @@ export default {
                 document.head.innerHTML = '<title>抱歉，出错了</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"><link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/open/libs/weui/0.4.1/weui.css">'
                 document.body.innerHTML = '<div class="weui_msg"><div class="weui_icon_area"><i class="weui_icon_info weui_icon_msg"></i></div><div class="weui_text_area"><h4 class="weui_msg_title">请在微信客户端打开链接</h4></div></div>'
             }
+        },
+        openPublicResultHandle() {
+            let projectKey = this.projectConfig.projectKey
+            this.$router.replace({path: '/project/public/result', query: {projectKey}})
         },
         submitForm(data) {
             // 完成时间

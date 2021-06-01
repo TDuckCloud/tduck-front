@@ -150,9 +150,9 @@ function setUpload(config, scheme, response, file, fileList) {
         newValue = []
     }
     newValue.push({fileName: file.name, url: response.data})
-    this.$set(config, 'defaultValue', JSON.stringify(newValue))
-    this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
-    setValueLabel.call(this, {type: 'file', files: JSON.stringify(newValue)}, config, scheme)
+    this.$set(config, 'defaultValue', newValue)
+    this.$set(this[this.formConf.formModel], scheme.__vModel__, newValue)
+    setValueLabel.call(this, {type: 'file', files: newValue}, config, scheme)
 }
 
 function deleteUpload(config, scheme, file, fileList) {
@@ -160,9 +160,9 @@ function deleteUpload(config, scheme, file, fileList) {
     fileList.forEach(element => {
         newValue.push({fileName: element.name, url: element.url})
     })
-    this.$set(config, 'defaultValue', JSON.stringify(newValue))
-    this.$set(this[this.formConf.formModel], scheme.__vModel__, JSON.stringify(newValue))
-    setValueLabel.call(this, {type: 'file', files: JSON.stringify(newValue)}, config, scheme)
+    this.$set(config, 'defaultValue', newValue)
+    this.$set(this[this.formConf.formModel], scheme.__vModel__, newValue)
+    setValueLabel.call(this, {type: 'file', files: newValue}, config, scheme)
 }
 
 function setValue(event, config, scheme) {

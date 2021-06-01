@@ -14,7 +14,7 @@
                                 />
                             </el-form-item>
                             <el-form-item label="" prop="code">
-                                <el-input v-model="retrieveAccountForm.code" autocomplete="off" placeholder="请输入验证码" />
+                                <el-input v-model="retrieveAccountForm.code" class="width50" autocomplete="off" placeholder="请输入验证码" />
                                 <el-button :disabled="emailValidateCodeBtn" class="ml-20" type="primary"
                                            @click="sendPhoneValidateCodeHandle"
                                 >
@@ -22,7 +22,7 @@
                                 </el-button>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="phoneRetrievePassWordHandle">
+                                <el-button class="width-full" type="primary" @click="phoneRetrievePassWordHandle">
                                     找回密码
                                 </el-button>
                             </el-form-item>
@@ -37,7 +37,7 @@
                                 <el-input v-model="retrieveAccountForm.email" autocomplete="off" placeholder="请输入邮箱" />
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="sendEmailValidateHandle">
+                                <el-button  class="width-full" type="primary" @click="sendEmailValidateHandle">
                                     找回密码
                                 </el-button>
                             </el-form-item>
@@ -78,26 +78,14 @@
                 没有收到邮件？请检查您的垃圾邮件或者重新发送
             </p>
         </div>
-        <Verify
-            ref="verify"
-            :captcha-type="'blockPuzzle'"
-            :img-size="{ width: '330px', height: '155px' }"
-            :mode="'pop'"
-            @success="verifySuccessHandle"
-        />
     </div>
 </template>
 
 <script>
-// 引入组件
-import Verify from '@/components/verifition/Verify'
 import constants from '@/utils/constants'
 
 export default {
     name: 'RetrievePwd',
-    components: {
-        Verify
-    },
     data() {
         let validateRePass = (rule, value, callback) => {
             if (value === '') {
@@ -168,12 +156,11 @@ export default {
         sendPhoneValidateCodeHandle() {
             this.$refs['phoneForm'].validateField('phoneNumber', err => {
                 if (!err) {
-                    this.$refs.verify.show()
+                    this.sendPhoneValidateCode()
                 }
             })
         },
-        sendPhoneValidateCode(params) {
-            let slideCode = params.captchaVerification
+        sendPhoneValidateCode() {
             let phoneNumber = this.retrieveAccountForm.phoneNumber
             this.$refs['phoneForm'].validateField('phoneNumber', err => {
                 if (!err) {
@@ -181,7 +168,7 @@ export default {
                     this.$api.request({
                         url: '/retrieve/password/phone/code',
                         method: 'get',
-                        params: {slideCode: slideCode, phoneNumber: phoneNumber}
+                        params: {phoneNumber: phoneNumber}
                     }).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.emailValidateCodeBtn = true
@@ -230,30 +217,22 @@ export default {
         sendEmailValidateHandle() {
             this.$refs['emailForm'].validateField('email', err => {
                 if (!err) {
-                    this.$refs.verify.show()
+                    this.sendEmailValidate()
                 }
             })
         },
-        sendEmailValidate(params) {
-            let slideCode = params.captchaVerification
+        sendEmailValidate() {
             this.$refs['emailForm'].validate(valid => {
                 if (valid) {
                     this.$api.request({
                         url: '/retrieve/password/email',
                         method: 'get',
-                        params: {slideCode: slideCode, email: this.retrieveAccountForm.email}
+                        params: {email: this.retrieveAccountForm.email}
                     }).then(() => {
                         this.retrieveStep = 3
                     })
                 }
             })
-        },
-        verifySuccessHandle(params) {
-            if (this.retrieveType == 'phone') {
-                this.sendPhoneValidateCode(params)
-            } else {
-                this.sendEmailValidate(params)
-            }
         }
     }
 }

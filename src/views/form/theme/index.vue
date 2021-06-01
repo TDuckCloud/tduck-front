@@ -237,7 +237,7 @@
 </template>
 
 <script>
-import PreView from './PreView'
+import PreView from '../preview'
 
 export default {
     name: 'Theme',

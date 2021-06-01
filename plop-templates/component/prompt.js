@@ -47,7 +47,7 @@ module.exports = {
     actions: data => {
         let path = ''
         if (data.isGlobal) {
-            path = 'src/components/{{properCase name}}/index.vue'
+            path = 'src/components/{{properCase name}}/oldIndex.vue'
         } else {
             path = `${data.path}/components/{{properCase name}}/index.vue`
         }

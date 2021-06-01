@@ -5,7 +5,6 @@
                 <p class="project-setting-title">
                     提交设置
                 </p>
-                <p class="project-setting-label">提交后</p>
                 <el-row type="flex" align="middle">
                     <el-col :span="12">
                         <p class="project-setting-label">显示提示图片</p>
@@ -87,8 +86,21 @@
                         />
                     </el-col>
                 </el-row>
+                <el-row type="flex" align="middle">
+                    <el-col :span="12">
+                        <p class="project-setting-label">公开反馈结果</p>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-switch
+                            v-model="userProjectSettingData.publicResult"
+                            @change="()=>{
+                                this.saveUserProjectSetting()
+                            }"
+                        />
+                    </el-col>
+                </el-row>
             </el-col>
-            <el-col :span="6" class="project-setting-view" style="text-align: center;">
+            <el-col :span="6" class="project-setting-view text-center">
                 <p class="project-setting-title">
                     回收设置
                 </p>
@@ -572,6 +584,7 @@ export default {
                 submitPromptText: '提交成功 !',
                 submitJumpUrl: '',
                 wxWrite: false,
+                publicResult: false,
                 timedNotEnabledPromptText: '填写尚未启用',
                 timedDeactivatePromptText: '填写尚已经停用',
                 timedQuantitativeQuantity: null,

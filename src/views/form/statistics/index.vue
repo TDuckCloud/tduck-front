@@ -65,6 +65,7 @@
                 </el-table-column>
             </el-table>
             <el-drawer
+                v-if="activeResultRow"
                 :visible.sync="detailDrawer"
                 :with-header="false"
             >
@@ -76,25 +77,10 @@
                         <div>
                             <div v-for="item in projectItemList" :key="item.id">
                                 <h4>{{ item.label }}</h4>
-                                <!--  如果是文件输入-->
-                                <div
-                                    v-if="item.type==17 &&activeResultRow&&activeResultRow['processData'][`field${item.formItemId}`]"
-                                >
-                                    <el-link
-                                        v-for="file in JSON.parse(activeResultRow['processData'][`field${item.formItemId}`]['files'])"
-                                        :key="file"
-                                        :href="file.url" target="_blank"
-                                        type="primary"
-                                    >
-                                        <span> {{ file.fileName }}</span>
-                                    </el-link>
-                                </div>
-                                <el-tag v-else>
-                                    {{
-                                        activeResultRow ?
-                                            activeResultRow['processData'][`field${item.formItemId}`] : ''
-                                    }}
-                                </el-tag>
+                                <result-item :field-item-id="item.formItemId" :project-item-data="item"
+                                             :result-data="activeResultRow"
+                                />
+                                <el-divider />
                             </div>
                         </div>
                     </el-card>
@@ -146,7 +132,7 @@
 
 <script>
 import _ from 'lodash'
-
+import ResultItem from './item'
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
 const fixedDefaultFormColumn = ['serialNumber', 'submitAddress', 'createTime']
@@ -154,7 +140,9 @@ const fixedDefaultLabelFormColumn = {serialNumber: '提交序号', submitAddress
 
 export default {
     name: 'ProjectStatistics',
-    components: {},
+    components: {
+        ResultItem
+    },
     data() {
         return {
             projectKey: null,
@@ -297,7 +285,8 @@ export default {
     margin: 6px auto;
 }
 .detail-container {
-    padding: 10px;
+    padding: 20px;
+    height: 100% !important;
 }
 .filter-table-view {
     width: 80%;

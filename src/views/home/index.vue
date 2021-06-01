@@ -1,102 +1,106 @@
 <template>
-    <div>
+    <div class="home-container">
         <el-container>
-            <el-header height="92" class="home-header-view">
-                <el-row type="flex" align="middle" justify="center">
-                    <el-col :span="4" :offset="1">
-                        <img src="@/assets/images/indexLogo.png" class="header-logo-img"
-                             @click="$router.push({path:'/'})"
-                        >
-                    </el-col>
-                    <el-col :span="10">
-                        <el-menu :default-active="menuIndex" mode="horizontal"
-                                 text-color="#205BB5"
-                                 active-text-color="#205BB5"
-                                 @select="activeMenuHandle"
-                        >
-                            <el-menu-item v-for="(item, index) in menuRouters"
-                                          :key="index"
-                                          :index="item.routerPath"
-                                          class="menu-item"
-                            >
-                                {{ item.title }}
-                            </el-menu-item>
-                        </el-menu>
-                    </el-col>
-                    <el-col :span="1">
-                        <!-- <el-button round>升级</el-button>-->
-                    </el-col>
-                    <el-col :span="1">
-                        <div style="display: flex;
-                        align-items: center;
-                        justify-content: center;"
-                        >
-                            <!--     <svg-icon name="loginWx" style="width: 24px; height: 24px;" />-->
+            <el-header class="header-container" height="38">
+                <div>
+                    <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+                         @click="$router.push({path:'/'})"
+                    >
+                </div>
+                <div class="right-header">
+                    <el-link href="https://doc.tduckapp.com/" target="_blank">帮助文档</el-link>
+                    <el-popover
+                        placement="bottom-end"
+                        trigger="click"
+                        width="150"
+                    >
+                        <div class="user-person-menu">
+                            <div>
+                                <p v-if="getUserInfo" class="nick-name">{{ getUserInfo.name }}</p>
+                            </div>
+                            <el-divider />
+                            <div>
+                                <p class="person-menu-item" @click="$router.push({path: '/home/member'})">
+                                    <font-icon class="fab fa-get-pocket" />
+                                    我的账户
+                                </p>
+                                <el-divider />
+                                <p class="person-menu-item" @click="logoutHandle">
+                                    <font-icon class="fas fa-sign-out" />
+                                    退出登录
+                                </p>
+                            </div>
                         </div>
-                    </el-col>
-                    <el-col :span="1">
-                        <el-link href="https://gitee.com/TDuckApp/tduck-platform/wikis/%E6%9C%AC%E5%9C%B0%E8%BF%90%E8%A1%8C?sort_id=3681729" target="_blank">帮助</el-link>
-                    </el-col>
-                    <el-col :span="3">
-                        <el-popover
-                            placement="bottom-end"
-                            width="200"
-                            trigger="click"
-                        >
-                            <div class="user-person-menu">
-                                <div>
-                                    <p v-if="getUserInfo" class="nick-name">{{ getUserInfo.name }}</p>
-                                </div>
-                                <div class="person-menu-divider" />
-                                <div>
-                                    <p class="person-menu-item" @click="$router.push({path: '/home/member'})">
-                                        <font-icon class="fab fa-get-pocket" />
-                                        我的账户
-                                    </p>
-                                    <div class="person-menu-divider" />
-                                    <p class="person-menu-item" @click="logoutHandle">
-                                        <font-icon class="fas fa-sign-out" />
-                                        退出登录
-                                    </p>
-                                </div>
-                            </div>
-                            <div slot="reference" style="display: flex; align-items: center; justify-content: center;">
-                                <img v-if="getUserInfo" :src="getUserInfo.avatar" class="user-avatar">
-                            </div>
-                        </el-popover>
-                    </el-col>
-                </el-row>
+                        <div slot="reference">
+                            <img v-if="getUserInfo" :src="getUserInfo.avatar" class="user-avatar">
+                        </div>
+                    </el-popover>
+                </div>
             </el-header>
-            <el-main class="home-main-view">
-                <router-view />
-            </el-main>
+            <el-container>
+                <el-aside width="280px">
+                    <el-card>
+                        <el-button  type="primary" @click="createBlankTemplate">新建项目</el-button>
+                        <div class="menu-view">
+                            <div v-for="menu in menuList" :key="menu.route"
+                                 :class="defaultActiveMenu==menu.route?'menu-item-active menu-item':'menu-item'"
+                                 @click="menuClickHandle(menu)"
+                            >
+                                <font-icon :class="menu.icon" />
+                                <span>{{ menu.name }}</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h5>加入社群</h5>
+                            <el-image
+                                fit="fill"
+                                src="https://oss.smileyi.top/static/wx-qrcode.png"
+                                style="width: 200px; height: 200px;"
+                            />
+                        </div>
+                    </el-card>
+                </el-aside>
+                <el-container>
+                    <el-main>
+                        <router-view />
+                    </el-main>
+                    <el-footer>
+                        <div class="about-container">
+                            <font-icon class="fas fa-user" />
+                            <span class="desc-text">关于填鸭</span>
+                        </div>
+                    </el-footer>
+                </el-container>
+            </el-container>
         </el-container>
     </div>
 </template>
+
 <script>
-import store from '@/store/index.js'
-import FontIcon from '@/components/FontIcon'
+import {formConf} from '@/components/generator/config'
+import store from '@/store'
 import router from '@/router'
-import {openUrl, checkIsUrl} from '@/utils/index'
 
 export default {
-    name: 'Home',
-    components: {FontIcon},
+    name: 'NewIndex',
+    components: {},
     data() {
         return {
-            menuIndex: null,
-            menuRouters: [
+            defaultActiveMenu: '',
+            menuList: [
                 {
-                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform?time=1',
-                    title: '免费模板'
+                    route: '/home',
+                    name: '工作台',
+                    icon: 'fas fa-laptop'
                 },
                 {
-                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform',
-                    title: '开源项目'
-                },
-                {
-                    routerPath: 'https://gitee.com/TDuckApp/tduck-platform/issues',
-                    title: '提出建议'
+                    route: '/project/template',
+                    name: '模板中心',
+                    icon: 'fas fa-clipboard'
+                }, {
+                    route: '/project/recycle',
+                    name: '回收站',
+                    icon: 'fas fa-user'
                 }
             ]
         }
@@ -110,16 +114,21 @@ export default {
             return user
         }
     },
-    mounted() {
-        this.menuIndex = this.$route.path
+    created() {
+        this.defaultActiveMenu = this.$route.path
     },
     methods: {
-        activeMenuHandle(routerPath) {
-            if (checkIsUrl(routerPath)) {
-                openUrl(routerPath)
-            } else {
-                this.menuIndex = routerPath
-            }
+        menuClickHandle(menu) {
+            this.$router.replace({path: menu.route})
+        },
+        createBlankTemplate() {
+            this.$api.post('/user/project/create', {
+                'describe': formConf.description,
+                'name': formConf.title
+            }).then(res => {
+                console.log(res)
+                this.$router.push({path: '/project/form', query: {key: res.data}})
+            })
         },
         logoutHandle() {
             this.$confirm('您确定要退出登录吗？', '退出确认', {
@@ -142,34 +151,91 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
 
-.menu-item {
-    line-height: 80px;
-    height: 80px;
-    text-align: left;
-    font-weight: 550;
-    color: rgba(32, 91, 181, 100);
-    font-size: 20px;
-    &:hover {
+<style lang="scss" scoped>
+.home-container {
+    background-color: rgba(247, 247, 247, 90);
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    line-height: 38px;
+    height: 38px;
+    min-width: 1024px;
+    .header-logo-img {
+        width: 120px;
+        height: 35px;
+        float: left;
+    }
+    .right-header {
+        display: flex;
+        flex-direction: row;
+        > * {
+            margin: 0 20px;
+        }
+    }
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 100px;
         cursor: pointer;
     }
 }
-.el-menu.el-menu--horizontal {
-    border-bottom: none;
-}
-.home-header-view {
-    line-height: 92px;
-    height: 92px;
-    min-width: 1024px;
+.menu-view {
+    margin-top: 20px;
+    height: 501px;
     background-color: rgba(255, 255, 255, 100);
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
+    padding: 20px;
     text-align: center;
-    .header-logo-img {
-        width: 90%;
-        height: 90%;
-        float: left;
+    .menu-item-active {
+        color: $menuActiveText !important;
+    }
+    .menu-item {
+        color: #333;
+        font-size: 16px;
+        text-align: left;
+        line-height: 25px;
+        &:hover {
+            cursor: pointer;
+            color: $menuActiveText;
+        }
+        & .fas:hover {
+            color: $menuActiveText;
+        }
+        .fas {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 5px;
+        }
+        span {
+            margin-left: 10px;
+        }
+    }
+}
+.banner-container {
+    height: 60px;
+}
+.el-aside {
+    padding: 0;
+    margin: 0;
+    .el-card {
+        height: 100%;
+        ::v-deep .el-card__body {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+        .el-button {
+            width: 80%;
+            margin-top: 20px;
+        }
     }
 }
 .user-person-menu {
@@ -184,22 +250,26 @@ export default {
         color: rgba(70, 70, 70, 86);
         font-size: 14px;
         text-align: left;
+        &:hover {
+            cursor: pointer;
+            color: $menuActiveText;
+        }
     }
-    .person-menu-item:hover {
-        cursor: pointer;
-        color: rgba(32, 91, 181, 100);
+    .el-divider {
+        margin: 5px 0;
+    }
+    .person-menu-divider {
+        background-color: rgba(210, 210, 210, 78);
+        border: 1px solid rgba(210, 210, 210, 78);
     }
 }
-.user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 100px;
-    cursor: pointer;
+.about-container {
+    text-align: center;
+    .fa-user {
+        font-size: 19px;
+        color: rgba(172, 172, 172, 100);
+        margin: 1px;
+    }
 }
-.home-main-view {
-    height: calc(100vh - 92px);
-    min-width: 1024px;
-    background-color: #f7f7f7;
-    padding: 0;
-}
+
 </style>
