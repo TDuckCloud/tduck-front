@@ -4,6 +4,7 @@
         <pagination />
         <province-city />
         <input-map />
+        <phone-verification />
     </div>
 </template>
 
@@ -13,10 +14,13 @@ import pagination from '../components/form/pagination'
 import ProvinceCity from '@/components/form/ProvinceCity'
 
 import InputMap from '@/components/form/InputMap/index'
+import PhoneVerification from '@/components/form/PhoneVerification/index'
+
 export default {
     name: 'App',
     components: {
         ProvinceCity,
+        PhoneVerification,
         SignPad,
         pagination,
         InputMap

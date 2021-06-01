@@ -818,5 +818,24 @@ export const personalInfoComponents = [
         },
         placeholder: '请选择位置',
         style: {width: '100%'}
+    },
+    {
+        typeId: 'PHONE_VERIFICATION',
+        __config__: {
+            label: '手机号验证',
+            labelWidth: null,
+            showLabel: true,
+            changeTag: false,
+            tag: 'phone-verification',
+            tagIcon: 'input',
+            defaultValue: undefined,
+            required: true,
+            layout: 'colFormItem',
+            span: 24,
+            showRegList: false,
+            document: 'https://element.eleme.cn/#/zh-CN/component/input'
+        },
+        placeholder: '请验证手机号',
+        style: {width: '100%'}
     }
 ]

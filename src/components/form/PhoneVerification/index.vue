@@ -1,25 +1,26 @@
 <template>
-    <div>
+    <div class="phone-number-container">
         <el-input
             v-model="inputValue"
+            class="input-with-select"
             maxlength="11"
-            readonly
-            placeholder="点击验证手机号" class="input-with-select" @click="open=true"
+            placeholder="点击验证手机号" readonly @click.native="openDialogHandle"
         >
             <i slot="prefix" class="el-input__icon el-icon-mobile" />
-            <el-button slot="append" icon="el-icon-message" @click="open=true" />
+            <el-button slot="append" icon="el-icon-message" @click="openDialogHandle" />
         </el-input>
-        <el-dialog title="手机号验证" :visible.sync="open">
-            <el-form ref="form" :model="phoneValidateForm" label-width="80px" :rules="rules">
+        <el-dialog :visible.sync="open" title="手机号验证">
+            <el-form ref="form" :model="phoneValidateForm" :rules="rules" label-width="80px">
                 <el-form-item label="手机号" prop="phoneNumber">
-                    <el-input v-model="phoneValidateForm.phoneNumber" maxlength="11" show-word-limit
-                              prefix-icon=" el-icon-mobile "
+                    <el-input v-model="phoneValidateForm.phoneNumber" maxlength="11" prefix-icon=" el-icon-mobile "
+                              show-word-limit
                     />
                 </el-form-item>
                 <el-form-item label="验证码" prop="code">
-                    <el-input v-model="validateCode" prefix-icon="el-icon-message" class="width80" />
-                    <el-button type="primary"
-                               :disabled="phoneValidateCodeBtn"
+                    <el-input v-model="phoneValidateForm.code" style="width: 85%;" prefix-icon="el-icon-message" />
+                    <el-button :disabled="phoneValidateCodeBtn"
+                               style="width: 10%;"
+                               type="primary"
                                @click="sendValidateMsgHandle"
                     >
                         {{ phoneValidateCodeBtnText }}
@@ -44,7 +45,6 @@ export default {
         return {
             phoneValidateCodeBtnText: '发送验证码',
             phoneValidateCodeBtn: false,
-            validateCode: '',
             open: false,
             inputValue: null,
             phoneValidateForm: {
@@ -64,10 +64,22 @@ export default {
         }
     },
     methods: {
+        openDialogHandle() {
+            this.open = true
+            this.phoneValidateForm = {
+                phoneNumber: '',
+                code: ''
+            }
+        },
         validateCodeHandle() {
             this.$refs['form'].validate(valid => {
                 if (valid) {
                     // 调接口 验证成功
+                    this.$api.post('/project/phone/code/check', this.phoneValidateForm).then(res => {
+                        this.inputValue = res.data
+                        this.open = false
+                        this.$emit('input', res.data)
+                    })
                 } else {
                     return false
                 }
@@ -77,7 +89,7 @@ export default {
             this.$refs['form'].validateField('phoneNumber', err => {
                 if (!err) {
                     this.phoneValidateCodeBtn = true
-                    this.$api.get(`/register/phone/code?phoneNumber=${this.inputPhoneNumber}`).then(() => {
+                    this.$api.get(`/project/phone/code?phoneNumber=${this.phoneValidateForm.phoneNumber}`).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.phoneValidateCodeBtn = true
                         let count = 60
@@ -98,3 +110,8 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.phone-number-container {
+    display: flex;
+}
+</style>

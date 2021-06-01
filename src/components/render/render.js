@@ -1,5 +1,6 @@
 import {deepClone} from '@/utils/index'
 import SignPad from '@/components/form/SignPad/index'
+import PhoneVerification from '@/components/form/PhoneVerification/index'
 
 const componentChild = {}
 /**
@@ -127,7 +128,8 @@ function makeDataObject() {
 
 export default {
     components: {
-        SignPad
+        SignPad,
+        PhoneVerification
     },
     props: {
         conf: {
