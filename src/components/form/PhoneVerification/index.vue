@@ -12,14 +12,14 @@
         <el-dialog :visible.sync="open" title="手机号验证">
             <el-form ref="form" :model="phoneValidateForm" :rules="rules" label-width="80px">
                 <el-form-item label="手机号" prop="phoneNumber">
-                    <el-input v-model="phoneValidateForm.phoneNumber" maxlength="11" prefix-icon=" el-icon-mobile "
+                    <el-input v-model="phoneValidateForm.phoneNumber" style="width: 80%;" maxlength="11" prefix-icon=" el-icon-mobile "
                               show-word-limit
                     />
                 </el-form-item>
                 <el-form-item label="验证码" prop="code">
-                    <el-input v-model="phoneValidateForm.code" style="width: 85%;" prefix-icon="el-icon-message" />
+                    <el-input v-model="phoneValidateForm.code" style="width: 60%;" prefix-icon="el-icon-message" />
                     <el-button :disabled="phoneValidateCodeBtn"
-                               style="width: 10%;"
+                               style="width: 15%;"
                                type="primary"
                                @click="sendValidateMsgHandle"
                     >
@@ -113,5 +113,8 @@ export default {
 <style lang="scss" scoped>
 .phone-number-container {
     display: flex;
+}
+.phone-number-container ::v-deep.el-form-item__label {
+    float: left;
 }
 </style>
