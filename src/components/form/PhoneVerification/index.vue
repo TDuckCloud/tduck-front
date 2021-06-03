@@ -12,19 +12,21 @@
         <el-dialog :visible.sync="open" title="手机号验证">
             <el-form ref="form" :model="phoneValidateForm" :rules="rules" label-width="80px">
                 <el-form-item label="手机号" prop="phoneNumber">
-                    <el-input v-model="phoneValidateForm.phoneNumber" style="width: 80%;" maxlength="11" prefix-icon=" el-icon-mobile "
+                    <el-input v-model="phoneValidateForm.phoneNumber" class="input" maxlength="11" prefix-icon=" el-icon-mobile "
                               show-word-limit
                     />
                 </el-form-item>
                 <el-form-item label="验证码" prop="code">
-                    <el-input v-model="phoneValidateForm.code" style="width: 60%;" prefix-icon="el-icon-message" />
-                    <el-button :disabled="phoneValidateCodeBtn"
-                               style="width: 15%;"
-                               type="primary"
-                               @click="sendValidateMsgHandle"
-                    >
-                        {{ phoneValidateCodeBtnText }}
-                    </el-button>
+                    <el-input v-model="phoneValidateForm.code" class="input" prefix-icon="el-icon-message">
+                        <el-button
+                            slot="append"
+                            :disabled="phoneValidateCodeBtn"
+                            type="primary"
+                            @click="sendValidateMsgHandle"
+                        >
+                            {{ phoneValidateCodeBtnText }}
+                        </el-button>
+                    </el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -37,7 +39,7 @@
 
 <script>
 export default {
-    name: 'Index',
+    name: 'PhoneVerification',
     props: {
         value: null
     },
@@ -113,8 +115,22 @@ export default {
 <style lang="scss" scoped>
 .phone-number-container {
     display: flex;
+    .input {
+        width: 70%;
+    }
 }
 .phone-number-container ::v-deep.el-form-item__label {
     float: left;
+}
+@media screen and (max-width: 500px) {
+    .phone-number-container ::v-deep.el-form-item__label {
+        float: none !important;
+    }
+    ::v-deep.el-form-item .el-form-item__content {
+        margin-left: 0 !important;
+    }
+    .input {
+        width: 100% !important;
+    }
 }
 </style>

@@ -130,7 +130,7 @@ export default {
             })
         },
         queryProjectItems() {
-            this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {
+            this.$api.get('/user/project/item/list', {params: {key: this.projectKey, displayType: true}}).then(res => {
                 if (res.data) {
                     res.data.map(item => {
                         _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)

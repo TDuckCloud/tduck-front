@@ -20,6 +20,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="queryProjectResult">查询</el-button>
+                    <el-button type="primary" @click="customFilterDialogVisible=true">条件</el-button>
                     <el-button type="success" @click="exportProjectResult">导出</el-button>
                 </el-form-item>
             </el-form>
@@ -106,7 +107,7 @@
                     </el-col>
                 </el-row>
                 <el-divider />
-                <el-checkbox-group v-model="checkFixedCustomColumns">
+                <el-checkbox-group v-model="checkedFixedCustomColumns">
                     <el-row>
                         <el-col v-for="(val, key) in fixedDefaultLabelFormColumn" :key="key" :span="4">
                             <el-checkbox :label="key">{{ val }}</el-checkbox>
@@ -127,6 +128,24 @@
                 </span>
             </el-dialog>
         </div>
+        <el-dialog :visible.sync="customFilterDialogVisible" center title="结构化筛选">
+            <div class="flex-center">
+                <el-transfer
+                    v-model="checkedFilterColumns"
+                    filterable
+                    :props="{
+                        key: 'formItemId',
+                        label: 'label'
+                    }"
+                    filter-placeholder="请输入问题名称"
+                    :data="projectItemList"
+                />
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="customColumnDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveStatisticsCheckedColumns">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -146,11 +165,13 @@ export default {
     data() {
         return {
             projectKey: null,
+            customFilterDialogVisible: false,
             customColumnDialogVisible: false,
+            checkedFilterColumns: [],
             // 固定自定义列 如序号等
             fixedCustomColumns: fixedDefaultFormColumn,
             // 选中的
-            checkFixedCustomColumns: fixedDefaultFormColumn,
+            checkedFixedCustomColumns: fixedDefaultFormColumn,
             fixedDefaultLabelFormColumn: fixedDefaultLabelFormColumn,
             // 自定义表单属性
             checkOtherCustomColumns: [],
@@ -205,7 +226,7 @@ export default {
         },
         saveStatisticsCheckedColumns() {
             this.customColumnDialogVisible = false
-            this.fixedCustomColumns = this.checkFixedCustomColumns
+            this.fixedCustomColumns = this.checkedFixedCustomColumns
             this.otherCustomColumns = this.checkOtherCustomColumns
             saveCheckedColumn(this.projectKey, {
                 fixedCustomColumns: this.fixedCustomColumns,
@@ -220,7 +241,7 @@ export default {
             let {fixedCustomColumns, otherCustomColumns} = checkedColumn
             if (fixedCustomColumns) {
                 this.fixedCustomColumns = fixedCustomColumns
-                this.checkFixedCustomColumns = fixedCustomColumns
+                this.checkedFixedCustomColumns = fixedCustomColumns
             }
             if (otherCustomColumns) {
                 this.otherCustomColumns = otherCustomColumns
@@ -248,7 +269,7 @@ export default {
             })
         },
         queryProjectItems() {
-            this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {
+            this.$api.get('/user/project/item/list', {params: {key: this.projectKey, displayType: false}}).then(res => {
                 if (res.data) {
                     res.data.map(item => {
                         _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)

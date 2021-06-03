@@ -3,7 +3,13 @@
  *
  */
 import _ from 'lodash'
-import {assistComponents, imageComponents, inputComponents, selectComponents} from '@/components/generator/config'
+import {
+    assistComponents,
+    imageComponents,
+    inputComponents,
+    personalInfoComponents,
+    selectComponents
+} from '@/components/generator/config'
 
 /**
  * 表单json转换为后台需要的对象
@@ -20,7 +26,7 @@ export function formItemConvertData(item, projectKey) {
         'regList': item.__config__.regList,
         'showLabel': item.__config__.showLabel,
         'span': item.__config__.span,
-        'displayType': item.displayType,
+        'displayType': item.__config__.displayType,
         'projectKey': projectKey
     }
     let expand = {}
@@ -49,7 +55,7 @@ export function dbDataConvertForItemJson(data) {
     }
     if (!typeMap.size > 0) {
         // 根据类型获取默认数据
-        _.concat(inputComponents, selectComponents, imageComponents, assistComponents).forEach(item => {
+        _.concat(inputComponents, selectComponents, imageComponents, assistComponents, personalInfoComponents).forEach(item => {
             typeMap.set(item.typeId, item)
         })
     }
