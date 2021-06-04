@@ -31,14 +31,25 @@ export default {
 }
 .header-container {
     position: relative;
+    height: 500px;
+    width: 100%;
+    background: url(~@/assets/images/official/heade-background.png);
+    background-size: percentage;
+    //transform: rotate(337deg);
+    //background: linear-gradient(90deg, #2054f1, #224ef3, #38eaff);
+    //border-radius: 0 5px 5px 267px;
+    //background-size: cover;
 }
 .background {
-    position: absolute;
-    bottom: -375px;
-    width: 1920px;
-    height: 847px;
-    transform: rotate(337deg);
-    background: linear-gradient(90deg, #2054f1, #224ef3, #38eaff);
-    border-radius: 0 5px 5px 267px;
+    //position: absolute;
+    //bottom: -375px;
+    //width: 1920px;
+    //height: 847px;
+    //height: 500px;
+    //width: 100%;
+    //transform: rotate(337deg);
+    //background: linear-gradient(90deg, #2054f1, #224ef3, #38eaff);
+    //border-radius: 0 5px 5px 267px;
+    //background-size: cover;
 }
 </style>

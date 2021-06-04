@@ -11,7 +11,7 @@
                              active-text-color="#205BB5"
                              @select="activeMenuHandle"
                     >
-                        <el-menu-item v-for="(item, index) in menuRouters" :key="oldIndex" :index="item.routerPath"
+                        <el-menu-item v-for="(item, index) in menuRouters" :key="index" :index="item.routerPath"
                                       :route="item.routerPath" class="menu-item"
                         >
                             {{ item.title }}

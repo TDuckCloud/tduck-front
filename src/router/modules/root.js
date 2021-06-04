@@ -17,7 +17,7 @@ export default [
     {
         path: '/',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/oldIndex.vue'),
         children: [
             {
                 path: '',
