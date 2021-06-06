@@ -15,36 +15,19 @@ export default [
         component: () => import(/* webpackChunkName: 'root' */ '@/views/account/validate')
     },
     {
+        path: '/forget/password',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
+    },
+    {
         path: '/',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue'),
-        children: [
-            {
-                path: '',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/introduction.vue')
-            },
-            {
-                path: 'forget/password',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
-            },
-            {
-                path: '/enterprise',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/enterprise')
-            },
-            {
-                path: '/sources',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/sources')
-            },
-            {
-                path: '/proposal',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/official/proposal')
-            }
-        ]
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue')
+    },
+    {
+        path: '/payService',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/PayService')
     },
     {
         path: '/login',

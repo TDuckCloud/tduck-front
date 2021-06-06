@@ -10,7 +10,7 @@
                     <span class="menu-item" @click="$router.push({path:'/'})">首页</span>
                     <a class="menu-item" href="https://gitee.com/TDuckApp/tduck-platform" target="_blank">开源项目</a>
                     <a class="menu-item" href="https://doc.tduckapp.com/" target="_blank">开发文档</a>
-                    <span class="menu-item">付费服务</span>
+                    <span class="menu-item" @click="$router.push({path:'/payService'})">付费服务</span>
                     <span class="menu-item add-contact-me">加入社群
                         <div>
                             <img src="@/assets/images/official/contact_me_qr.png">
@@ -224,7 +224,7 @@ body {
     position: relative;
     .background {
         position: absolute;
-        z-index: -1;
+        z-index: 1;
         img {
             width: 100%;
         }
@@ -238,6 +238,9 @@ body {
         justify-content: space-around;
         align-content: center;
         align-items: center;
+        * {
+            z-index: 20;
+        }
         .logo {
             width: 182px;
             height: 28px;
@@ -287,6 +290,9 @@ body {
         justify-content: space-evenly;
         align-content: center;
         align-items: center;
+        * {
+            z-index: 20;
+        }
         .slogan {
             font-size: 59px;
             font-weight: bold;
@@ -461,7 +467,7 @@ body {
     }
 }
 .top-header {
-    animation: stickyMenu1 0.5s ease-in-out;
+    animation: stickyMenu1 0.4s ease-in-out;
 }
 .is-fixed {
     position: fixed;
