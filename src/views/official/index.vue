@@ -1,6 +1,5 @@
 <template>
     <div class="official-container">
-        <el-backtop target=".official-container" />
         <div class="header-container">
             <div class="background">
                 <img src="@/assets/images/official/background.svg">
@@ -219,7 +218,7 @@ body {
 .official-container {
     min-width: 1280px;
     height: 100%;
-    overflow-x: hidden;
+    //overflow-x: hidden;
 }
 .header-container {
     position: relative;
