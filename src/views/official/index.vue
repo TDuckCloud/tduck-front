@@ -5,7 +5,7 @@
                 <img src="@/assets/images/official/background.svg">
             </div>
             <div id="headerNav" :class="{'is-fixed' : isFixed}" class="top-header">
-                <img class="logo" src="@/assets/images/official/TDUCK@2x.png">
+                <img class="logo" src="@/assets/images/official/TDUCK@2x.png" @click="$router.push({path:'/'})">
                 <div>
                     <span class="menu-item" @click="$router.push({path:'/'})">首页</span>
                     <a class="menu-item" href="https://gitee.com/TDuckApp/tduck-platform" target="_blank">开源项目</a>

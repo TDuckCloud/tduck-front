@@ -30,7 +30,7 @@
                             >
                                 <span>¥</span>
                                 <count-to :end-val="item.money" />
-                                <s>{{ item.money }}</s>
+                                <s>{{ item.dismoney }}</s>
                                 <em>{{ item.tip }}</em>
                             </p>
                         </template>

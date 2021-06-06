@@ -1,185 +1,133 @@
 <template>
-    <data-pay :option="option" />
+    <div>
+        <Header />
+        <data-pay :option="option" />
+    </div>
 </template>
 
 <script>
 import DataPay from '@/views/official/DataPay'
+import Header from '@/views/official/header'
+import {MessageBox} from 'element-ui'
 
 export default {
     name: 'PayService',
-    components: {DataPay},
+    components: {Header, DataPay},
     data() {
         return {
             option: {
                 span: 8,
                 data: [
                     {
-                        title: '后台模版',
-                        src: '/images/official/vip1.png',
-                        money: '999999',
-                        dismoney: '999999',
-                        tip: '/永久',
-                        color: '#808695',
+                        title: '私有部署',
+                        src: 'https://qiniu.smileyi.top/vip1.png',
+                        money: 599,
+                        dismoney: 999,
+                        tip: '/次',
+                        color: '#2054F0FF',
                         subtext: '购买',
-                        click: function(item) {
-                            alert(JSON.stringify(item))
+                        click: function() {
+                            MessageBox.alert('暂无', '添加客服微信', {
+                                dangerouslyUseHTMLString: true
+                            })
                         },
                         list: [
                             {
-                                title: '面向全屏幕尺寸的响应式适配能力',
-                                check: true,
-                                tip: `<h2 > 后台管理模版 - <small>点击红色字体即可预览</small></h2> <br />
-                1.用户名登录/验证码登录/第三方登陆(QQ, 微信)/人脸识别/多种登录方式。 <br /> <br />
-                2.全新的前端错误日志监控机制 <br /> <br />
-                3.灵活的10 + 多款主题自由配置<br /><br />
-                4.路由权限、菜单权限、登录权限 <br /> <br />
-                5.前端路由动态服务端加载和无限极动态路由加载。 <br /> <br />
-                6.模块的可拆卸化, 达到开箱即用 <br /> <br />`
-                            },
-                            {
-                                title: '支持IE9+等系列浏览器',
+                                title: '官方部署，快速使用',
                                 check: true
                             },
                             {
-                                title: '全新的前端错误日志监控机制',
+                                title: '一次部署，开心使用',
                                 check: true
                             },
                             {
-                                title: '基于最新的avue底层开发',
+                                title: '愉快解决，不再头疼',
                                 check: true
                             },
                             {
-                                title: '前端路由动态服务端加载',
+                                title: '稳定部署，专业团队',
                                 check: true
                             },
                             {
-                                title: '灵活的多款主题自由配置',
+                                title: 'XXXX',
                                 check: true
                             },
                             {
-                                title: '模块的可拆卸化,达到开箱即用',
+                                title: 'XXXX',
                                 check: true
                             },
                             {
-                                title: '免费的私人git私服',
+                                title: 'XXX',
                                 check: true
                             },
                             {
-                                title: '专属会员群',
+                                title: 'XXXX',
+                                check: true
+                            },
+                            {
+                                title: 'XXXX',
                                 check: true
                             }, {
-                                title: '前端最新干货分享',
-                                check: true
-                            }, {
-                                title: '赠送 Avue.js 脚手架文档（价值¥59.99）',
-                                href: 'https://www.kancloud.cn/smallwei/avue',
-                                check: true
-                            }, {
-                                title: '赠送 Avue 修仙系列视频教程',
-                                href: 'https://www.bilibili.com/video/av24644922',
+                                title: 'XXXX',
                                 check: true
                             }
                         ]
                     }, {
-                        title: 'Avuex源码',
-                        src: '/images/official/vip2.png',
-                        color: '#ffa820',
-                        money: '999999999',
-                        dismoney: '999999',
-                        tip: '/永久',
+                        title: '私有定制',
+                        src: 'https://qiniu.smileyi.top/vip2.png',
+                        color: '#33C9FDFF',
+                        money: 888,
+                        dismoney: 1000,
+                        tip: '/起',
                         subtext: '购买',
-                        click: function(item) {
-                            alert(JSON.stringify(item))
+                        click: function() {
+                            MessageBox.alert('暂无', '添加客服微信', {
+                                dangerouslyUseHTMLString: true
+                            })
                         },
                         list: [
                             {
-                                title: '一键集成表格的导出excel,打印,等功能',
+                                title: '私有定制，随心所欲',
                                 check: true
                             },
                             {
-                                title: '底层代码可重用轻松对接多个UI框架',
+                                title: '强大团队，快速赋能你的业务',
                                 check: true
                             },
                             {
-                                title: '底层更加完善的开发错误调试机制',
+                                title: '效果满意，价格美丽',
                                 check: true
                             },
                             {
-                                title: '一套代码多个终端自适应',
+                                title: 'XXXXX',
                                 check: true
                             },
                             {
-                                title: '一键集成表格的导出excel，打印，等常用功能',
+                                title: 'xXXXXX',
                                 check: true
                             },
                             {
-                                title: '表格的批量操作,表单的级联操作更加便捷',
+                                title: 'XXXXX',
                                 check: true
                             },
                             {
-                                title: '新增大量常用组件（搜索，选项卡）',
+                                title: 'XXXX',
                                 check: true
                             },
                             {
-                                title: '新增大量全新可配置的骚属性',
+                                title: 'XXXX',
                                 check: true
                             },
                             {
-                                title: '丰富的数据展示模版组件包',
+                                title: 'XXXX',
                                 check: true
                             },
                             {
-                                title: '专属的开发者文档，助你快速掌握',
-                                check: true
-                            }, {
-                                title: '赠送 Avue.js 脚手架文档（价值¥59.99）',
-                                href: 'https://www.kancloud.cn/smallwei/avue',
-                                check: true
-                            }, {
-                                title: '赠送 Avue 修仙系列视频教程',
-                                href: 'https://www.bilibili.com/video/av24644922',
+                                title: 'XXXXX',
                                 check: true
                             }
                         ]
-                    }, {
-                        title: '全家桶',
-                        src: '/images/official/vip3.png',
-                        color: '#ef4868',
-                        money: '999999',
-                        dismoney: '999999',
-                        tip: '/永久',
-                        subtext: '购买',
-                        click: function(item) {
-                            alert(JSON.stringify(item))
-                        },
-                        list: [
-                            {
-                                title: '授权商业化开发,永久更新授权使用',
-                                check: true
-                            },
-                            {
-                                title: '后期更新和新产品将全部免费',
-                                check: true
-                            },
-                            {
-                                title: '拥有avue系列的全部特权和全部源码（包括avuex）',
-                                check: true
-                            },
-                            {
-                                title: '提供远程技术支持和问题解答',
-                                check: true
-                            }, {
-                                title: '赠送 Avue.js 脚手架文档（价值¥59.99）',
-                                href: 'https://www.kancloud.cn/smallwei/avue',
-                                check: true
-                            }, {
-                                title: '赠送 Avue 修仙系列视频教程',
-                                href: 'https://www.bilibili.com/video/av24644922',
-                                check: true
-                            }
-                        ]
-                    }
-                ]
+                    }]
             }
         }
     }
