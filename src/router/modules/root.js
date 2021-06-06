@@ -25,11 +25,6 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/introduction.vue')
             },
             {
-                path: 'login',
-                meta: {requireLogin: false},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login.vue')
-            },
-            {
                 path: 'forget/password',
                 meta: {requireLogin: false},
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/account/ForgetPwd')
@@ -50,6 +45,11 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/official/proposal')
             }
         ]
+    },
+    {
+        path: '/login',
+        meta: {requireLogin: false},
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/account/login.vue')
     },
     {
         path: '/home',

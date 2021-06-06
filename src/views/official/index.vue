@@ -1,20 +1,28 @@
 <template>
     <div class="official-container">
+        <el-backtop target=".official-container" />
         <div class="header-container">
             <div class="background">
                 <img src="@/assets/images/official/background.svg">
             </div>
-            <div class="top-header">
+            <div id="headerNav" :class="{'is-fixed' : isFixed}" class="top-header">
                 <img class="logo" src="@/assets/images/official/TDUCK@2x.png">
                 <div>
-                    <span class="menu-item">首页</span>
-                    <span class="menu-item">开源项目</span>
-                    <span class="menu-item">开发文档</span>
+                    <span class="menu-item" @click="$router.push({path:'/'})">首页</span>
+                    <a class="menu-item" href="https://gitee.com/TDuckApp/tduck-platform" target="_blank">开源项目</a>
+                    <a class="menu-item" href="https://doc.tduckapp.com/" target="_blank">开发文档</a>
                     <span class="menu-item">付费服务</span>
-                    <span class="menu-item">加入社群</span>
+                    <span class="menu-item add-contact-me">加入社群
+                        <div>
+                            <img src="@/assets/images/official/contact_me_qr.png">
+                        </div>
+                    </span>
                 </div>
                 <div>
-                    <el-button>登录</el-button>
+                    <el-button v-if="isLogin" @click="$router.push({path:'/home'})">控 制 台</el-button>
+                    <el-button v-if="!isLogin" @click="$router.push({path:'/login'})">
+                        登 录
+                    </el-button>
                 </div>
             </div>
             <div class="content-header">
@@ -26,7 +34,7 @@
                         TDuck - Have what you want,
                         get you income.
                     </p>
-                    <el-button>立即体验</el-button>
+                    <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
                     <img src="@/assets/images/official/banner2.png">
@@ -59,7 +67,7 @@
                 <p class="desc">客户满意度 宾馆服务满意度 </p>
                 <p class="desc"> 餐厅满意度调查 公共服务满意度</p>
                 <p class="desc">旅游服务满意度 经销商满意度 </p>
-                <p>前往体验 ></p>
+                <p @click="$router.push({path:'/home'})">前往体验 ></p>
             </div>
             <div class="solution-item">
                 <p class="title">市场调研</p>
@@ -67,7 +75,7 @@
                 <p class="desc">餐饮市场调查 手机市场调查 </p>
                 <p class="desc"> 培训市场调查 消费者调查 </p>
                 <p class="desc">APP市场调查 女性消费者偏好调查 </p>
-                <p>前往体验 ></p>
+                <p @click="$router.push({path:'/home'})">前往体验 ></p>
             </div>
             <div class="solution-item">
                 <p class="title">报名登记</p>
@@ -75,7 +83,7 @@
                 <p class="desc">才艺比赛报名 粉丝活动报名 </p>
                 <p class="desc"> 聚餐出游报名 活动/会务微信报名 </p>
                 <p class="desc"> 讲座公开课报名 商品订单 </p>
-                <p>前往体验 ></p>
+                <p @click="$router.push({path:'/home'})">前往体验 ></p>
             </div>
         </div>
         <p class="title">他们都在使用</p>
@@ -162,15 +170,56 @@
 </template>
 
 <script>
+import store from '@/store'
+
 export default {
-    name: 'Official'
+    name: 'Official',
+    data() {
+        return {
+            isFixed: false,
+            offsetTop: 0
+        }
+    },
+    computed: {
+        getStore() {
+            return store
+        },
+        isLogin() {
+            return this.getStore.getters['user/isLogin']
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.initHeight)
+        let that = this
+        this.$nextTick(() => {
+            // 获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
+            that.offsetTop = document.querySelector('#headerNav').offsetTop
+        })
+    },
+    // 回调中移除监听
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll)
+    },
+    methods: {
+        initHeight() {
+            // 设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离 (被卷曲的高度)
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            // 如果被卷曲的高度大于吸顶元素到顶端位置 的距离
+            this.isFixed = scrollTop > this.offsetTop
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.official-container {
-    min-width: 960px;
+html,
+body {
     height: 100%;
+}
+.official-container {
+    min-width: 1280px;
+    height: 100%;
+    overflow-x: hidden;
 }
 .header-container {
     position: relative;
@@ -182,6 +231,9 @@ export default {
         }
     }
     .top-header {
+        width: 100%;
+        height: 72px;
+        line-height: 72px;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -198,6 +250,30 @@ export default {
             color: #fff;
             margin-right: 73px;
             line-height: 72px;
+        }
+        .add-contact-me {
+            position: relative;
+            div {
+                margin-top: 20px;
+                position: absolute;
+                right: 0%;
+                top: 100%;
+                visibility: hidden;
+                opacity: 0;
+                transform: translateY(100px);
+                transition: 0.3s;
+            }
+            img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        .add-contact-me:hover {
+            div {
+                visibility: visible;
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .login-btn {
             width: 95px;
@@ -252,6 +328,7 @@ export default {
         background: linear-gradient(-32deg, rgba(32, 84, 241, 0.51) 0%, rgba(34, 78, 243, 0.51) 0%, rgba(56, 234, 255, 0.51) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: show 0.5s forwards;
     }
     .features {
         display: flex;
@@ -331,6 +408,9 @@ export default {
     width: 100%;
     height: 464px;
     background: linear-gradient(163deg, rgba(32, 84, 241, 0.67), rgba(34, 78, 243, 0.67), rgba(56, 234, 255, 0.67));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .top {
         display: flex;
         flex-direction: row;
@@ -347,7 +427,7 @@ export default {
             font-weight: 300;
             color: #fff;
             line-height: 20px;
-            width: 292px;
+            max-width: 292px;
         }
         a {
             font-size: 16px;
@@ -359,6 +439,9 @@ export default {
         }
         .qrcode {
             display: flex;
+            div {
+                margin: 10px;
+            }
             img {
                 margin-top: 30px;
                 width: 115px;
@@ -367,7 +450,8 @@ export default {
         }
     }
     .bottom {
-        margin-top: 130px;
+        position: relative;
+        bottom: 0;
         p {
             text-align: center;
             font-size: 16px;
@@ -377,8 +461,65 @@ export default {
         }
     }
 }
+.top-header {
+    animation: stickyMenu1 0.5s ease-in-out;
+}
+.is-fixed {
+    position: fixed;
+    z-index: 999;
+    animation: stickyMenu 0.7s ease-in-out;
+    top: 0;
+    background: linear-gradient(-67deg, rgba(32, 84, 241, 1), rgba(51, 201, 253, 1), rgba(35, 86, 244, 1));
+}
+@keyframes stickyMenu1 {
+    0% {
+        opacity: 0;
+        background: rgba(32, 84, 241, 1);
+    }
+    50% {
+        opacity: 0.5;
+        background: rgba(32, 84, 241, 1);
+    }
+    100% {
+        background-color: transparent;
+        opacity: 1;
+    }
+}
+@keyframes stickyMenu {
+    0% {
+        margin-top: -120px;
+        opacity: 0;
+    }
+    50% {
+        margin-top: -64px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: 0;
+        opacity: 1;
+    }
+}
+@media only screen and (max-width: 1580px) {
+    .content-header {
+        .slogan-desc {
+            font-size: 25px !important;
+        }
+    }
+}
+@media only screen and (max-width: 1280px) {
+    .content-header {
+        .slogan {
+            font-size: 39px !important;
+        }
+        .slogan-desc {
+            font-size: 20px !important;
+        }
+    }
+}
+::v-deep .el-button {
+    border: none;
+}
 ::v-deep .el-button span {
-    //font-size: 18px;
     font-weight: 400;
     color: #2667f5;
 }
