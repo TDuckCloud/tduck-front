@@ -22,6 +22,7 @@
                     <el-button type="primary" @click="queryProjectResult">查询</el-button>
                     <el-button type="primary" @click="customFilterDialogVisible=true">条件</el-button>
                     <el-button type="success" @click="exportProjectResult">导出</el-button>
+                    <el-button type="success" @click="exportProjectResult">下载附件</el-button>
                 </el-form-item>
             </el-form>
         </div>
