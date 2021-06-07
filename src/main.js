@@ -7,6 +7,7 @@ import meta from 'vue-meta'
 import dayjs from 'dayjs'
 import Cookies from 'js-cookie'
 import router from './router/index'
+import animated from 'animate.css'
 import api from './api'
 import store from './store/index'
 import '@/assets/styles/index.scss' // global css
@@ -34,6 +35,7 @@ Vue.prototype.msgInfo = function(msg) {
 Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
+Vue.use(animated)
 
 // 自动加载 svg 图标
 const req = require.context('./assets/icons', false, /\.svg$/)

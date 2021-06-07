@@ -26,10 +26,10 @@
             </div>
             <div class="content-header">
                 <div class="left">
-                    <p class="slogan">
+                    <p class="slogan animate__animated animate__fadeInLeftBig">
                         填鸭，待定，SLOGAN
                     </p>
-                    <p class="slogan-desc">
+                    <p class="slogan-desc animate__animated animate__fadeInLeftBig">
                         TDuck - Have what you want,
                         get you income.
                     </p>

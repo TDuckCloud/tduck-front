@@ -195,9 +195,11 @@ export function getCurrentDomain() {
  * @param {boolean} immediate
  * @return {*}
  */
-export function debounce(func, wait, immediate) {
-    let timeout, args, context, timestamp, result
 
+export function debounce(func, wait, immediate) {
+    // eslint-disable-next-line no-unused-vars
+    let timeout, args, context, timestamp, result
+    // eslint-disable-next-line no-unused-vars
     const later = function() {
         // 据上一次触发时间间隔
         const last = +new Date() - timestamp
