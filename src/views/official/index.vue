@@ -85,8 +85,8 @@
                 <p @click="$router.push({path:'/home'})">前往体验 ></p>
             </div>
         </div>
-        <p class="title">他们都在使用</p>
         <div class="use-company">
+            <p class="title">他们都在使用</p>
             <div>
                 <img src="https://qiniu.smileyi.top/lanzhouxiandaizhiye.png" style="width: 170px; height: 30px;">
                 <img src="https://qiniu.smileyi.top/baoluekeji.png" style="width: 117px; height: 33px;">
@@ -117,7 +117,7 @@
             <div>
                 <img src="https://qiniu.smileyi.top/zhangzhutong.png" style="width: 43px; height: 45px;">
                 <img src="https://qiniu.smileyi.top/泰享健康@2x.png" style="width: 196px; height: 48px;">
-                <img src="https://qiniu.smileyi.top/人人孕妇@2x.png" style="width: 156px; height: 54px;">
+                <img src="https://qiniu.smileyi.top/renrenyun.png" style="width: 156px; height: 54px;">
                 <img src="https://qiniu.smileyi.top/xykj@2x.png" style="width: 209px; height: 51px;">
                 <img src="https://qiniu.smileyi.top/上海市闵行区卫生健康委员会@2x.png" style="width: 47px; height: 49px;">
             </div>
@@ -405,6 +405,13 @@ body {
     align-content: center;
     align-items: center;
     justify-content: flex-start;
+    margin-top: 200px;
+    & > div {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+    }
     div {
         margin: 10px 3px;
     }
@@ -419,7 +426,7 @@ body {
     background: linear-gradient(163deg, rgba(32, 84, 241, 0.67), rgba(34, 78, 243, 0.67), rgba(56, 234, 255, 0.67));
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     .top {
         display: flex;
         flex-direction: row;
@@ -477,7 +484,7 @@ body {
 .is-fixed {
     position: fixed;
     z-index: 999;
-    animation: stickyMenu 0.7s ease-in-out;
+    animation: stickyMenu 0.5s ease-in-out;
     top: 0;
     background: linear-gradient(-67deg, rgba(32, 84, 241, 1), rgba(51, 201, 253, 1), rgba(35, 86, 244, 1));
 }

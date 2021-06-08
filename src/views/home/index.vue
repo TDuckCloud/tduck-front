@@ -40,7 +40,7 @@
             <el-container>
                 <el-aside width="280px">
                     <el-card>
-                        <el-button  type="primary" @click="createBlankTemplate">新建项目</el-button>
+                        <el-button type="primary" @click="createBlankTemplate">新建项目</el-button>
                         <div class="menu-view">
                             <div v-for="menu in menuList" :key="menu.route"
                                  :class="defaultActiveMenu==menu.route?'menu-item-active menu-item':'menu-item'"
@@ -171,6 +171,7 @@ export default {
         width: 120px;
         height: 35px;
         float: left;
+        margin-left: 25px;
     }
     .right-header {
         display: flex;
