@@ -19,7 +19,7 @@
 
 <script>
 import HomeFunction from './HomButton'
-import Dashboard from './dashboard'
+import Dashboard from '../form/statistics/chart'
 
 export default {
     name: 'HomeView',

@@ -306,6 +306,7 @@ body {
             line-height: 43px;
         }
         .right img {
+            padding-top: 30px;
             height: 540px;
             width: 375px;
         }
@@ -404,6 +405,9 @@ body {
     align-content: center;
     align-items: center;
     justify-content: flex-start;
+    div {
+        margin: 10px 3px;
+    }
     img {
         margin-right: 30px;
     }
@@ -415,27 +419,28 @@ body {
     background: linear-gradient(163deg, rgba(32, 84, 241, 0.67), rgba(34, 78, 243, 0.67), rgba(56, 234, 255, 0.67));
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     .top {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        text-align: center;
+        text-align: left;
         .title {
-            font-size: 25px;
+            font-size: 20px;
             font-weight: bold;
             color: #fff;
             line-height: 60px;
+            text-align: left;
         }
         .desc {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 300;
             color: #fff;
             line-height: 20px;
             max-width: 292px;
         }
         a {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 300;
             color: #fff;
             cursor: pointer;

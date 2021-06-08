@@ -1,83 +1,53 @@
 <template>
     <div class="dashboard-container">
-        <div class="left-view">
-            <div class="project-select-view">
-                <div style="width: 140px;">
-                    <p class="tag-title">回收概览</p>
-                </div>
-                <div style="margin-left: 30px;">
-                    <el-select v-model="activeProjectKey"
-                               placeholder="请选择"
-                               @change="projectChangeHandle"
-                    >
-                        <el-option
-                            v-for="item in projectListData"
-                            :key="item.key"
-                            :label="item.name"
-                            :value="item.key"
-                        />
-                    </el-select>
-                </div>
-            </div>
-            <div class="project-collect-view">
-                <div class="project-index-view">
-                    <div style="display: flex;
-                    width: 80%;
-                    text-align: center;
-                    margin: 0 auto;
-                    justify-content: space-between;"
-                    >
-                        <div>
-                            <p style="text-align: center;">有效回收量</p>
-                            <count-to :end-val="projectStats.completeCount"
-                                      style="font-size: 20px;"
-                            />
-                        </div>
-                        <div>
-                            <p>总浏览量</p>
-                            <count-to :end-val="projectStats.viewCount" style="font-size: 20px;" />
-                        </div>
-                        <div>
-                            <p>回收率</p>
-                            <count-to :end-val="projectStats.completeRate" style="font-size: 20px;" />
-                            %
-                        </div>
-                        <div>
-                            <p>平均完成时间</p>
-                            <span style="font-size: 20px;">
-                                {{ projectStats.avgCompleteFormatStr }}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <line-chart :chart-option="lineChartOptionData" />
-                </div>
+        <div class="project-select-view">
+            <div style="width: 140px;">
+                <p class="tag-title">回收概览</p>
             </div>
         </div>
-        <div class="right-view">
-            <div style="width: 230px;">
-                <p class="tag-title">表单提交地域分布图</p>
-            </div>
-            <div style="width: 460px;">
-                <map-chart :chart-option="mapChartOptionData" :height="'250px'" />
-            </div>
-            <div style="display: flex; flex-direction: row; justify-content: space-around;">
-                <div style="width: 364px;">
-                    <div style="width: 120px;">
-                        <p class="tag-title">常用设备</p>
+        <div v-if="false" class="project-collect-view">
+            <div class="project-index-view">
+                <div>
+                    <div>
+                        <p style="text-align: center;">有效回收量</p>
+                        <count-to :end-val="projectStats.completeCount"
+                                  style="font-size: 20px;"
+                        />
                     </div>
                     <div>
-                        <pie-chart :chart-option="pieChartOptionData" :height="'250px'" />
+                        <p>总浏览量</p>
+                        <count-to :end-val="projectStats.viewCount" style="font-size: 20px;" />
+                    </div>
+                    <div>
+                        <p>回收率</p>
+                        <count-to :end-val="projectStats.completeRate" style="font-size: 20px;" />
+                        %
+                    </div>
+                    <div>
+                        <p>平均完成时间</p>
+                        <span style="font-size: 20px;">
+                            {{ projectStats.avgCompleteFormatStr }}
+                        </span>
                     </div>
                 </div>
-                <div style="width: 50%;">
-                    <div style="width: 120px;">
-                        <p class="tag-title">来源渠道</p>
-                    </div>
-                    <div>
-                        <bar-chart :chart-option="barChartOptionData" :height="'250px'" />
-                    </div>
+            </div>
+            <div>
+                <line-chart :chart-option="lineChartOptionData" />
+            </div>
+        </div>
+        <p class="tag-title">表单提交地域分布图</p>
+        <map-chart v-if="false" :chart-option="mapChartOptionData" :height="'450px'" />
+        <div style="display: flex; flex-direction: row; justify-content: space-around;">
+            <div style="width: 50%;">
+                <p class="tag-title">常用设备</p>
+                <div>
+                    <pie-chart :chart-option="pieChartOptionData" :height="'250px'" />
+                </div>
+            </div>
+            <div style="width: 50%;">
+                <p class="tag-title">来源渠道</p>
+                <div>
+                    <bar-chart :chart-option="barChartOptionData" :height="'250px'" />
                 </div>
             </div>
         </div>
@@ -89,10 +59,10 @@ import LineChart from '@/components/echarts/LineChart'
 import MapChart from '@/components/echarts/MapChart'
 import CountTo from '@/components/CountTo'
 import BarChart from '@/components/echarts/BarChart'
-import {timeFormat} from '@/utils/index'
+import {timeFormat} from '@/utils'
 
 export default {
-    name: 'HomeDashboard',
+    name: 'StatisticsChart',
     components: {
         CountTo,
         MapChart,
@@ -186,14 +156,13 @@ export default {
                         name: '提交数',
                         type: 'map',
                         mapType: 'china',
-                        zoom: 1.2,
+                        zoom: 1.4,
                         roam: false,
                         label: {
                             show: false,
                             color: 'rgb(0,0,0)'
                         },
-                        data: [
-                        ]
+                        data: []
                     }
                 ]
             },
@@ -273,13 +242,9 @@ export default {
         }
     },
     created() {
-        this.$api.get('/user/project/list', {params: {status: 2}}).then(res => {
-            this.projectListData = res.data
-            if (res.data && res.data[0]) {
-                this.activeProjectKey = res.data[0].key
-                this.projectChangeHandle()
-            }
-        })
+        this.activeProjectKey = this.$route.query.key
+        this.projectChangeHandle()
+
     }, methods: {
         projectChangeHandle() {
             this.getProjectStats()
@@ -370,35 +335,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .dashboard-container {
-    min-width: 980px;
-    display: flex;
-    align-content: center;
-    margin: 35px auto;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 .tag-title {
     font-size: 20px;
-    border-bottom: 3px solid rgba(68, 68, 68, 100);
     line-height: 25px;
     margin: 10px;
 }
-.project-select-view {
-    display: flex;
-    align-content: center;
-    align-items: center;
-}
-.project-collect-view {
-    width: 730px;
-    height: 500px;
-    border-radius: 10px;
-    border: 1px solid rgba(187, 187, 187, 100);
-}
-.right-view {
-    display: flex;
-    flex-direction: column;
-    min-width: 40%;
+.project-index-view {
+    & > div {
+        display: flex;
+        width: 80%;
+        text-align: center;
+        margin: 0 auto;
+        justify-content: space-between;
+    }
 }
 </style>

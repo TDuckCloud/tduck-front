@@ -15,6 +15,7 @@ import '@/utils/plugins'
 // 全局组件自动注册
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
+import Process from '@/components/HandleProcess/process'
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$store = store
@@ -31,7 +32,7 @@ Vue.prototype.msgWarning = function(msg) {
 Vue.prototype.msgInfo = function(msg) {
     this.$message.info(msg)
 }
-
+Vue.prototype.$process = Process
 Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
