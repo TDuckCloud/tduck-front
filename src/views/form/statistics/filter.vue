@@ -45,7 +45,9 @@
         </el-row>
         <span slot="footer" class="dialog-footer">
             <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button :disabled="selectedFields.length==0" type="primary" @click="submitFilterHandle">确 定</el-button>
+            <el-button :disabled="selectedFields.length==0&&filterParams!={}" type="primary"
+                       @click="submitFilterHandle"
+            >确 定</el-button>
         </span>
     </el-dialog>
 </template>
@@ -63,6 +65,8 @@ export default {
         return {
             dialogVisible: true,
             selectedFields: [],
+            // 参数比较类型
+            filterParamsComparison: {},
             filterParams: {}
         }
     },
@@ -76,7 +80,7 @@ export default {
             this.$set(this.fields, item.leftIndex, item)
         },
         submitFilterHandle() {
-            this.$emit('filter', this.filterParams)
+            this.$emit('filter', this.filterParams, this.filterParamsComparison)
             this.dialogVisible = false
         },
         selectedFieldHandle(index, item) {
@@ -86,6 +90,11 @@ export default {
             item.selected = true
             this.$set(this.fields, index, item)
             item.leftIndex = index
+            if (['SELECT', 'RADIO', 'CHECKBOX', 'IMAGE_SELECT'].includes(item.type)) {
+                this.filterParamsComparison[`filed${item.formItemId}`] = 'EQ'
+            } else {
+                this.filterParamsComparison[`filed${item.formItemId}`] = 'LIKE'
+            }
             this.selectedFields.push(item)
         }
     }

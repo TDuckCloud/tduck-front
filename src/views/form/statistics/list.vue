@@ -129,9 +129,7 @@
                 </span>
             </el-dialog>
         </div>
-        <data-filter ref="dataFilter" :fields="projectItemList" @filter="(params)=>
-        {this.queryConditions.extParams=params;this.queryProjectResult()}"
-        />
+        <data-filter ref="dataFilter" :fields="projectItemList" @filter="dataFilterHandle" />
     </div>
 </template>
 
@@ -178,7 +176,8 @@ export default {
                 projectKey: '',
                 beginDateTime: '',
                 endDateTime: '',
-                extParams: {}
+                extParams: null,
+                extComparisons: null
             }
         }
     },
@@ -206,6 +205,11 @@ export default {
         },
         conditionFilterHandle() {
             this.$refs.dataFilter.showDialogHandle()
+        },
+        dataFilterHandle(params, comparisons) {
+            this.queryConditions.extParams = params
+            this.queryConditions.extComparisons = comparisons
+            this.queryProjectResult()
         },
         queryProjectResult() {
             this.$api.get('/user/project/result/page', {params: this.queryConditions}).then(res => {
