@@ -5,9 +5,9 @@ import _ from 'lodash'
 
 export default class sign {
     /**
-     * json参数升序
-     * @param jsonObj 发送参数
-     */
+   * json参数升序
+   * @param jsonObj 发送参数
+   */
 
     static sortAsc(jsonObj) {
         let arr = new Array()
@@ -25,10 +25,10 @@ export default class sign {
     }
 
     /**
-     * @param url 请求的url,应该包含请求参数(url的?后面的参数)
-     * @param requestParams 请求参数(POST的JSON参数)
-     * @returns {string} 获取签名
-     */
+   * @param url 请求的url,应该包含请求参数(url的?后面的参数)
+   * @param requestParams 请求参数(POST的JSON参数)
+   * @returns {string} 获取签名
+   */
     static getSign(url, request) {
         let requestParams = {}
         if (request.params) {
@@ -37,6 +37,9 @@ export default class sign {
                 if (key) {
                     if (value == undefined || value == null) {
                         return undefined
+                    }
+                    if (value instanceof Object) {
+                        return JSON.stringify(value)
                     }
                     return '' + value
                 }
@@ -53,9 +56,9 @@ export default class sign {
     }
 
     /**
-     * @param url 请求的url
-     * @returns {{}} 将url中请求参数组装成json对象(url的?后面的参数)
-     */
+   * @param url 请求的url
+   * @returns {{}} 将url中请求参数组装成json对象(url的?后面的参数)
+   */
     static parseQueryString(url) {
         let urlReg = /^[^?]+\?([\w\W]+)$/,
             paramReg = /([^&=]+)=([\w\W]*?)(&|$|#)/g,
@@ -71,8 +74,8 @@ export default class sign {
     }
 
     /**
-     * @returns {*} 将两个对象合并成一个
-     */
+   * @returns {*} 将两个对象合并成一个
+   */
     static mergeObject(objectOne, objectTwo) {
         if (Object.keys(objectTwo).length > 0) {
             for (let key in objectTwo) {

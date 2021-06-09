@@ -1,53 +1,5 @@
-const fs = require('fs')
 const path = require('path')
-const spritesmithPlugin = require('webpack-spritesmith')
 const terserPlugin = require('terser-webpack-plugin')
-const cdnDependencies = require('./dependencies.cdn')
-
-const spritesmithTasks = []
-fs.readdirSync('src/assets/sprites').map(dirname => {
-    if (fs.statSync(`src/assets/sprites/${dirname}`).isDirectory()) {
-        spritesmithTasks.push(
-            new spritesmithPlugin({
-                src: {
-                    cwd: path.resolve(__dirname, `src/assets/sprites/${dirname}`),
-                    glob: '*.png'
-                },
-                target: {
-                    image: path.resolve(__dirname, `src/assets/sprites/${dirname}.[hash].png`),
-                    css: [
-                        [path.resolve(__dirname, `src/assets/sprites/_${dirname}.scss`), {
-                            format: 'handlebars_based_template',
-                            spritesheetName: dirname
-                        }]
-                    ]
-                },
-                customTemplates: {
-                    'handlebars_based_template': path.resolve(__dirname, 'scss.template.hbs')
-                },
-                // 样式文件中调用雪碧图地址写法
-                apiOptions: {
-                    cssImageRef: `~${dirname}.[hash].png`
-                },
-                spritesmithOptions: {
-                    algorithm: 'binary-tree',
-                    padding: 10
-                }
-            })
-        )
-    }
-})
-
-// CDN 相关
-const isCDN = process.env.VUE_APP_CDN == 'ON'
-const externals = {}
-cdnDependencies.forEach(pkg => {
-    externals[pkg.name] = pkg.library
-})
-const cdn = {
-    css: cdnDependencies.map(e => e.css).filter(e => e),
-    js: cdnDependencies.map(e => e.js).filter(e => e)
-}
 
 module.exports = {
     publicPath: '/',
@@ -65,16 +17,13 @@ module.exports = {
         }
     },
     configureWebpack: config => {
-        config.resolve.modules = ['node_modules', 'assets/sprites']
+        config.resolve.modules = ['node_modules']
         config.resolve.alias = {
             '@': path.resolve(__dirname, 'src')
         }
-        config.plugins.push(...spritesmithTasks)
-        if (isCDN) {
-            config.externals = externals
-        }
         config.optimization = {
             minimizer: [
+                //https://webpack.docschina.org/plugins/terser-webpack-plugin/
                 new terserPlugin({
                     terserOptions: {
                         compress: {
@@ -88,12 +37,6 @@ module.exports = {
             ]
         }
     },
-    pluginOptions: {
-        lintStyleOnBuild: true,
-        stylelint: {
-            fix: true
-        }
-    },
     chainWebpack: config => {
         const oneOfsMap = config.module.rule('scss').oneOfs.store
         oneOfsMap.forEach(item => {
@@ -102,7 +45,6 @@ module.exports = {
                 .options({
                     resources: [
                         './src/assets/styles/resources/*.scss',
-                        './src/assets/sprites/*.scss'
                     ]
                 })
                 .end()
@@ -125,12 +67,47 @@ module.exports = {
         config.plugin('html')
             .tap(args => {
                 args[0].title = process.env.VUE_APP_TITLE
-                if (isCDN) {
-                    args[0].cdn = cdn
-                }
                 args[0].debugTool = process.env.VUE_APP_DEBUG_TOOL
                 return args
             })
             .end()
+
+      config
+        .when(process.env.NODE_ENV !== 'development',
+          config => {
+            config
+              .plugin('ScriptExtHtmlWebpackPlugin')
+              .after('html')
+              .use('script-ext-html-webpack-plugin', [{
+                // `runtime` must same as runtimeChunk name. default is `runtime`
+                inline: /runtime\..*\.js$/
+              }])
+              .end()
+            config
+              .optimization.splitChunks({
+              chunks: 'all',
+              cacheGroups: {
+                libs: {
+                  name: 'chunk-libs',
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: 10,
+                  chunks: 'initial' // only package third parties that are initially dependent
+                },
+                elementUI: {
+                  name: 'chunk-elementUI', // split elementUI into a single package
+                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                },
+                commons: {
+                  name: 'chunk-commons',
+                  test: resolve('src/components'), // can customize your rules
+                  minChunks: 3, //  minimum common number
+                  priority: 5,
+                  reuseExistingChunk: true
+                }
+              }
+            })
+          }
+        )
     }
 }

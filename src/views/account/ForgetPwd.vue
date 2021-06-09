@@ -4,19 +4,25 @@
             <div>
                 <h4 class="title">找回密码</h4>
                 <el-tabs
-                    v-model="retrieveType" class="login-form"
+                    v-model="retrieveType"
+                    class="login-form"
                 >
                     <el-tab-pane label="手机找回" name="phone">
                         <el-form ref="phoneForm" :model="retrieveAccountForm" :rules="phoneRules" label-width="0px">
                             <el-form-item prop="phoneNumber">
-                                <el-input v-model="retrieveAccountForm.phoneNumber" autocomplete="off"
-                                          placeholder="请输入手机号"
+                                <el-input
+                                    v-model="retrieveAccountForm.phoneNumber"
+                                    autocomplete="off"
+                                    placeholder="请输入手机号"
                                 />
                             </el-form-item>
                             <el-form-item label="" prop="code">
                                 <el-input v-model="retrieveAccountForm.code" class="width50" autocomplete="off" placeholder="请输入验证码" />
-                                <el-button :disabled="emailValidateCodeBtn" class="ml-20" type="primary"
-                                           @click="sendPhoneValidateCodeHandle"
+                                <el-button
+                                    :disabled="emailValidateCodeBtn"
+                                    class="ml-20"
+                                    type="primary"
+                                    @click="sendPhoneValidateCodeHandle"
                                 >
                                     {{ emailValidateCodeBtnText }}
                                 </el-button>
@@ -29,15 +35,18 @@
                         </el-form>
                     </el-tab-pane>
                     <el-tab-pane label="邮箱找回" name="email">
-                        <el-form ref="emailForm" :model="retrieveAccountForm" :rules="emailRules"
-                                 label-width="0px"
-                                 status-icon
+                        <el-form
+                            ref="emailForm"
+                            :model="retrieveAccountForm"
+                            :rules="emailRules"
+                            label-width="0px"
+                            status-icon
                         >
                             <el-form-item label="" prop="email">
                                 <el-input v-model="retrieveAccountForm.email" autocomplete="off" placeholder="请输入邮箱" />
                             </el-form-item>
                             <el-form-item>
-                                <el-button  class="width-full" type="primary" @click="sendEmailValidateHandle">
+                                <el-button class="width-full" type="primary" @click="sendEmailValidateHandle">
                                     找回密码
                                 </el-button>
                             </el-form-item>
@@ -55,13 +64,19 @@
                 </div>
                 <el-form ref="resetPwdForm" :model="resetPwdForm" :rules="pwdRules" label-width="0px">
                     <el-form-item label="" prop="password">
-                        <el-input v-model="resetPwdForm.password" autocomplete="off" placeholder="请输入密码"
-                                  show-password
+                        <el-input
+                            v-model="resetPwdForm.password"
+                            autocomplete="off"
+                            placeholder="请输入密码"
+                            show-password
                         />
                     </el-form-item>
                     <el-form-item label="" prop="rePassword">
-                        <el-input v-model="resetPwdForm.rePassword" autocomplete="off" placeholder="请再次输入密码"
-                                  show-password
+                        <el-input
+                            v-model="resetPwdForm.rePassword"
+                            autocomplete="off"
+                            placeholder="请再次输入密码"
+                            show-password
                         />
                     </el-form-item>
                     <el-form-item>
@@ -87,7 +102,7 @@ import constants from '@/utils/constants'
 export default {
     name: 'RetrievePwd',
     data() {
-        let validateRePass = (rule, value, callback) => {
+        const validateRePass = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'))
             } else if (value !== this.resetPwdForm.rePassword) {
@@ -115,17 +130,17 @@ export default {
             },
             phoneRules: {
                 phoneNumber: [
-                    {required: true, trigger: 'blur', message: '请输入手机号'},
+                    { required: true, trigger: 'blur', message: '请输入手机号' },
                     {
                         pattern: /^(?:0|86|\+86)?1[3456789]\d{9}$/,
                         message: '请输入正确的手机号'
                     }
                 ],
-                code: {required: true, trigger: 'blur', message: '请输入验证码'}
+                code: { required: true, trigger: 'blur', message: '请输入验证码' }
             },
             emailRules: {
                 email: [
-                    {required: true, trigger: 'blur', message: '请输入邮箱'},
+                    { required: true, trigger: 'blur', message: '请输入邮箱' },
                     {
                         pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
                         message: '请输入正确的邮箱'
@@ -134,18 +149,18 @@ export default {
             },
             pwdRules: {
                 password: [
-                    {required: true, trigger: 'blur', message: '请输入新密码'},
+                    { required: true, trigger: 'blur', message: '请输入新密码' },
                     {
                         pattern: constants.passwordReg,
                         message: constants.passwordRegDesc
                     }
                 ],
-                rePassword: [{required: true, trigger: 'blur', validator: validateRePass}]
+                rePassword: [{ required: true, trigger: 'blur', validator: validateRePass }]
             }
         }
     },
     created() {
-        let code = this.$route.query.code
+        const code = this.$route.query.code
         if (code) {
             this.resetAccount = this.$route.query.email
             this.resetPwdForm.code = code
@@ -161,19 +176,19 @@ export default {
             })
         },
         sendPhoneValidateCode() {
-            let phoneNumber = this.retrieveAccountForm.phoneNumber
+            const phoneNumber = this.retrieveAccountForm.phoneNumber
             this.$refs['phoneForm'].validateField('phoneNumber', err => {
                 if (!err) {
                     this.emailValidateCodeBtn = true
                     this.$api.request({
                         url: '/retrieve/password/phone/code',
                         method: 'get',
-                        params: {phoneNumber: phoneNumber}
+                        params: { phoneNumber: phoneNumber }
                     }).then(() => {
                         this.msgSuccess('验证码发送成功，5分钟内有效')
                         this.emailValidateCodeBtn = true
                         let count = 60
-                        let timer = setInterval(() => {
+                        const timer = setInterval(() => {
                             count--
                             this.emailValidateCodeBtnText = count + 's后重新发送'
                             if (count == 0) {
@@ -207,7 +222,7 @@ export default {
                         if (res.data) {
                             this.msgSuccess('密码重置成功，快去登录吧')
                             setTimeout(() => {
-                                this.$router.push({path: '/login'})
+                                this.$router.push({ path: '/login' })
                             }, 2000)
                         }
                     })
@@ -227,7 +242,7 @@ export default {
                     this.$api.request({
                         url: '/retrieve/password/email',
                         method: 'get',
-                        params: {email: this.retrieveAccountForm.email}
+                        params: { email: this.retrieveAccountForm.email }
                     }).then(() => {
                         this.retrieveStep = 3
                     })
@@ -240,55 +255,64 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/mixin.scss';
-.app-container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-.title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 28px;
-    text-align: center;
-}
-.pwd-container {
-    width: 20%;
-    height: 50%;
-    align-content: center;
-    div {
-        width: 350px;
-    }
-}
-.reset-pwd-view {
-    div {
-        width: 350px;
-        .rest-pwd-user-view {
-            line-height: 80px;
-            height: 100px;
-            padding: 10px;
-            .el-icon-user {
-                display: inline-block;
-                width: 20%;
-                color: #717171;
-                text-align: left;
-                font-size: 50px;
-            }
-            span {
-                color: #4c4c4c;
-                display: inline-block;
-                text-align: center;
-                font-size: 19px;
-                width: 80%;
-            }
-        }
-    }
-}
-.msg-view {
-    @include position-center(xy);
 
-    text-align: center;
-    color: #929292;
-    width: 30%;
+.app-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.title {
+  color: rgba(16, 16, 16, 100);
+  font-size: 28px;
+  text-align: center;
+}
+
+.pwd-container {
+  width: 20%;
+  height: 50%;
+  align-content: center;
+
+  div {
+    width: 350px;
+  }
+}
+
+.reset-pwd-view {
+  div {
+    width: 350px;
+
+    .rest-pwd-user-view {
+      line-height: 80px;
+      height: 100px;
+      padding: 10px;
+
+      .el-icon-user {
+        display: inline-block;
+        width: 20%;
+        color: #717171;
+        text-align: left;
+        font-size: 50px;
+      }
+
+      span {
+        color: #4c4c4c;
+        display: inline-block;
+        text-align: center;
+        font-size: 19px;
+        width: 80%;
+      }
+    }
+  }
+}
+
+.msg-view {
+  @include position-center(xy);
+
+  text-align: center;
+  color: #929292;
+  width: 30%;
 }
 </style>

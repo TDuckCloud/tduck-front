@@ -87,40 +87,7 @@
         </div>
         <div class="use-company">
             <p class="title">他们都在使用</p>
-            <div>
-                <img src="https://qiniu.smileyi.top/lanzhouxiandaizhiye.png" style="width: 170px; height: 30px;">
-                <img src="https://qiniu.smileyi.top/baoluekeji.png" style="width: 117px; height: 33px;">
-                <img src="https://qiniu.smileyi.top/tongxinraunjian.png" style="width: 100px; height: 29px;">
-                <img src="https://qiniu.smileyi.top/yunshangshien.png" style="width: 100px; height: 24px;">
-            </div>
-            <div>
-                <img src="https://qiniu.smileyi.top/wanshitong.png" style="width: 24px; height: 24px;">
-                <img src="https://qiniu.smileyi.top/shengji@2x.png" style="width: 48px; height: 46px;">
-                <img src="https://qiniu.smileyi.top/hebeijiangong.png" style="width: 46px; height: 48px;">
-                <img src="https://qiniu.smileyi.top/indexLogo.d128b371@2x.png" style="width: 134px; height: 41px;">
-                <img src="https://qiniu.smileyi.top/zhongguopingan.png" style="width: 165px; height: 28px;">
-            </div>
-            <div>
-                <img src="https://qiniu.smileyi.top/舒心家园房产@2x.png" style="width: 168px; height: 40px;">
-                <img src="https://qiniu.smileyi.top/丽珠试剂@2x.png" style="width: 150px; height: 53px;">
-                <img src="https://qiniu.smileyi.top/申银万国期货@2x.png" style="width: 192px; height: 47px;">
-                <img src="https://qiniu.smileyi.top/ucloud@2x.png" style="width: 241px; height: 29px;">
-                <img src="https://qiniu.smileyi.top/H3C@2x.png" style="width: 127px; height: 54px;">
-            </div>
-            <div>
-                <img src="https://qiniu.smileyi.top/中央企业工业互联网融通平台@2x.png" style="width: 169px; height: 47px;">
-                <img src="https://qiniu.smileyi.top/yifengertiyan.png" style="width: 206px; height: 32px;">
-                <img src="https://qiniu.smileyi.top/hauxin@2x.png" style="width: 315px; height: 50px;">
-                <img src="https://qiniu.smileyi.top/17466041@2x.png" style="width: 138px; height: 62px;">
-                <img src="https://qiniu.smileyi.top/美博会@2x.png" style="width: 118px; height: 67px;">
-            </div>
-            <div>
-                <img src="https://qiniu.smileyi.top/zhangzhutong.png" style="width: 43px; height: 45px;">
-                <img src="https://qiniu.smileyi.top/泰享健康@2x.png" style="width: 196px; height: 48px;">
-                <img src="https://qiniu.smileyi.top/renrenyun.png" style="width: 156px; height: 54px;">
-                <img src="https://qiniu.smileyi.top/xykj@2x.png" style="width: 209px; height: 51px;">
-                <img src="https://qiniu.smileyi.top/上海市闵行区卫生健康委员会@2x.png" style="width: 47px; height: 49px;">
-            </div>
+            <img src="@/assets/images/official/use-commony.png">
         </div>
         <div class="footer">
             <div class="top">
@@ -406,18 +373,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     margin-top: 200px;
-    & > div {
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
-    }
-    div {
-        margin: 10px 3px;
-    }
-    img {
-        margin-right: 30px;
-    }
+
 }
 .footer {
     margin-top: 227px;

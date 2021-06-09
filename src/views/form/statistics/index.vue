@@ -14,6 +14,7 @@
 <script>
 import list from './list'
 import chart from './chart'
+
 export default {
     name: 'ProjectStatistics',
     components: {
@@ -22,7 +23,7 @@ export default {
     },
     data() {
         return {
-            activeName: 'chart'
+            activeName: 'list'
         }
     },
     mounted() {
@@ -34,11 +35,12 @@ export default {
 
 <style scoped>
 .statistics-tabs {
-    padding: 20px;
-    width: 100%;
-    height: 100%;
-    .el-tab-pane {
-        height: 100%;
-    }
+  padding: 20px;
+  //width: 99%;
+  height: 100%;
+}
+
+::v-deep .el-tabs__content {
+  padding: 0;
 }
 </style>

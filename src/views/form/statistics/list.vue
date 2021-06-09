@@ -20,7 +20,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="queryProjectResult">查询</el-button>
-                    <el-button type="primary" @click="customFilterDialogVisible=true">条件</el-button>
+                    <el-button type="primary" @click="conditionFilterHandle">条件</el-button>
                     <el-button type="success" @click="exportProjectResult">导出</el-button>
                     <el-button type="success" @click="downloadProjectResultFile">下载附件</el-button>
                 </el-form-item>
@@ -129,30 +129,16 @@
                 </span>
             </el-dialog>
         </div>
-        <el-dialog :visible.sync="customFilterDialogVisible" center title="结构化筛选">
-            <div class="flex-center">
-                <el-transfer
-                    v-model="checkedFilterColumns"
-                    filterable
-                    :props="{
-                        key: 'formItemId',
-                        label: 'label'
-                    }"
-                    filter-placeholder="请输入问题名称"
-                    :data="projectItemList"
-                />
-            </div>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="customColumnDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveStatisticsCheckedColumns">确 定</el-button>
-            </span>
-        </el-dialog>
+        <data-filter ref="dataFilter" :fields="projectItemList" @filter="(params)=>
+        {this.queryConditions.extParams=params;this.queryProjectResult()}"
+        />
     </div>
 </template>
 
 <script>
 import _ from 'lodash'
 import ResultItem from './item'
+import DataFilter from './filter'
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
 const fixedDefaultFormColumn = ['serialNumber', 'submitAddress', 'createTime']
@@ -161,7 +147,8 @@ const fixedDefaultLabelFormColumn = {serialNumber: '提交序号', submitAddress
 export default {
     name: 'ProjectStatisticsList',
     components: {
-        ResultItem
+        ResultItem,
+        DataFilter
     },
     data() {
         return {
@@ -190,7 +177,8 @@ export default {
                 size: 10,
                 projectKey: '',
                 beginDateTime: '',
-                endDateTime: ''
+                endDateTime: '',
+                extParams: {}
             }
         }
     },
@@ -207,7 +195,6 @@ export default {
                     onClick={() => this.customColumnDialogVisible = true}></i>
             )
         },
-
         openDetailDrawerHandle(row) {
             this.activeResultRow = row
             this.detailDrawer = true
@@ -216,6 +203,9 @@ export default {
             this.$api.get(`/user/project/${this.projectKey}`).then(res => {
                 this.projectData = res.data
             })
+        },
+        conditionFilterHandle() {
+            this.$refs.dataFilter.showDialogHandle()
         },
         queryProjectResult() {
             this.$api.get('/user/project/result/page', {params: this.queryConditions}).then(res => {
@@ -301,50 +291,58 @@ export default {
 
 <style scoped>
 .statistics-container {
-    width: 100%;
-    height: 100%;
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
 }
+
 .custom-col-container >>> .el-checkbox__label {
-    width: 200px;
-    min-height: 25px;
-    line-height: 25px;
-    vertical-align: middle;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  width: 200px;
+  min-height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+
 .result-table-view {
-    width: 80%;
-    margin: 6px auto;
+  width: 80%;
+  min-height: 75vh;
+  margin: 6px auto;
 }
+
 .detail-container {
-    padding: 20px;
-    height: 100% !important;
+  padding: 20px;
+  height: 100% !important;
 }
+
 .filter-table-view {
-    width: 80%;
-    margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 }
+
 ::v-deep .el-icon-setting {
-    font-size: 24px;
-    line-height: 25px;
-    color: white;
+  font-size: 24px;
+  line-height: 25px;
+  color: white;
 }
+
 ::v-deep .data-table-header .cell {
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
 
 /* 1.显示滚动条：当内容超出容器的时候，可以拖动： */
 ::v-deep .el-drawer__body {
-    overflow: auto;
+  overflow: auto;
 
-    /* overflow-x: auto; */
+  /* overflow-x: auto; */
 }
 
 /* 2.隐藏滚动条，太丑了 */
 ::v-deep .el-drawer__container ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 </style>

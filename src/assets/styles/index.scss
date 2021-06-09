@@ -127,6 +127,7 @@ div:focus {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
 }
 .clearfix {
     &::after {
@@ -196,14 +197,6 @@ aside {
     cursor: pointer;
     &:hover {
         color: rgb(32, 160, 255);
-    }
-}
-.filter-container {
-    padding-bottom: 10px;
-    .filter-item {
-        display: inline-block;
-        vertical-align: middle;
-        margin-bottom: 10px;
     }
 }
 

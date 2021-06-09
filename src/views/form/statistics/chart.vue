@@ -1,42 +1,38 @@
 <template>
     <div class="dashboard-container">
-        <div class="project-select-view">
-            <div style="width: 140px;">
-                <p class="tag-title">回收概览</p>
-            </div>
-        </div>
-        <div v-if="false" class="project-collect-view">
-            <div class="project-index-view">
+        <p class="tag-title">回收概览</p>
+        <div class="project-index-view">
+            <div>
                 <div>
-                    <div>
-                        <p style="text-align: center;">有效回收量</p>
-                        <count-to :end-val="projectStats.completeCount"
-                                  style="font-size: 20px;"
-                        />
-                    </div>
-                    <div>
-                        <p>总浏览量</p>
-                        <count-to :end-val="projectStats.viewCount" style="font-size: 20px;" />
-                    </div>
-                    <div>
-                        <p>回收率</p>
-                        <count-to :end-val="projectStats.completeRate" style="font-size: 20px;" />
-                        %
-                    </div>
-                    <div>
-                        <p>平均完成时间</p>
-                        <span style="font-size: 20px;">
-                            {{ projectStats.avgCompleteFormatStr }}
-                        </span>
-                    </div>
+                    <p style="text-align: center;">有效回收量</p>
+                    <count-to :end-val="projectStats.completeCount"
+                              style="font-size: 20px;"
+                    />
+                </div>
+                <div>
+                    <p>总浏览量</p>
+                    <count-to :end-val="projectStats.viewCount" style="font-size: 20px;" />
+                </div>
+                <div>
+                    <p>回收率</p>
+                    <count-to :end-val="projectStats.completeRate" style="font-size: 20px;" />
+                    %
+                </div>
+                <div>
+                    <p>平均完成时间</p>
+                    <span style="font-size: 20px;">
+                        {{ projectStats.avgCompleteFormatStr }}
+                    </span>
                 </div>
             </div>
-            <div>
-                <line-chart :chart-option="lineChartOptionData" />
-            </div>
+        </div>
+        <div class="line-chat">
+            <line-chart :chart-option="lineChartOptionData" />
         </div>
         <p class="tag-title">表单提交地域分布图</p>
-        <map-chart v-if="false" :chart-option="mapChartOptionData" :height="'450px'" />
+        <div style="width: 90%">
+            <map-chart :chart-option="mapChartOptionData" :height="'450px'" />
+        </div>
         <div style="display: flex; flex-direction: row; justify-content: space-around;">
             <div style="width: 50%;">
                 <p class="tag-title">常用设备</p>
@@ -337,14 +333,14 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard-container {
-    width: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden!important;
 }
 .tag-title {
     font-size: 20px;
     line-height: 25px;
-    margin: 10px;
+  margin-left: 20px;
 }
 .project-index-view {
     & > div {
