@@ -55,9 +55,9 @@ export function evalExpression(context, expression) {
         let value = itemExpArr[2]
         // 比较是否成立
         console.log(varName)
-        let filedValue = _.get(context, varName)
-        console.log(filedValue)
-        flag = expressionOperator[sp](filedValue, value)
+        let fieldValue = _.get(context, varName)
+        console.log(fieldValue)
+        flag = expressionOperator[sp](fieldValue, value)
         console.log(flag)
         // & 一个不成立直接调出循环 返回成功
         if (and && !flag) {

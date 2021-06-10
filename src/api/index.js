@@ -17,7 +17,7 @@ const toLogin = () => {
 
 const api = axios.create({
     baseURL: process.env.VUE_APP_API_ROOT,
-    timeout: 10000,
+    timeout: 30000,
     responseType: 'json',
     withCredentials: false,
     headers: {

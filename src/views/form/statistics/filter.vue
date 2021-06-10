@@ -3,7 +3,7 @@
         <p>点击添加筛选项：</p>
         <el-row>
             <el-col :span="6" class="filter-left">
-                <p v-for="(field,index) in fields" :key="field.id"
+                <p v-for="(field,index) in copyFields" :key="field.id"
                    :class="{'selected':field.selected}"
                    class="filter-item-label"
                    @click="selectedFieldHandle(index,field)"
@@ -22,12 +22,12 @@
                             <p class="compare">
                                 选择
                             </p>
-                            <el-select v-model="filterParams[`filed${field.formItemId}`]">
+                            <el-select v-model="filterParams[`field${field.formItemId}`]">
                                 <el-option
                                     v-for="item in field.expand.options"
-                                    :key="item.id"
+                                    :key="item.value"
                                     :label="item.label"
-                                    :value="item.id"
+                                    :value="item.value"
                                 />
                             </el-select>
                         </div>
@@ -35,7 +35,7 @@
                             <p class="compare">
                                 包含
                             </p>
-                            <el-input v-model="filterParams[`filed${field.formItemId}`]" />
+                            <el-input v-model="filterParams[`field${field.formItemId}`]" />
                         </div>
                         <i class="el-icon-delete" @click="removeSelectedFieldHandle" />
                     </div>
@@ -44,7 +44,7 @@
             </el-col>
         </el-row>
         <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button @click="cancelHandle">取 消</el-button>
             <el-button :disabled="selectedFields.length==0&&filterParams!={}" type="primary"
                        @click="submitFilterHandle"
             >确 定</el-button>
@@ -54,6 +54,7 @@
 
 <script>
 import DataEmpty from '@/components/DataEmpty'
+import {jsonSimpleClone} from '@/utils'
 
 export default {
     name: 'StatisticsFilter',
@@ -63,7 +64,8 @@ export default {
     },
     data() {
         return {
-            dialogVisible: true,
+            copyFields: [],
+            dialogVisible: false,
             selectedFields: [],
             // 参数比较类型
             filterParamsComparison: {},
@@ -72,15 +74,23 @@ export default {
     },
     methods: {
         showDialogHandle() {
+            this.copyFields = jsonSimpleClone(this.fields)
+            this.selectedFields = []
+            this.filterParamsComparison = {}
+            this.filterParams = {}
             this.dialogVisible = true
         },
         removeSelectedFieldHandle(index, item) {
             this.selectedFields.splice(index, 1)
             item.selected = false
-            this.$set(this.fields, item.leftIndex, item)
+            this.$set(this.copyFields, item.leftIndex, item)
         },
         submitFilterHandle() {
             this.$emit('filter', this.filterParams, this.filterParamsComparison)
+            this.dialogVisible = false
+        },
+        cancelHandle() {
+            this.$emit('filter', null, null)
             this.dialogVisible = false
         },
         selectedFieldHandle(index, item) {
@@ -88,12 +98,12 @@ export default {
                 return
             }
             item.selected = true
-            this.$set(this.fields, index, item)
+            this.$set(this.copyFields, index, item)
             item.leftIndex = index
             if (['SELECT', 'RADIO', 'CHECKBOX', 'IMAGE_SELECT'].includes(item.type)) {
-                this.filterParamsComparison[`filed${item.formItemId}`] = 'EQ'
+                this.filterParamsComparison[`field${item.formItemId}`] = 'eq'
             } else {
-                this.filterParamsComparison[`filed${item.formItemId}`] = 'LIKE'
+                this.filterParamsComparison[`field${item.formItemId}`] = 'like'
             }
             this.selectedFields.push(item)
         }

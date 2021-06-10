@@ -111,6 +111,7 @@ export default {
         },
         handleSubmit() {
             this.setVal()
+            this.$emit('input', this.text)
             this.box = false
         },
         handleClear() {
@@ -207,6 +208,7 @@ export default {
         },
         handleClose() {
             window.poiPicker.clearSearchResults()
+            this.box = false
         },
         addClick() {
             this.map.on('click', e => {
