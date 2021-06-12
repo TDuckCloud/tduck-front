@@ -2,6 +2,9 @@
     <div class="app-container">
         <div v-if="retrieveStep===1" class="pwd-container">
             <div>
+                <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+                     @click="$router.push({path:'/'})"
+                >
                 <h4 class="title">找回密码</h4>
                 <el-tabs
                     v-model="retrieveType"
@@ -56,6 +59,9 @@
             </div>
         </div>
         <div v-if="retrieveStep===2" class="reset-pwd-view">
+            <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+                 @click="$router.push({path:'/'})"
+            >
             <div>
                 <h4 class="title">重置密码</h4>
                 <div class="rest-pwd-user-view">
@@ -262,8 +268,16 @@ export default {
   display: flex;
   justify-content: center;
   align-content: center;
+  align-items: center;
 }
 
+.header-logo-img {
+  width: 120px;
+  height: 35px;
+  float: left;
+  margin-left: 25px;
+  cursor: pointer;
+}
 .title {
   color: rgba(16, 16, 16, 100);
   font-size: 28px;
@@ -271,10 +285,11 @@ export default {
 }
 
 .pwd-container {
-  width: 20%;
+  width: 25%;
   height: 50%;
   align-content: center;
-
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 50px;
   div {
     width: 350px;
   }
@@ -283,7 +298,8 @@ export default {
 .reset-pwd-view {
   div {
     width: 350px;
-
+    padding: 50px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     .rest-pwd-user-view {
       line-height: 80px;
       height: 100px;

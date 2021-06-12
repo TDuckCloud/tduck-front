@@ -6,7 +6,7 @@
         <div class="logo-content">
             <span class="hello">Hello ，</span>
             <span class="tips">欢迎使用Tduck！</span>
-            <el-tabs v-model="loginType" class="login-form-tab">
+            <el-tabs v-if="formType=='login'" v-model="loginType" class="login-form-tab">
                 <el-tab-pane v-if="enableWx" label="微信扫码登录" name="wx">
                     <div class="wx-login">
                         <div class="flex-center">
@@ -51,10 +51,18 @@
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="loginHandle">登录</el-button>
+                            <el-link class="ml-20 link-btn" @click="toForgetPwdHandle">忘记密码</el-link>
+                            <el-link class="ml-20 link-btn" @click="formType='reg'">立即注册</el-link>
                         </el-form-item>
+                        <div class="other-login">
+                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">
+                                <svg-icon class="other-login-icon" name="loginQQ" />
+                            </span>
+                        </div>
                     </el-form>
                 </el-tab-pane>
             </el-tabs>
+            <register v-else @success="registerSuccessHandle" />
             <p class="desc">
                 关于TDuckApp登录
             </p>
@@ -71,9 +79,13 @@
 import {getCurrentDomain} from '@/utils'
 // 引入组件
 import constants from '@/utils/constants'
+import Register from '../register/index.vue'
 
 export default {
     name: 'Login',
+    components: {
+        Register
+    },
     data() {
         const validateAccount = (rule, value, callback) => {
             const reg1 = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
@@ -85,6 +97,7 @@ export default {
             }
         }
         return {
+            formType: 'login',
             loginType: 'account',
             agreeProtocol: '',
             accountLoginRules: {
@@ -185,14 +198,26 @@ export default {
                 }
             })
         },
+        registerSuccessHandle() {
+            this.formType = 'login'
+            this.loginType = 'account'
+        },
         loginHandle() {
-            this.$api.request({
-                url: '/login/account',
-                method: 'post',
-                data: this.accountForm
-            }).then(res => {
-                this.loginSuccessHandle(res.data)
+            this.$refs['accountLoginForm'].validate(valid => {
+                if (valid) {
+                    this.$api.request({
+                        url: '/login/account',
+                        method: 'post',
+                        data: this.accountForm
+                    }).then(res => {
+                        this.loginSuccessHandle(res.data)
+                    })
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
             })
+
         }
     }
 }
@@ -250,6 +275,11 @@ export default {
   }
 }
 
+.other-login-icon {
+  font-size: 25px;
+  cursor: pointer;
+}
+
 .logo-content ::v-deep.el-tabs__nav-wrap::after {
   position: static !important;
 }
@@ -268,11 +298,23 @@ export default {
 
 ::v-deep .el-input {
   height: 39px !important;
+  line-height: 39px !important;
+}
+
+.link-btn {
+  font-size: 12px !important;
 }
 
 ::v-deep .el-input__inner {
   height: 39px !important;
-  background: transparent;
+  line-height: 39px !important;
+  background: #F2F2F2 !important;
+  border: none;
 }
 
+::v-deep .el-button {
+  background: #408EFC;
+  border-radius: 10px;
+  width: 145px;
+}
 </style>

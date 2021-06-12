@@ -188,8 +188,8 @@
                         </el-form>
                     </el-tab-pane>
                     <div class="flex-row">
-                        <el-link class="ml-20" @click="toForgetPwdHandle">忘记密码</el-link>
-                        <el-link class="ml-20" @click="registerHandleClick">立即注册</el-link>
+                        <el-link class="ml-20 link-btn" @click="toForgetPwdHandle">忘记密码</el-link>
+                        <el-link class="ml-20 link-btn" @click="registerHandleClick">立即注册</el-link>
                         <div class="other-login">
                             <span @click="redirectUrl(qqLoginAuthorizeUrl)">
                                 <svg-icon class="other-login-icon" name="loginQQ" />
@@ -488,10 +488,13 @@ export default {
     width: 300px;
 }
 .code-input {
-    width: 150px;
+    width: 180px;
 }
 .account-login-form {
     text-align: left;
+}other-login-icon
+.link-btn{
+  font-size: 12px!important;
 }
 .account-login-form .el-form-item--small.el-form-item {
     margin-bottom: 8px;
