@@ -154,7 +154,7 @@ export default {
     }
 }
 .el-main {
-    background-color: $backgroundColor;
+    background-color: rgba(247, 247, 247, 90);
     height: calc(100vh - 60px);
 }
 @media screen and (max-width: 750px) {

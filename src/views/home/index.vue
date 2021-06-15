@@ -153,6 +153,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$menuActiveText: #409eff;
+
 .home-container {
     background-color: rgba(247, 247, 247, 90);
     display: flex;

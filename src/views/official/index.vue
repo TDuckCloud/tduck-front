@@ -2,7 +2,7 @@
     <div class="official-container">
         <div class="header-container">
             <div class="background">
-                <img src="@/assets/images/official/background.svg">
+                <img src="https://qiniu.smileyi.top/background.svg">
             </div>
             <div id="headerNav" :class="{'is-fixed' : isFixed}" class="top-header">
                 <img class="logo" src="@/assets/images/official/TDUCK@2x.png" @click="$router.push({path:'/'})">
@@ -36,7 +36,7 @@
                     <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
-                    <img src="@/assets/images/official/banner2.png">
+                    <img src="https://qiniu.smileyi.top/banner2.png">
                 </div>
             </div>
         </div>
@@ -56,13 +56,13 @@
                     <p> 无需编程，拖拽可视化模板或组件，即可生成精美问卷</p>
                 </div>
             </div>
-            <img class="img1" src="@/assets/images/official/desc1.png">
+            <img class="img1" src="https://qiniu.smileyi.top/desc1.png">
         </div>
         <p class="title">我们的解决方案</p>
         <div class="solutions">
             <div class="solution-item">
                 <p class="title">客户体验</p>
-                <img src="@/assets/images/official/solution1.png">
+                <img src="https://qiniu.smileyi.top/solution1.png">
                 <p class="desc">客户满意度 宾馆服务满意度 </p>
                 <p class="desc"> 餐厅满意度调查 公共服务满意度</p>
                 <p class="desc">旅游服务满意度 经销商满意度 </p>
@@ -70,7 +70,7 @@
             </div>
             <div class="solution-item">
                 <p class="title">市场调研</p>
-                <img src="@/assets/images/official/solution2.png">
+                <img src="https://qiniu.smileyi.top/solution2.png">
                 <p class="desc">餐饮市场调查 手机市场调查 </p>
                 <p class="desc"> 培训市场调查 消费者调查 </p>
                 <p class="desc">APP市场调查 女性消费者偏好调查 </p>
@@ -78,7 +78,7 @@
             </div>
             <div class="solution-item">
                 <p class="title">报名登记</p>
-                <img src="@/assets/images/official/solution3.png">
+                <img src="https://qiniu.smileyi.top/solution3.png">
                 <p class="desc">才艺比赛报名 粉丝活动报名 </p>
                 <p class="desc"> 聚餐出游报名 活动/会务微信报名 </p>
                 <p class="desc"> 讲座公开课报名 商品订单 </p>
@@ -87,7 +87,7 @@
         </div>
         <div class="use-company">
             <p class="title">他们都在使用</p>
-            <img src="@/assets/images/official/use-commony.png">
+            <img src="https://qiniu.smileyi.top/use-commony.png">
         </div>
         <div class="footer">
             <div class="top">
@@ -137,7 +137,7 @@
 
 <script>
 import store from '@/store'
-
+import 'animate.css'
 export default {
     name: 'Official',
     data() {

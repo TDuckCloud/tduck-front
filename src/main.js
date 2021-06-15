@@ -7,27 +7,29 @@ import meta from 'vue-meta'
 import dayjs from 'dayjs'
 import Cookies from 'js-cookie'
 import router from './router/index'
-import animated from 'animate.css'
+
 import api from './api'
 import store from './store/index'
 import '@/assets/styles/index.scss' // global css
 import '@/utils/plugins'
+import './assets/icons' // icon
 // 全局组件自动注册
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
 import Process from '@/components/HandleProcess/process'
+
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$store = store
 Vue.prototype.$cookies = Cookies
 Vue.prototype.msgSuccess = function(msg) {
-    this.$message({ showClose: true, message: msg, type: 'success' })
+    this.$message({showClose: true, message: msg, type: 'success'})
 }
 Vue.prototype.msgError = function(msg) {
-    this.$message({ showClose: true, message: msg, type: 'error' })
+    this.$message({showClose: true, message: msg, type: 'error'})
 }
 Vue.prototype.msgWarning = function(msg) {
-    this.$message({ showClose: true, message: msg, type: 'warning' })
+    this.$message({showClose: true, message: msg, type: 'warning'})
 }
 Vue.prototype.msgInfo = function(msg) {
     this.$message.info(msg)
@@ -36,12 +38,6 @@ Vue.prototype.$process = Process
 Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
-Vue.use(animated)
-
-// 自动加载 svg 图标
-const req = require.context('./assets/icons', false, /\.svg$/)
-const requireAll = requireContext => requireContext.keys().map(requireContext)
-requireAll(req)
 
 Vue.config.productionTip = false
 

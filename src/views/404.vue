@@ -23,7 +23,7 @@ export default {
     justify-content: center;
     justify-items: center;
     .title {
-        color: $--color-primary;
+        color: #1890ff;
         font-size: 84px;
         text-align: left;
     }

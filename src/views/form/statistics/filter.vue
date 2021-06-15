@@ -112,6 +112,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/styles/resources/variables.scss";
 .filter-left {
   border-right: 1px solid #dcdfe6;
 
