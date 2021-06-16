@@ -9,7 +9,7 @@
                     <img class="header-logo" src="@/assets/images/indexLogo.png" @click="$router.push({path:'/home'})">
                 </el-col>
                 <el-col :span="1">
-                    <el-button type="primary" icon="el-icon-view">
+                    <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
                         预览
                     </el-button>
                 </el-col>
@@ -38,15 +38,23 @@
                 <router-view />
             </div>
         </div>
+        <el-dialog
+            :visible.sync="previewDialogVisible"
+            fullscreen
+        >
+            <pre-view :preview-qrcode="true" />
+        </el-dialog>
     </div>
 </template>
 
 <script>
+import PreView from '@/views/form/preview'
 export default {
     name: 'NewIndex',
-    components: {},
+    components: {PreView},
     data() {
         return {
+            previewDialogVisible: false,
             defaultActiveMenu: 'editor',
             projectKey: null,
             isCollapse: false,
@@ -185,4 +193,7 @@ export default {
   }
 }
 
+::v-deep.preview-container{
+  background-color: #ffffff;
+}
 </style>

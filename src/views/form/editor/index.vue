@@ -419,3 +419,9 @@ export default {
 @import '@/assets/styles/form/home';
 @import '@/assets/styles/form/index';
 </style>
+<style lang="scss" scoped>
+.form-name-text:hover{
+  border: 1px dashed #7b7b7b;
+  min-height: 100px;
+}
+</style>
