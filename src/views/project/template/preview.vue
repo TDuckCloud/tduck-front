@@ -52,7 +52,7 @@ export default {
     methods: {
         createProjectByTemplate() {
             this.createProjectLoading = true
-            this.$api.post('/user/project/template/create/', {'key': this.projectConfig.projectKey}).then(res => {
+            this.$api.post('/user/project/use-template/create', {'key': this.projectConfig.projectKey}).then(res => {
                 this.createProjectLoading = false
                 if (res.data) {
                     this.$router.push({path: '/project/form', query: {key: res.data, active: 1}})

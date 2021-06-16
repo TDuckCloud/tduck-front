@@ -2,7 +2,7 @@
     <div class="official-container">
         <div class="header-container">
             <div class="background">
-                <img src="https://qiniu.smileyi.top/background.svg">
+                <img src="@/assets/images/official/background.svg">
             </div>
             <div id="headerNav" :class="{'is-fixed' : isFixed}" class="top-header">
                 <img class="logo" src="@/assets/images/official/TDUCK@2x.png" @click="$router.push({path:'/'})">
@@ -36,7 +36,7 @@
                     <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
-                    <img src="https://qiniu.smileyi.top/banner2.png">
+                    <img src="@/assets/images/official/banner2.png">
                 </div>
             </div>
         </div>
@@ -56,13 +56,13 @@
                     <p> 无需编程，拖拽可视化模板或组件，即可生成精美问卷</p>
                 </div>
             </div>
-            <img class="img1" src="https://qiniu.smileyi.top/desc1.png">
+            <img class="img1" src="@/assets/images/official/desc1.png">
         </div>
         <p class="title">我们的解决方案</p>
         <div class="solutions">
             <div class="solution-item">
                 <p class="title">客户体验</p>
-                <img src="https://qiniu.smileyi.top/solution1.png">
+                <img src="@/assets/images/official/solution1.png">
                 <p class="desc">客户满意度 宾馆服务满意度 </p>
                 <p class="desc"> 餐厅满意度调查 公共服务满意度</p>
                 <p class="desc">旅游服务满意度 经销商满意度 </p>
@@ -70,7 +70,7 @@
             </div>
             <div class="solution-item">
                 <p class="title">市场调研</p>
-                <img src="https://qiniu.smileyi.top/solution2.png">
+                <img src="@/assets/images/official/solution2.png">
                 <p class="desc">餐饮市场调查 手机市场调查 </p>
                 <p class="desc"> 培训市场调查 消费者调查 </p>
                 <p class="desc">APP市场调查 女性消费者偏好调查 </p>
@@ -78,7 +78,7 @@
             </div>
             <div class="solution-item">
                 <p class="title">报名登记</p>
-                <img src="https://qiniu.smileyi.top/solution3.png">
+                <img src="@/assets/images/official/solution3.png">
                 <p class="desc">才艺比赛报名 粉丝活动报名 </p>
                 <p class="desc"> 聚餐出游报名 活动/会务微信报名 </p>
                 <p class="desc"> 讲座公开课报名 商品订单 </p>
@@ -87,7 +87,7 @@
         </div>
         <div class="use-company">
             <p class="title">他们都在使用</p>
-            <img src="https://qiniu.smileyi.top/use-commony.png">
+            <img src="@/assets/images/official/use-commony.png">
         </div>
         <div class="footer">
             <div class="top">
@@ -137,7 +137,7 @@
 
 <script>
 import store from '@/store'
-import 'animate.css'
+
 export default {
     name: 'Official',
     data() {
@@ -180,320 +180,320 @@ export default {
 <style lang="scss" scoped>
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 .official-container {
-    min-width: 1280px;
-    height: 100%;
-    //overflow-x: hidden;
+  min-width: 1280px;
+  height: 100%;
+  //overflow-x: hidden;
 }
 .header-container {
-    position: relative;
-    .background {
-        position: absolute;
-        z-index: 1;
-        img {
-            width: 100%;
-        }
+  position: relative;
+  .background {
+    position: absolute;
+    z-index: 1;
+    img {
+      width: 100%;
     }
-    .top-header {
-        width: 100%;
-        height: 72px;
-        line-height: 72px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-content: center;
-        align-items: center;
-        * {
-            z-index: 20;
-        }
-        .logo {
-            width: 182px;
-            height: 28px;
-        }
-        .menu-item {
-            font-size: 17px;
-            font-weight: 300;
-            cursor: pointer;
-            color: #fff;
-            margin-right: 73px;
-            line-height: 72px;
-        }
-        .add-contact-me {
-            position: relative;
-            div {
-                margin-top: 20px;
-                position: absolute;
-                right: 0%;
-                top: 100%;
-                visibility: hidden;
-                opacity: 0;
-                transform: translateY(100px);
-                transition: 0.3s;
-            }
-            img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-        .add-contact-me:hover {
-            div {
-                visibility: visible;
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .login-btn {
-            width: 95px;
-            height: 37px;
-            background: #fff;
-            border-radius: 11px;
-        }
-    }
-    .content-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-content: center;
-        align-items: center;
-        * {
-            z-index: 20;
-        }
-        .slogan {
-            font-size: 59px;
-            font-weight: bold;
-            color: #fff;
-            line-height: 18px;
-        }
-        .slogan-desc {
-            font-size: 37px;
-            font-weight: bold;
-            color: #fff;
-            line-height: 43px;
-        }
-        .right img {
-            padding-top: 30px;
-            height: 540px;
-            width: 375px;
-        }
-    }
-}
-.title {
-    text-align: center;
-    font-size: 23px;
-    font-weight: bold;
-    color: #232323;
-    line-height: 76px;
-}
-.introduction {
-    margin-top: 217px;
+  }
+  .top-header {
+    width: 100%;
+    height: 72px;
+    line-height: 72px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .en-title {
-        font-size: 101px;
-        font-weight: bold;
-        color: #fff;
-        line-height: 97px;
-        letter-spacing: 15px;
-        background: linear-gradient(-32deg, rgba(32, 84, 241, 0.51) 0%, rgba(34, 78, 243, 0.51) 0%, rgba(56, 234, 255, 0.51) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: show 0.5s forwards;
-    }
-    .features {
-        display: flex;
-        div {
-            margin: 0 20px;
-            text-align: center;
-        }
-        :first-child {
-            font-size: 25px;
-            font-weight: bold;
-            color: #222;
-            line-height: 68px;
-        }
-        :last-child {
-            font-size: 10px;
-            font-weight: 300;
-            color: #222;
-            line-height: 22px;
-        }
-    }
-    .img1 {
-        min-width: 515px;
-        height: 438px;
-    }
-}
-.solutions {
-    width: 80%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-evenly;
-    .solution-item {
-        width: 250px;
-        height: 390px;
-        background: linear-gradient(-12deg, rgba(32, 84, 241, 0.08), rgba(34, 78, 243, 0.08), rgba(56, 234, 255, 0.08));
-        border-radius: 15px;
-        text-align: center;
-        cursor: pointer;
-        &:hover {
-            box-shadow: 0 2px 49px 0 rgba(105, 119, 168, 0.54);
-        }
-        img {
-            width: 197px;
-            height: 147px;
-        }
-        .title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #276ef6;
-            line-height: 69px;
-        }
-        .desc {
-            font-size: 9px;
-            font-weight: 300;
-            color: #222;
-            line-height: 15px;
-        }
-        :last-child {
-            font-size: 10px;
-            font-weight: 300;
-            color: #276ef6;
-            line-height: 69px;
-        }
-    }
-}
-.use-company {
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
     align-content: center;
     align-items: center;
-    justify-content: flex-start;
-    margin-top: 200px;
+    * {
+      z-index: 20;
+    }
+    .logo {
+      width: 182px;
+      height: 28px;
+    }
+    .menu-item {
+      font-size: 17px;
+      font-weight: 300;
+      cursor: pointer;
+      color: #fff;
+      margin-right: 73px;
+      line-height: 72px;
+    }
+    .add-contact-me {
+      position: relative;
+      div {
+        margin-top: 20px;
+        position: absolute;
+        right: 0%;
+        top: 100%;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(100px);
+        transition: 0.3s;
+      }
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    .add-contact-me:hover {
+      div {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .login-btn {
+      width: 95px;
+      height: 37px;
+      background: #fff;
+      border-radius: 11px;
+    }
+  }
+  .content-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+    * {
+      z-index: 20;
+    }
+    .slogan {
+      font-size: 59px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 18px;
+    }
+    .slogan-desc {
+      font-size: 37px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 43px;
+    }
+    .right img {
+      padding-top: 30px;
+      height: 540px;
+      width: 375px;
+    }
+  }
+}
+.title {
+  text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+  color: #232323;
+  line-height: 76px;
+}
+.introduction {
+  margin-top: 217px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .en-title {
+    font-size: 101px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 97px;
+    letter-spacing: 15px;
+    background: linear-gradient(-32deg, rgba(32, 84, 241, 0.51) 0%, rgba(34, 78, 243, 0.51) 0%, rgba(56, 234, 255, 0.51) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: show 0.5s forwards;
+  }
+  .features {
+    display: flex;
+    div {
+      margin: 0 20px;
+      text-align: center;
+    }
+    :first-child {
+      font-size: 25px;
+      font-weight: bold;
+      color: #222;
+      line-height: 68px;
+    }
+    :last-child {
+      font-size: 10px;
+      font-weight: 300;
+      color: #222;
+      line-height: 22px;
+    }
+  }
+  .img1 {
+    min-width: 515px;
+    height: 438px;
+  }
+}
+.solutions {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  .solution-item {
+    width: 250px;
+    height: 390px;
+    background: linear-gradient(-12deg, rgba(32, 84, 241, 0.08), rgba(34, 78, 243, 0.08), rgba(56, 234, 255, 0.08));
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      box-shadow: 0 2px 49px 0 rgba(105, 119, 168, 0.54);
+    }
+    img {
+      width: 197px;
+      height: 147px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #276ef6;
+      line-height: 69px;
+    }
+    .desc {
+      font-size: 9px;
+      font-weight: 300;
+      color: #222;
+      line-height: 15px;
+    }
+    :last-child {
+      font-size: 10px;
+      font-weight: 300;
+      color: #276ef6;
+      line-height: 69px;
+    }
+  }
+}
+.use-company {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 200px;
 
 }
 .footer {
-    margin-top: 227px;
-    width: 100%;
-    height: 464px;
-    background: linear-gradient(163deg, rgba(32, 84, 241, 0.67), rgba(34, 78, 243, 0.67), rgba(56, 234, 255, 0.67));
+  margin-top: 227px;
+  width: 100%;
+  height: 464px;
+  background: linear-gradient(163deg, rgba(32, 84, 241, 0.67), rgba(34, 78, 243, 0.67), rgba(56, 234, 255, 0.67));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .top {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    .top {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        text-align: left;
-        .title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #fff;
-            line-height: 60px;
-            text-align: left;
-        }
-        .desc {
-            font-size: 12px;
-            font-weight: 300;
-            color: #fff;
-            line-height: 20px;
-            max-width: 292px;
-        }
-        a {
-            font-size: 12px;
-            font-weight: 300;
-            color: #fff;
-            cursor: pointer;
-            line-height: 30px;
-            display: block;
-        }
-        .qrcode {
-            display: flex;
-            div {
-                margin: 10px;
-            }
-            img {
-                margin-top: 30px;
-                width: 115px;
-                height: 114px;
-            }
-        }
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: left;
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      line-height: 60px;
+      text-align: left;
     }
-    .bottom {
-        position: relative;
-        bottom: 0;
-        p {
-            text-align: center;
-            font-size: 16px;
-            font-weight: 300;
-            color: #fff;
-            line-height: 20px;
-        }
+    .desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 20px;
+      max-width: 292px;
     }
+    a {
+      font-size: 12px;
+      font-weight: 300;
+      color: #fff;
+      cursor: pointer;
+      line-height: 30px;
+      display: block;
+    }
+    .qrcode {
+      display: flex;
+      div {
+        margin: 10px;
+      }
+      img {
+        margin-top: 30px;
+        width: 115px;
+        height: 114px;
+      }
+    }
+  }
+  .bottom {
+    position: relative;
+    bottom: 0;
+    p {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 300;
+      color: #fff;
+      line-height: 20px;
+    }
+  }
 }
 .top-header {
-    animation: stickyMenu1 0.4s ease-in-out;
+  animation: stickyMenu1 0.4s ease-in-out;
 }
 .is-fixed {
-    position: fixed;
-    z-index: 999;
-    animation: stickyMenu 0.5s ease-in-out;
-    top: 0;
-    background: linear-gradient(-67deg, rgba(32, 84, 241, 1), rgba(51, 201, 253, 1), rgba(35, 86, 244, 1));
+  position: fixed;
+  z-index: 999;
+  animation: stickyMenu 0.5s ease-in-out;
+  top: 0;
+  background: linear-gradient(-67deg, rgba(32, 84, 241, 1), rgba(51, 201, 253, 1), rgba(35, 86, 244, 1));
 }
 @keyframes stickyMenu1 {
-    0% {
-        opacity: 0;
-        background: rgba(32, 84, 241, 1);
-    }
-    50% {
-        opacity: 0.5;
-        background: rgba(32, 84, 241, 1);
-    }
-    100% {
-        background-color: transparent;
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+    background: rgba(32, 84, 241, 1);
+  }
+  50% {
+    opacity: 0.5;
+    background: rgba(32, 84, 241, 1);
+  }
+  100% {
+    background-color: transparent;
+    opacity: 1;
+  }
 }
 @keyframes stickyMenu {
-    0% {
-        margin-top: -120px;
-        opacity: 0;
-    }
-    50% {
-        margin-top: -64px;
-        opacity: 0;
-    }
-    100% {
-        margin-top: 0;
-        opacity: 1;
-    }
+  0% {
+    margin-top: -120px;
+    opacity: 0;
+  }
+  50% {
+    margin-top: -64px;
+    opacity: 0;
+  }
+  100% {
+    margin-top: 0;
+    opacity: 1;
+  }
 }
 @media only screen and (max-width: 1580px) {
-    .content-header {
-        .slogan-desc {
-            font-size: 25px !important;
-        }
+  .content-header {
+    .slogan-desc {
+      font-size: 25px !important;
     }
+  }
 }
 @media only screen and (max-width: 1280px) {
-    .content-header {
-        .slogan {
-            font-size: 39px !important;
-        }
-        .slogan-desc {
-            font-size: 20px !important;
-        }
+  .content-header {
+    .slogan {
+      font-size: 39px !important;
     }
+    .slogan-desc {
+      font-size: 20px !important;
+    }
+  }
 }
 ::v-deep .el-button {
-    border: none;
+  border: none;
 }
 ::v-deep .el-button span {
-    font-weight: 400;
-    color: #2667f5;
+  font-weight: 400;
+  color: #2667f5;
 }
 </style>

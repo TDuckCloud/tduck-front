@@ -9,10 +9,14 @@
                     <img class="header-logo" src="@/assets/images/indexLogo.png" @click="$router.push({path:'/home'})">
                 </el-col>
                 <el-col :span="1">
-                    <el-button type="primary">编辑</el-button>
+                    <el-button type="primary" icon="el-icon-view">
+                        预览
+                    </el-button>
                 </el-col>
                 <el-col :span="2">
-                    <el-button type="success">保存为模板</el-button>
+                    <el-button type="success" icon="el-icon-folder-add">
+                        保存为模板
+                    </el-button>
                 </el-col>
             </el-row>
         </el-card>
@@ -86,6 +90,12 @@ export default {
     methods: {
         menuSelectHandle(index) {
             this.$router.replace({path: index, query: {key: this.projectKey}})
+        },
+        saveProjectAsTemplateHandle() {
+            // 全局组件Id
+            this.$api.get('/user/project/item/max-form-id', {params: {key: this.projectKey}}).then(res => {
+                this.idGlobal = res.data ? res.data : 100
+            })
         },
         collapseHandle() {
             let isCollapse = !this.isCollapse
