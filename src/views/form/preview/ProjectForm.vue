@@ -215,8 +215,8 @@ export default {
             this.perPageFields = perPageFields
         },
         /**
-         * 处理逻辑显示数据
-         */
+     * 处理逻辑显示数据
+     */
         logicShowTriggerHandle(logicItem) {
             if (!logicItem) {
                 return
@@ -270,68 +270,76 @@ export default {
 <style lang="scss">
 
 .project-form {
-    margin: 15px auto;
-    width: 800px;
-    padding: 15px;
-    background-repeat: repeat;
-    background-color: rgba(229, 239, 247, 0.87);
+  margin: 15px auto;
+  width: 800px;
+  padding: 15px;
+  background-repeat: repeat;
+  background-color: rgba(229, 239, 247, 0.87);
 }
+
 .project-body::-webkit-scrollbar {
-    width: 0 !important;
-    background: transparent;
+  width: 0 !important;
+  background: transparent;
 }
+
 .project-body {
-    -ms-overflow-style: none;
-    overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
 }
+
 .logo-img {
-    max-height: 120px;
+  max-height: 120px;
 }
+
 .submit-btn-form-item {
-    text-align: left;
+  text-align: left;
 }
+
 .submit-btn-form-item button {
-    width: 20%;
+  width: 20%;
 }
+
 @media screen and (max-width: 750px) {
-    .project-form {
-        margin: 0;
-        width: 100% !important;
-        background-color: white;
-    }
-    .logo-img {
-        max-height: 2.94rem;
-    }
-    .submit-btn-form-item {
-        text-align: center;
-    }
-    .submit-btn-form-item button {
-        width: 80%;
-    }
+  .project-form {
+    margin: 0;
+    width: 100% !important;
+    background-color: white;
+  }
+  .logo-img {
+    max-height: 2.94rem;
+  }
+  .submit-btn-form-item {
+    text-align: center;
+  }
+  .submit-btn-form-item button {
+    width: 80%;
+  }
 }
+
 @media screen and (max-width: 500px) {
-    .el-message {
-        min-width: 300px !important;
+  .el-message {
+    min-width: 300px !important;
+  }
+  .el-message-box {
+    width: 300px !important;
+  }
+  //! 日期范围兼容移动端
+  //.el-date-range-picker__content{
+  //  float: none!important;
+  //  width: 100% !important;
+  //}
+  //# 日期范围兼容移动端
+  .el-dialog__wrapper .el-dialog {
+    width: 300px !important;
+
+    .el-dialog__body {
+      padding: 10px 20px !important;
+
+      .el-form-item__label {
+        width: 68px !important;
+      }
     }
+  }
 }
-@media screen and (max-width: 500px) {
-    .el-message-box {
-        width: 300px !important;
-    }
-}
-@media screen and (max-width: 500px) {
-    .el-dialog__wrapper .el-dialog {
-        width: 300px !important;
-        .el-dialog__body {
-            padding: 10px 20px !important;
-            .el-form-item__label {
-                width: 68px !important;
-            }
-            //.el-select,
-            //.el-input {
-            //    width: 180px !important;
-        }
-        //}
-    }
-}
+
 </style>

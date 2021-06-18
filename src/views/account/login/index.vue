@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <div class="logo-banner">
-            <img src="https://qiniu.smileyi.top/logo_banner.png">
+            <img src="@/assets/images/logo_banner.png">
         </div>
         <div class="logo-content">
             <span class="hello">Hello ，</span>
