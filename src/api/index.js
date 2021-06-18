@@ -56,7 +56,6 @@ const signRequest = request => {
 
 api.interceptors.response.use(
     async response => {
-        console.log(response)
         /**
          * 全局拦截请求发送后返回的数据，如果数据有报错则在这做全局的错误提示
          * 假设返回数据格式为：{"code":500,"msg":"邮箱地址不正确","data":null}

@@ -1,10 +1,11 @@
 <template>
     <div class="dashboard-container">
         <p class="tag-title">回收概览</p>
+        <el-divider />
         <div class="project-index-view">
             <div>
                 <div>
-                    <p style="text-align: center;">有效回收量</p>
+                    <p class="text-center">有效回收量</p>
                     <count-to :end-val="projectStats.completeCount"
                               style="font-size: 20px;"
                     />
@@ -27,23 +28,24 @@
             </div>
         </div>
         <div class="line-chat">
-            <line-chart :chart-option="lineChartOptionData" />
+            <line-chart :width="'100vw'" :chart-option="lineChartOptionData" />
         </div>
         <p class="tag-title">表单提交地域分布图</p>
         <div style="width: 90%">
-            <map-chart :chart-option="mapChartOptionData" :height="'450px'" />
+            <map-chart :width="'100vw'" :chart-option="mapChartOptionData" :height="'450px'" />
         </div>
+        <el-divider />
         <div style="display: flex; flex-direction: row; justify-content: space-around;">
             <div style="width: 50%;">
                 <p class="tag-title">常用设备</p>
                 <div>
-                    <pie-chart :chart-option="pieChartOptionData" :height="'250px'" />
+                    <pie-chart :width="'48vw'" :chart-option="pieChartOptionData" :height="'250px'" />
                 </div>
             </div>
             <div style="width: 50%;">
                 <p class="tag-title">来源渠道</p>
                 <div>
-                    <bar-chart :chart-option="barChartOptionData" :height="'250px'" />
+                    <bar-chart :width="'48vw'" :chart-option="barChartOptionData" :height="'250px'" />
                 </div>
             </div>
         </div>
@@ -338,9 +340,9 @@ export default {
     overflow-x: hidden!important;
 }
 .tag-title {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 25px;
-  margin-left: 20px;
+   margin-left: 20px;
 }
 .project-index-view {
     & > div {
