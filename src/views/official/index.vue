@@ -36,7 +36,7 @@
                     <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
-                    <img src="@/assets/images/official/banner2.png">
+                    <img src="@/assets/images/official/banner02.png">
                 </div>
             </div>
         </div>

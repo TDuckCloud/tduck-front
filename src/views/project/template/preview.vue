@@ -7,7 +7,7 @@
             </el-button>
         </div>
         <div class="template-preview-content">
-            <el-scrollbar style="height: 90vh;">
+            <el-scrollbar style="height: 80vh;">
                 <project-form
                     v-if="projectConfig.projectKey"
                     :project-config="projectConfig"
@@ -57,8 +57,7 @@ export default {
                 if (res.data) {
                     this.$router.push({path: '/project/form', query: {key: res.data, active: 1}})
                 }
-            }).catch(res => {
-                console.log(res)
+            }).catch(() => {
                 this.createProjectLoading = false
             })
         },
@@ -73,7 +72,8 @@ export default {
 .template-preview-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 98%;
+    overflow-x: hidden;
     flex-direction: column;
     align-items: center;
     align-content: center;
