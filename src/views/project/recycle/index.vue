@@ -63,7 +63,7 @@
                 @current-change="queryRecycleProjectPage"
             />
         </div>
-        <data-empty v-if="!projectList&&projectList.length==0" />
+        <data-empty v-if="!projectList||projectList.length==0" />
     </div>
 </template>
 <script>
