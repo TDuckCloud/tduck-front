@@ -14,7 +14,7 @@
                     </el-button>
                 </el-col>
                 <el-col :span="2">
-                    <el-button type="success" icon="el-icon-folder-add">
+                    <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
                         保存为模板
                     </el-button>
                 </el-col>
@@ -100,9 +100,8 @@ export default {
             this.$router.replace({path: index, query: {key: this.projectKey}})
         },
         saveProjectAsTemplateHandle() {
-            // 全局组件Id
-            this.$api.get('/user/project/item/max-form-id', {params: {key: this.projectKey}}).then(res => {
-                this.idGlobal = res.data ? res.data : 100
+            this.$api.post('/user/project/template/save', {key: this.projectKey}).then(() => {
+                this.msgSuccess('保存成功')
             })
         },
         collapseHandle() {

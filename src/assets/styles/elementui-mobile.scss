@@ -1,0 +1,44 @@
+@media screen and (max-width: 500px) {
+  .el-message {
+    min-width: 300px !important;
+  }
+  .el-message-box {
+    width: 300px !important;
+  }
+  //! 日期范围兼容移动端
+  .el-date-range-picker__content{
+    float: none!important;
+    width: 100% !important;
+  }
+  .el-date-range-picker__content.is-left .el-picker-panel__icon-btn{
+    float: right!important;
+  }
+  .el-date-editor .el-range-separator{
+    padding: 0!important;
+  }
+  .el-date-range-picker .el-picker-panel__body{
+    min-width: 320px!important;
+  }
+  .el-date-range-picker{
+    width: 100%!important;
+  }
+  .el-date-table td{
+    width: 20px!important;
+    padding:0px!important;
+  }
+  .el-date-range-picker table{
+    width: 320px!important;
+  }
+  //# 日期范围兼容移动端
+  .el-dialog__wrapper .el-dialog {
+    width: 300px !important;
+
+    .el-dialog__body {
+      padding: 10px 20px !important;
+
+      .el-form-item__label {
+        width: 68px !important;
+      }
+    }
+  }
+}

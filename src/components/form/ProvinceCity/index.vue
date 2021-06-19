@@ -4,6 +4,7 @@
             v-model="value"
             :options="options"
             :props="props"
+            clearable
             @change="changeHandle"
         />
     </div>

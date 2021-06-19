@@ -27,7 +27,7 @@
             <div class="content-header">
                 <div class="left">
                     <p class="slogan animate__animated animate__fadeInLeftBig">
-                        填鸭，待定，SLOGAN
+                        让企业轻松拥有问卷系统
                     </p>
                     <p class="slogan-desc animate__animated animate__fadeInLeftBig">
                         TDuck - Have what you want,

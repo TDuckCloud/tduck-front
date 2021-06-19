@@ -106,6 +106,7 @@ export default {
     beforeCreate() {
         document.querySelector('body').className = 'project-body'
     },
+
     created() {
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.formConf.projectKey = this.projectConfig.projectKey
@@ -157,6 +158,7 @@ export default {
                 }
                 if (res.data.project) {
                     this.formConf.title = res.data.project.name
+                    document.title = res.data.project.name
                     this.formConf.description = res.data.project.describe
                 }
                 this.formConf.logicShowRule = this.logicShowTriggerRule
@@ -268,7 +270,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import '@/assets/styles/elementui-mobile.scss';
 .project-form {
   margin: 15px auto;
   width: 800px;
@@ -315,31 +317,4 @@ export default {
     width: 80%;
   }
 }
-
-@media screen and (max-width: 500px) {
-  .el-message {
-    min-width: 300px !important;
-  }
-  .el-message-box {
-    width: 300px !important;
-  }
-  //! 日期范围兼容移动端
-  //.el-date-range-picker__content{
-  //  float: none!important;
-  //  width: 100% !important;
-  //}
-  //# 日期范围兼容移动端
-  .el-dialog__wrapper .el-dialog {
-    width: 300px !important;
-
-    .el-dialog__body {
-      padding: 10px 20px !important;
-
-      .el-form-item__label {
-        width: 68px !important;
-      }
-    }
-  }
-}
-
 </style>
