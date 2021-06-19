@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div v-for="template in templateList" :key="template.id" class="project-template-view">
-                        <img :src="template.coverImg" style="width: 144px; height: 133px;">
+                        <img :src="template.coverImg?template.coverImg:'https://i.niupic.com/images/2021/01/08/99d0.png'" style="width: 144px; height: 133px;">
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
@@ -61,7 +61,7 @@
                         <div class="project-template-use-view">
                             <div
                                 class="project-template-use-view-btn"
-                                @click="toProjectTemplate(index.key)"
+                                @click="toProjectTemplate(template.key)"
                             >
                                 <div>
                                     <font-icon class="fa fa-eye" style="font-size: 40px;" />
