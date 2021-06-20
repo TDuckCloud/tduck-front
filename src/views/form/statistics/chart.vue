@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="line-chat">
-            <line-chart :width="'100vw'" :chart-option="lineChartOptionData" />
+            <line-chart :width="'95vw'" :chart-option="lineChartOptionData" />
         </div>
         <p class="tag-title">表单提交地域分布图</p>
         <div style="width: 90%">

@@ -39,8 +39,9 @@ const layouts = {
         if (value) {
             config.defaultValue = value
         }
-        // 控制逻辑显示隐藏
-        let colStyle = scheme.logicShow ? '' : 'display:none'
+        // 表单被重新渲染 控制逻辑显示隐藏
+        let triggerShow = _.indexOf(this.logicTriggerItemList, config.formId) > -1
+        let colStyle = scheme.logicShow || triggerShow ? '' : 'display:none'
         let cidAttr = config.formId
         return (
             <el-col span={config.span} style={colStyle} cid={cidAttr}>
@@ -143,8 +144,7 @@ function renderChildren(h, scheme) {
     return renderFormItem.call(this, h, config.children)
 }
 
-function setUpload(config, scheme, response, file, fileList) {
-    console.log(fileList)
+function setUpload(config, scheme, response, file) {
     let newValue = JSON.parse(this[this.formConf.formModel][scheme.__vModel__])
     if (!newValue) {
         newValue = []
@@ -180,8 +180,14 @@ function setValue(event, config, scheme) {
             // 成立让该对应的问题显示出来
             let flag = evalExpression(this[this.formConf.formModel], r.logicExpression)
             if (flag) {
+                // 防止表单重新渲染 display被刷新
+                this.logicTriggerItemList.push(r.triggerFormItemId)
+                console.log(this.logicTriggerItemList)
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = ''
             } else {
+                _.remove(this.logicTriggerItemList, function(n) {
+                    return n == r.triggerFormItemId
+                })
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = 'none'
             }
         })
@@ -333,7 +339,9 @@ export default {
             formConfCopy: deepClone(this.formConf),
             [this.formConf.formModel]: deepClone(this.formModel),
             [this.formConf.labelFormModel]: deepClone(this.labelFormModel),
-            [this.formConf.formRules]: {}
+            [this.formConf.formRules]: {},
+            // 已经被触发显示的问题
+            logicTriggerItemList: []
         }
         this.initFormData(data.formConfCopy.fields, data[this.formConf.formModel])
         this.initLabelFormData(data.formConfCopy.fields, data[this.formConf.labelFormModel])
@@ -380,6 +388,12 @@ export default {
         },
         buildRules(componentList, rules) {
             componentList.forEach(cur => {
+                // 逻辑不显示必填问题不校验
+                let triggerShow = _.indexOf(this.logicTriggerItemList, cur.formItemId) > -1
+                let flag = cur.logicShow || triggerShow ? '' : 'display:none'
+                if (flag) {
+                    return
+                }
                 const config = cur.__config__
                 if (cur.tag === 'el-upload') {
                     config.regList.push({

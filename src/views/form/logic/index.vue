@@ -40,7 +40,7 @@
                          :key="index"
                     >
                         <el-row align="middle" justify="center" type="flex">
-                            <el-col :offset="1" :span="6">
+                            <el-col :offset="1" :span="7">
                                 <span class="mr-10">{{ index + 1 }}.</span>
                                 <el-select
                                     v-model="logicItem.formItemId"
@@ -67,7 +67,7 @@
                                     />
                                 </el-select>
                             </el-col>
-                            <el-col :offset="1" :span="10">
+                            <el-col :offset="1" :span="9">
                                 <span>条件时显示此问题：</span>
                             </el-col>
                         </el-row>
@@ -183,9 +183,9 @@ export default {
                     }
                     return false
                 })
-                console.log(updateVal)
                 if (updateVal && updateVal[0] && updateVal[0].conditionList.length) {
                     let updateData = updateVal[0]
+
                     updateData.projectKey = this.projectKey
                     if (updateData.formItemId) {
                         this.saveProjectLogic(updateData)

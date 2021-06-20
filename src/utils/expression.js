@@ -5,11 +5,15 @@ import _ from 'lodash'
  */
 const expressionOperator = {
     eq: function(v1, v2) {
-        console.log(v1)
-        console.log(v2)
+        if (!v1) {
+            return false
+        }
         return v1 == v2
     },
     ne: function(v1, v2) {
+        if (!v1) {
+            return false
+        }
         return v1 != v2
     }
 }
@@ -19,8 +23,8 @@ const expressionOperator = {
  * @type {{'1': string, '2': string}}
  */
 const LogicConnector = {
-    1: '||',
-    2: '&&'
+    1: 'and',
+    2: 'or'
 }
 
 /**
@@ -29,8 +33,10 @@ const LogicConnector = {
  *  @connector 连接符 ||或者 &&
  */
 export function getExpression(conditionList, connector) {
-    let exList = conditionList.map(item => {
-        return `field${item.formItemId} ${item.expression} ${item.optionValue}`
+    let exList = conditionList.filter(item => {
+        return (Object.keys(item).length != 0)
+    }).map(item => {
+        return `field${item.formItemId} ${item.expression} ${item.optionValue}  `
     })
     return _.join(exList, LogicConnector[connector])
 }
@@ -39,9 +45,9 @@ export function getExpression(conditionList, connector) {
  * 执行表达式是否成立
  */
 export function evalExpression(context, expression) {
-    let exArray = expression.split(/[|][&]/)
+    let exArray = expression.split(/and|or/)
     // 获取是& 还是|
-    let and = !exArray.indexOf('|')
+    let and = expression.indexOf('and') > -1
     let flag = false
     console.log(exArray)
     for (let i = 0; i < exArray.length; i++) {
@@ -59,7 +65,7 @@ export function evalExpression(context, expression) {
         console.log(fieldValue)
         flag = expressionOperator[sp](fieldValue, value)
         console.log(flag)
-        // & 一个不成立直接调出循环 返回成功
+        // & 一个不成立直接调出循环 返回失败
         if (and && !flag) {
             break
             // | 一个成立直接调出循环 返回成功

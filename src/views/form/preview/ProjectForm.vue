@@ -61,6 +61,14 @@ export default {
             projectKind: 1
         }
     },
+    metaInfo: {
+        meta: [
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
+            }
+        ]
+    },
     data() {
         return {
             logicShowTriggerRule: {},
@@ -106,7 +114,6 @@ export default {
     beforeCreate() {
         document.querySelector('body').className = 'project-body'
     },
-
     created() {
         if (this.projectConfig && this.projectConfig.projectKey) {
             this.formConf.projectKey = this.projectConfig.projectKey
@@ -217,14 +224,17 @@ export default {
             this.perPageFields = perPageFields
         },
         /**
-     * 处理逻辑显示数据
-     */
+       * 处理逻辑显示数据
+       */
         logicShowTriggerHandle(logicItem) {
             if (!logicItem) {
                 return
             }
             // 建立触发关系 该字段值发生变化时 哪些问题需要进行逻辑判断 确定是否显示
             logicItem.conditionList.forEach(item => {
+                if (Object.keys(item).length === 0) {
+                    return
+                }
                 let rules = this.logicShowTriggerRule[item.formItemId]
                 if (!rules) {
                     rules = new Array()
