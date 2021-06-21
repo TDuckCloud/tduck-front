@@ -36,11 +36,11 @@
                     <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
-                    <el-image
+                    <img
                         class="image"
-                        :src="require('@/assets/images/official/banner02.png')"
+                        :src="require('@/assets/images/official/banner02.svg')"
                         fit="scale-down"
-                    />
+                    >
                 </div>
             </div>
         </div>
