@@ -27,7 +27,7 @@ export default {
                         color: '#2054F0FF',
                         subtext: '购买',
                         click: function() {
-                            MessageBox.alert('暂无', '添加客服微信', {
+                            MessageBox.alert('<img src="https://qiniu.smileyi.top/pay_qrcode1.jpg"/>', '添加客服微信', {
                                 dangerouslyUseHTMLString: true
                             })
                         },
@@ -45,30 +45,7 @@ export default {
                                 check: true
                             },
                             {
-                                title: '稳定部署，专业团队',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            }, {
-                                title: 'XXXX',
+                                title: '服务稳定，持久耐用',
                                 check: true
                             }
                         ]
@@ -81,7 +58,7 @@ export default {
                         tip: '/起',
                         subtext: '购买',
                         click: function() {
-                            MessageBox.alert('暂无', '添加客服微信', {
+                            MessageBox.alert('<img src="https://qiniu.smileyi.top/pay_qrcode2.jpg"/>', '添加客服微信', {
                                 dangerouslyUseHTMLString: true
                             })
                         },
@@ -96,34 +73,6 @@ export default {
                             },
                             {
                                 title: '效果满意，价格美丽',
-                                check: true
-                            },
-                            {
-                                title: 'XXXXX',
-                                check: true
-                            },
-                            {
-                                title: 'xXXXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXX',
-                                check: true
-                            },
-                            {
-                                title: 'XXXXX',
                                 check: true
                             }
                         ]
