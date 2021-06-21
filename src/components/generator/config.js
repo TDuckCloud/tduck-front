@@ -561,7 +561,7 @@ export const imageComponents = [
             tagIcon: 'image-select',
             layout: 'colFormItem',
             span: 24,
-            required: false,
+            required: true,
             regList: [],
             changeTag: true
         },
@@ -776,7 +776,7 @@ export const personalInfoComponents = [
         clearable: true,
         'prefix-icon': 'el-icon-postcard',
         'suffix-icon': '',
-        maxlength: 20,
+        maxlength: 18,
         'show-word-limit': true,
         readonly: false,
         disabled: false

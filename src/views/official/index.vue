@@ -36,7 +36,11 @@
                     <el-button @click="$router.push({path:'/home'})">立即体验</el-button>
                 </div>
                 <div class="right">
-                    <img src="@/assets/images/official/banner02.png">
+                    <el-image
+                        class="image"
+                        :src="require('@/assets/images/official/banner02.png')"
+                        fit="scale-down"
+                    />
                 </div>
             </div>
         </div>
@@ -254,7 +258,7 @@ body {
   .content-header {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
     align-content: center;
     align-items: center;
     * {
@@ -272,10 +276,15 @@ body {
       color: #fff;
       line-height: 43px;
     }
-    .right img {
-      padding-top: 30px;
-      height: 540px;
-      width: 375px;
+    .right{
+      position: relative;
+      height: 700px;
+      width: 700px;
+      .image {
+        padding-top: 30px;
+        height: 840px;
+        width: 700px;
+      }
     }
   }
 }
