@@ -6,7 +6,7 @@
                     <i class="el-icon-back" @click="$router.back(-1)" />
                 </el-col>
                 <el-col :span="3">
-                    <img class="header-logo" src="@/assets/images/indexLogo.png" @click="$router.push({path:'/home'})">
+                    <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
                 </el-col>
                 <el-col :span="1">
                     <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
@@ -131,7 +131,7 @@ export default {
 
 .header-container {
   width: 100%;
-  height: 60px;
+  height: 50px;
 
   .el-icon-back {
     font-size: 22px;
@@ -146,7 +146,7 @@ export default {
   }
 
   .header-logo {
-    height: 60px;
+    height: 45px;
     width: 200px;
   }
 }

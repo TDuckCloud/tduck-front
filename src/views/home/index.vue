@@ -3,7 +3,7 @@
         <el-container>
             <el-header class="header-container" height="38">
                 <div>
-                    <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+                    <img class="header-logo-img" src="@/assets/images/indexLogo.svg"
                          @click="$router.push({path:'/'})"
                     >
                 </div>
@@ -173,7 +173,7 @@ $menuActiveText: #409eff;
         width: 120px;
         height: 35px;
         float: left;
-        margin-left: 25px;
+        margin-left: 55px;
     }
     .right-header {
         display: flex;
