@@ -448,7 +448,6 @@ export default {
   border-radius: 0 280px;
   transform: rotate(-22deg);
   background: linear-gradient(60deg,#1E53F4,#1E53F4,#30cffd,#30cffd,#30cffd);
-  z-index: -1;
 }
 .content-page {
   height: calc(100vh - 64px);
@@ -463,6 +462,7 @@ export default {
   // text-align: center;
   position: relative;
   .content-explain {
+    z-index: 1;
     position: absolute;
     top: 20%;
     padding: 0 40px;
@@ -516,7 +516,6 @@ export default {
     }
   }
   .image {
-    z-index: -1;
     position: absolute;
     top: 20%;
     right: 0;
