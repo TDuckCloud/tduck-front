@@ -2,7 +2,7 @@
     <div class="app-container">
         <div v-if="retrieveStep===1" class="pwd-container">
             <div>
-                <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+                <img class="header-logo-img" src="@/assets/images/indexLogo.svg"
                      @click="$router.push({path:'/'})"
                 >
                 <h4 class="title">找回密码</h4>
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div v-if="retrieveStep===2" class="reset-pwd-view">
-            <img class="header-logo-img" src="@/assets/images/indexLogo.png"
+            <img class="header-logo-img" src="@/assets/images/indexLogo.svg"
                  @click="$router.push({path:'/'})"
             >
             <div>

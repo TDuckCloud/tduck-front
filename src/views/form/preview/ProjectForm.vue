@@ -216,10 +216,13 @@ export default {
             // 计算页数 添加分页
             _.keys(perPageFields).forEach(key => {
                 let pageItem = _.get(pageFields, key)
-                let fields = _.get(perPageFields, key)
-                pageItem.totalPageNum = len
-                fields.push(pageItem)
-                _.set(perPageFields, key, fields)
+                if (pageItem) {
+                    let fields = _.get(perPageFields, key)
+                    pageItem.totalPageNum = len
+                    fields.push(pageItem)
+                    _.set(perPageFields, key, fields)
+                }
+
             })
             this.perPageFields = perPageFields
         },
