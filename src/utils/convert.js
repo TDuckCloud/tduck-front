@@ -199,6 +199,12 @@ const dataParams = {
     // 手写签名
     'SIGN_PAD': {
         'color': 'color'
+    },
+    // 日期类型
+    'DATE': {
+        'type': 'type',
+        'format': 'format',
+        'valueFormat': 'value-format'
     }
 }
 
