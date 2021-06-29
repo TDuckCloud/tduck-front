@@ -164,7 +164,11 @@ const dataParams = {
     }, // 时间选择
     'TIME': {},
     'RATE': {
-        'max': 'max'
+        'max': 'max',
+        'allowHalf': 'allow-half',
+        'showText': 'show-text',
+        'showScore': 'show-score',
+        'disabled': 'disabled'
     },
     // 文件上传
     'UPLOAD': {
