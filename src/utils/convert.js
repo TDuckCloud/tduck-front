@@ -178,8 +178,8 @@ const dataParams = {
         'sizeUnit': '__config__.sizeUnit',
         'listType': 'list-type',
         'limit': 'limit',
-        'multiple': 'multiple'
-
+        'multiple': 'multiple',
+        'accept': 'accept'
     },
     // 图片
     'IMAGE': {
