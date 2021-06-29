@@ -12,7 +12,7 @@
                 </el-button>
             </div>
             <div v-if="publishStatus" class="publish-finish-view">
-                <el-row align="middle" type="flex">
+                <el-row :gutter="10" align="middle" type="flex">
                     <el-col :span="20">
                         <div style="display: flex; justify-content: center;">
                             <div class="icon-view">
