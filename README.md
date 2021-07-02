@@ -6,6 +6,13 @@
 <h2 align="left">Tduck 填鸭 —— 表单收集器</h2>
 
 
+## 特别鸣谢 :heart: 
+
+### 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
+
+### 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
+
+
 ### 平台简介
 
 Tduck,  Form collection system
@@ -155,15 +162,6 @@ https://www.ydyno.com/archives/1219.html
 - theme elementui主题
 - util 工具类
 - views 页面
-
-
-## 特别鸣谢
-
-
-- 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
-
-- 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
-
 
 
 ### ChangeLog 持续更新中 :sparkles: 
