@@ -6,11 +6,11 @@
 <h2 align="left">Tduck 填鸭 —— 表单收集器</h2>
 
 
-## 特别鸣谢 :heart: 
+### 特别鸣谢 :heart: 
 
-### 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
+#### 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
 
-### 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
+#### 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
 
 
 ### 平台简介
