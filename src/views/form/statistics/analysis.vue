@@ -1,30 +1,33 @@
 <template>
     <div class="analysis">
-        <div v-for="(item, index) in list" :key="index">
-            <div class="content">
-                <div class="title">
-                    <span style="font-size: 16px">Q：{{ item.label }}（{{ item.type }}）</span>
+        <div v-if="list.length && list.length !== 0">
+            <div v-for="(item, index) in list" :key="index">
+                <div class="content">
+                    <div class="title">
+                        <span style="font-size: 16px">Q：{{ item.label }}（{{ item.type }}）</span>
 
-                    <div>
-                        <span>图表类型：</span>
-                        <el-select v-model="item.chartType" placeholder="请选择">
-                            <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value"
-                            />
-                        </el-select>
+                        <div>
+                            <span>图表类型：</span>
+                            <el-select v-model="item.chartType" placeholder="请选择">
+                                <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                                />
+                            </el-select>
+                        </div>
                     </div>
+                    <line-chart
+                        class="chart"
+                        :chart-option="getCharData(item)"
+                        :width="'90vw'"
+                    />
                 </div>
-                <line-chart
-                    class="chart"
-                    :chart-option="getCharData(item)"
-                    :width="'90vw'"
-                />
+                <el-divider />
             </div>
-            <el-divider />
         </div>
+        <data-empty v-else style="padding: 20px" desc="只有单选、多选、下拉框组件可以生成图表" />
     </div>
 </template>
 
