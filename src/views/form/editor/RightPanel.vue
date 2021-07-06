@@ -1404,8 +1404,9 @@ export default {
     addSelectItem() {
       let lastItem = _.last(this.activeData.__slot__.options);
       this.activeData.__slot__.options.push({
-        label: "",
-        value: lastItem ? lastItem.value + 1 : 1,
+        label: '',
+        value: lastItem ? lastItem.value === 0 ? _.max(_.values(this.activeData.__slot__.options.map(item =>
+          item.value))) + 1 : lastItem.value + 1 : 1
       });
     },
     async blukAddSelectItems() {
