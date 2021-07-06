@@ -1409,8 +1409,8 @@ export default {
       });
     },
     async blukAddSelectItems() {
-      var arrStrs = await navigator.clipboard.readText();
-      var arr = arrStrs.split("\n");
+      let arrStrs = await navigator.clipboard.readText();
+      let arr = arrStrs.split("\n");
       if (arr.length > 1) {
         const options = [];
         for (let index = 0; index < arr.length; index++) {
@@ -1424,8 +1424,6 @@ export default {
         }
         this.activeData.__slot__.options = options;
       }
-      //console.log(res);
-      console.log(this.activeData);
     },
     addImageSelectItem() {
       let lastItem = _.last(this.activeData.options);
