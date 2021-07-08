@@ -5,15 +5,15 @@
                 <el-col :span="2">
                     <i class="el-icon-back" @click="$router.back(-1)" />
                 </el-col>
-                <el-col :span="3">
+                <el-col :span="3" :md="6">
                     <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
                 </el-col>
-                <el-col :span="1">
+                <el-col :span="1" :md="3">
                     <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
                         预览
                     </el-button>
                 </el-col>
-                <el-col :span="2">
+                <el-col :span="2" :md="3">
                     <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
                         保存为模板
                     </el-button>
