@@ -333,5 +333,8 @@ export default {
   .submit-btn-form-item button {
     width: 80%;
   }
+  .project-form .describe-html img{
+    width: 95vw!important;
+  }
 }
 </style>
