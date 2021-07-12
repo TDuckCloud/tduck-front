@@ -933,12 +933,12 @@
           >
             <el-switch v-model="activeData['step-strictly']" />
           </el-form-item>
-          <el-form-item
-            v-if="activeData.__config__.tag === 'el-cascader'"
-            label="任选层级"
-          >
-            <el-switch v-model="activeData.props.props.checkStrictly" />
-          </el-form-item>
+<!--          <el-form-item-->
+<!--            v-if="activeData.__config__.tag === 'el-cascader'"-->
+<!--            label="任选层级"-->
+<!--          >-->
+<!--            <el-switch v-model="activeData.props.props.checkStrictly" />-->
+<!--          </el-form-item>-->
           <el-form-item
             v-if="activeData.__config__.tag === 'el-cascader'"
             label="是否多选"
@@ -990,12 +990,12 @@
           >
             <el-switch v-model="activeData.readonly" />
           </el-form-item>
-          <el-form-item
-            v-if="activeData.disabled !== undefined"
-            label="是否禁用"
-          >
-            <el-switch v-model="activeData.disabled" />
-          </el-form-item>
+<!--          <el-form-item-->
+<!--            v-if="activeData.disabled !== undefined"-->
+<!--            label="是否禁用"-->
+<!--          >-->
+<!--            <el-switch v-model="activeData.disabled" />-->
+<!--          </el-form-item>-->
           <el-form-item
             v-if="activeData.__config__.tag === 'el-select'"
             label="能否搜索"

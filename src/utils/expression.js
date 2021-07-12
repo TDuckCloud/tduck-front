@@ -8,7 +8,8 @@ const expressionOperator = {
         if (!v1) {
             return false
         }
-        return v1 == v2
+        // 当type=CHECK_BOX时此处应为包含关系
+        return v1.includes(+v2)
     },
     ne: function(v1, v2) {
         if (!v1) {
