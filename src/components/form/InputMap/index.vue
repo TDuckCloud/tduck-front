@@ -319,4 +319,7 @@ export default {
     margin-bottom: 10px;
 }
 
+::v-deep .el-dialog__headerbtn {
+  z-index: 999;
+}
 </style>
