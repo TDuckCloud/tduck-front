@@ -9,7 +9,8 @@ const expressionOperator = {
             return false
         }
         // 当type=CHECK_BOX时此处应为包含关系
-        return v1.includes(+v2)
+        return  Array.isArray(v1) ? v1.includes(+v2) : v1 == v2
+
     },
     ne: function(v1, v2) {
         if (!v1) {
