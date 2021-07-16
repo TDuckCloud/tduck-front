@@ -125,14 +125,13 @@ export default {
         getWxAuthorizationUserInfo() {
             let wxAuthorizationCode = this.wxAuthorizationCode
             // 根据code 获取用户授权信息
-            this.$api.get('/authorization/user/info', {
+            this.$api.get('/wx/jsapi//authorization/user/info', {
                 params: {
                     code: wxAuthorizationCode
                 }
             }).then(res => {
                 if (res.data) {
                     this.wxUserInfo = res.data
-                    alert(res.data)
                 }
             })
 
@@ -233,7 +232,6 @@ export default {
                     if (res.data && res.data.wxWrite) {
                         // 记录微信用户信息
                         if (res.data.recordWxUser && !this.wxAuthorizationCode) {
-                            console.log(this.wxAuthorizationUrl)
                             location.href = this.wxAuthorizationUrl
                         } else {
                             this.onlyWxOpenHandle()
