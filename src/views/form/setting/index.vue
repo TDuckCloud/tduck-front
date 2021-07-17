@@ -303,7 +303,7 @@
                             @change="()=>{
                                 this.userProjectSettingData.recordWxUser=true
                                 this.userProjectSettingData.wxWrite=true
-                                this.saveUserProjectSetting
+                                this.saveUserProjectSetting()
                             }"
                         />
                     </el-col>
