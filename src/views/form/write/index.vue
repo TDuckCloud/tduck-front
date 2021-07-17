@@ -115,7 +115,12 @@ export default {
         },
         queryProjectSettingStatus() {
             // 是否能进入填写
-            this.$api.get('/user/project/setting-status', {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
+            this.$api.get('/user/project/setting-status', {
+                params: {
+                    projectKey: this.projectConfig.projectKey,
+                    wxOpenId: this.wxUserInfo ? this.wxUserInfo.openid : ''
+                }
+            }).then(res => {
                 if (res.msg) {
                     this.writeNotStartPrompt = res.msg
                     this.writeStatus = 0
