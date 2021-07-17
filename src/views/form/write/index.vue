@@ -84,13 +84,13 @@ export default {
             }
         ]
     },
-    created() {
+    async created() {
         let key = this.$route.query.key || this.$route.params.key
         this.projectConfig.projectKey = key
         let wxCode = getQueryString('code')
         if (wxCode) {
             this.wxAuthorizationCode = wxCode
-            this.getWxAuthorizationUserInfo()
+            await this.getWxAuthorizationUserInfo()
         }
         this.getWxAuthorizationUrl()
         this.queryProjectSettingStatus()
