@@ -604,7 +604,7 @@ export default {
             },
             userProjectSettingData: {
                 submitPromptImg: '',
-                wxWriteOnce: '',
+                wxWriteOnce: false,
                 submitPromptText: '提交成功 !',
                 submitJumpUrl: '',
                 wxWrite: false,
