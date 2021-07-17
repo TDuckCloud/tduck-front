@@ -125,7 +125,7 @@ export default {
         getWxAuthorizationUserInfo() {
             let wxAuthorizationCode = this.wxAuthorizationCode
             // 根据code 获取用户授权信息
-            this.$api.get('/wx/jsapi//authorization/user/info', {
+            this.$api.get('/wx/jsapi/authorization/user/info', {
                 params: {
                     code: wxAuthorizationCode
                 }
@@ -264,6 +264,8 @@ export default {
                 'submitOs': ua.os.name,
                 'submitBrowser': ua.browser.name,
                 'submitUa': ua,
+                'wxUserInfo': this.wxUserInfo,
+                'wxOpenId': this.wxUserInfo ? this.wxUserInfo.openid : '',
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
             }).then(() => {

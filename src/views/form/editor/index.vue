@@ -89,7 +89,8 @@
                             />
                         </draggable>
                         <div v-show="!drawingList.length" class="empty-info">
-                            从左侧拖入或点选组件进行表单设计
+                            <img style="width: 20%" src="@/assets/images/form-bg.png">
+                            <p>从左侧拖入或点选组件进行表单设计</p>
                         </div>
                     </el-form>
                 </el-row>

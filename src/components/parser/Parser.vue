@@ -31,6 +31,7 @@ const layouts = {
         let labelWidth = config.labelWidth ? `${config.labelWidth}px` : null
         if (config.showLabel === false) labelWidth = '0'
         let label = config.label
+        // 显示序号
         if (formConfCopy.showNumber) {
             label = scheme.serialNumber + ': ' + label
         }
@@ -404,7 +405,25 @@ export default {
                         }, trigger: 'change'
                     })
                 }
+                // 处理其他输入必填校验
+                const validateOtherInput = (rule, value, callback) => {
+                    // 0 等于选中其他
+                    if (value == 0 || (Array.isArray(value) && value.includes(0))) {
+                        if (!this[this.formConf.labelFormModel][`${rule.field}other`]) {
+                            callback(new Error('请输入其他内容'))
+                        } else {
+                            callback()
+                        }
+                    } else {
+                        callback()
+                    }
+                }
                 if (Array.isArray(config.regList)) {
+                    // 必填其他输入框校验
+                    if (['RADIO', 'CHECKBOX'].includes(cur.typeId)) {
+                        const required = {validator: validateOtherInput, message: cur.placeholder}
+                        config.regList.push(required)
+                    }
                     if (config.required) {
                         const required = {required: config.required, message: cur.placeholder}
                         if (Array.isArray(config.defaultValue)) {
@@ -457,29 +476,33 @@ export default {
 <style scoped>
 ::v-deep .el-radio-group,
 ::v-deep .el-checkbox-group {
-    margin-left: 10px;
+  margin-left: 10px;
 }
+
 ::v-deep .el-radio,
 ::v-deep .el-checkbox {
-    display: block;
-    min-height: 23px;
-    line-height: 23px;
+  display: block;
+  min-height: 23px;
+  line-height: 23px;
 }
+
 ::v-deep .el-radio__label,
 ::v-deep .el-checkbox__label {
-    font-size: 14px;
-    padding-left: 10px;
-    text-overflow: ellipsis;
-    white-space: normal;
-    min-height: 18px;
-    vertical-align: middle;
-    display: inline-block;
+  font-size: 14px;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  white-space: normal;
+  min-height: 18px;
+  vertical-align: middle;
+  display: inline-block;
 }
+
 ::v-deep .item-other-input {
-    margin-left: 20px !important;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  margin-left: 20px !important;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
 }
+
 ::v-deep .item-other-input:focus {
-    outline: none !important;
+  outline: none !important;
 }
 </style>

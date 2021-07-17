@@ -11,7 +11,7 @@ export const formConf = {
     span: 24,
     title: '问卷名称',
     description: '为了给您提供更好的服务，希望您能抽出几分钟时间，将您的感受和建议告诉我们，我们非常重视每位\n' +
-        '用户的宝贵意见，期待您的参与！现在我们就马上开始吧！',
+    '用户的宝贵意见，期待您的参与！现在我们就马上开始吧！',
     formBtns: true,
     unFocusedComponentBorder: true
 }
@@ -19,7 +19,7 @@ export const formConf = {
 // 输入型组件 【左面板】
 export const inputComponents = [
     {
-        // 组件的自定义配置
+    // 组件的自定义配置
         typeId: 'INPUT',
         __config__: {
             label: '单行文本',
@@ -795,6 +795,7 @@ export const personalInfoComponents = [
             layout: 'colFormItem',
             span: 24,
             showRegList: false,
+            regList: [],
             document: 'https://element.eleme.cn/#/zh-CN/component/input'
         },
         placeholder: '请选择省市县',
@@ -814,6 +815,7 @@ export const personalInfoComponents = [
             layout: 'colFormItem',
             span: 24,
             showRegList: false,
+            regList: [],
             document: 'https://element.eleme.cn/#/zh-CN/component/input'
         },
         placeholder: '请选择位置',
@@ -833,6 +835,7 @@ export const personalInfoComponents = [
             layout: 'colFormItem',
             span: 24,
             showRegList: false,
+            regList: [],
             document: 'https://element.eleme.cn/#/zh-CN/component/input'
         },
         placeholder: '请验证手机号',
