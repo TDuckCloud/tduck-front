@@ -1,23 +1,16 @@
 <template>
     <div class="form-index-container">
         <el-card class="header-container">
-            <el-row align="middle" type="flex">
-                <el-col :span="2">
-                    <i class="el-icon-back" @click="$router.back(-1)" />
-                </el-col>
-                <el-col :span="3" :xs="6">
-                    <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
-                </el-col>
-                <el-col :span="1" :xs="3">
-                    <el-button icon="el-icon-view" type="primary" @click="openPreviewHandle">
-                        预览
-                    </el-button>
-                </el-col>
-                <el-col :span="2" :xs="3">
-                    <el-button icon="el-icon-folder-add" type="success" @click="saveProjectAsTemplateHandle">
-                        保存为模板
-                    </el-button>
-                </el-col>
+            <el-row align="middle" type="flex" :gutter="5">
+                <i class="el-icon-back" @click="$router.back(-1)" />
+                <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
+                <el-col />
+                <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
+                    预览
+                </el-button>
+                <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
+                    保存为模板
+                </el-button>
             </el-row>
         </el-card>
         <div class="main-container">
@@ -139,13 +132,14 @@ export default {
 .header-container {
   width: 100%;
   height: 50px;
+  padding: 0 20px;
 
   .el-icon-back {
     font-size: 22px;
     font-weight: 550;
     cursor: pointer;
     color: #000;
-    margin-left: 40px;
+    margin-right: 75px;
 
     &:hover {
       color: rgb(32, 160, 255);

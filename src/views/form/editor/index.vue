@@ -37,7 +37,7 @@
             <el-scrollbar class="center-scrollbar">
                 <el-row v-if="formConf" :gutter="formConf.gutter" class="center-board-row">
                     <el-row align="middle" justify="center" type="flex">
-                        <el-col :span="20" class="text-center">
+                        <el-col class="form-head-title">
                             <h4 class="form-name-text" contenteditable="true"
                                 @blur="(event)=>{
                                     this.formConf.title=event.target.innerText;
@@ -48,7 +48,7 @@
                         </el-col>
                     </el-row>
                     <el-row align="middle" justify="center" type="flex">
-                        <el-col :span="23">
+                        <el-col class="form-head-desc">
                             <Tinymce v-if="editDescription" v-model="formConf.description"
                                      placeholder="请输入表单描述"
                                      @blur="editDescription=false" @input="saveProjectInfo"
@@ -64,7 +64,7 @@
                             <!--                            </p>-->
                         </el-col>
                     </el-row>
-                    <el-divider />
+                    <el-divider class="form-head-divider" />
                     <el-form
                         :disabled="formConf.disabled"
                         :label-position="formConf.labelPosition"
@@ -421,8 +421,33 @@ export default {
 @import '@/assets/styles/form/index';
 </style>
 <style lang="scss" scoped>
-.form-name-text:hover{
-  border: 1px dashed #7b7b7b;
-  min-height: 100px;
+
+.center-board {
+
+  .center-board-row {
+    margin-right: 10px;
+  }
+
+  .form-head-title {
+    padding: 0 10px;
+    text-align: center;
+
+    .form-name-text:hover{
+      border: 1px dashed #7b7b7b;
+      min-height: 100px;
+    }
+
+  }
+
+  .form-head-desc {
+    padding: 0 10px;
+  }
+
+  .form-head-divider {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: auto;
+  }
 }
+
 </style>
