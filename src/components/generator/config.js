@@ -602,7 +602,7 @@ export const assistComponents = [
         typeId: 'DIVIDER',
         __config__: {
             label: '分割线',
-            defaultValue: '分割线',
+            defaultValue: '',
             displayType: true,
             showLabel: false,
             showDefaultValue: false,

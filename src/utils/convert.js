@@ -136,6 +136,7 @@ const dataParams = {
     'CASCADER': {
         'options': 'options',
         'filterable': 'filterable',
+        'show-all-levels': 'showAllLevels',
         'multiple': 'props.props.multiple'
     },
     // 单选框组

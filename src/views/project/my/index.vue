@@ -280,7 +280,7 @@ export default {
             this.dataShowType = type
         },
         toProjectHandle(key, type) {
-            this.$router.push({path: '/project/form', query: {key: key, active: type}})
+            this.$router.push({path: `/project/form/${type}`, query: {key: key, active: type}})
         },
         deleteProject(key) {
             this.$api.post('/user/project/delete', {'key': key}).then(res => {

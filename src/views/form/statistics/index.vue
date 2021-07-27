@@ -7,6 +7,9 @@
             <el-tab-pane label="统计视图" name="chart">
                 <chart />
             </el-tab-pane>
+            <el-tab-pane label="数据分析" name="analysis">
+                <analysis />
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -14,12 +17,14 @@
 <script>
 import list from './list'
 import chart from './chart'
+import analysis from './analysis'
 
 export default {
     name: 'ProjectStatistics',
     components: {
         list,
-        chart
+        chart,
+        analysis
     },
     data() {
         return {

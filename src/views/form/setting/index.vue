@@ -80,6 +80,7 @@
                     <el-col :span="20" class="setting-input">
                         <el-input
                             v-model="userProjectSettingData.submitJumpUrl"
+                            placeholder="https://demo.tduckapp.com"
                             :show-word-limit="true"
                             :maxlength="50"
                             @change="saveUserProjectSetting"

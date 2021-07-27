@@ -643,7 +643,7 @@ export default {
     margin-top: 200px;
 
     img {
-      width: 100%;
+      width: 80%;
     }
   }
 }
@@ -800,6 +800,9 @@ export default {
   }
   .content-wrapper-company {
     margin-top: 80px !important;
+    img {
+      width: 100% !important;
+    }
   }
   .footer-page {
     text-align: center;

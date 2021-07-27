@@ -174,8 +174,8 @@ export default {
             })
         },
         /**
-         * 微信分享
-         */
+     * 微信分享
+     */
         setWxProjectShare(wx) {
             let {shareImg, shareTitle, shareDesc} = this.userProjectSetting
             wx.updateAppMessageShareData({
@@ -243,8 +243,8 @@ export default {
             })
         },
         /**
-         * 仅在微信打开
-         */
+     * 仅在微信打开
+     */
         onlyWxOpenHandle() {
             let wxUa = navigator.userAgent.toLowerCase()
             let isWeixin = wxUa.indexOf('micromessenger') != -1
@@ -270,6 +270,12 @@ export default {
                 'processData': data.labelFormModel
             }).then(() => {
                 this.writeStatus = 2
+                if (this.userProjectSetting.submitJumpUrl) {
+                    setTimeout(() => {
+                        window.location.replace(this.userProjectSetting.submitJumpUrl)
+                    }, 1000)
+                }
+
             })
         }
     }
@@ -278,33 +284,36 @@ export default {
 
 <style lang="scss" scoped>
 .write-container {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
+
 .title-icon-view {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
+
 .icon-view {
-    width: 59px;
-    height: 59px;
-    border-radius: 100px;
-    background-color: #0076ff;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
+  width: 59px;
+  height: 59px;
+  border-radius: 100px;
+  background-color: #0076ff;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
+
 .success-icon {
-    text-align: center;
-    color: white;
-    font-size: 30px;
+  text-align: center;
+  color: white;
+  font-size: 30px;
 }
 </style>

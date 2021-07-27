@@ -20,7 +20,7 @@
             </h4>
             <div
                 v-show="projectTheme.showDescribe"
-                class="form-name-text" v-html="formConf.description"
+                class="form-name-text describe-html" v-html="formConf.description"
             />
             <el-divider />
             <parser v-if="startParser"
@@ -291,6 +291,10 @@ export default {
   background-repeat: repeat;
   background-color: rgba(229, 239, 247, 0.87);
 }
+.project-form .describe-html img{
+  max-width: 780px;
+  margin: 0px;
+}
 
 .project-body::-webkit-scrollbar {
   width: 0 !important;
@@ -328,6 +332,9 @@ export default {
   }
   .submit-btn-form-item button {
     width: 80%;
+  }
+  .project-form .describe-html img{
+    width: 95vw!important;
   }
 }
 </style>
