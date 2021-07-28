@@ -547,23 +547,26 @@
                 <div
                     v-if="userProjectSettingData.shareDesc||userProjectSettingData.shareTitle||userProjectSettingData.shareImg"
                 >
+                    <p>通知卡片预览</p>
                     <div class="share-preview">
+                        <div style="flex: 1" />
                         <div class="share-preview-msg">
-                            <div>
+                            <div class="share-preview-msg-box">
                                 <p class="share-preview-msg-title">
                                     {{ userProjectSettingData.shareTitle }}
                                 </p>
-                                <p class="share-preview-msg-desc">
-                                    {{ userProjectSettingData.shareDesc }}
-                                </p>
+                                <div class="share-preview-info">
+                                    <p class="share-preview-msg-desc">
+                                        {{ userProjectSettingData.shareDesc }}
+                                    </p>
+                                    <div class="share-preview-img-box">
+                                        <img v-if="userProjectSettingData.shareImg" :src="userProjectSettingData.shareImg" class="share-preview-img">
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <img v-if="userProjectSettingData.shareImg" :src="userProjectSettingData.shareImg"
-                                     class="share-preview-img"
-                                >
-                            </div>
+                            <div class="share-preview-msg-angle" />
                         </div>
-                        <div>
+                        <div class="share-preview-avatar">
                             <img :src="getUserInfo.avatar" class="share-user-avatar">
                         </div>
                     </div>
@@ -837,11 +840,10 @@ export default {
 }
 
 .share-preview {
-  width: 360px;
   height: 162px;
   margin: 0 auto;
   border-radius: 5px;
-  background-color: rgba(210, 210, 210, 42);
+  background-color: #0001;
   border: 1px solid rgba(255, 255, 255, 100);
   display: flex;
   align-content: center;
@@ -851,52 +853,97 @@ export default {
 
 .share-preview-msg {
   width: 210px;
-  height: 88px;
+  margin-right: 25px;
   border-radius: 5px;
   background-color: white;
   color: rgba(16, 16, 16, 100);
   box-shadow: 0 0 3px 0 rgba(157, 158, 162, 100);
-  padding: 5px;
+  padding: 7px 10px 10px;
   display: flex;
   align-items: center;
   justify-items: center;
   justify-content: center;
   position: relative;
+  z-index: 1;
 }
 
-.share-preview-msg::after {
+.share-preview-msg-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.share-preview-msg::after,.share-preview-msg-angle {
   content: '';
-  border: 10px solid transparent;
-  border-left-color: #fff;
+  border: 8px solid transparent;
+  border-style: solid;
+  border-left-color: rgba(157, 158, 162, 0.397);
   position: absolute;
-  right: -18px;
-  top: 5px;
+  right: -15px;
+  top: 16px;
   width: 0;
+  z-index: -1;
+}
+
+.share-preview-msg-angle {
+  border: 7px solid transparent;
+  border-left-color: #ffffff;
+  right: -13px;
+  top: 17px;
+  z-index: 1;
 }
 
 .share-preview-msg-title {
   line-height: 22px;
-  height: 25px;
-  margin: 3px;
+  margin: 0;
   color: rgba(16, 16, 16, 100);
   font-size: 14px;
   text-align: left;
+
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.share-preview-info {
+  flex: 1;
+  display: flex;
+  margin-top: 5px;
 }
 
 .share-preview-msg-desc {
-  margin: 3px;
+  flex: 1;
+  height: 100%;
+  margin: 0;
   color: rgba(144, 147, 153, 100);
   font-size: 12px;
   line-height: 20px;
-  height: 60px;
-  width: 155px;
   text-align: left;
+
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
+.share-preview-img-box {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 5px;
+}
 .share-preview-img {
   width: 49px;
   height: 46px;
-  margin-right: 5px;
+}
+
+.share-preview-avatar {
+  margin-right: 30px;
+  margin-top: -35px;
 }
 
 .share-user-avatar {
