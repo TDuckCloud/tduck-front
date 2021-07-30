@@ -47,6 +47,7 @@
                         {{ scope.row[col] }}
                     </template>
                 </el-table-column>
+
                 <el-table-column
                     v-for="col in otherCustomColumns"
                     :key="col" :label="projectItemColumns[col]"
@@ -56,6 +57,16 @@
                         {{ scope.row['processData'][col] }}
                     </template>
                 </el-table-column>
+
+                <el-table-column
+                    v-for="col in fixedFormTailColumns" :key="`t${col}`"
+                    :label="fixedDefaultLabelFormTailColumn[col]"
+                >
+                    <template slot-scope="scope">
+                        {{ scope.row[col] }}
+                    </template>
+                </el-table-column>
+
                 <el-table-column
                     :render-header="renderHeader"
                     fixed="right"
@@ -123,6 +134,14 @@
                         </el-col>
                     </el-row>
                 </el-checkbox-group>
+                <el-divider />
+                <el-checkbox-group v-model="checkedFixedTailCustomColumns">
+                    <el-row>
+                        <el-col v-for="(val, key) in fixedDefaultLabelFormTailColumn" :key="key" :span="4">
+                            <el-checkbox :label="key">{{ val }}</el-checkbox>
+                        </el-col>
+                    </el-row>
+                </el-checkbox-group>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="customColumnDialogVisible = false">取 消</el-button>
                     <el-button type="primary" @click="saveStatisticsCheckedColumns">确 定</el-button>
@@ -139,8 +158,12 @@ import ResultItem from './item'
 import DataFilter from './filter'
 import {getCheckedColumn, saveCheckedColumn} from '@/utils/db'
 
-const fixedDefaultFormColumn = ['serialNumber', 'submitAddress', 'createTime']
-const fixedDefaultLabelFormColumn = {serialNumber: '提交序号', submitAddress: '提交地址', createTime: '提交时间'}
+// 头部固定标签
+const fixedDefaultFormColumn = ['serialNumber']
+const fixedDefaultLabelFormColumn = {serialNumber: '提交序号'}
+// 尾部固定标签
+const fixedDefaultFormTailColumn = ['submitAddress', 'createTime']
+const fixedDefaultLabelFormTailColumn = { submitAddress: '提交地址', createTime: '提交时间'}
 
 export default {
     name: 'ProjectStatisticsList',
@@ -156,9 +179,12 @@ export default {
             checkedFilterColumns: [],
             // 固定自定义列 如序号等
             fixedCustomColumns: fixedDefaultFormColumn,
+            fixedFormTailColumns: fixedDefaultFormTailColumn,
             // 选中的
             checkedFixedCustomColumns: fixedDefaultFormColumn,
             fixedDefaultLabelFormColumn: fixedDefaultLabelFormColumn,
+            checkedFixedTailCustomColumns: fixedDefaultFormTailColumn,
+            fixedDefaultLabelFormTailColumn: fixedDefaultLabelFormTailColumn,
             // 自定义表单属性
             checkOtherCustomColumns: [],
             otherCustomColumns: [],
@@ -223,9 +249,11 @@ export default {
             this.customColumnDialogVisible = false
             this.fixedCustomColumns = this.checkedFixedCustomColumns
             this.otherCustomColumns = this.checkOtherCustomColumns
+            this.fixedFormTailColumns = this.checkedFixedTailCustomColumns
             saveCheckedColumn(this.projectKey, {
                 fixedCustomColumns: this.fixedCustomColumns,
-                otherCustomColumns: this.otherCustomColumns
+                otherCustomColumns: this.otherCustomColumns,
+                fixedCustomTailColumns: this.fixedFormTailColumns
             })
         },
         getDbCheckedColumns() {
@@ -233,7 +261,7 @@ export default {
             if (!checkedColumn) {
                 return
             }
-            let {fixedCustomColumns, otherCustomColumns} = checkedColumn
+            let {fixedCustomColumns, otherCustomColumns, fixedCustomTailColumns} = checkedColumn
             if (fixedCustomColumns) {
                 this.fixedCustomColumns = fixedCustomColumns
                 this.checkedFixedCustomColumns = fixedCustomColumns
@@ -241,6 +269,10 @@ export default {
             if (otherCustomColumns) {
                 this.otherCustomColumns = otherCustomColumns
                 this.checkOtherCustomColumns = otherCustomColumns
+            }
+            if (fixedCustomTailColumns) {
+                this.fixedCustomTailColumns = fixedCustomTailColumns
+                this.checkedFixedTailCustomColumns = fixedCustomTailColumns
             }
         },
         downloadProjectResultFile() {
