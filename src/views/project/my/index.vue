@@ -105,7 +105,7 @@
                             </el-button>
                         </el-popconfirm>
                         <el-popconfirm
-                            v-if="p.status==3"
+                            v-if="p.status!=2"
                             title="确定删除该项目吗？"
                             @confirm="deleteProject(p.key)"
                         >
@@ -200,7 +200,7 @@
                             </el-button>
                         </el-popconfirm>
                         <el-popconfirm
-                            v-if="scope.row.status==3"
+                            v-if="scope.row.status!=2"
                             title="确定删除该项目吗？"
                             @confirm="deleteProject(scope.row.key)"
                         >

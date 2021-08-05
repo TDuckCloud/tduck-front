@@ -84,13 +84,13 @@ export default {
             }
         ]
     },
-    created() {
+    async created() {
         let key = this.$route.query.key || this.$route.params.key
         this.projectConfig.projectKey = key
         let wxCode = getQueryString('code')
         if (wxCode) {
             this.wxAuthorizationCode = wxCode
-            this.getWxAuthorizationUserInfo()
+            await this.getWxAuthorizationUserInfo()
         }
         this.getWxAuthorizationUrl()
         this.queryProjectSettingStatus()
@@ -115,7 +115,12 @@ export default {
         },
         queryProjectSettingStatus() {
             // 是否能进入填写
-            this.$api.get('/user/project/setting-status', {params: {projectKey: this.projectConfig.projectKey}}).then(res => {
+            this.$api.get('/user/project/setting-status', {
+                params: {
+                    projectKey: this.projectConfig.projectKey,
+                    wxOpenId: this.wxUserInfo ? this.wxUserInfo.openid : ''
+                }
+            }).then(res => {
                 if (res.msg) {
                     this.writeNotStartPrompt = res.msg
                     this.writeStatus = 0
@@ -125,14 +130,13 @@ export default {
         getWxAuthorizationUserInfo() {
             let wxAuthorizationCode = this.wxAuthorizationCode
             // 根据code 获取用户授权信息
-            this.$api.get('/authorization/user/info', {
+            this.$api.get('/wx/jsapi/authorization/user/info', {
                 params: {
                     code: wxAuthorizationCode
                 }
             }).then(res => {
                 if (res.data) {
                     this.wxUserInfo = res.data
-                    alert(res.data)
                 }
             })
 
@@ -233,7 +237,6 @@ export default {
                     if (res.data && res.data.wxWrite) {
                         // 记录微信用户信息
                         if (res.data.recordWxUser && !this.wxAuthorizationCode) {
-                            console.log(this.wxAuthorizationUrl)
                             location.href = this.wxAuthorizationUrl
                         } else {
                             this.onlyWxOpenHandle()
@@ -266,6 +269,8 @@ export default {
                 'submitOs': ua.os.name,
                 'submitBrowser': ua.browser.name,
                 'submitUa': ua,
+                'wxUserInfo': this.wxUserInfo,
+                'wxOpenId': this.wxUserInfo ? this.wxUserInfo.openid : '',
                 'originalData': data.formModel,
                 'processData': data.labelFormModel
             }).then(() => {

@@ -933,12 +933,12 @@
           >
             <el-switch v-model="activeData['step-strictly']" />
           </el-form-item>
-<!--          <el-form-item-->
-<!--            v-if="activeData.__config__.tag === 'el-cascader'"-->
-<!--            label="任选层级"-->
-<!--          >-->
-<!--            <el-switch v-model="activeData.props.props.checkStrictly" />-->
-<!--          </el-form-item>-->
+          <!--          <el-form-item-->
+          <!--            v-if="activeData.__config__.tag === 'el-cascader'"-->
+          <!--            label="任选层级"-->
+          <!--          >-->
+          <!--            <el-switch v-model="activeData.props.props.checkStrictly" />-->
+          <!--          </el-form-item>-->
           <el-form-item
             v-if="activeData.__config__.tag === 'el-cascader'"
             label="是否多选"
@@ -990,12 +990,12 @@
           >
             <el-switch v-model="activeData.readonly" />
           </el-form-item>
-<!--          <el-form-item-->
-<!--            v-if="activeData.disabled !== undefined"-->
-<!--            label="是否禁用"-->
-<!--          >-->
-<!--            <el-switch v-model="activeData.disabled" />-->
-<!--          </el-form-item>-->
+          <!--          <el-form-item-->
+          <!--            v-if="activeData.disabled !== undefined"-->
+          <!--            label="是否禁用"-->
+          <!--          >-->
+          <!--            <el-switch v-model="activeData.disabled" />-->
+          <!--          </el-form-item>-->
           <el-form-item
             v-if="activeData.__config__.tag === 'el-select'"
             label="能否搜索"
@@ -1404,9 +1404,16 @@ export default {
     addSelectItem() {
       let lastItem = _.last(this.activeData.__slot__.options);
       this.activeData.__slot__.options.push({
-        label: '',
-        value: lastItem ? lastItem.value === 0 ? _.max(_.values(this.activeData.__slot__.options.map(item =>
-          item.value))) + 1 : lastItem.value + 1 : 1
+        label: "",
+        value: lastItem
+          ? lastItem.value === 0
+            ? _.max(
+                _.values(
+                  this.activeData.__slot__.options.map((item) => item.value)
+                )
+              ) + 1
+            : lastItem.value + 1
+          : 1,
       });
     },
     async blukAddSelectItems() {
@@ -1617,7 +1624,7 @@ export default {
 .right-board {
   width: 350px;
   position: absolute;
-  right: 17px;
+  right: 0px;
   top: 0;
   padding-top: 3px;
   background-color: #fff;

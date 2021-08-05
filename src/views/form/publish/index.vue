@@ -13,7 +13,22 @@
             </div>
             <div v-if="publishStatus" class="publish-finish-view">
                 <el-row :gutter="10" align="middle" type="flex">
-                    <el-col :span="20">
+                    <el-col>
+                        <div>
+                            <vue-qr v-if="writeLink" :callback="qrCodeGenSuccess" :size="194"
+                                    :text="writeLink"
+                            />
+                        </div>
+                        <div style="text-align: center;">
+                            <el-link type="primary" @click="()=>{
+                                this.downloadFile('qrcode.png',this.qrCodeUrl)
+                            }"
+                            >
+                                下载分享二维码
+                            </el-link>
+                        </div>
+                    </el-col>
+                    <el-col style="margin-left: 75px;">
                         <div style="display: flex; justify-content: center;">
                             <div class="icon-view">
                                 <i class="el-icon-check success-icon" />
@@ -51,21 +66,6 @@
                                 </el-button>
                             </el-col>
                         </el-row>
-                    </el-col>
-                    <el-col :span="6">
-                        <div>
-                            <vue-qr v-if="writeLink" :callback="qrCodeGenSuccess" :size="194"
-                                    :text="writeLink"
-                            />
-                        </div>
-                        <div style="text-align: center;">
-                            <el-link type="primary" @click="()=>{
-                                this.downloadFile('qrcode.png',this.qrCodeUrl)
-                            }"
-                            >
-                                下载分享二维码
-                            </el-link>
-                        </div>
                     </el-col>
                 </el-row>
             </div>

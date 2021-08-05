@@ -1,11 +1,11 @@
 <template>
     <el-form ref="setting" :model="userProjectSettingData" :rules="settingRules">
-        <el-row class="project-setting-container" type="flex" justify="center" align="top">
-            <el-col :span="5" :offset="3" class="project-setting-view">
+        <el-row align="top" class="project-setting-container" justify="center" type="flex">
+            <el-col :offset="3" :span="5" class="project-setting-view">
                 <p class="project-setting-title">
                     提交设置
                 </p>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">显示提示图片</p>
                     </el-col>
@@ -19,8 +19,8 @@
                 <div v-if="projectSetting.showPromptImg">
                     <div class="block">
                         <el-image
-                            class="submit-prompt-img"
                             :src="userProjectSettingData.submitPromptImg"
+                            class="submit-prompt-img"
                             fit="cover "
                         >
                             <div slot="error" class="image-slot">
@@ -30,16 +30,16 @@
                     </div>
                     <el-upload
                         ref="logoUpload"
-                        accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                        :action="getUploadUrl"
                         :headers="getUploadHeader"
                         :on-success="uploadSubmitPromptHandle"
-                        :action="getUploadUrl"
                         :show-file-list="false"
+                        accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                     >
                         <el-button slot="trigger" size="small" type="text">请上传提示图片 *</el-button>
                     </el-upload>
                 </div>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">显示提示文字</p>
                     </el-col>
@@ -56,13 +56,13 @@
                 <el-row v-if="projectSetting.showPromptText">
                     <el-col :span="20" class="setting-input">
                         <el-input v-model="userProjectSettingData.submitPromptText"
-                                  :show-word-limit="true"
                                   :maxlength="50"
+                                  :show-word-limit="true"
                                   @change="saveUserProjectSetting"
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">跳转网页地址</p>
                     </el-col>
@@ -80,14 +80,14 @@
                     <el-col :span="20" class="setting-input">
                         <el-input
                             v-model="userProjectSettingData.submitJumpUrl"
-                            placeholder="https://demo.tduckapp.com"
-                            :show-word-limit="true"
                             :maxlength="50"
+                            :show-word-limit="true"
+                            placeholder="https://demo.tduckapp.com"
                             @change="saveUserProjectSetting"
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">公开反馈结果</p>
                     </el-col>
@@ -105,7 +105,7 @@
                 <p class="project-setting-title">
                     回收设置
                 </p>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">只在微信中填写</p>
                     </el-col>
@@ -116,7 +116,7 @@
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">定时收集表单</p>
                     </el-col>
@@ -133,19 +133,19 @@
                     </el-col>
                 </el-row>
                 <div v-if="projectSetting.timingCollectForm">
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="5">
                             <p class="project-setting-sub-label">收集时间：</p>
                         </el-col>
                         <el-col :span="8">
                             <el-date-picker
                                 v-model="userProjectSettingData.timedCollectionBeginTime"
-                                type="datetime"
-                                style="width: 100%; border: none;"
                                 align="center"
                                 class="collection-date-picker"
-                                value-format="yyyy-MM-dd HH:mm:ss"
                                 placeholder="选择开始时间"
+                                style="width: 100%; border: none;"
+                                type="datetime"
+                                value-format="yyyy-MM-dd HH:mm:ss"
                                 @change="saveUserProjectSetting"
                             />
                         </el-col>
@@ -153,44 +153,44 @@
                         <el-col :span="8">
                             <el-date-picker
                                 v-model="userProjectSettingData.timedCollectionEndTime"
-                                type="datetime"
                                 align="center"
                                 class="collection-date-picker"
-                                style="width: 100%; border: none;"
-                                value-format="yyyy-MM-dd HH:mm:ss"
                                 placeholder="结束日期"
+                                style="width: 100%; border: none;"
+                                type="datetime"
+                                value-format="yyyy-MM-dd HH:mm:ss"
                                 @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">未启用提示语：</p>
                         </el-col>
                         <el-col :span="15">
-                            <el-input v-model="userProjectSettingData.timedNotEnabledPromptText" class="setting-input"
-                                      style="width: 80%;"
+                            <el-input v-model="userProjectSettingData.timedNotEnabledPromptText" :maxlength="50"
                                       :show-word-limit="true"
-                                      :maxlength="50"
+                                      class="setting-input"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">停用后提示语：</p>
                         </el-col>
                         <el-col :span="15">
-                            <el-input v-model="userProjectSettingData.timedDeactivatePromptText" class="setting-input"
-                                      style="width: 80%;"
+                            <el-input v-model="userProjectSettingData.timedDeactivatePromptText" :maxlength="50"
                                       :show-word-limit="true"
-                                      :maxlength="50"
+                                      class="setting-input"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
                 </div>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">定时定量表单</p>
                     </el-col>
@@ -207,19 +207,19 @@
                     </el-col>
                 </el-row>
                 <div v-if="projectSetting.timingQuantitativeForm">
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="5">
                             <p class="project-setting-sub-label">收集时间：</p>
                         </el-col>
                         <el-col :span="8">
                             <el-date-picker
                                 v-model="userProjectSettingData.timedCollectionBeginTime"
-                                type="datetime"
-                                style="width: 100%; border: none;"
                                 align="center"
                                 class="collection-date-picker"
-                                value-format="yyyy-MM-dd HH:mm:ss"
                                 placeholder="选择开始时间"
+                                style="width: 100%; border: none;"
+                                type="datetime"
+                                value-format="yyyy-MM-dd HH:mm:ss"
                                 @change="saveUserProjectSetting"
                             />
                         </el-col>
@@ -227,73 +227,95 @@
                         <el-col :span="8">
                             <el-date-picker
                                 v-model="userProjectSettingData.timedCollectionEndTime"
-                                type="datetime"
                                 align="center"
                                 class="collection-date-picker"
-                                style="width: 100%; border: none;"
-                                value-format="yyyy-MM-dd HH:mm:ss"
                                 placeholder="结束日期"
+                                style="width: 100%; border: none;"
+                                type="datetime"
+                                value-format="yyyy-MM-dd HH:mm:ss"
                                 @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">未启用提示语：</p>
                         </el-col>
                         <el-col :span="15">
-                            <el-input v-model="userProjectSettingData.timedNotEnabledPromptText" class="setting-input"
-                                      style="width: 80%;"
+                            <el-input v-model="userProjectSettingData.timedNotEnabledPromptText" :maxlength="50"
                                       :show-word-limit="true"
-                                      :maxlength="50"
+                                      class="setting-input"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">停用后提示语：</p>
                         </el-col>
                         <el-col :span="15">
-                            <el-input v-model="userProjectSettingData.timedDeactivatePromptText" class="setting-input"
-                                      style="width: 80%;"
+                            <el-input v-model="userProjectSettingData.timedDeactivatePromptText" :maxlength="50"
                                       :show-word-limit="true"
-                                      :maxlength="50"
+                                      class="setting-input"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
-                    <el-row v-if="projectSetting.timingQuantitativeForm" type="flex" align="middle">
+                    <el-row v-if="projectSetting.timingQuantitativeForm" align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">定量表单填写数量：</p>
                         </el-col>
                         <el-col :span="15">
                             <el-input v-model="userProjectSettingData.timedQuantitativeQuantity" class="setting-input"
-                                      style="width: 80%;"
                                       oninput="value=value.replace(/[^\d]/g,'')"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
                 </div>
                 <div v-if="projectSetting.timingQuantitativeForm">
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="8">
                             <p class="project-setting-sub-label">收集完成后提示：</p>
                         </el-col>
                         <el-col :span="15">
-                            <el-input v-model="userProjectSettingData.timedEndPromptText" class="setting-input"
-                                      style="width: 80%;"
+                            <el-input v-model="userProjectSettingData.timedEndPromptText" :maxlength="50"
                                       :show-word-limit="true"
-                                      :maxlength="50"
+                                      class="setting-input"
+                                      style="width: 80%;"
                                       @change="saveUserProjectSetting"
                             />
                         </el-col>
                     </el-row>
                 </div>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
-                        <p class="project-setting-label">每人限制填写1次</p>
+                        <p class="project-setting-label ">
+                            每个微信仅填写一次
+                        </p>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-switch
+                            v-model="userProjectSettingData.wxWriteOnce"
+                            @change="()=>{
+                                this.userProjectSettingData.recordWxUser=true
+                                this.userProjectSettingData.wxWrite=true
+                                this.saveUserProjectSetting()
+                            }"
+                        />
+                    </el-col>
+                </el-row>
+                <el-row align="middle" type="flex">
+                    <el-col :span="12">
+                        <p class="project-setting-label ">
+                            每人限制填写1次
+                            <el-tooltip class="item" content="根据IP地址限制填写" effect="dark" placement="top-start">
+                                <i class="el-icon-warning" />
+                            </el-tooltip>
+                        </p>
                     </el-col>
                     <el-col :span="12">
                         <el-switch
@@ -302,7 +324,7 @@
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">每人每天限制填写1次</p>
                     </el-col>
@@ -314,22 +336,22 @@
                     </el-col>
                 </el-row>
                 <el-row v-if="userProjectSettingData.everyoneDayWriteOnce||userProjectSettingData.everyoneWriteOnce"
-                        type="flex"
                         align="middle"
+                        type="flex"
                 >
                     <el-col :span="8">
                         <p class="project-setting-sub-label">重复填写后提示：</p>
                     </el-col>
                     <el-col :span="15">
-                        <el-input v-model="userProjectSettingData.writeOncePromptText" class="setting-input"
-                                  style="width: 80%;"
+                        <el-input v-model="userProjectSettingData.writeOncePromptText" :maxlength="50"
                                   :show-word-limit="true"
-                                  :maxlength="50"
+                                  class="setting-input"
+                                  style="width: 80%;"
                                   @change="saveUserProjectSetting"
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">新反馈提醒我</p>
                     </el-col>
@@ -338,7 +360,7 @@
                     </el-col>
                 </el-row>
                 <div v-if="projectSetting.newFeedbackRemind">
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="5">
                             <p class="project-setting-sub-label">发邮件提醒我</p>
                         </el-col>
@@ -352,21 +374,21 @@
                             />
                         </el-col>
                     </el-row>
-                    <el-row v-if="projectSetting.newFeedbackRemindEmail" type="flex" align="middle">
-                        <el-col :span="5" :offset="3">
+                    <el-row v-if="projectSetting.newFeedbackRemindEmail" align="middle" type="flex">
+                        <el-col :offset="3" :span="5">
                             <p class="project-setting-sub-label">请填写邮箱：</p>
                         </el-col>
                         <el-col :span="12">
                             <el-form-item prop="newWriteNotifyEmail">
                                 <el-input v-model="userProjectSettingData.newWriteNotifyEmail" class="setting-input"
-                                          style="width: 80%;"
                                           placeholder="多个邮箱用 ; 隔开"
+                                          style="width: 80%;"
                                           @change="saveUserProjectSetting"
                                 />
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row type="flex" align="middle">
+                    <el-row align="middle" type="flex">
                         <el-col :span="5">
                             <p class="project-setting-sub-label">发微信提醒我</p>
                         </el-col>
@@ -386,8 +408,8 @@
                             </p>
                         </el-col>
                     </el-row>
-                    <el-row v-if="userProjectSettingData.newWriteNotifyWx" type="flex" align="middle">
-                        <el-col :span="5" :offset="3">
+                    <el-row v-if="userProjectSettingData.newWriteNotifyWx" align="middle" type="flex">
+                        <el-col :offset="3" :span="5">
                             <p class="project-setting-sub-label">提醒人：</p>
                         </el-col>
                         <el-col :span="12">
@@ -398,17 +420,17 @@
                         </el-col>
                     </el-row>
                 </div>
-                <el-dialog title="微信扫描二维码订阅"
+                <el-dialog :visible.sync="dialogSubNotifyVisible"
+                           title="微信扫描二维码订阅"
                            width="400px"
-                           :visible.sync="dialogSubNotifyVisible"
                 >
                     <el-image
-                        style="width: 150px; height: 150px;"
                         :src="subNotifyWxQrCode"
                         fit="fill"
+                        style="width: 150px; height: 150px;"
                     />
                 </el-dialog>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">记录微信用户个人信息</p>
                     </el-col>
@@ -432,7 +454,7 @@
                 <p class="project-setting-title">
                     分享设置
                 </p>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">自定义分享图标</p>
                     </el-col>
@@ -443,7 +465,7 @@
                         />
                     </el-col>
                 </el-row>
-                <el-row v-if="projectSetting.customizeShareIcon" type="flex" align="middle">
+                <el-row v-if="projectSetting.customizeShareIcon" align="middle" type="flex">
                     <el-col :span="10">
                         <p class="project-setting-label">
                             请上传分享图片 *
@@ -453,16 +475,16 @@
                     <el-col :span="12">
                         <el-upload
                             ref="logoUpload"
-                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                            :action="getUploadUrl"
                             :headers="getUploadHeader"
                             :on-success="uploadShareImgHandle"
-                            :action="getUploadUrl"
                             :show-file-list="false"
+                            accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                         >
                             <div class="block">
                                 <el-image
-                                    class="share-img"
                                     :src="userProjectSettingData.shareImg"
+                                    class="share-img"
                                     fit="cover "
                                 >
                                     <div slot="error" class="image-slot">
@@ -473,7 +495,7 @@
                         </el-upload>
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">自定义分享标题</p>
                     </el-col>
@@ -484,8 +506,8 @@
                         />
                     </el-col>
                 </el-row>
-                <el-row v-if="projectSetting.customizeShareTitle" type="flex"
-                        align="middle"
+                <el-row v-if="projectSetting.customizeShareTitle" align="middle"
+                        type="flex"
                 >
                     <el-col :span="8">
                         <p class="project-setting-sub-label">请输入标题：</p>
@@ -493,13 +515,13 @@
                     <el-col :span="15">
                         <el-input
                             v-model="userProjectSettingData.shareTitle"
-                            :show-word-limit="true"
                             :maxlength="50"
+                            :show-word-limit="true"
                             class="setting-input" style="width: 80%;" @change="saveUserProjectSetting"
                         />
                     </el-col>
                 </el-row>
-                <el-row type="flex" align="middle">
+                <el-row align="middle" type="flex">
                     <el-col :span="12">
                         <p class="project-setting-label">自定义分享描述</p>
                     </el-col>
@@ -507,8 +529,8 @@
                         <el-switch v-model="projectSetting.customizeShareDesc" />
                     </el-col>
                 </el-row>
-                <el-row v-if="projectSetting.customizeShareDesc" type="flex"
-                        align="middle"
+                <el-row v-if="projectSetting.customizeShareDesc" align="middle"
+                        type="flex"
                 >
                     <el-col :span="8">
                         <p class="project-setting-sub-label">请输入描述：</p>
@@ -516,8 +538,8 @@
                     <el-col :span="15">
                         <el-input
                             v-model="userProjectSettingData.shareDesc"
-                            :show-word-limit="true"
                             :maxlength="50"
+                            :show-word-limit="true"
                             class="setting-input" style="width: 80%;" @change="saveUserProjectSetting"
                         />
                     </el-col>
@@ -525,24 +547,27 @@
                 <div
                     v-if="userProjectSettingData.shareDesc||userProjectSettingData.shareTitle||userProjectSettingData.shareImg"
                 >
+                    <p>通知卡片预览</p>
                     <div class="share-preview">
+                        <div style="flex: 1" />
                         <div class="share-preview-msg">
-                            <div>
+                            <div class="share-preview-msg-box">
                                 <p class="share-preview-msg-title">
                                     {{ userProjectSettingData.shareTitle }}
                                 </p>
-                                <p class="share-preview-msg-desc">
-                                    {{ userProjectSettingData.shareDesc }}
-                                </p>
+                                <div class="share-preview-info">
+                                    <p class="share-preview-msg-desc">
+                                        {{ userProjectSettingData.shareDesc }}
+                                    </p>
+                                    <div class="share-preview-img-box">
+                                        <img v-if="userProjectSettingData.shareImg" :src="userProjectSettingData.shareImg" class="share-preview-img">
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <img v-if="userProjectSettingData.shareImg" :src="userProjectSettingData.shareImg"
-                                     class="share-preview-img"
-                                >
-                            </div>
+                            <div class="share-preview-msg-angle" />
                         </div>
-                        <div>
-                            <img class="share-user-avatar" :src="getUserInfo.avatar">
+                        <div class="share-preview-avatar">
+                            <img :src="getUserInfo.avatar" class="share-user-avatar">
                         </div>
                     </div>
                 </div>
@@ -582,6 +607,7 @@ export default {
             },
             userProjectSettingData: {
                 submitPromptImg: '',
+                wxWriteOnce: false,
                 submitPromptText: '提交成功 !',
                 submitJumpUrl: '',
                 wxWrite: false,
@@ -722,163 +748,226 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style scoped>
 .project-setting-container {
-    width: 100%;
-    height: 100%;
-    min-height: 85vh;
-    padding-top: 30px;
-    margin: 0;
-    background-color: #f7f7f7;
+  width: 100%;
+  height: 100%;
+  min-height: 85vh;
+  padding-top: 30px;
+  margin: 0;
+  background-color: #f7f7f7;
 }
+
 .project-setting-view {
-    height: 100%;
-    line-height: 20px;
-    border-radius: 7px;
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 100);
-    background-color: white;
-    margin-right: 10px;
-    padding: 10px;
+  height: 100%;
+  line-height: 20px;
+  border-radius: 7px;
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 100);
+  background-color: white;
+  margin-right: 10px;
+  padding: 10px;
 }
+
 .project-setting-title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 18px;
-    text-align: left;
-    font-weight: 550;
-    margin-left: 20px;
+  color: rgba(16, 16, 16, 100);
+  font-size: 18px;
+  text-align: left;
+  font-weight: 550;
+  margin-left: 20px;
 }
+
 .project-setting-label {
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: left;
-    line-height: 20px;
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  text-align: left;
+  line-height: 20px;
 }
+
 .project-setting-sub-label {
-    color: rgba(144, 147, 149, 100);
-    font-size: 14px;
-    text-align: left;
-    margin-left: 2px;
-    line-height: 20px;
+  color: rgba(144, 147, 149, 100);
+  font-size: 14px;
+  text-align: left;
+  margin-left: 2px;
+  line-height: 20px;
 }
+
 .submit-prompt-img {
-    width: 80%;
-    height: 117px;
-    background-color: #f7f7f7;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
+  width: 80%;
+  height: 117px;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
 }
+
 .sub-user-view {
-    position: relative;
-    width: 60px;
-    cursor: pointer;
+  position: relative;
+  width: 60px;
+  cursor: pointer;
 }
+
 .sub-user-view:hover .sub-user-delete {
-    display: block;
+  display: block;
 }
+
 .sub-user-delete {
-    position: absolute;
-    right: -6px;
-    background-color: red;
-    color: white;
-    border-radius: 50px;
-    padding: 2px;
-    font-size: 12px;
-    height: 16px;
-    width: 16px;
-    font-weight: 500;
-    line-height: 18px;
-    display: none;
+  position: absolute;
+  right: -6px;
+  background-color: red;
+  color: white;
+  border-radius: 50px;
+  padding: 2px;
+  font-size: 12px;
+  height: 16px;
+  width: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  display: none;
 }
+
 .share-img {
-    width: 123px;
-    height: 117px;
-    background-color: #f7f7f7;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
+  width: 123px;
+  height: 117px;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
 }
+
 .share-preview {
-    width: 360px;
-    height: 162px;
-    margin: 0 auto;
-    border-radius: 5px;
-    background-color: rgba(210, 210, 210, 42);
-    border: 1px solid rgba(255, 255, 255, 100);
-    display: flex;
-    align-content: center;
-    align-items: center;
-    justify-content: space-around;
+  height: 162px;
+  margin: 0 auto;
+  border-radius: 5px;
+  background-color: #0001;
+  border: 1px solid rgba(255, 255, 255, 100);
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: space-around;
 }
+
 .share-preview-msg {
-    width: 210px;
-    height: 88px;
-    border-radius: 5px;
-    background-color: white;
-    color: rgba(16, 16, 16, 100);
-    box-shadow: 0 0 3px 0 rgba(157, 158, 162, 100);
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
-    position: relative;
+  width: 210px;
+  margin-right: 25px;
+  border-radius: 5px;
+  background-color: white;
+  color: rgba(16, 16, 16, 100);
+  box-shadow: 0 0 3px 0 rgba(157, 158, 162, 100);
+  padding: 7px 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
 }
-.share-preview-msg::after {
-    content: '';
-    border: 10px solid transparent;
-    border-left-color: #fff;
-    position: absolute;
-    right: -18px;
-    top: 5px;
-    width: 0;
+
+.share-preview-msg-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
+
+.share-preview-msg::after,.share-preview-msg-angle {
+  content: '';
+  border: 8px solid transparent;
+  border-style: solid;
+  border-left-color: rgba(157, 158, 162, 0.397);
+  position: absolute;
+  right: -15px;
+  top: 16px;
+  width: 0;
+  z-index: -1;
+}
+
+.share-preview-msg-angle {
+  border: 7px solid transparent;
+  border-left-color: #ffffff;
+  right: -13px;
+  top: 17px;
+  z-index: 1;
+}
+
 .share-preview-msg-title {
-    line-height: 22px;
-    height: 25px;
-    margin: 3px;
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: left;
+  line-height: 22px;
+  margin: 0;
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  text-align: left;
+
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
+
+.share-preview-info {
+  flex: 1;
+  display: flex;
+  margin-top: 5px;
+}
+
 .share-preview-msg-desc {
-    margin: 3px;
-    color: rgba(144, 147, 153, 100);
-    font-size: 12px;
-    line-height: 20px;
-    height: 60px;
-    width: 155px;
-    text-align: left;
+  flex: 1;
+  height: 100%;
+  margin: 0;
+  color: rgba(144, 147, 153, 100);
+  font-size: 12px;
+  line-height: 20px;
+  text-align: left;
+
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.share-preview-img-box {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 5px;
 }
 .share-preview-img {
-    width: 49px;
-    height: 46px;
-    margin-right: 5px;
+  width: 49px;
+  height: 46px;
 }
+
+.share-preview-avatar {
+  margin-right: 30px;
+  margin-top: -35px;
+}
+
 .share-user-avatar {
-    width: 49px;
-    height: 49px;
-    border-radius: 6px;
+  width: 49px;
+  height: 49px;
+  border-radius: 6px;
 }
+
 ::v-deep .setting-input input {
-    border: none;
-    border-bottom: 1px solid rgba(187, 187, 187, 100);
-    border-radius: 0;
-    line-height: 20px;
-    height: 20px;
+  border: none;
+  border-bottom: 1px solid rgba(187, 187, 187, 100);
+  border-radius: 0;
+  line-height: 20px;
+  height: 20px;
 }
+
 ::v-deep .collection-date-picker input {
-    border: none;
-    border-bottom: 1px solid rgba(187, 187, 187, 100);
-    border-radius: 0;
+  border: none;
+  border-bottom: 1px solid rgba(187, 187, 187, 100);
+  border-radius: 0;
 }
+
 ::v-deep .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {
-    margin: 0;
+  margin: 0;
 }
 </style>

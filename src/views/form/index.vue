@@ -1,29 +1,22 @@
 <template>
     <div class="form-index-container">
         <el-card class="header-container">
-            <el-row align="middle" type="flex">
-                <el-col :span="2">
-                    <i class="el-icon-back" @click="$router.back(-1)" />
-                </el-col>
-                <el-col :span="3" :md="6">
-                    <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
-                </el-col>
-                <el-col :span="1" :md="3">
-                    <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
-                        预览
-                    </el-button>
-                </el-col>
-                <el-col :span="2" :md="3">
-                    <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
-                        保存为模板
-                    </el-button>
-                </el-col>
+            <el-row align="middle" type="flex" :gutter="5">
+                <i class="el-icon-back" @click="$router.back(-1)" />
+                <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
+                <el-col />
+                <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
+                    预览
+                </el-button>
+                <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
+                    保存为模板
+                </el-button>
             </el-row>
         </el-card>
         <div class="main-container">
             <div class="left-menu-container">
-                <el-menu :collapse="isCollapse" class="el-menu-vertical"
-                         :default-active="defaultActiveMenu"
+                <el-menu :collapse="isCollapse" :default-active="defaultActiveMenu"
+                         class="el-menu-vertical"
                          @select="menuSelectHandle"
                 >
                     <el-menu-item v-for="menuItem in menuItemList" :key="menuItem.route" :index="menuItem.route">
@@ -40,20 +33,23 @@
         </div>
         <el-dialog
             :visible.sync="previewDialogVisible"
+            destroy-on-close
             fullscreen
         >
-            <pre-view :preview-qrcode="true" />
+            <pre-view :key="previewKey" :preview-qrcode="true" />
         </el-dialog>
     </div>
 </template>
 
 <script>
 import PreView from '@/views/form/preview'
+
 export default {
     name: 'NewIndex',
     components: {PreView},
     data() {
         return {
+            previewKey: +new Date(),
             previewDialogVisible: false,
             defaultActiveMenu: 'editor',
             projectKey: null,
@@ -99,6 +95,10 @@ export default {
         menuSelectHandle(index) {
             this.$router.replace({path: index, query: {key: this.projectKey}})
         },
+        openPreviewHandle() {
+            this.previewKey = +new Date()
+            this.previewDialogVisible = true
+        },
         saveProjectAsTemplateHandle() {
             this.$api.post('/user/project/template/save', {key: this.projectKey}).then(() => {
                 this.msgSuccess('保存成功')
@@ -132,13 +132,14 @@ export default {
 .header-container {
   width: 100%;
   height: 50px;
+  padding: 0 20px;
 
   .el-icon-back {
     font-size: 22px;
     font-weight: 550;
     cursor: pointer;
     color: #000;
-    margin-left: 40px;
+    margin-right: 75px;
 
     &:hover {
       color: rgb(32, 160, 255);
@@ -192,7 +193,7 @@ export default {
   }
 }
 
-::v-deep.preview-container{
+::v-deep.preview-container {
   background-color: #ffffff;
 }
 </style>
