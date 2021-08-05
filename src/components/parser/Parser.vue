@@ -258,25 +258,35 @@ function setValueLabel(event, config, scheme) {
     let tagOptionKey = processType[config.tag]
     if (tagOptionKey) {
         if (event instanceof Array) {
+            // 多选 其他自定义输入
             let labelArr = new Array()
+            if(!event.includes(0)){
+              // 如果多选里没有选择其他，就清掉other
+              this.$set(this[this.formConf.labelFormModel], `${scheme.__vModel__}other`, '')
+              // 同时把输入框清空
+              document.querySelector('.'+config.tag).querySelector(".item-other-input").value = ""
+            }
             event.forEach(item => {
                 // 拼到头部 其他选项
-                if (item === 0) {
-                    labelArr.push(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
-                } else if (item) {
-                    let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
-                    labelArr.push(label)
-                }
+                let {label} = getObject(_.get(scheme, tagOptionKey), 'value', item)
+                labelArr.push(label)
             })
             this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, labelArr.join(','))
         } else {
-            // 多选 单选 其他自定义输入
+            // 单选 其他自定义输入
             if (event == 0) {
                 console.log(this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
-                this.$set(this[this.formConf.labelFormModel], `${scheme.__vModel__}`, this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
+                // 如果选择了其他，把label存在field字段，把输入框内容存在fieldother字段
+                let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
+                this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+                this.$set(this[this.formConf.labelFormModel], `${scheme.__vModel__}other`,this[this.formConf.labelFormModel][`${scheme.__vModel__}other`])
             } else {
                 let item = _.find(_.get(scheme, tagOptionKey), {'value': event})
                 this.$set(this[this.formConf.labelFormModel], scheme.__vModel__, item.label)
+                // 如果没有选择其他，就清掉other
+                this.$set(this[this.formConf.labelFormModel], `${scheme.__vModel__}other`,'')
+                // 同时把输入框清空
+                document.querySelector('.'+config.tag).querySelector(".item-other-input").value = ""
             }
         }
     } else if (config.tag === 'el-upload') {
