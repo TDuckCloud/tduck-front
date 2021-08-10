@@ -65,6 +65,7 @@
                 <el-col :offset="8" :span="8">
                     <el-switch
                         v-model="showSettings.logoSetting"
+                        @change="(value) => value == false && uploadLogoHandle({data:''})"
                     />
                 </el-col>
             </el-row>

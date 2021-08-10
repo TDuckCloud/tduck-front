@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div v-for="template in templateList" :key="template.id" class="project-template-view">
-                        <img :src="template.coverImg?template.coverImg:'https://i.niupic.com/images/2021/01/08/99d0.png'" style="width: 144px; height: 133px;">
+                        <img :src="template.coverImg?template.coverImg:'https://i.niupic.com/images/2021/01/08/99d0.png'" style="width: 100%; height: 133px;">
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
@@ -182,8 +182,9 @@ export default {
     width: 151px;
     height: 196px;
     line-height: 20px;
-    border-radius: 3px;
+    border-radius: 10px;
     text-align: center;
+    overflow: hidden;
     margin: 20px;
     //border: 1px solid rgba(187, 187, 187, 100);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);

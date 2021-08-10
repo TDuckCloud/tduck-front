@@ -364,10 +364,10 @@ export default {
     width: 169px;
     height: 199px;
     line-height: 20px;
-    border-radius: 4px;
+    border-radius: 10px;
     background-color: rgba(255, 255, 255, 100);
     text-align: center;
-    margin: 10px;
+    margin: 20px;
     position: relative;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     .project-title {
