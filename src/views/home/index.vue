@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <h5>加入社群</h5>
+                            <h5>入群获取部署资料</h5>
                             <el-image
                                 fit="fill"
                                 src="https://oss.smileyi.top/static/wx-qrcode.png"
@@ -66,8 +66,7 @@
                     </el-main>
                     <el-footer>
                         <div class="about-container">
-                            <font-icon class="fas fa-user" />
-                            <span class="desc-text">关于填鸭</span>
+                            <span class="desc-text"><a href="https://demo.tduckapp.com" target="view_window">关于填鸭</a></span>
                         </div>
                     </el-footer>
                 </el-container>
@@ -90,17 +89,17 @@ export default {
             menuList: [
                 {
                     route: '/home',
-                    name: '工作台',
-                    icon: 'fas fa-laptop'
+                    name: '我的项目',
+                    icon: 'fa-pencil-square'
                 },
                 {
                     route: '/project/template',
                     name: '模板中心',
-                    icon: 'fas fa-clipboard'
+                    icon: 'fa-caret-square-o-up'
                 }, {
                     route: '/project/recycle',
                     name: '回收站',
-                    icon: 'fas fa-user'
+                    icon: 'fa-trash'
                 }
             ]
         }
@@ -167,11 +166,10 @@ $menuActiveText: #409eff;
     justify-content: space-between;
     background-color: #fff;
     line-height: 38px;
-    height: 38px;
     min-width: 1024px;
     .header-logo-img {
         width: 120px;
-        height: 35px;
+        height: 45px;
         float: left;
         margin-left: 55px;
     }
@@ -202,7 +200,7 @@ $menuActiveText: #409eff;
         color: #333;
         font-size: 16px;
         text-align: left;
-        line-height: 25px;
+        line-height: 35px;
         &:hover {
             cursor: pointer;
             color: $menuActiveText;
