@@ -17,7 +17,7 @@ export default function loadTinymce(cb) {
         background: 'rgba(255, 255, 255, 0.5)'
     })
 
-    loadScript('https://lib.baomitu.com/tinymce/latest/tinymce.min.js', () => {
+    loadScript('//lib.baomitu.com/tinymce/5.8.2/tinymce.min.js', () => {
         loading.close()
         // eslint-disable-next-line no-undef
         tinymceObj = tinymce
