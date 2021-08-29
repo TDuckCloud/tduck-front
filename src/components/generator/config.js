@@ -16,6 +16,73 @@ export const formConf = {
     unFocusedComponentBorder: true
 }
 
+// 组件默认值
+export const componentDefaultValue = {
+    INPUT: {
+        val: undefined
+    },
+    TEXTAREA: {
+        val: undefined
+    },
+    NUMBER_INPUT: {
+        val: undefined
+    },
+    CASCADER: {
+        val: []
+    },
+    RADIO: {
+        val: undefined
+    },
+    CHECKBOX: {
+        val: []
+    },
+    SWITCH: {
+        val: false
+    },
+    SLIDER: {
+        val: null
+    },
+    TIME: {
+        val: null
+    },
+    TIME_RANGE: {
+        val: null
+    },
+    DATE: {
+        val: null
+    },
+    DATE_RANGE: {
+        val: null
+    },
+    RATE: {
+        val: 0
+    },
+    COLOR: {
+        val: null
+    },
+    UPLOAD: {
+        val: null
+    },
+    IMAGE_CAROUSEL: {
+        val: null
+    },
+    IMAGE_SELECT: {
+        val: null
+    },
+    DESC_TEXT: {
+        val: '描述文字'
+    },
+    DIVIDER: {
+        val: ''
+    },
+    SIGN_PAD: {
+        val: ''
+    },
+    PAGINATION: {
+        val: '分页'
+    }
+}
+
 // 输入型组件 【左面板】
 export const inputComponents = [
     {
