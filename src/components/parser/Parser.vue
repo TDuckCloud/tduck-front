@@ -3,6 +3,7 @@ import {deepClone} from '@/utils/index'
 import {evalExpression} from '@/utils/expression'
 import render from '@/components/render/render.js'
 import _ from 'lodash'
+import {componentDefaultValue} from '@/components/generator/config.js'
 
 const ruleTrigger = {
     'el-input': 'blur',
@@ -38,6 +39,10 @@ const layouts = {
         // 分页返回上一页时把值设置回表单
         let value = _.get(this[this.formConf.formModel], scheme.__vModel__)
         if (value) {
+            config.defaultValue = value
+        }
+        // 逻辑隐藏后赋值默认值
+        if (!config.logicShow) {
             config.defaultValue = value
         }
         // 表单被重新渲染 控制逻辑显示隐藏
@@ -180,16 +185,32 @@ function setValue(event, config, scheme) {
         rules.forEach(r => {
             // 成立让该对应的问题显示出来
             let flag = evalExpression(this[this.formConf.formModel], r.logicExpression)
+            // 参与逻辑设置的表单项
+            let logicItem = this.formConf.fields.find(a => a.formItemId == r.triggerFormItemId)
             if (flag) {
                 // 防止表单重新渲染 display被刷新
                 this.logicTriggerItemList.push(r.triggerFormItemId)
                 console.log(this.logicTriggerItemList)
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = ''
+                // 重置逻辑校验
+                logicItem.logicShow = true
+                this[this.formConf.formRules] = {}
+                this.logicRules(this.formConfCopy.fields, this[this.formConf.formRules])
             } else {
                 _.remove(this.logicTriggerItemList, function(n) {
                     return n == r.triggerFormItemId
                 })
                 document.querySelector(`div[cid="${r.triggerFormItemId}"]`).style.display = 'none'
+                // 隐藏表单校验
+                logicItem.logicShow = false
+                this[this.formConf.formRules] = {}
+                this.logicRules(this.formConfCopy.fields, this[this.formConf.formRules])
+                // 默认值
+                let resetValConfig = componentDefaultValue[logicItem.typeId]
+                if (resetValConfig) {
+                    this.$set(this[this.formConf.labelFormModel], logicItem.__vModel__, resetValConfig.val)
+                    this.$set(this[this.formConfCopy.formModel], logicItem.__vModel__, resetValConfig.val)
+                }
             }
         })
     }
@@ -410,9 +431,6 @@ export default {
                 // 逻辑不显示必填问题不校验
                 let triggerShow = _.indexOf(this.logicTriggerItemList, cur.formItemId) > -1
                 let flag = cur.logicShow || triggerShow ? '' : 'display:none'
-                if (flag) {
-                    return
-                }
                 const config = cur.__config__
                 if (cur.tag === 'el-upload') {
                     config.regList.push({
@@ -449,13 +467,31 @@ export default {
                         required.message === undefined && (required.message = `${config.label}不能为空`)
                         config.regList.push(required)
                     }
+                    // 显示时使用表单校验
+                    if (!flag) {
+                        rules[cur.__vModel__] = config.regList.map(item => {
+                            item.pattern && (item.pattern = eval(item.pattern))
+                            item.trigger = ruleTrigger && ruleTrigger[config.tag]
+                            return item
+                        })
+                    }
+                }
+                if (config.children) this.buildRules(config.children, rules)
+            })
+        },
+        // 重建逻辑规则的表单校验
+        logicRules(componentList, rules) {
+            componentList.forEach(cur => {
+                let triggerShow = _.indexOf(this.logicTriggerItemList, cur.formItemId) > -1
+                let flag = cur.logicShow || triggerShow ? '' : 'display:none'
+                const config = cur.__config__
+                if (!flag) {
                     rules[cur.__vModel__] = config.regList.map(item => {
                         item.pattern && (item.pattern = eval(item.pattern))
                         item.trigger = ruleTrigger && ruleTrigger[config.tag]
                         return item
                     })
                 }
-                if (config.children) this.buildRules(config.children, rules)
             })
         },
         resetForm() {
