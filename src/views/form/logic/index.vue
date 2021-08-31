@@ -185,8 +185,6 @@ export default {
                 })
                 if (updateVal && updateVal[0] && updateVal[0].conditionList.length) {
                     let updateData = updateVal[0]
-
-                    updateData.projectKey = this.projectKey
                     if (updateData.formItemId) {
                         this.saveProjectLogic(updateData)
                     }
@@ -213,7 +211,10 @@ export default {
             }
         },
         addLogicHandle() {
-            this.logicList.push(jsonSimpleClone(this.defaultLogicItem))
+            // 添加逻辑时即赋项目值，多次添加逻辑仅保存第一次问题
+            let newLogicItem = jsonSimpleClone(this.defaultLogicItem)
+            newLogicItem.projectKey = this.projectKey
+            this.logicList.push(newLogicItem)
         },
         getConditionProjectItemList(logicItem) {
             let showFormItemId = logicItem.formItemId
