@@ -130,7 +130,7 @@ export default {
         getWxAuthorizationUserInfo() {
             let wxAuthorizationCode = this.wxAuthorizationCode
             // 根据code 获取用户授权信息
-            this.$api.get('/wx/jsapi/authorization/user/info', {
+            return this.$api.get('/wx/jsapi/authorization/user/info', {
                 params: {
                     code: wxAuthorizationCode
                 }
