@@ -310,6 +310,7 @@ export default {
                 position: 'bottom-left',
                 customClass: 'notify-success',
                 dangerouslyUseHTMLString: true,
+                showClose: false,
                 message: '<div style="line-height: 30px">支持权限管理/协同填写/全新的表单引擎/快速赋能业务<span class="github-btn"><a href="https://www.tduckcloud.com" target="_blank">好的</a></span></div>'
             })
         }
