@@ -305,12 +305,12 @@ export default {
         msgCard() {
             // <a href="https://gitee.com/TDuckApp/tduck-platform" target="_blank">3798</a>
             this.$notify({
-                title: '关注下 Star 数',
+                title: '去看看更强的TDUCK-Pro',
                 duration: 0,
                 position: 'bottom-left',
                 customClass: 'notify-success',
                 dangerouslyUseHTMLString: true,
-                message: '<div style="line-height: 30px">我们需要您的支持，请点击按钮帮助我们增加 gitee star。<span class="github-btn"><a href="https://gitee.com/TDuckApp/tduck-platform" target="_blank">Start</a></span></div>'
+                message: '<div style="line-height: 30px">支持权限管理/协同填写/全新的表单引擎/快速赋能业务<span class="github-btn"><a href="https://www.tduckcloud.com" target="_blank">好的</a></span></div>'
             })
         }
     }
