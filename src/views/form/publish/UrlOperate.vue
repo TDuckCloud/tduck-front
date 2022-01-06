@@ -1,6 +1,6 @@
 <template>
-    <el-row class="mt20">
-        <el-col :offset="1" :span="13">
+    <el-row class="">
+        <el-col :span="13">
             <el-input :disabled="true" :value="linkUrl" size="mini" />
         </el-col>
         <el-col :span="8">

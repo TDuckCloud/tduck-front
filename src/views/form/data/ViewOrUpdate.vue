@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import GenerateForm from '@/formgen/src/components/GenerateForm/GenerateForm'
+import {GenerateForm}  from 'tduck-form-generator'
 import {updateFormDataRequest} from '../../../api/project/data'
 import _ from 'lodash'
 import {jsonSimpleClone} from '../../../utils'

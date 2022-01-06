@@ -1,18 +1,20 @@
 <template>
-    <el-card>
-        <div slot="header">
-            <span>公开发布</span>
-            <span class="desc-text ml-10">公开发布后，所有访问的用户都能够填写数据</span>
-        </div>
-        <p class="desc-text m20">
-            开启后，会生成表单填写链接，所有即可填写表单
-        </p>
-        <el-switch
-            v-model="publishStatus" class="m20" @change="handlePublishChange"
-        />
-        <url-operate v-if="publishStatus" :link-url="createDataLink" />
-        <el-divider />
-    </el-card>
+    <div>
+        <el-card class="publish-card">
+            <div slot="header">
+                <span>发布</span>
+                <span class="desc-text ml-10">公开发布后，所有访问的用户都能够填写数据</span>
+            </div>
+            <p class="desc-text m20">
+                开启后，会生成表单填写链接，所有即可填写表单
+            </p>
+            <el-switch
+                v-model="publishStatus" @change="handlePublishChange"
+            />
+            <url-operate v-if="publishStatus" :link-url="createDataLink" class="url-op" />
+            <el-divider />
+        </el-card>
+    </div>
 </template>
 
 <script>
@@ -73,5 +75,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.publish-card{
+  width: 900px;
+  height: 500px;
+  margin: 20px auto;
+  padding: 50px;
+}
+.url-op{
+  margin-top: 50px;
+}
 </style>

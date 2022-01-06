@@ -78,7 +78,13 @@ export default {
                     title: '发布',
                     icon: 'el-icon-video-play',
                     route: '/project/form/publish'
-                }, {
+                },
+                {
+                    title: '数据',
+                    icon: 'el-icon-s-data',
+                    route: '/project/form/data'
+                },
+                {
                     title: '统计',
                     icon: 'el-icon-data-line',
                     route: '/project/form/statistics'

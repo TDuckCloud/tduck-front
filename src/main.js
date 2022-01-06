@@ -16,6 +16,10 @@ import '@/utils/plugins'
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
 import Process from '@/components/HandleProcess/process'
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+import VXETablePluginExportXLSX from 'vxe-table-plugin-export-xlsx'
 
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
@@ -37,7 +41,8 @@ Vue.prototype.$process = Process
 Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
-
+Vue.use(VXETable)
+VXETable.use(VXETablePluginExportXLSX)
 Vue.config.productionTip = false
 
 new Vue({

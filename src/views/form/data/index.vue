@@ -9,9 +9,6 @@
                 <el-button v-if="checkBtnPerms('add')" icon="el-icon-plus" type="primary" @click="handleAdd">
                     添加
                 </el-button>
-                <el-button v-if="checkBtnPerms('query')" icon="el-icon-search" type="primary" @click="handleQuery">
-                    查询
-                </el-button>
                 <el-button v-if="checkBtnPerms('import')" icon="el-icon-upload2" type="primary" @click="handleImport">
                     导入
                 </el-button>
@@ -48,35 +45,13 @@
                 </el-button>
             </div>
         </el-dialog>
-        <el-dialog :visible.sync="queryDialogVisible"
-                   class="t-dialog t-dialog--top"
-                   title="查询"
-        >
-            <data-filter :fields="fields" @filter="params=>{
-                queryParams.filter=params
-            }"
-            />
-            <div slot="footer" class="t-dialog__footer">
-                <el-button @click="queryDialogVisible = false">
-                    取 消
-                </el-button>
-                <el-button type="primary" @click="()=>{
-                    queryDialogVisible = false
-                    $refs.xGrid.commitProxy('reload')
-                }"
-                >
-                    查 询
-                </el-button>
-            </div>
-        </el-dialog>
         <import ref="dataImport" :form-key="formKey" @success="handleReloadTable" />
     </div>
 </template>
 
 <script>
 
-import BizProjectForm from '@/formgen/src/components/BizProjectForm'
-import DataFilter from './filter'
+import {BizProjectForm}  from 'tduck-form-generator'
 import ViewOrUpdate from './ViewOrUpdate'
 import {
     createFormResultRequest,
@@ -93,11 +68,10 @@ export default {
     components: {
         Import,
         BizProjectForm,
-        DataFilter,
         ViewOrUpdate
     },
     props: {
-        // 模式 1表示控制台中的管理 2 表示权限组
+        // 模式
         mode: {
             type: Number,
             required: false,
