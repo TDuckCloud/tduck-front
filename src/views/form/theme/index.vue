@@ -2,7 +2,9 @@
     <div class="theme-container">
         <div class="left-container">
             <el-scrollbar class="left-scrollbar-container">
-                <p class="theme-title">外观主题</p>
+                <p class="theme-title">
+                    外观主题
+                </p>
                 <el-row>
                     <el-col :span="3">
                         <span class="theme-prompt-text">风格</span>
@@ -14,7 +16,8 @@
                         <span
                             :class="{'style-btn-active':activeStyle==item.key}"
                             class="style-btn" @click="activeStyleHandle(item)"
-                        >{{ item.label }}</span>
+                        >{{ item.label }}
+                        </span>
                     </el-col>
                 </el-row>
                 <el-row>
@@ -55,9 +58,11 @@
                 </el-row>
             </el-scrollbar>
         </div>
-        <pre-view :key="projectFormKey" :project-key="projectKey" />
+        <pre-view :key="projectFormKey" :form-key="formKey" />
         <div class="right-container">
-            <p class="right-title">外观设置</p>
+            <p class="right-title">
+                外观设置
+            </p>
             <el-row align="middle" class="option-line-view" type="flex">
                 <el-col :span="8">
                     <span class="option-line-title">添加logo</span>
@@ -65,7 +70,7 @@
                 <el-col :offset="8" :span="8">
                     <el-switch
                         v-model="showSettings.logoSetting"
-                        @change="(value) => value == false && uploadLogoHandle({data:''})"
+                        @change="cleanFormSave('logoImg')"
                     />
                 </el-col>
             </el-row>
@@ -75,8 +80,8 @@
                 </el-col>
                 <el-col :span="4">
                     <img
-                        v-if="userProjectTheme.logoImg"
-                        :src="userProjectTheme.logoImg"
+                        v-if="userFormTheme.logoImg"
+                        :src="userFormTheme.logoImg"
                         style="width: 30px; height: 30px;"
                     >
                 </el-col>
@@ -89,7 +94,9 @@
                         :show-file-list="false"
                         accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                     >
-                        <el-button slot="trigger" size="small" type="text">上传Logo</el-button>
+                        <el-button slot="trigger" size="small" type="text">
+                            上传Logo
+                        </el-button>
                     </el-upload>
                 </el-col>
             </el-row>
@@ -99,15 +106,59 @@
                 </el-col>
                 <el-col :span="18">
                     <el-radio-group
-                        v-model="userProjectTheme.logoPosition"
+                        v-model="userFormTheme.logoPosition"
                         size="mini" @change="saveUserTheme"
                     >
-                        <el-radio-button label="left">左对齐</el-radio-button>
-                        <el-radio-button label="center">居中</el-radio-button>
-                        <el-radio-button label="right">右对齐</el-radio-button>
+                        <el-radio-button label="left">
+                            左对齐
+                        </el-radio-button>
+                        <el-radio-button label="center">
+                            居中
+                        </el-radio-button>
+                        <el-radio-button label="right">
+                            右对齐
+                        </el-radio-button>
                     </el-radio-group>
                 </el-col>
             </el-row>
+            <el-row align="middle" class="option-line-view" type="flex">
+                <el-col :span="8">
+                    <span class="option-line-title">头图设置</span>
+                </el-col>
+                <el-col :offset="8" :span="8">
+                    <el-switch
+                        v-model="showSettings.headImgSetting"
+                        @change="()=>cleanFormSave('headImgUrl')"
+                    />
+                </el-col>
+            </el-row>
+            <el-row v-if="showSettings.headImgSetting" align="middle" type="flex">
+                <el-col :span="6">
+                    <span class="option-line-sub-title">上传图片</span>
+                </el-col>
+                <el-col :span="4">
+                    <img
+                        v-if="userFormTheme.headImgUrl"
+                        :src="userFormTheme.headImgUrl"
+                        style="width: 30px; height: 30px;"
+                    >
+                </el-col>
+                <el-col :offset="6" :span="8">
+                    <el-upload
+                        ref="logoUpload"
+                        :action="getUploadUrl"
+                        :headers="getUploadHeader"
+                        :on-success="uploadHeadImgHandle"
+                        :show-file-list="false"
+                        accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
+                    >
+                        <el-button slot="trigger" size="small" type="text">
+                            上传
+                        </el-button>
+                    </el-upload>
+                </el-col>
+            </el-row>
+
             <el-row align="middle" class="option-line-view" type="flex">
                 <el-col :span="8">
                     <span class="option-line-title">背景设置</span>
@@ -116,9 +167,9 @@
                     <el-switch
                         v-model="showSettings.backgroundSetting"
                         @change="()=>{
-                            this.userProjectTheme.backgroundImg=''
-                            this.userProjectTheme.backgroundColor=''
-                            this.saveUserTheme()
+                            userFormTheme.backgroundImg=''
+                            userFormTheme.backgroundColor=''
+                            saveUserTheme()
                         }"
                     />
                 </el-col>
@@ -132,12 +183,16 @@
                         <el-radio-group
                             v-model="showSettings.backgroundType"
                             size="mini" @change="()=>{
-                                this.userProjectTheme.backgroundImg=''
-                                this.userProjectTheme.backgroundColor=''
+                                userFormTheme.backgroundImg=''
+                                userFormTheme.backgroundColor=''
                             }"
                         >
-                            <el-radio-button label="color">颜色</el-radio-button>
-                            <el-radio-button label="img">图片</el-radio-button>
+                            <el-radio-button label="color">
+                                颜色
+                            </el-radio-button>
+                            <el-radio-button label="img">
+                                图片
+                            </el-radio-button>
                         </el-radio-group>
                     </el-col>
                 </el-row>
@@ -149,7 +204,7 @@
                     </el-col>
                     <el-col :spvan="18">
                         <el-color-picker
-                            v-model=" userProjectTheme.backgroundColor"
+                            v-model=" userFormTheme.backgroundColor"
                             size="mini"
                             @change="saveUserTheme"
                         />
@@ -171,7 +226,9 @@
                             accept=".jpg,.jpeg,.png,.gif,.bmp,.JPG,.JPEG,.PBG,.GIF,.BMP"
                             class="upload-demo"
                         >
-                            <el-button slot="trigger" size="small" type="text">上传背景</el-button>
+                            <el-button slot="trigger" size="small" type="text">
+                                上传背景
+                            </el-button>
                         </el-upload>
                     </el-col>
                 </el-row>
@@ -192,7 +249,7 @@
                         <span class="option-line-sub-title">按钮提示文字</span>
                     </el-col>
                     <el-col :spvan="10">
-                        <el-input v-model="userProjectTheme.submitBtnText"
+                        <el-input v-model="userFormTheme.submitBtnText"
                                   placeholder="请输入内容"
                                   size="mini"
                                   style="width: 80%;" @change="saveUserTheme"
@@ -206,7 +263,7 @@
                 </el-col>
                 <el-col :offset="8" :span="8">
                     <el-switch
-                        v-model="userProjectTheme.showTitle"
+                        v-model="userFormTheme.showTitle"
                         @change="saveUserTheme"
                     />
                 </el-col>
@@ -217,7 +274,7 @@
                 </el-col>
                 <el-col :offset="8" :span="8">
                     <el-switch
-                        v-model="userProjectTheme.showDescribe"
+                        v-model="userFormTheme.showDescribe"
                         @change="saveUserTheme"
                     />
                 </el-col>
@@ -228,7 +285,7 @@
                 </el-col>
                 <el-col :offset="8" :span="8">
                     <el-switch
-                        v-model="userProjectTheme.showNumber"
+                        v-model="userFormTheme.showNumber"
                         @change="saveUserTheme"
                     />
                 </el-col>
@@ -239,6 +296,9 @@
 
 <script>
 import PreView from '../preview'
+import {getUserThemeRequest, listThemeRequest, saveUserThemeRequest} from '@/api/project/form'
+import {listCategory} from '../../../api/project/theme'
+import {getToken} from '../../../utils/auth'
 
 export default {
     name: 'Theme',
@@ -250,37 +310,27 @@ export default {
             // 外观设置
             showSettings: {
                 logoSetting: false, // 打开logo
+                headImgSetting: false, // 打开logo
                 backgroundSetting: false,
                 btnSetting: false,
                 backgroundType: 'color'
             },
             // 用户主题设置
-            userProjectTheme: {
-                projectKey: '',
+            userFormTheme: {
+                formKey: '',
                 themeId: '',
                 showTitle: true,
                 showDescribe: true,
                 showNumber: false,
                 backgroundColor: '',
                 backgroundImg: '',
-                logoImg: '',
+                headImgUrl: '',
                 logoPosition: 'left',
                 submitBtnText: '提交'
             },
             projectFormKey: +new Date(),
-            projectKey: '',
-            styleList: [
-                {'label': '全部', 'key': ''},
-                {'label': '节日', 'key': 'festival'},
-                {'label': '亲子', 'key': 'parent_child'},
-                {'label': '风景', 'key': 'scenery'},
-                {'label': '职业', 'key': 'occupation'},
-                {'label': '校园', 'key': 'school'},
-                {'label': '商务', 'key': 'commerce'},
-                {'label': '其他', 'key': 'others'},
-                {'label': '餐饮', 'key': 'catering'},
-                {'label': '防疫', 'key': 'fangyi'}
-            ],
+            formKey: '',
+            styleList: [],
             colorList: [
                 '#FF6D56',
                 '#F8E71C',
@@ -300,7 +350,7 @@ export default {
     computed: {
         getUploadHeader() {
             return {
-                'token': this.$store.getters['user/isLogin']
+                Authorization: 'Bearer ' + getToken()
             }
         },
         getUploadUrl() {
@@ -308,43 +358,65 @@ export default {
         }
     },
     mounted() {
-        this.projectKey = this.$route.query.key
-        this.queryProjectTheme()
+        this.formKey = this.$route.query.key
+        this.queryFormThemeStyle()
+        this.queryFormTheme()
         this.projectFormKey = +new Date()
-        this.queryUserProjectTheme()
+        this.queryUserFormTheme()
     },
     methods: {
         uploadBackgroundHandle(response) {
-            this.userProjectTheme.backgroundImg = response.data
-            this.userProjectTheme.backgroundColor = ''
+            this.userFormTheme.backgroundImg = response.data
+            this.userFormTheme.backgroundColor = ''
             this.saveUserTheme()
         },
         uploadLogoHandle(response) {
-            this.userProjectTheme.logoImg = response.data
+            this.userFormTheme.logoImg = response.data
+            this.saveUserTheme()
+        },
+        uploadHeadImgHandle(response) {
+            this.userFormTheme.headImgUrl = response.data
             this.saveUserTheme()
         },
         activeStyleHandle(item) {
             this.activeStyle = item.key
-            this.queryProjectTheme()
+            this.queryFormTheme()
         },
-        saveUserTheme() {
-            this.userProjectTheme.projectKey = this.projectKey
-            this.userProjectTheme.themeId = this.activeTheme ? this.activeTheme.id : ''
-            this.$api.post('/user/project/theme/save', this.userProjectTheme).then(() => {
+        cleanFormSave(key) {
+            this.userFormTheme[key] = ''
+            this.saveUserTheme()
+        },
+        saveUserTheme(item) {
+            this.userFormTheme.formKey = this.formKey
+            if (item) {
+                this.userFormTheme.headImgUrl = item.headImgUrl
+                this.userFormTheme.btnsColor = item.btnsColor
+            }
+            saveUserThemeRequest(this.userFormTheme).then(() => {
                 this.projectFormKey = +new Date()
             })
         },
-        queryUserProjectTheme() {
-            this.$api.get(`/user/project/theme/${this.projectKey}`).then(res => {
+        queryFormThemeStyle() {
+            listCategory(this.queryParams).then(response => {
+                if (response.data) {
+                    this.styleList = response.data.map(item => {
+                        return {key: item.id, label: item.name}
+                    })
+                }
+            })
+        },
+        queryUserFormTheme() {
+            getUserThemeRequest(this.formKey).then(res => {
                 if (!res.data) {
                     return
                 }
-                this.userProjectTheme = res.data
-                let {themeId, logoImg, backgroundImg, backgroundColor, submitBtnText} = res.data
+                this.userFormTheme = res.data
+                let {themeId, logoImg, backgroundImg, headImgUrl, backgroundColor, submitBtnText} = res.data
                 this.activeTheme = {
                     'id': themeId
                 }
                 this.showSettings.logoSetting = !!logoImg
+                this.showSettings.headImgSetting = !!headImgUrl
                 this.showSettings.btnSetting = !!submitBtnText
                 if (backgroundImg || backgroundColor) {
                     this.showSettings.backgroundSetting = true
@@ -361,23 +433,20 @@ export default {
                     type: 'info'
                 }).then(() => {
                     this.activeTheme = item
-                    this.saveUserTheme()
+                    this.saveUserTheme(item)
                 }).catch(() => {
 
                 })
             }
         },
         activeColorHandle(item) {
-            console.log(item)
             this.activeColor = item
-            this.queryProjectTheme()
+            this.queryFormTheme()
         },
-        queryProjectTheme() {
-            this.$api.get('/project/theme/list', {
-                params: {
-                    'color': this.activeColor,
-                    'style': this.activeStyle
-                }
+        queryFormTheme() {
+            listThemeRequest({
+                'color': this.activeColor,
+                'style': this.activeStyle
             }).then(res => {
                 this.themeList = res.data
             })
@@ -388,131 +457,149 @@ export default {
 
 <style scoped>
 .theme-container {
-    width: 100%;
-    height: 100%;
-    background-color: #f7f7f7;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
-    justify-content: center;
+  width: 100%;
+  background-color: #f7f7f7;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  justify-content: center;
 }
+
 .left-container {
-    line-height: 20px;
-    text-align: center;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 100);
-    background-color: white;
-    width: 20%;
-    height: calc(100vh - 60px);
+  line-height: 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 100);
+  background-color: white;
+  width: 20%;
+  height: calc(100vh - 60px);
 }
+
 .left-scrollbar-container {
-    height: 100%;
-    margin: 20px;
+  height: 100%;
+  margin: 20px;
 }
+
 ::v-deep .el-scrollbar__wrap {
-    overflow-x: hidden !important;
+  overflow-x: hidden !important;
 }
+
 .style-btn {
-    line-height: 30px;
-    border-radius: 4px;
-    padding: 3px;
-    color: #707070;
-    font-size: 14px;
-    text-align: center;
-    border: 1px solid #eaeaea;
+  line-height: 30px;
+  border-radius: 4px;
+  padding: 3px;
+  color: #707070;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #eaeaea;
 }
+
 .preview-container {
-    width: 70%;
+  width: 70%;
 }
+
 .theme-title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 24px;
-    text-align: left;
+  color: rgba(16, 16, 16, 100);
+  font-size: 24px;
+  text-align: left;
 }
+
 .theme-prompt-text {
-    color: rgba(16, 16, 16, 100);
-    font-size: 16px;
-    line-height: 30px;
-    text-align: left;
+  color: rgba(16, 16, 16, 100);
+  font-size: 16px;
+  line-height: 30px;
+  text-align: left;
 }
+
 .color-btn {
-    width: 40px;
-    height: 22px;
-    line-height: 20px;
-    border-radius: 4px;
-    background-color: rgba(11, 141, 213, 100);
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: center;
-    margin: 3px;
-    border: 1px solid rgba(255, 255, 255, 100);
+  width: 40px;
+  height: 22px;
+  line-height: 20px;
+  border-radius: 4px;
+  background-color: rgba(11, 141, 213, 100);
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  text-align: center;
+  margin: 3px;
+  border: 1px solid rgba(255, 255, 255, 100);
 }
+
 .color-btn:hover,
 .style-btn:hover {
-    cursor: pointer;
-    border: 1px solid rgba(11, 141, 213, 100);
+  cursor: pointer;
+  border: 1px solid rgba(11, 141, 213, 100);
 }
+
 .style-btn-active {
-    border: 1px solid rgba(11, 141, 213, 100);
+  border: 1px solid rgba(11, 141, 213, 100);
 }
+
 .head-list-img {
-    border: 2px solid transparent;
+  border: 2px solid transparent;
 }
+
 .head-list-img:hover {
-    cursor: pointer;
-    border: 2px solid rgba(11, 141, 213, 100);
+  cursor: pointer;
+  border: 2px solid rgba(11, 141, 213, 100);
 }
+
 .head-list-img-active {
-    border: 2px solid rgba(11, 141, 213, 100);
+  border: 2px solid rgba(11, 141, 213, 100);
 }
+
 .theme-img-view .head-list-view-select ::after {
-    content: "";
-    background: url('~@/assets/images/mobile_theme_active.png');
-    background-size: 18px;
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    top: 4px;
-    right: 4px;
+  content: "";
+  background: url('~@/assets/images/mobile_theme_active.png');
+  background-size: 18px;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }
+
 .right-container {
-    width: 310px;
-    height: calc(100vh - 60px);
-    line-height: 20px;
-    text-align: center;
-    padding: 22px;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 100);
-    background-color: white;
-    margin-right: 5px;
+  width: 310px;
+  height: calc(100vh - 60px);
+  line-height: 20px;
+  text-align: center;
+  padding: 22px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 100);
+  background-color: white;
+  margin-right: 5px;
 }
+
 .right-title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 24px;
-    text-align: left;
-    margin: 0 0 30px 0;
+  color: rgba(16, 16, 16, 100);
+  font-size: 24px;
+  text-align: left;
+  margin: 0 0 30px 0;
 }
+
 .right-container .option-line-view {
-    padding: 0;
-    width: 280px;
-    height: 42px;
-    line-height: 20px;
-    border-radius: 5px;
-    text-align: center;
-    margin-bottom: 10px;
-    border: 1px solid rgba(187, 187, 187, 100);
+  padding: 0;
+  width: 280px;
+  height: 42px;
+  line-height: 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  border: 1px solid rgba(187, 187, 187, 100);
 }
+
 .right-container .option-line-title {
-    color: rgba(16, 16, 16, 100);
-    line-height: 40px;
-    font-size: 14px;
-    text-align: left;
+  color: rgba(16, 16, 16, 100);
+  line-height: 40px;
+  font-size: 14px;
+  text-align: left;
 }
+
 .option-line-sub-title {
-    color: rgb(82, 81, 81);
-    line-height: 40px;
-    font-size: 13px;
-    text-align: left;
+  color: rgb(82, 81, 81);
+  line-height: 40px;
+  font-size: 13px;
+  text-align: left;
 }
 </style>

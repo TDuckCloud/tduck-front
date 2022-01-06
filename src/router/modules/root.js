@@ -22,12 +22,7 @@ export default [
     {
         path: '/',
         meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/index.vue')
-    },
-    {
-        path: '/payService',
-        meta: {requireLogin: false},
-        component: () => import(/* webpackChunkName: 'root' */ '@/views/official/PayService')
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/home/index.vue')
     },
     {
         path: '/login',

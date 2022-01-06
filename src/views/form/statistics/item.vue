@@ -60,9 +60,9 @@ export default {
             return this.resultData ? this.resultData['processData'] : {}
         },
         getItemValue() {
-            if(this.processData[`field${this.fieldItemId}other`]){
-              // 如果存在其他的内容，返回lable+内容
-              return this.processData[`field${this.fieldItemId}`] + ':'+this.processData[`field${this.fieldItemId}other`]
+            if (this.processData[`field${this.fieldItemId}other`]) {
+                // 如果存在其他的内容，返回lable+内容
+                return this.processData[`field${this.fieldItemId}`] + ':' + this.processData[`field${this.fieldItemId}other`]
             }
             return this.processData[`field${this.fieldItemId}`] ? this.processData[`field${this.fieldItemId}`] : ''
         }

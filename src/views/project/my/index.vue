@@ -230,12 +230,7 @@
 </template>
 <script>
 import dayjs from 'dayjs'
-
-let projectStatusList = [
-    {code: 1, name: '未发布', color: '#006EFF'},
-    {code: 2, name: '收集中', color: '#34C82A'},
-    {code: 3, name: '已结束', color: '#955A45'}
-]
+import {createFormRequest, deleteFormRequest, pageFormRequest, stopFormRequest} from '@/api/project/form'
 
 export default {
     name: 'MyProject',
@@ -246,6 +241,7 @@ export default {
     },
     data() {
         return {
+            dialogVisible: false,
             dataShowType: 'gird',
             total: 0,
             queryParams: {
@@ -256,7 +252,15 @@ export default {
                 endDateTime: null,
                 status: null
             },
-            projectStatusList: projectStatusList,
+            formData: {
+                description: '',
+                name: '问卷名称'
+            },
+            projectStatusList: [
+                {code: 1, name: '未发布', color: '#006EFF'},
+                {code: 2, name: '收集中', color: '#34C82A'},
+                {code: 3, name: '已结束', color: '#955A45'}
+            ],
             projectList: [],
             projectListLoading: true
         }
@@ -276,6 +280,19 @@ export default {
         this.queryProjectPage()
     },
     methods: {
+        createFormHandle() {
+            this.$refs['createForm'].validate(valid => {
+                if (valid) {
+                    createFormRequest(this.formData).then(res => {
+                        this.$router.push({path: '/project/form', query: {key: res.data}})
+                    })
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+
+        },
         switchDataShowTypeHandle(type) {
             this.dataShowType = type
         },
@@ -283,7 +300,7 @@ export default {
             this.$router.push({path: `/project/form/${type}`, query: {key: key, active: type}})
         },
         deleteProject(key) {
-            this.$api.post('/user/project/delete', {'key': key}).then(res => {
+            deleteFormRequest({'key': key}).then(res => {
                 if (res.data) {
                     this.msgSuccess('刪除成功')
                     this.queryProjectPage()
@@ -291,7 +308,7 @@ export default {
             })
         },
         stopProject(key) {
-            this.$api.post('/user/project/stop', {'key': key}).then(res => {
+            stopFormRequest({'key': key}).then(res => {
                 if (res.data) {
                     this.msgSuccess('停止成功')
                     this.queryProjectPage()
@@ -299,9 +316,9 @@ export default {
             })
         },
         queryProjectPage() {
-            this.$api.get('/user/project/page', {
-                params: this.queryParams
-            }).then(res => {
+            pageFormRequest(
+                this.queryParams
+            ).then(res => {
                 let {records, total, size} = res.data
                 this.projectList = records
                 this.total = total
@@ -315,108 +332,123 @@ export default {
 
 <style lang="scss" scoped>
 .my-project-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
+
 .back-view {
-    display: flex;
-    width: 80%;
-    align-content: flex-start;
-    margin: 10px;
+  display: flex;
+  width: 80%;
+  align-content: flex-start;
+  margin: 10px;
 }
+
 .filter-view {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: row;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
 }
+
 .show-view-type-icon {
-    color: white;
-    font-size: 18px;
-    -webkit-text-stroke: 0.5px #a8a8a8;
-    margin: 5px;
-    cursor: pointer;
+  color: white;
+  font-size: 18px;
+  -webkit-text-stroke: 0.5px #a8a8a8;
+  margin: 5px;
+  cursor: pointer;
 }
+
 .show-view-type-icon-active {
-    color: rgba(92, 155, 249, 100);
-    -webkit-text-stroke: 0.5px rgba(92, 155, 249, 100);
+  color: rgba(92, 155, 249, 100);
+  -webkit-text-stroke: 0.5px rgba(92, 155, 249, 100);
 }
+
 .project-grid-container {
-    margin-top: 20px;
-    display: flex;
-    width: 100%;
-    justify-content: center;
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
 }
+
 .project-grid-view {
-    display: flex;
-    width: 1045px;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  width: 1045px;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
+
 .project-table-view {
-    margin-top: 20px;
-    width: 80%;
+  margin-top: 20px;
+  width: 80%;
 }
+
 .project-grid-item-view {
-    width: 169px;
-    height: 199px;
+  width: 169px;
+  height: 199px;
+  line-height: 20px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 100);
+  text-align: center;
+  margin: 20px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+
+  .project-title {
+    color: rgba(16, 16, 16, 100);
+    font-size: 14px;
+    text-align: left;
     line-height: 20px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 100);
+    max-height: 20px;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-grid-view-status {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    line-height: 20px;
+    background-color: rgba(0, 110, 255, 100);
     text-align: center;
-    margin: 20px;
-    position: relative;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-    .project-title {
-        color: rgba(16, 16, 16, 100);
-        font-size: 14px;
-        text-align: left;
-        line-height: 20px;
-        max-height: 20px;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    .project-grid-view-status {
-        display: inline-block;
-        width: 7px;
-        height: 7px;
-        line-height: 20px;
-        background-color: rgba(0, 110, 255, 100);
-        text-align: center;
-        border: 1px solid rgba(0, 110, 255, 100);
-        border-radius: 20px;
-    }
+    border: 1px solid rgba(0, 110, 255, 100);
+    border-radius: 20px;
+  }
 }
+
 .gird-operating-btns {
-    position: absolute;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    bottom: 0;
-    display: none;
-    border: none;
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  bottom: 0;
+  display: none;
+  border: none;
 }
+
 .project-grid-item-view:hover .gird-operating-btns {
-    display: block;
+  display: block;
 }
+
 .project-grid-view-preimg {
-    width: 143px;
-    height: 121px;
+  width: 143px;
+  height: 121px;
 }
+
 .project-grid-view-time {
-    color: rgba(144, 147, 153, 100);
-    font-size: 12px;
-    line-height: 20px;
-    text-align: center;
-    margin: 0;
+  color: rgba(144, 147, 153, 100);
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  margin: 0;
 }
+
 .project-page-view {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 </style>

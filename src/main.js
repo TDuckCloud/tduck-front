@@ -12,14 +12,10 @@ import api from './api'
 import store from './store/index'
 import '@/assets/styles/index.scss' // global css
 import '@/utils/plugins'
-import './assets/icons' // icon
 // 全局组件自动注册
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
 import Process from '@/components/HandleProcess/process'
-
-import AOS from 'aos'
-import 'aos/dist/aos.css'
 
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
@@ -41,7 +37,6 @@ Vue.prototype.$process = Process
 Vue.use(VueClipboard)
 Vue.use(meta)
 Vue.use(Element, {size: 'small', zIndex: 3000})
-Vue.use(AOS)
 
 Vue.config.productionTip = false
 
@@ -50,4 +45,3 @@ new Vue({
     store,
     render: h => h(App)
 }).$mount('#app')
-AOS.init()
