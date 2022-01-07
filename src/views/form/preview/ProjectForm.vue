@@ -34,4 +34,9 @@ export default {
     }
 }
 </script>
-
+<style scoped lang="scss">
+::v-deep .project-form{
+  overflow-x: hidden!important;
+  padding: 5px!important;
+}
+</style>

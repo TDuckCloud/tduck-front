@@ -1,5 +1,5 @@
 <template>
-    <FormDesign />
+    <FormDesign :question-mode="true" />
 </template>
 <script>
 import TduckForm, {FormDesign} from 'tduck-form-generator'

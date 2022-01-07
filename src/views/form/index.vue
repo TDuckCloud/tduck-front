@@ -1,7 +1,7 @@
 <template>
     <div class="form-index-container">
         <el-card class="header-container">
-            <el-row align="middle" type="flex" :gutter="5">
+            <el-row align="middle" type="flex" :gutter="5" style="height: 50px">
                 <i class="el-icon-back" @click="$router.back(-1)" />
                 <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
                 <el-col />
@@ -38,15 +38,17 @@
         >
             <pre-view :key="previewKey" :preview-qrcode="true" />
         </el-dialog>
+        <template-create ref="templateCreate" :form-key="projectKey" />
     </div>
 </template>
 
 <script>
 import PreView from '@/views/form/preview'
+import TemplateCreate from '@/views/project/template/create'
 
 export default {
     name: 'NewIndex',
-    components: {PreView},
+    components: {TemplateCreate, PreView},
     data() {
         return {
             previewKey: +new Date(),
@@ -106,9 +108,7 @@ export default {
             this.previewDialogVisible = true
         },
         saveProjectAsTemplateHandle() {
-            this.$api.post('/user/project/template/save', {key: this.projectKey}).then(() => {
-                this.msgSuccess('保存成功')
-            })
+            this.$refs['templateCreate'].handleOpen()
         },
         collapseHandle() {
             let isCollapse = !this.isCollapse
@@ -139,7 +139,7 @@ export default {
   width: 100%;
   height: 50px;
   padding: 0 20px;
-
+  line-height: 50px;
   .el-icon-back {
     font-size: 22px;
     font-weight: 550;
@@ -153,8 +153,9 @@ export default {
   }
 
   .header-logo {
-    height: 45px;
-    width: 200px;
+    height: 35px;
+    width: 160px;
+    vertical-align: middle;
   }
 }
 

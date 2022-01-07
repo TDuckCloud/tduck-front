@@ -197,11 +197,20 @@ export default {
 .t-dialog .left {
   height: 700px !important;
 }
+.t__dialog__menu{
+  float: right;
+  margin-right: 23px;
+}
 
 .t-dialog--fullscreen .left {
   padding: 50px;
   height: 80vh !important;
 }
-
+::v-deep .t-dialog{
+  margin-top: 5vh!important;
+}
+::v-deep .t-dialog--fullscreen{
+  margin-top: 0vh!important;
+}
 </style>
 

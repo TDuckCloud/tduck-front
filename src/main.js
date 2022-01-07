@@ -15,6 +15,7 @@ import '@/utils/plugins'
 // 全局组件自动注册
 import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
+import './assets/icons'
 import Process from '@/components/HandleProcess/process'
 import 'xe-utils'
 import VXETable from 'vxe-table'

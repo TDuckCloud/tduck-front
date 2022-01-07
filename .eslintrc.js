@@ -51,6 +51,7 @@ module.exports = {
         'no-unneeded-ternary': [2, {
             'defaultAssignment': false
         }],
+        'no-unused-vars': 'off',
         'quotes': [2, 'single'],
         'semi': [2, 'never'],
         'space-before-blocks': [2, 'always'],
@@ -82,6 +83,7 @@ module.exports = {
         'vue/attributes-order': 2,
         'vue/order-in-components': 2,
         'vue/this-in-template': 0,
+        'vue/require-prop-types':'off',
         'vue/script-indent': [2, 4, {
             'switchCase': 1
         }],

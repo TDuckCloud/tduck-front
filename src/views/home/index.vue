@@ -85,7 +85,7 @@ export default {
     components: {},
     data() {
         return {
-            defaultActiveMenu: '',
+            defaultActiveMenu: '/home',
             menuList: [
                 {
                     route: '/home',
@@ -114,7 +114,18 @@ export default {
         }
     },
     created() {
-        this.defaultActiveMenu = this.$route.path
+        if (!this.getStore.getters['user/userInfo']) {
+            this.$router.push({
+                path: '/login',
+                query: {
+                    redirect: router.currentRoute.fullPath
+                }
+            })
+        }
+        if (this.$route.path) {
+            this.defaultActiveMenu = this.$route.path
+        }
+
     },
     methods: {
         menuClickHandle(menu) {
@@ -184,6 +195,7 @@ $menuActiveText: #409eff;
         height: 35px;
         border-radius: 100px;
         cursor: pointer;
+      vertical-align: middle;
     }
 }
 .menu-view {

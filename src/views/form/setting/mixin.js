@@ -8,7 +8,7 @@ export default {
     computed: {
         getUploadHeader() {
             return {
-                Authorization: 'Bearer ' + getToken()
+                token: getToken()
             }
         },
         getUploadUrl() {
