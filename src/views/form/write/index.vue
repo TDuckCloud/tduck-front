@@ -229,3 +229,70 @@ export default {
   font-size: 30px;
 }
 </style>
+
+<style lang="scss">
+@import '../../../assets/styles/elementui-mobile.scss';
+
+.project-form-wrapper {
+  width: 100%;
+  min-height: 100%;
+  padding: 20px 0px;
+  background-color: rgba(158, 207, 250, 0.3);
+}
+
+.project-form {
+  margin: 0px auto;
+  width: 800px;
+  padding: 15px;
+  background-repeat: repeat;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
+
+.project-form .describe-html img {
+  max-width: 780px;
+  margin: 0px;
+}
+
+.project-body::-webkit-scrollbar {
+  width: 0 !important;
+  background: transparent;
+}
+
+.project-body {
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+
+.logo-img {
+  max-height: 120px;
+}
+
+.submit-btn-form-item button {
+  width: 20%;
+}
+
+.support-text {
+  color: #545454;
+  text-shadow: 0 1px 1px #e9e9e9;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .project-form {
+    width: 100% !important;
+  }
+  .logo-img {
+    max-height: 2.94rem;
+  }
+  .submit-btn-form-item {
+    text-align: center;
+  }
+  .submit-btn-form-item button {
+    width: 80%;
+  }
+  .project-form .describe-html img {
+    width: 95vw !important;
+  }
+}
+</style>

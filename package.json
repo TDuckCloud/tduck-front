@@ -9,22 +9,26 @@
     "preview": "node build/index.js --preview",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "svgo": "svgo -f src/assets/icons"
+    "svgo": "svgo -f src/assets/icons",
+    "report": "vue-cli-service build --report"
   },
   "dependencies": {
-    "aos": "^2.3.4",
     "axios": "^0.21.0",
     "core-js": "^3.6.4",
     "crypto-js": "^4.0.0",
     "dayjs": "^1.9.4",
     "echarts": "^5.0.0",
     "element-ui": "2.15.7",
+    "exceljs": "^4.3.0",
     "file-saver": "^2.0.2",
     "js-cookie": "^2.2.1",
+    "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
+    "resize-detector": "^0.3.0",
     "signature_pad": "^3.0.0-beta.4",
-    "tduck-form-generator": "1.6.5",
+    "tduck-form-generator": "1.6.9",
     "ua-parser-js": "^0.7.23",
+    "vant": "^2.12.25",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
     "vue-image-crop-upload": "^2.5.0",
@@ -35,9 +39,7 @@
     "vuex": "^3.5.1",
     "vxe-table": "^3.3.14",
     "vxe-table-plugin-export-xlsx": "^2.2.1",
-    "xe-utils": "^3.4.0",
-    "exceljs": "^4.3.0",
-    "resize-detector": "^0.3.0"
+    "xe-utils": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.8",
@@ -45,6 +47,7 @@
     "@vue/cli-service": "^4.5.8",
     "babel-eslint": "^10.1.0",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "babel-plugin-import": "^1.13.3",
     "eslint": "^7.12.1",
     "eslint-plugin-vue": "^7.1.0",
     "html-webpack-plugin": "^4.5.0",
