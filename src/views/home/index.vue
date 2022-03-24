@@ -76,16 +76,16 @@
 </template>
 
 <script>
-import {formConf} from '@/components/generator/config'
 import store from '@/store'
 import router from '@/router'
+import {createFormRequest} from '@/api/project/form'
 
 export default {
     name: 'NewIndex',
     components: {},
     data() {
         return {
-            defaultActiveMenu: '',
+            defaultActiveMenu: '/home',
             menuList: [
                 {
                     route: '/home',
@@ -114,18 +114,28 @@ export default {
         }
     },
     created() {
-        this.defaultActiveMenu = this.$route.path
+        if (!this.getStore.getters['user/userInfo']) {
+            this.$router.push({
+                path: '/login',
+                query: {
+                    redirect: router.currentRoute.fullPath
+                }
+            })
+        }
+        if (this.$route.path) {
+            this.defaultActiveMenu = this.$route.path
+        }
+
     },
     methods: {
         menuClickHandle(menu) {
             this.$router.replace({path: menu.route})
         },
         createBlankTemplate() {
-            this.$api.post('/user/project/create', {
-                'describe': formConf.description,
-                'name': formConf.title
+            createFormRequest({
+                'description': '快来填写你的问卷描述吧',
+                'name': '问卷名称'
             }).then(res => {
-                console.log(res)
                 this.$router.push({path: '/project/form', query: {key: res.data}})
             })
         },
@@ -185,6 +195,7 @@ $menuActiveText: #409eff;
         height: 35px;
         border-radius: 100px;
         cursor: pointer;
+      vertical-align: middle;
     }
 }
 .menu-view {

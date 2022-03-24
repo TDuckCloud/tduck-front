@@ -10,77 +10,39 @@
                             <span>图表类型：</span>
                             <el-select v-model="item.chartType" placeholder="请选择">
                                 <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
+                                    v-for="option in options"
+                                    :key="option.value"
+                                    :label="option.label"
+                                    :value="option.value"
                                 />
                             </el-select>
                         </div>
                     </div>
-                    <line-chart
-                        class="chart"
-                        :chart-option="getCharData(item)"
-                        :width="'90vw'"
+                    <t-chart
+                        :option="getCharData(item)"
+                        :init-options="initOptions"
+                        theme="tduck-echarts-theme"
                     />
                 </div>
                 <el-divider />
             </div>
         </div>
-        <data-empty v-else style="padding: 20px" desc="只有单选、多选、下拉框组件可以生成图表" />
+        <el-empty v-else description="只有单选、多选、下拉框组件可以生成图表" />
     </div>
 </template>
 
 <script>
-import LineChart from '@/components/echarts/LineChart'
+import TChart from '@/components/TChart'
+import {getFormAnalysisRequest} from '@/api/project/report'
+
 export default {
     components: {
-        LineChart
+        TChart
     },
     data() {
         return {
-            barChartOptionData: {
-                tooltip: {
-                    trigger: 'axis',
-                    backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
-                    color: 'black',
-                    borderWidth: '1',
-                    borderColor: 'rgb(156,209,255)',
-                    textStyle: {
-                        color: 'black'
-                    },
-                    axisPointer: {
-                        type: 'shadow'
-                    }
-                },
-                grid: {
-                    left: '3%',
-                    right: '4%',
-                    bottom: '3%',
-                    containLabel: true
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                        axisTick: {
-                            alignWithLabel: true
-                        }
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value'
-                    }
-                ],
-                series: [
-                    {
-                        name: '数量',
-                        type: 'line',
-                        barWidth: '40%',
-                        data: [10, 52, 200, 334, 390, 330, 220]
-                    }
-                ]
+            initOptions: {
+                renderer: 'svg'
             },
             list: [],
             options: [
@@ -88,10 +50,6 @@ export default {
                     value: 'pie',
                     label: '饼图'
                 },
-                /* {
-          value: "ring",
-          label: "环形图",
-        }, */
                 {
                     value: 'bar',
                     label: '柱状图'
@@ -108,35 +66,55 @@ export default {
     },
     methods: {
         getData() {
-            this.$api
-                .get('/user/project/report/analysis', {
-                    params: { projectKey: this.$route.query.key }
-                })
-                .then(res => {
-                    this.list = res.data
-                })
+            getFormAnalysisRequest({formKey: this.$route.query.key}).then(res => {
+                this.list = res.data
+            })
         },
         getCharData(data) {
             const config = {
-                tooltip: {
-                    backgroundColor: 'rgba(255,255,255,0.8)', // 通过设置rgba调节背景颜色与透明度
-                    color: 'black',
-                    borderWidth: '1',
-                    borderColor: 'rgb(156,209,255)',
-                    textStyle: {
-                        color: 'black'
+                toolbox: {
+                    show: true,
+                    showTitle: false, // 隐藏默认文字，否则两者位置会重叠
+                    feature: {
+                        saveAsImage: {
+                            show: true,
+                            title: '保存为图片'
+                        }
+                    },
+                    tooltip: { // 和 option.tooltip 的配置项相同
+                        show: true,
+                        formatter: function(param) {
+                            return '<div>' + param.title + '</div>' // 自定义的 DOM 结构
+                        },
+                        backgroundColor: '#FFF',
+                        textStyle: {
+                            fontSize: 12
+                        },
+                        extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);' // 自定义的 CSS 样式
                     }
                 },
+                tooltip: {
+                    trigger: 'axis',
+                    extraCssText: 'z-index:1'
+                },
                 grid: {
-                    left: '3%',
+                    top: '5%',
+                    left: '2%',
                     right: '4%',
-                    bottom: '3%',
+                    bottom: '0%',
                     containLabel: true
                 },
                 xAxis: [
                     {
+                        splitLine: {
+                            show: false
+                        },
+                        axisLine: {
+                            show: false
+                        },
                         type: 'category',
                         axisTick: {
+                            show: false,
                             alignWithLabel: true
                         }
                     }
@@ -150,10 +128,17 @@ export default {
                     {
                         name: '数量',
                         type: 'pie',
-                        barWidth: '40%'
+                        barWidth: '25%',
+                        data: [],
+                        symbolSize: 1,
+                        symbol: 'circle',
+                        smooth: true,
+                        yAxisIndex: 0,
+                        showSymbol: false
                     }
                 ]
             }
+            // 柱状 折现图
             if (['bar', 'line'].includes(data.chartType)) {
                 config.tooltip.axisPointer = {
                     type: 'line'
@@ -163,26 +148,13 @@ export default {
                 config.series[0].data = data.data
                 config.series[0].type = data.chartType
             } else {
-                // 环形图暂时不用   无法切换到饼图
-                /* if ("ring" === data.chartType) {
-          config.series[0].radius = ["40%", "70%"];
-          
-          config.series[0].emphasis = {
-                label: {
-                    show: true,
-                    fontSize: '25',
-                    fontWeight: 'bold'
+                config.tooltip = {
+                    trigger: 'item'
                 }
-            }
-        }else{
-          delete config.series[0].radius
-          delete config.series[0].label
-        } */
                 config.series[0].data = []
                 Object.keys(data.map).forEach(key => {
-                    config.series[0].data.push({ name: key, value: data.map[key] })
+                    config.series[0].data.push({name: key, value: data.map[key]})
                 })
-                // config.series[0].data = data.map
             }
             return config
         }
@@ -197,6 +169,7 @@ export default {
   .content {
     padding: 20px;
     width: 100%;
+
     .title {
       font-size: 14px;
       padding: 0 30px;
@@ -205,6 +178,7 @@ export default {
       width: 100%;
       display: flex;
       justify-content: space-between;
+
       .select {
         float: right;
       }

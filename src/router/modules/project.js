@@ -28,7 +28,7 @@ export default [
         ]
     },
     {
-        path: '/project/view',
+        path: '/project/form/view',
         meta: {requireLogin: false},
         component: () => import(/* webpackChunkName: 'root' */ '@/views/form/preview/ProjectForm.vue')
     },

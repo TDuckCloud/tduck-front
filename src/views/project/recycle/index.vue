@@ -3,33 +3,33 @@
         <el-table
             v-if="projectList&&projectList.length>0"
             :data="projectList"
-            stripe
             border
+            empty-text="暂无数据"
             highlight-current-row
 
+            stripe
             style="width: 100%;"
-            empty-text="暂无数据"
         >
             <el-table-column
-                prop="name"
-                show-overflow-tooltip
                 align="center"
                 label="标题"
+                prop="name"
+                show-overflow-tooltip
             />
             <el-table-column
-                prop="resultCount"
                 align="center"
                 label="收集数"
+                prop="resultCount"
             />
             <el-table-column
                 align="center"
-                prop="createTime"
                 label="创建时间"
+                prop="createTime"
             />
             <el-table-column
                 align="center"
-                prop="updateTime"
                 label="删除时间"
+                prop="updateTime"
             />
             <el-table-column label="操作">
                 <template slot-scope="scope">
@@ -55,18 +55,20 @@
         <div class="project-page-view">
             <el-pagination
                 v-if="total>10"
-                background
-                :page-size.sync="queryParams.size"
                 :current-page.sync="queryParams.current"
-                layout="total, prev, pager, next"
+                :page-size.sync="queryParams.size"
                 :total="total"
+                background
+                layout="total, prev, pager, next"
                 @current-change="queryRecycleProjectPage"
             />
         </div>
-        <data-empty v-if="!projectList||projectList.length==0" />
+        <el-empty v-if="!projectList||projectList.length==0" slot="empty" description="暂无数据" />
     </div>
 </template>
 <script>
+
+import {deleteRecycleFormRequest, listRecycleFormRequest, restoreRecycleFormRequest} from '../../../api/project/form'
 
 export default {
     name: 'RecycleBin',
@@ -85,15 +87,13 @@ export default {
             projectListLoading: true
         }
     },
-    computed: {
-
-    },
+    computed: {},
     created() {
         this.queryRecycleProjectPage()
     },
     methods: {
         restoreProject(key) {
-            this.$api.post('/user/project/recycle/restore', {'key': key}).then(res => {
+            restoreRecycleFormRequest({'key': key}).then(res => {
                 if (res.data) {
                     this.msgSuccess('恢复成功')
                     this.queryRecycleProjectPage()
@@ -101,7 +101,7 @@ export default {
             })
         },
         deleteProject(key) {
-            this.$api.post('/user/project/recycle/delete', {'key': key}).then(res => {
+            deleteRecycleFormRequest({'key': key}).then(res => {
                 if (res.data) {
                     this.msgSuccess('刪除成功')
                     this.queryRecycleProjectPage()
@@ -109,9 +109,7 @@ export default {
             })
         },
         queryRecycleProjectPage() {
-            this.$api.get('/user/project/recycle/page', {
-                params: this.queryParams
-            }).then(res => {
+            listRecycleFormRequest(this.queryParams).then(res => {
                 let {records, total, size} = res.data
                 this.projectList = records
                 this.total = total
@@ -125,20 +123,22 @@ export default {
 
 <style lang="scss" scoped>
 .rc-bin-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
+
 .back-view {
-    display: flex;
-    width: 80%;
-    align-content: flex-start;
-    margin: 10px;
+  display: flex;
+  width: 80%;
+  align-content: flex-start;
+  margin: 10px;
 }
+
 .project-page-view {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 </style>
