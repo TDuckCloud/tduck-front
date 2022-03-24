@@ -247,14 +247,14 @@ export default {
                         // 接收 Promise 对象
                         query: ({page, sorts, filters, form}) => {
                             this.queryParams.size = page.pageSize
-                            this.queryParams.current = page.currentPage - 1
+                            this.queryParams.current = page.currentPage
                             this.queryParams.formKey = this.formKey
                             return listFormDataTableRequest(this.queryParams)
                         },
                         // 查询全部 导出全部时会被调用
                         queryAll: () => {
-                            this.queryParams.size = null
-                            this.queryParams.current = null
+                            this.queryParams.size = 0
+                            this.queryParams.current = 0
                             this.queryParams.formKey = this.formKey
                             return listFormDataTableRequest(this.queryParams).then(res => {
                                 // 临时处理对象导出显示
