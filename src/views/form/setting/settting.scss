@@ -1,0 +1,62 @@
+.project-setting-view {
+  height: 100%;
+  line-height: 20px;
+  border-radius: 7px;
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 100);
+  background-color: white;
+  padding: 10px;
+  margin-left: 20px;
+  .el-form{
+    width: 70%;
+    margin-left: 20px;
+ }
+}
+
+.project-setting-title {
+  color: rgba(16, 16, 16, 100);
+  font-size: 18px;
+  text-align: left;
+  font-weight: 550;
+  margin-left: 20px;
+}
+.setting-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  .label{
+    color: rgba(16, 16, 16, 100);
+    font-size: 14px;
+    text-align: left;
+    line-height: 20px;
+  }
+  .label{
+    width: 80%;
+  }
+  .el-switch{
+    width: 20%;
+  }
+}
+
+::v-deep.el-form-item{
+  margin-bottom: 0!important;
+}
+::v-deep .el-form-item+.el-form-item{
+  margin-top: 10px!important;
+}
+
+
+.project-setting-sub-label {
+  color: rgba(144, 147, 149, 100);
+  font-size: 14px;
+  text-align: left;
+  margin-left: 2px;
+  line-height: 20px;
+}
+.submit-btn{
+  margin-top: 20px;
+  text-align: left;
+}

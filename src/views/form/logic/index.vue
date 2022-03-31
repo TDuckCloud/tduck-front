@@ -3,11 +3,15 @@
         <el-scrollbar class="scrollbar-container">
             <el-row align="middle" class="header-row" justify="center" type="flex">
                 <el-col :span="12">
-                    <p class="logic_title">显示逻辑</p>
+                    <p class="logic_title">
+                        显示逻辑
+                    </p>
                 </el-col>
                 <el-col :span="12">
                     <el-tooltip placement="top" popper-class="question-popper">
-                        <div slot="content">符合某项条件，则显示某道题<br>点击查看帮助</div>
+                        <div slot="content">
+                            符合某项条件，则显示某道题<br>点击查看帮助
+                        </div>
                         <i class="el-icon-question" />
                     </el-tooltip>
                 </el-col>
@@ -130,13 +134,15 @@
 <script>
 import _ from 'lodash'
 import {jsonSimpleClone} from '@/utils'
+import {getFormLogicRequest, listProjectItemRequest, saveFormLogicRequest} from '@/api/project/form'
+import {debounce} from 'throttle-debounce'
 
 export default {
     name: 'ProjectLogic',
     components: {},
     data() {
         return {
-            projectKey: '',
+            formKey: '',
             // 默认逻辑项
             defaultLogicItem: {
                 formItemId: null,
@@ -167,38 +173,20 @@ export default {
             logicList: []
         }
     },
-    computed: {
-        // 解决 vue watch监听数据，新老值一样
-        getLogicList() {
-            return JSON.parse(JSON.stringify(this.logicList))
-        }
-    },
     watch: {
-        getLogicList: {
-            handler(val, oldVal) {
-                // 找出发生变化的值
-                let updateVal = _.differenceWith(val, oldVal, (arrVal, othVal) => {
-                    if (JSON.stringify(arrVal) == JSON.stringify(othVal)) {
-                        return true
-                    }
-                    return false
-                })
-                if (updateVal && updateVal[0] && updateVal[0].conditionList.length) {
-                    let updateData = updateVal[0]
-
-                    updateData.projectKey = this.projectKey
-                    if (updateData.formItemId) {
-                        this.saveProjectLogic(updateData)
-                    }
+        logicList: {
+            handler(val) {
+                if (val) {
+                    this.saveProjectLogic(val)
                 }
             },
             deep: true
         }
     },
     mounted() {
-        this.projectKey = this.$route.query.key
+        this.formKey = this.$route.query.key
         this.queryProjectItems()
-        this.queryProjectLogics()
+        this.queryProjectLogic()
     },
     methods: {
         addConditionHandle(logicItem) {
@@ -207,13 +195,12 @@ export default {
         removeConditionHandle(logicItem, logicIndex, index) {
             logicItem.conditionList.splice(index, 1)
             if (logicItem.conditionList.length == 0) {
-                this.$api.post('/user/project/logic/delete', logicItem).then(() => {
-                    this.logicList.splice(logicIndex, 1)
-                })
+                this.logicList.splice(logicIndex, 1)
             }
         },
         addLogicHandle() {
-            this.logicList.push(jsonSimpleClone(this.defaultLogicItem))
+            let newLogicItem = jsonSimpleClone(this.defaultLogicItem)
+            this.logicList.push(newLogicItem)
         },
         getConditionProjectItemList(logicItem) {
             let showFormItemId = logicItem.formItemId
@@ -225,7 +212,7 @@ export default {
             let index = conditionProjectItemList.findIndex(item => item.formItemId == showFormItemId)
             conditionProjectItemList = _.slice(conditionProjectItemList, 0, index)
             conditionProjectItemList = conditionProjectItemList.filter(item => {
-                return ['RADIO', 'CHECKBOX', 'SELECT'].includes(item.type)
+                return ['RADIO', 'CHECKBOX', 'SELECT', 'IMAGE_SELECT'].includes(item.type)
             })
             return conditionProjectItemList
         },
@@ -242,28 +229,28 @@ export default {
         getFormItemOptions(formItemId) {
             let formItem = this.allProjectItemList.find(item => item.formItemId == formItemId)
             if (formItem) {
-                return formItem.expand.options
+                return formItem.scheme.config.options
             }
             return []
         },
-        queryProjectLogics() {
-            this.$api.get('/user/project/logic/list', {params: {projectKey: this.projectKey}}).then(res => {
-                this.logicList = res.data
+        queryProjectLogic() {
+            getFormLogicRequest({formKey: this.formKey}).then(res => {
+                if (res.data) {
+                    this.logicList = res.data.scheme ? res.data.scheme : []
+                }
             })
         },
         queryProjectItems() {
-            this.$api.get('/user/project/item/list', {params: {key: this.projectKey}}).then(res => {
+            listProjectItemRequest({key: this.formKey}).then(res => {
                 this.allProjectItemList = res.data
             })
         },
-        saveProjectLogic(data) {
-            this.$api.post('/user/project/logic/save', data).then(res => {
-                if (!data.id) {
-                    let index = _.findIndex(this.logicList, {formItemId: data.formItemId})
-                    this.logicList[index].id = res.data.id
-                }
+        saveProjectLogic: debounce(430, true, function(logicList) {
+            let data = {formKey: this.formKey, scheme: logicList}
+            saveFormLogicRequest(data).then(res => {
+
             })
-        }
+        })
     }
 
 }
@@ -271,82 +258,95 @@ export default {
 
 <style lang="scss" scoped>
 .project-logic-container {
-    width: 100%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  .scrollbar-container {
     height: 100%;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    .scrollbar-container {
-        height: 100%;
-    }
-    .header-row {
-        width: 230px;
-    }
-    .logic_title {
-        font-size: 18px;
-        height: 45px;
-        line-height: 45px;
-        color: #484848;
-        text-indent: 20px;
-        padding-top: 20px;
-    }
-}
-::v-deep .el-scrollbar__wrap {
-    overflow-x: hidden;
-}
-.not-logic-container {
-    .el-icon-circle-plus-outline {
-        font-size: 20px;
-    }
-    .label {
-        font-size: 18px;
-    }
-}
-.logic-item-container {
-    .tips {
-        font-size: 14px;
-        color: #aaa;
-    }
-    .label {
-        font-size: 15px;
-    }
-    .remove {
-        color: #ff4949;
-    }
-}
-.el-icon-question {
-    font-size: 23px;
-    height: 50px;
-    line-height: 50px;
+  }
+
+  .header-row {
+    width: 230px;
+  }
+
+  .logic_title {
+    font-size: 18px;
+    height: 45px;
+    line-height: 45px;
+    color: #484848;
     text-indent: 20px;
-    padding-top: 23px;
-    color: #d8d8d8;
+    padding-top: 20px;
+  }
 }
+
+::v-deep .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
+
+.not-logic-container {
+  .el-icon-circle-plus-outline {
+    font-size: 20px;
+  }
+
+  .label {
+    font-size: 18px;
+  }
+}
+
+.logic-item-container {
+  .tips {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .label {
+    font-size: 15px;
+  }
+
+  .remove {
+    color: #ff4949;
+  }
+}
+
+.el-icon-question {
+  font-size: 23px;
+  height: 50px;
+  line-height: 50px;
+  text-indent: 20px;
+  padding-top: 23px;
+  color: #d8d8d8;
+}
+
 .show-logic-container {
-    padding: 10px;
-    min-width: 950px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  padding: 10px;
+  min-width: 950px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
+
 .el-icon-circle-plus-outline,
 .el-icon-remove-outline {
-    font-size: 24px;
+  font-size: 24px;
 }
 </style>
 <style>
 .question-popper.el-tooltip__popper[x-placement^="top"] .popper__arrow {
-    /* border-top-color: #205bb5 !important; */
+  /* border-top-color: #205bb5 !important; */
 }
+
 .question-popper.el-tooltip__popper[x-placement^="top"] .popper__arrow::after {
-    /* border-top-color: #205bb5 !important; */
+  /* border-top-color: #205bb5 !important; */
 }
+
 .question-popper {
-    padding: 10px;
-    color: #000 !important;
-    border-color: #205bb5 !important;
-    background: #fff !important;
+  padding: 10px;
+  color: #000 !important;
+  border-color: #205bb5 !important;
+  background: #fff !important;
 }
 
 </style>

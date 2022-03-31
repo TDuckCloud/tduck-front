@@ -1,6 +1,6 @@
 <template>
     <div class="create-container">
-        <el-row>
+        <div>
             <div class="create-header-container">
                 <div class="filter-container">
                     <el-form ref="form" :inline="true">
@@ -25,10 +25,12 @@
                 <el-menu :default-active="queryParams.type"
                          mode="horizontal"
                          style="background-color: transparent;" @select="(index)=>{
-                             this.queryParams.type=index
-                             this.queryTemplatePage()}"
+                             queryParams.type=index
+                             queryTemplatePage()}"
                 >
-                    <el-menu-item :`index`="null">全部</el-menu-item>
+                    <el-menu-item :`index`="null">
+                        全部
+                    </el-menu-item>
                     <el-menu-item v-for="(item, index) in templateTypeList" :key="index"
                                   :index="item.id.toString()"
                     >
@@ -46,34 +48,34 @@
                     >
                         <div style="flex: 1;">
                             <i class="el-icon-plus" style="font-size: 40px; align-items: center;" />
-                            <p style="font-size: 14px;">创建一个空白模板</p>
+                            <p style="font-size: 14px;">
+                                创建一个空白模板
+                            </p>
                         </div>
                     </div>
                     <div v-for="template in templateList" :key="template.id" class="project-template-view">
-                        <img :src="template.coverImg?template.coverImg:'https://i.niupic.com/images/2021/01/08/99d0.png'" style="width: 144px; height: 133px;">
+                        <img :src="template.coverImg?template.coverImg:require('@/assets/images/99d0.png')"
+                             style="width: 150px; height: 133px;"
+                        >
                         <p class="project-template-title">
                             {{ template.name }}
                         </p>
-                        <!--                        <p style="color: rgba(189, 188, 188, 100); font-size: 12px; margin: 0;">-->
-                        <!--                            {{ template.likeCount }}人喜欢-->
-                        <!--                            <svg-icon name="like" style="width: 12px; height: 12px;" />-->
-                        <!--                        </p>-->
                         <div class="project-template-use-view">
-                            <div
-                                class="project-template-use-view-btn"
-                                @click="toProjectTemplate(template.key)"
+                            <el-button icon="el-icon-view" type="text" @click="toProjectTemplate(template.key)">
+                                查看
+                            </el-button>
+                            <el-button v-hasPermi="['project:template:delete']" icon="el-icon-delete"
+                                       type="text"
+                                       @click="handleDelete(template)"
                             >
-                                <div>
-                                    <font-icon class="fa fa-eye" style="font-size: 40px;" />
-                                </div>
-                                <el-button type="text">查看</el-button>
-                            </div>
+                                删除
+                            </el-button>
                         </div>
                     </div>
                 </div>
             </div>
-        </el-row>
-        <div>
+        </div>
+        <div class="text-center">
             <el-pagination
                 v-if="total>10"
                 :current-page.sync="queryParams.current"
@@ -88,7 +90,13 @@
 </template>
 
 <script>
-import {formConf} from '@/components/generator/config'
+
+import {
+    deleteFormTemplateRequest,
+    getFormTemplatePageRequest,
+    getFormTemplateTypeListRequest
+} from '@/api/project/template'
+import {createFormRequest} from '@/api/project/form'
 
 export default {
     name: 'CreateProject',
@@ -112,15 +120,27 @@ export default {
     },
     methods: {
         queryTemplateType() {
-            this.$api.get('/project/template/type/list').then(res => {
+            getFormTemplateTypeListRequest().then(res => {
                 this.templateTypeList = res.data
             })
         },
         toProjectTemplate(key) {
             this.$router.push({path: '/project/template/preview', query: {key: key}})
         },
+        handleDelete(item) {
+            this.$confirm(`此操作将永久删除${item.name}, 是否继续?`, '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                deleteFormTemplateRequest({key: item.key}).then(res => {
+                    this.msgSuccess('删除成功')
+                    this.queryTemplatePage()
+                })
+            })
+        },
         queryTemplatePage() {
-            this.$api.get('/project/template/page', {params: this.queryParams}).then(res => {
+            getFormTemplatePageRequest(this.queryParams).then(res => {
                 let {records, total, size} = res.data
                 this.templateList = records
                 this.total = total
@@ -129,11 +149,7 @@ export default {
             })
         },
         createBlankTemplate() {
-            this.$api.post('/user/project/create', {
-                'describe': formConf.description,
-                'name': formConf.title
-            }).then(res => {
-                console.log(res)
+            createFormRequest({description: '表单模板', name: '表单模板'}).then(res => {
                 this.$router.push({path: '/project/form', query: {key: res.data}})
             })
         }
@@ -143,93 +159,93 @@ export default {
 
 <style lang="scss" scoped>
 .create-container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    .el-pagination {
-        margin-top: 20px;
-    }
+   max-width: 1200px;
+   margin: 0 auto;
+  .el-pagination {
+    margin-top: 20px;
+  }
 }
+
 .create-header-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
+
 .filter-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 20px !important;
-    .el-input {
-        display: inline-block;
-        width: 300px !important;
-    }
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px !important;
+
+  .el-input {
+    display: inline-block;
+    width: 300px !important;
+  }
 }
+
 .project-grid-view {
-    display: flex;
-    width: 1200px;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  max-width: 1200px;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
+
 .tag-title {
-    font-size: 20px;
-    border-bottom: 3px solid rgba(68, 68, 68, 100);
-    line-height: 25px;
+  font-size: 20px;
+  border-bottom: 3px solid rgba(68, 68, 68, 100);
+  line-height: 25px;
 }
+
 .project-template-view {
-    width: 151px;
-    height: 196px;
-    line-height: 20px;
-    border-radius: 3px;
-    text-align: center;
-    margin: 20px;
-    //border: 1px solid rgba(187, 187, 187, 100);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
-    background: white;
-    position: relative;
+  width: 151px;
+  height: 196px;
+  line-height: 20px;
+  border-radius: 3px;
+  text-align: center;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  background: white;
+  position: relative;
 }
+
 .project-template-view:hover .project-template-use-view {
-    display: block;
-    cursor: pointer;
+  display: block;
+  cursor: pointer;
 }
+
 .project-template-use-view {
-    position: absolute;
-    width: 100%;
-    height: 196px;
-    z-index: 100;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    bottom: 0;
-    filter: alpha(opacity=60);
-    -moz-opacity: 0.6;
-    opacity: 0.6;
-    display: none;
-    border: none;
+  position: absolute;
+  width: 100%;
+  height: 28px;
+  z-index: 100;
+  background-color: #f0f0f0;
+  filter: alpha(opacity=60);
+  -moz-opacity: 0.6;
+  opacity: 0.6;
+  display: none;
+  border: none;
 }
+
 .project-template-title {
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    margin: 0 3px;
-    line-height: 30px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  color: rgba(16, 16, 16, 100);
+  font-size: 14px;
+  margin: 0 3px;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.project-template-use-view-btn {
-    margin-top: 50%;
-}
+
 .el-menu.el-menu--horizontal {
-    border-bottom: none;
+  border-bottom: none;
 }
+
 ::v-deep .search-template-input input {
-    width: 651px;
-    height: 50px;
-    line-height: 20px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid rgba(187, 187, 187, 100);
+  width: 651px;
+  height: 50px;
+  line-height: 20px;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(187, 187, 187, 100);
 }
 </style>

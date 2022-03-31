@@ -40,9 +40,14 @@ export default [
                 component: () => import(/* webpackChunkName: 'root' */ '@/views/form/theme')
             },
             {
+                path: 'data',
+                meta: {requireLogin: true},
+                component: resolve => require(['@/views/form/data'], resolve)
+            },
+            {
                 path: 'statistics',
                 meta: {requireLogin: true},
-                component: () => import(/* webpackChunkName: 'root' */ '@/views/form/statistics')
+                component: resolve => require(['@/views/form/statistics'], resolve)
             }
         ]
     }

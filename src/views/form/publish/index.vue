@@ -13,7 +13,7 @@
             </div>
             <div v-if="publishStatus" class="publish-finish-view">
                 <el-row :gutter="10" align="middle" type="flex">
-                    <el-col>
+                    <el-col :span="12">
                         <div>
                             <vue-qr v-if="writeLink" :callback="qrCodeGenSuccess" :size="194"
                                     :text="writeLink"
@@ -28,7 +28,7 @@
                             </el-link>
                         </div>
                     </el-col>
-                    <el-col style="margin-left: 75px;">
+                    <el-col :span="12" style="margin-left: 75px;">
                         <div style="display: flex; justify-content: center;">
                             <div class="icon-view">
                                 <i class="el-icon-check success-icon" />
@@ -75,6 +75,7 @@
 
 <script>
 import VueQr from 'vue-qr'
+import {getFormStatusRequest, publishFormRequest, stopPublishFormRequest} from '@/api/project/publish'
 
 export default {
     name: 'ProjectPublish',
@@ -84,19 +85,19 @@ export default {
     data() {
         return {
             publishStatus: false,
-            projectKey: null,
+            formKey: '',
             writeLink: '',
             qrCodeUrl: ''
         }
     },
     mounted() {
-        this.projectKey = this.$route.query.key
+        this.formKey = this.$route.query.key
         let url = window.location.protocol + '//' + window.location.host
-        this.writeLink = `${url}/s/${this.projectKey}`
+        this.writeLink = `${url}/s/${this.formKey}`
         this.getProjectStatus()
     }, methods: {
         getProjectStatus() {
-            this.$api.get(`/user/project/${this.projectKey}`).then(res => {
+            getFormStatusRequest(this.formKey).then(res => {
                 if (res.data.status == 2) {
                     this.publishStatus = true
                 } else {
@@ -105,13 +106,13 @@ export default {
             })
         },
         publishProject() {
-            this.$api.post('/user/project/publish', {key: this.projectKey}).then(() => {
+            publishFormRequest({key: this.formKey}).then(() => {
                 this.publishStatus = true
                 this.msgSuccess('发布成功')
             })
         },
         stopPublishProject() {
-            this.$api.post('/user/project/stop', {'key': this.projectKey}).then(res => {
+            stopPublishFormRequest({key: this.formKey}).then(res => {
                 if (res.data) {
                     this.msgSuccess('停止成功')
                     this.getProjectStatus()
@@ -153,44 +154,50 @@ export default {
 
 <style lang="scss" scoped>
 .publish-container {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: #f7f7f7;
-    min-height: 84vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #f7f7f7;
+  min-height: 84vh;
+}
+.publish-btn-view{
+  width: 800px;
+  height: 200px;
+  text-align: center;
+  margin: 0px auto;
+  padding-top: 300px;
 }
 .publish-finish-view {
-    width: 500px;
-    height: 200px;
+  width: 800px;
+  height: 200px;
+  text-align: center;
+  margin: 0px auto;
+  padding-top: 300px;
+  .icon-view {
+    width: 59px;
+    height: 59px;
+    border-radius: 100px;
+    background-color: #0076ff;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+  }
+  .success-icon {
     text-align: center;
-    .icon-view {
-        width: 59px;
-        height: 59px;
-        border-radius: 100px;
-        background-color: #0076ff;
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-items: center;
-        justify-content: center;
-    }
-    .success-icon {
-        text-align: center;
-        color: white;
-        font-size: 30px;
-    }
-    .success-title {
-        color: rgba(16, 16, 16, 100);
-        font-size: 28px;
-    }
-    .link-text {
-        color: rgba(16, 16, 16, 100);
-        font-size: 14px;
-    }
+    color: white;
+    font-size: 30px;
+  }
+  .success-title {
+    color: rgba(16, 16, 16, 100);
+    font-size: 28px;
+  }
+  .link-text {
+    color: rgba(16, 16, 16, 100);
+    font-size: 14px;
+  }
 }
 
 </style>

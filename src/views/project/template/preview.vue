@@ -1,20 +1,17 @@
 <template>
     <div v-loading="createProjectLoading" class="template-preview-container">
-        <div class="back-view">
-            <el-button size="mini" round @click="$router.back(-1)">
-                <i class="el-icon-arrow-left" />
-                返回
-            </el-button>
+        <div class="header">
+            <el-page-header content="模板详情" @back="$router.back(-1)" />
         </div>
         <div class="template-preview-content">
-            <el-scrollbar style="height: 80vh;">
-                <project-form
-                    v-if="projectConfig.projectKey"
-                    :project-config="projectConfig"
+            <el-scrollbar class="template-scrollbar">
+                <biz-project-form
+                    v-if="formConfig.formKey"
+                    :form-config="formConfig"
                     @submit="submitForm"
                 />
             </el-scrollbar>
-            <div style="margin: 20px;">
+            <div class="use-btn">
                 <el-button
                     type="primary"
                     @click="createProjectByTemplate"
@@ -27,32 +24,35 @@
 </template>
 
 <script>
-import ProjectForm from '@/views/form/preview/ProjectForm'
+import BizProjectForm   from 'tduck-form-generator'
+import {useTemplateCreateFormRequest} from '@/api/project/template'
+import mixin from '../../form/TduckFormMixin'
 
 export default {
     name: 'TemplatePreview',
     components: {
-        ProjectForm
+        BizProjectForm
     },
+    mixins: [mixin],
     props: {},
     data() {
         return {
             createProjectLoading: false,
-            projectConfig: {
-                projectKey: '',
+            formConfig: {
+                formKey: '',
                 preview: false,
-                projectKind: 2,
+                formKind: 2,
                 showBtns: true
             }
         }
     },
     mounted() {
-        this.projectConfig.projectKey = this.$route.query.key
+        this.formConfig.formKey = this.$route.query.key
     },
     methods: {
         createProjectByTemplate() {
             this.createProjectLoading = true
-            this.$api.post('/user/project/use-template/create', {'key': this.projectConfig.projectKey}).then(res => {
+            useTemplateCreateFormRequest({key: this.formConfig.formKey}).then(res => {
                 this.createProjectLoading = false
                 if (res.data) {
                     this.$router.push({path: '/project/form', query: {key: res.data, active: 1}})
@@ -70,22 +70,24 @@ export default {
 
 <style lang="scss" scoped>
 .template-preview-container {
-    display: flex;
-    width: 100%;
-    height: 98%;
-    overflow-x: hidden;
-    flex-direction: column;
-    align-items: center;
-    align-content: center;
-    overflow-y: hidden;
+  width: 100%;
+  height: 100%;
 }
-.back-view {
-    display: flex;
-    width: 80%;
-    align-content: flex-start;
-    margin: 10px;
+
+.header {
+  padding: 20px;
+}
+
+.template-scrollbar{
+  height: calc(100% - 64px);
 }
 .template-preview-content {
-    display: flex;
+  position: relative;
+
+  .use-btn {
+    position: absolute;
+    top: 50px;
+    right: 180px;
+  }
 }
 </style>

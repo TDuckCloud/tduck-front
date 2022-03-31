@@ -1,6 +1,6 @@
 <template>
     <div class="preview-container">
-        <el-tabs v-if="projectConfig.projectKey" type="card">
+        <el-tabs v-if="formConfig.formKey" type="card">
             <el-tab-pane>
                 <span slot="label"><i class="el-icon-mobile" />
                     手机
@@ -18,6 +18,9 @@
                 </div>
                 <div v-if="mobilePreviewUrl&&previewQrcode" class="qrcode-view">
                     <p>手机扫码查看效果</p>
+                    <p class="text-danger">
+                        * 预览只能查看效果，无法提交数据
+                    </p>
                     <vue-qr
                         v-if="mobilePreviewUrl&&previewQrcode" :size="194" :text="mobilePreviewUrl"
                     />
@@ -28,9 +31,9 @@
                     电脑
                 </span>
                 <el-scrollbar style="height: 77vh;overflow-x: hidden!important;">
-                    <project-form
-                        v-if="projectConfig.projectKey"
-                        :project-config="projectConfig"
+                    <biz-project-form
+                        v-if="formConfig.formKey"
+                        :form-config="formConfig"
                     />
                 </el-scrollbar>
             </el-tab-pane>
@@ -39,33 +42,35 @@
 </template>
 
 <script>
-import ProjectForm from './ProjectForm'
+import {BizProjectForm} from 'tduck-form-generator'
 import VueQr from 'vue-qr'
+import mixin from '../TduckFormMixin'
 
 export default {
     name: 'PreView',
     components: {
-        ProjectForm,
+        BizProjectForm,
         VueQr
     },
+    mixins: [mixin],
     props: {
         previewQrcode: null
     },
     data() {
         return {
-            projectKey: null,
+            formKey: null,
             mobilePreviewUrl: '',
-            projectConfig: {
-                projectKey: '',
+            formConfig: {
+                formKey: '',
                 showBtns: true
             }
         }
     },
     mounted() {
-        this.projectKey = this.$route.query.key
+        this.formKey = this.$route.query.key
         let url = window.location.protocol + '//' + window.location.host
-        this.mobilePreviewUrl = `${url}/project/view?key=${this.projectKey}`
-        this.$set(this.projectConfig, 'projectKey', this.projectKey)
+        this.mobilePreviewUrl = `${url}/project/form/view?key=${this.formKey}`
+        this.$set(this.formConfig, 'formKey', this.formKey)
     }
 }
 </script>
@@ -75,15 +80,23 @@ export default {
 .preview-container {
   margin: 0;
   padding-top: 30px;
-  background-color: #f7f7f7;
+  height: 100vh;
+  overflow: hidden!important;
+  background-color: var(--color-bg);
 }
-::v-deep .el-tabs--card>.el-tabs__header .el-tabs__nav{
-  border: 1px solid #E4E7ED!important;
+
+::v-deep .el-tabs--card > .el-tabs__header .el-tabs__nav {
+  border: 1px solid #E4E7ED !important;
 }
+
 ::v-deep .el-tabs__header {
   width: 300px;
   margin: 0 auto;
   border: none;
+}
+
+::v-deep .el-dialog__body {
+  max-height: calc(100vh - 200px) !important;
 }
 
 ::v-deep .el-tabs--card > .el-tabs__header .el-tabs__item {
@@ -91,6 +104,9 @@ export default {
   border: 1px solid white;
 }
 
+::v-deep .project-form{
+  margin: 40px auto 0px;
+}
 div.preview-layer {
   width: 500px;
   height: 100%;
@@ -115,11 +131,12 @@ div.preview-layer .preview-phone {
   z-index: 1000;
 }
 
-.qrcode-view{
+.qrcode-view {
   position: absolute;
-  top: 0;
-  right: 20px;
-  p{
+  top: 20px;
+  right: 260px;
+
+  p {
     text-align: center;
     font-size: 12px;
     color: #303133;

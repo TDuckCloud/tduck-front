@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     login(context, payload) {
         return new Promise(resolve => {
-            // 模拟登录成功，写入 token 信息
+            // 登录成功，写入 token 信息
             context.commit('setData', {
                 token: payload.token,
                 userInfo: payload
@@ -27,7 +27,7 @@ const actions = {
     },
     update(context, payload) {
         return new Promise(resolve => {
-            // 模拟登录成功，写入 token 信息
+            // 登录成功，写入 token 信息
             context.commit('setData', {
                 token: state.token,
                 userInfo: payload
