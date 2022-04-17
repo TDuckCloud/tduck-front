@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <vxe-grid ref="xGrid" v-bind="gridOptions"
+        <vxe-grid ref="xGrids" v-bind="gridOptions"
                   @cell-click="handleViewOrUpdate"
                   @cell-menu="cellContextMenuEvent"
                   @menu-click="contextMenuClickEvent"
@@ -22,6 +22,38 @@
             <!--自定义空数据模板-->
             <template #empty>
                 <el-empty slot="empty" description="暂无数据" />
+            </template>
+            <!--      图片上传自定义列显示-->
+            <template #img_default="{ row ,column}">
+                <el-image
+                    v-for="img in row[column.property] "
+                    :key="img.url"
+                    style="width: 45px; height: 45px"
+                    :src="img.url"
+                    fit="contain"
+                />
+            </template>
+            <!--  文件上传自定义列显示  -->
+            <template #file_default="{ row ,column}">
+                <a
+                    v-for="file in row[column.property] "
+                    :key="file.url"
+                    :href="file.url"
+                    target="_blank"
+                >
+                    <el-tooltip class="item" effect="dark" :content="file.name" placement="top-start">
+                        <i class="el-icon-document-add" style="font-size: 30px" />
+                    </el-tooltip>
+                </a>
+            </template>
+            <!--      手写签名-->
+            <template #signpad_default="{ row ,column}">
+                <el-image
+                    v-if="row[column.property]"
+                    style="width: 45px; height: 45px"
+                    :src="row[column.property]"
+                    fit="contain"
+                />
             </template>
         </vxe-grid>
         <ViewOrUpdate v-if="formModel"
@@ -56,47 +88,39 @@ import XEUtils from 'xe-utils'
 import VXETablePluginExportXLSX from 'vxe-table-plugin-export-xlsx'
 
 import {
-    // 核心
-    VXETable,
-    // 功能模块
-    Icon,
-    Filter,
-    Menu,
-    // Edit,
-    Export,
-    Keyboard,
-    // Validator,
-    Header,
-    Footer,
-    // 可选组件
-    // Column,
-    // Colgroup,
-    Grid,
-    Toolbar,
-    Pager,
-    // Checkbox,
-    // CheckboxGroup,
-    // Radio,
-    // RadioGroup,
-    // RadioButton,
-    Input,
-    // Textarea,
     Button,
+    Export,
+    Filter,
+    Footer,
+    Grid,
+    Header,
+    Icon,
+    Input,
+    Keyboard,
+    Menu,
     Modal,
-    Tooltip,
-    // Form,
-    // FormItem,
-    // FormGather,
-    Select,
     Optgroup,
     Option,
-    // Switch,
-    // List,
-    // Pulldown,
-    // 表格
-    Table
+    Pager,
+    Select,
+    Table,
+    Toolbar,
+    Tooltip,
+    VXETable
 } from 'vxe-table'
 import zhCN from 'vxe-table/lib/locale/lang/zh-CN'
+import {BizProjectForm} from 'tduck-form-generator'
+import ViewOrUpdate from './ViewOrUpdate'
+import {
+    createFormResultRequest,
+    deleteFormDataRequest,
+    downloadFormDataFileRequest,
+    listFormDataTableRequest
+} from '@/api/project/data'
+import {listFormFieldsRequest} from '@/api/project/form'
+import _ from 'lodash'
+import Import from './import'
+import {formatTableColumn} from './formatTableColumn'
 
 // 按需加载的方式默认是不带国际化的，自定义国际化需要自行解析占位符 '{0}'，例如：
 VXETable.setup({
@@ -142,17 +166,6 @@ Vue.use(Header)
     // .use(Pulldown)
     // 安装表格
     .use(Table)
-import {BizProjectForm}  from 'tduck-form-generator'
-import ViewOrUpdate from './ViewOrUpdate'
-import {
-    createFormResultRequest,
-    deleteFormDataRequest,
-    downloadFormDataFileRequest,
-    listFormDataTableRequest
-} from '@/api/project/data'
-import {listFormFieldsRequest} from '@/api/project/form'
-import _ from 'lodash'
-import Import from './import'
 
 export default {
     name: 'FormData',
@@ -283,8 +296,6 @@ export default {
                     modes: ['insert']
                 },
                 exportConfig: {
-                    // remote: true,
-                    // exportMethod: this.exportMethod,
                     isMerge: false,
                     isAllExpand: false,
                     types: ['xlsx', 'csv', 'html', 'xml', 'txt'],
@@ -371,24 +382,7 @@ export default {
             // 部分组件格式化显示 Json
             let firstCol = [{type: 'checkbox', width: 60}]
             this.gridOptions.columns = firstCol.concat(fields.map(item => {
-                // 如果是个json对象 格式化成json字符串
-                if (['SELECT', 'IMAGE_UPLOAD', 'UPLOAD', 'CASCADER', 'IMAGE_SELECT', 'SUB_FORM', 'HORIZONTAL_INPUT', 'MATRIX_INPUT', 'MATRIX_SCALE', 'MATRIX_SELECT'].includes(item.type)) {
-                    return {
-                        field: item.value, title: item.label, slots: {
-                            // 使用 JSX 渲染
-                            default: ({row}) => {
-                                if (item.type === 'CASCADER') {
-                                    return row[item.value] && row[item.value].join(',')
-                                }
-                                let value = JSON.stringify(row[item.value])
-                                return [
-                                    value
-                                ]
-                            }
-                        }
-                    }
-                }
-                return {field: item.value, title: item.label}
+                return formatTableColumn(item)
             }))
             this.fields = fields
         },
@@ -399,7 +393,7 @@ export default {
             this.$refs.dataImport.upload.open = true
         },
         handleDownload() {
-            if (!this.$refs.xGrid.$data.tablePage.total) {
+            if (!this.$refs.xGrids.$data.tablePage.total) {
                 this.$message.error('无附件，无法导出')
                 return
             }
@@ -412,7 +406,7 @@ export default {
             })
         },
         handleDelete() {
-            let ids = this.$refs.xGrid.getCheckboxRecords(true).map(item => item.id)
+            let ids = this.$refs.xGrids.getCheckboxRecords(true).map(item => item.id)
             if (!ids.length) {
                 this.msgWarning('请选择数据')
                 return
@@ -427,7 +421,7 @@ export default {
                         type: 'success',
                         message: '删除成功!'
                     })
-                    this.$refs.xGrid.commitProxy('reload')
+                    this.$refs.xGrids.commitProxy('reload')
                 })
             }).catch(() => {
 
@@ -439,10 +433,10 @@ export default {
             this.addDialogVisible = true
         },
         handleReloadTable() {
-            this.$refs.xGrid.commitProxy('reload')
+            this.$refs.xGrids.commitProxy('reload')
         },
         cellContextMenuEvent({row}) {
-            const $grid = this.$refs.xGrid
+            const $grid = this.$refs.xGrids
             $grid.setCurrentRow(row)
         },
         handleViewOrUpdate(event) {
@@ -488,7 +482,7 @@ export default {
                 'originalData': data.formModel
             }).then(() => {
                 setTimeout(() => {
-                    this.$refs.xGrid.commitProxy('reload')
+                    this.$refs.xGrids.commitProxy('reload')
                 }, 1000)
                 this.addDialogVisible = false
                 this.msgSuccess('添加成功')
