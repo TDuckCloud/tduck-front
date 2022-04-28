@@ -12,10 +12,7 @@
                 />
             </el-scrollbar>
             <div class="use-btn">
-                <el-button
-                    type="primary"
-                    @click="createProjectByTemplate"
-                >
+                <el-button type="primary" @click="createProjectByTemplate">
                     使用该模板
                 </el-button>
             </div>
@@ -24,8 +21,8 @@
 </template>
 
 <script>
-import BizProjectForm   from 'tduck-form-generator'
-import {useTemplateCreateFormRequest} from '@/api/project/template'
+import { BizProjectForm } from 'tduck-form-generator'
+import { useTemplateCreateFormRequest } from '@/api/project/template'
 import mixin from '../../form/TduckFormMixin'
 
 export default {
@@ -52,42 +49,45 @@ export default {
     methods: {
         createProjectByTemplate() {
             this.createProjectLoading = true
-            useTemplateCreateFormRequest({key: this.formConfig.formKey}).then(res => {
-                this.createProjectLoading = false
-                if (res.data) {
-                    this.$router.push({path: '/project/form', query: {key: res.data, active: 1}})
-                }
-            }).catch(() => {
-                this.createProjectLoading = false
-            })
+            useTemplateCreateFormRequest({ key: this.formConfig.formKey })
+                .then(res => {
+                    this.createProjectLoading = false
+                    if (res.data) {
+                        this.$router.push({
+                            path: '/project/form',
+                            query: { key: res.data, active: 1 }
+                        })
+                    }
+                })
+                .catch(() => {
+                    this.createProjectLoading = false
+                })
         },
-        submitForm() {
-
-        }
+        submitForm() {}
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .template-preview-container {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .header {
-  padding: 20px;
+    padding: 20px;
 }
 
-.template-scrollbar{
-  height: calc(100% - 64px);
+.template-scrollbar {
+    height: calc(100% - 64px);
 }
 .template-preview-content {
-  position: relative;
+    position: relative;
 
-  .use-btn {
-    position: absolute;
-    top: 50px;
-    right: 180px;
-  }
+    .use-btn {
+        position: absolute;
+        top: 50px;
+        right: 180px;
+    }
 }
 </style>
