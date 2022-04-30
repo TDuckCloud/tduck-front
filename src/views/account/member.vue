@@ -7,7 +7,7 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td width="80" style="text-align: right;">用户名：</td>
+                                <td width="80" style="text-align: right;">昵称：</td>
                                 <td>
                                     {{ userInfo.name }}
                                     <el-button type="text" @click="editNameDialogVisible=true">
@@ -16,7 +16,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td width="80" style="text-align: right;">账号邮箱：</td>
+                                <td width="80" style="text-align: right;">账号：</td>
                                 <td>
                                     {{ userInfo.email }}
                                     <el-button type="text" @click="emailDialogVisible=true">绑定</el-button>

@@ -5,14 +5,14 @@
                 <div>
                     <img
                         class="header-logo-img"
-                        src="@/assets/images/indexLogo.svg"
+                        src="https://demo.tduckapp.com/img/indexLogo.efc52fa3.svg"
                         @click="$router.push({ path: '/' })"
                     >
                 </div>
                 <div class="right-header">
-                    <el-link href="https://doc.tduckapp.com/" target="_blank">
-                        帮助文档
-                    </el-link>
+                    <!--                    <el-link href="https://www.tduckcloud.com" target="_blank">
+                        了解TDUCK企业版
+                    </el-link>-->
                     <el-popover
                         placement="bottom-end"
                         trigger="click"
@@ -85,9 +85,9 @@
                             <el-footer>
                                 <div class="about-container">
                                     <span class="desc-text"><a
-                                        href="https://demo.tduckapp.com"
+                                        href="https://www.tduckcloud.com"
                                         target="view_window"
-                                    >关于填鸭</a></span>
+                                    >TDUCK官网</a></span>
                                 </div>
                             </el-footer>
                         </el-main>

@@ -3,13 +3,13 @@
         <el-card class="header-container">
             <el-row align="middle" type="flex" :gutter="5" style="height: 50px">
                 <i class="el-icon-back" @click="$router.back(-1)" />
-                <img class="header-logo" src="@/assets/images/indexLogo.svg" @click="$router.push({path:'/home'})">
+                <img class="header-logo" src="https://demo.tduckapp.com/img/indexLogo.efc52fa3.svg" @click="$router.push({path:'/home'})">
                 <el-col />
                 <el-button type="primary" icon="el-icon-view" @click="previewDialogVisible=true">
                     预览
                 </el-button>
                 <el-button type="success" icon="el-icon-folder-add" @click="saveProjectAsTemplateHandle">
-                    保存为模板
+                    保存至模板中心
                 </el-button>
             </el-row>
         </el-card>
