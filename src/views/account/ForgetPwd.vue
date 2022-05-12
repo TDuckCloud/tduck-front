@@ -285,8 +285,8 @@ export default {
 }
 
 .pwd-container {
-  width: 25%;
-  height: 50%;
+  width: 30%;
+  height: 60%;
   align-content: center;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   padding: 50px;
