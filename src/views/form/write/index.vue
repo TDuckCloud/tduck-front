@@ -34,7 +34,7 @@ import {BizProjectForm} from 'tduck-form-generator'
 import {getQueryString} from '@/utils'
 import constants from '@/utils/constants'
 import {getAuthorizationUrl, getAuthorizationUserInfo, getWxSignature} from '@/api/project/wxmp'
-import {setWxConfig} from './wx'
+import {setWxConfig, onlyWxOpenHandle} from './wx'
 import _ from 'lodash'
 import mixin from '../TduckFormMixin'
 import {createPublicFormResultRequest, viewFormResultRequest} from '@/api/project/data'
@@ -153,7 +153,7 @@ export default {
                         if (res.data.recordWxUser && !this.wxAuthorizationCode) {
                             location.href = this.wxAuthorizationUrl
                         } else {
-                            this.onlyWxOpenHandle()
+                            onlyWxOpenHandle()
                         }
                     }
                 }
