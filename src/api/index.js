@@ -64,6 +64,10 @@ api.interceptors.response.use(
          * 请求出错时 msg 会返回错误信息
          * 则代码如下
          */
+        // 下载具有文件名的文件需要返回完整response
+        if (response.headers['content-disposition']) {
+            return response
+        }
         let errCodes = [500, 405, 403]
         const res = response.data
         if (res.code === 200) {

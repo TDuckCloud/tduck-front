@@ -79,7 +79,30 @@ export default {
         /** 下载模板操作 */
         importTemplate() {
             downloadImportTemplateRequest({formKey: this.formKey}).then(response => {
-                this.download(response, '导入表单数据模板')
+                // this.download(response, '导入表单数据模板')
+                if (response) {
+                    console.log(response)
+                    let contentDisposition = response.headers['content-disposition']
+                    let fileName = window.decodeURI(contentDisposition.substring(contentDisposition.indexOf('=') + 1))
+                
+                    const blob = new Blob([response.data], { type: 'application/vnd.ms-excel' })
+                    // 对于<a>标签，只有 Firefox 和 Chrome（内核） 支持 download 属性
+                    if ('download' in document.createElement('a')) { 
+                        const link = document.createElement('a')// 创建a标签
+                        link.download = fileName// a标签添加属性
+                        link.style.display = 'none'
+                        link.href = URL.createObjectURL(blob)
+                        document.body.appendChild(link)
+                        link.click()// 执行下载
+                        URL.revokeObjectURL(link.href) // 释放url
+                        document.body.removeChild(link)// 释放标签
+                    } else {
+                        navigator.msSaveBlob(blob, fileName)
+                    }
+                } else {
+                    self.$message.warning('转化文件失败，请检查文件并且重试！')
+                }
+
             })
         },
         // 文件上传中处理
