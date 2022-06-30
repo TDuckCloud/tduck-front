@@ -143,7 +143,7 @@
                 <el-table-column
                     align="center"
                     label="描述"
-                    prop="describe"
+                    prop="description"
                     show-overflow-tooltip
                 />
                 <el-table-column
