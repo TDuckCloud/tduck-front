@@ -1,40 +1,93 @@
 
-## _TDUCK_  填鸭表单收集器  
-Tduck 填鸭：是基于B/S架构的一款开源的表单在线收集系统，为企业构建自己的信息反馈系统的综合解决方案，助力企业提高反馈收集客户服务效率。
+<p align="center">
+    <a href="https://www.tduckcloud.com" target="_blank" rel="noopener noreferrer">
+        <img style="margin-bottom: 0px;" width="100px" src="https://oss.tduckcloud.com/lading-image/ICO-icon.png" alt="TDUCK logo" />
+    </a>
+</p>
 
+<p align="center">数据收集，如此简单。</p>
+
+<p align="center">
+    <img src='https://gitee.com/TDuckApp/tduck-platform/badge/star.svg?theme=dark' alt='star'></img>
+    <img src='https://gitee.com/TDuckApp/tduck-platform/badge/fork.svg?theme=dark' alt='fork'></img>
+    <img src='https://img.shields.io/github/stars/tduckcloud/tduck-platform?style=social' alt='star'></img>
+    <img src='https://img.shields.io/github/forks/tduckcloud/tduck-platform?style=social' alt='fork'></img>
+    <br />
+    <br />   
+    <a href="https://www.tduckcloud.com/" target="_blank">官方网站</a>&nbsp;
+    <a href="https://www.yuque.com/tduck/home"  target="_blank" >部署文档</a>&nbsp;
+    <a href="https://pro.tduckcloud.com/s/QUiDSKq8" target="_blank">微信社区</a>&nbsp;
+    <a href="https://space.bilibili.com/409825300" target="_blank">bilibili频道</a>
+</p>
+
+<br />
+目前市面上的表单平台虽然功能强大，但是部分业务组件或者额外收取存储等费用，且费用较高，在数据隐私性较强且有特殊表单需求的场景下无法满足业务需求，国内的开源表单系统比较少，tduck表单应运而生。愿景能够让企业低成本拥有独立自定义表单问卷，快速赋能业务。
+
+------------------------------
 
 
 ###  :star:  提示
 表单设计器模块暂时没有开源，项目通过Npm方式引用，不影响正常使用以及二开其他功能，后续根据情况开源，如果你想获得该部分源码，可以与我们一起开发，提交5个Pr，我们将与你分享该源码。或拉取v2分支的表单源码进行二开使用！
 
-
-###  :fire:   开源版演示地址
-- 演示地址：https://www.tduckcloud.com
-- 演示账号/密码：扫码登录即可
-- 部署默认账号： test@tduckapp.com/12345678
-![输入图片说明](https://oss.tduckcloud.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20220224113836.png)
+------------------------------
 
 
-
-###  :fire:   PRO版演示地址
-- 演示地址：https://www.tduckcloud.com
-- 演示账号/密码：test/12345678
-![输入图片说明](https://s1.ax1x.com/2022/04/08/LptAVP.png)
-![输入图片说明](https://s1.ax1x.com/2022/04/08/LptV58.png)
-![输入图片说明](https://s1.ax1x.com/2022/04/08/Lpt6PO.png)
-![输入图片说明](https://s1.ax1x.com/2022/04/08/LptUxJ.png)
+###  开源版
+- 在线体验：<a href="http://www.tduckcloud.com" target="_blank">演示地址</a>
+- 默认账号：test@tduckapp.com
+- 默认密码：12345678
 
 
-###  :star: 功能特性
-##### 界面美观，全新element-ui支持，使用流畅
-- 以一种全新的设计体验，告别繁琐的设计流程
-- 通过简单有趣的方式，轻轻松松完成表单设计
-- 支持表单样式模板选择，只为显现更精美的表单
 
-##### 三大模块助力企业能力升级：
-- 新建表单：自定义可拖拽式表单设计
-- 表单设置：支持多种收集方式设置
-- 反馈统计：多维度统计收集的反馈数据
+###  PRO版
+- 在线体验：<a href="http://www.tduckcloud.com" target="_blank">演示地址</a>
+- 账号：test
+- 密码：12345678
+
+
+##  快速启动
+
+- 部署文档：<a href="https://www.yuque.com/tduck/home/vl7y79" target="_blank">点击查看部署文档</a>
+
+#### 配置最小开发环境：
+
+   * [MySQL5.7或以上](https://dev.mysql.com/downloads/mysql/)
+   * [JDK1.8或以上](http://www.oracle.com/technetwork/java/javase/overview/index.html)
+   * [Maven](https://maven.apache.org/download.cgi)
+   * [Nodejs](https://nodejs.org/en/download/)
+
+#### 创建一个tduck的数据库  **版本选择mysql5.7**  ，并执行项目目录下doc/tduck.sql文件
+
+#### 启动后端服务
+
+   打开命令行，输入以下命令
+
+   ```bash
+   mvn clean install -DskipTests
+   cd tduck-platform/tduck-api
+   mvn clean package -DskipTests
+   java -Dfile.encoding=UTF-8 -jar target/tduck-api.jar
+   ```
+
+#### 启动管理后台前端
+
+   打开命令行，输入以下命令
+
+   ```bash
+   npm install -g cnpm --registry=https://registry.npm.taobao.org
+   cd tduck-front
+   cnpm install
+   cnpm run serve
+   ```
+   浏览器打开，输入网址`http://localhost:8888`, 进入页面。
+
+
+### 项目源码
+
+|   后端源码  |   前端源码  |
+|--- | --- |
+|  https://gitee.com/TDuckApp/tduck-platform   |  https://gitee.com/TDuckApp/tduck-front   |
+|  https://github.com/TDuckCloud/tduck-platform   |  https://github.com/TDuckCloud/tduck-front   |
 
 
 
@@ -89,10 +142,6 @@ https://www.ydyno.com/archives/1219.html
 - views 页面
 
 
-### 加入社群
-  <img alt="logo" src="https://images.gitee.com/uploads/images/2021/0706/174654_31b12d64_1674451.png" style="margin-bottom: 0px;" width="80px">
-
-
 
 ### “新特性”
 
@@ -121,6 +170,5 @@ https://www.ydyno.com/archives/1219.html
 ### 特别鸣谢 :heart: 
 
 感谢 (https://gitee.com/eoner/vue-automation) 前端脚手架
-
 感谢 (https://gitee.com/mrhj/form-generator) 表单生成器
 
