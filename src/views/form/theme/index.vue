@@ -296,6 +296,7 @@
 
 <script>
 import PreView from '../preview'
+import 'tduck-form-generator/dist/TduckForm.css'
 import {getUserThemeRequest, listThemeRequest, saveUserThemeRequest} from '@/api/project/form'
 import {listCategory} from '../../../api/project/theme'
 import {getToken} from '../../../utils/auth'
@@ -330,6 +331,7 @@ export default {
             },
             projectFormKey: +new Date(),
             formKey: '',
+            token: '',
             styleList: [],
             colorList: [
                 '#FF6D56',
@@ -350,7 +352,7 @@ export default {
     computed: {
         getUploadHeader() {
             return {
-                Authorization: 'Bearer ' + getToken()
+                token: getToken()
             }
         },
         getUploadUrl() {
@@ -470,9 +472,9 @@ export default {
   line-height: 20px;
   text-align: center;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 100);
+  border: 0px solid rgba(255, 255, 255, 100);
   background-color: white;
-  width: 20%;
+  width: 25%;
   height: calc(100vh - 60px);
 }
 

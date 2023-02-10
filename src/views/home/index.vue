@@ -5,7 +5,7 @@
                 <div>
                     <img
                         class="header-logo-img"
-                        src="https://demo.tduckapp.com/img/indexLogo.efc52fa3.svg"
+                        src="https://oss.tduckcloud.com/logo-blue.png"
                         @click="$router.push({ path: '/' })"
                     >
                 </div>
@@ -218,9 +218,9 @@ $menuActiveText: #409eff;
     line-height: 38px;
     min-width: 1024px;
     .header-logo-img {
-        width: 120px;
-        height: 45px;
+        width: 100px;
         float: left;
+      margin-top: 5px;
         margin-left: 55px;
     }
     .right-header {

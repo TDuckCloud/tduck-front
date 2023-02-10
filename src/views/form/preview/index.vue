@@ -43,6 +43,7 @@
 
 <script>
 import {BizProjectForm} from 'tduck-form-generator'
+import 'tduck-form-generator/dist/TduckForm.css'
 import VueQr from 'vue-qr'
 import mixin from '../TduckFormMixin'
 

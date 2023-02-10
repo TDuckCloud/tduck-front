@@ -31,6 +31,7 @@
 
 <script>
 import {BizProjectForm} from 'tduck-form-generator'
+import 'tduck-form-generator/dist/TduckForm.css'
 import {getQueryString} from '@/utils'
 import constants from '@/utils/constants'
 import {getAuthorizationUrl, getAuthorizationUserInfo, getWxSignature} from '@/api/project/wxmp'
