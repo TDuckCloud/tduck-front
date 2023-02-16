@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <div class="logo-banner">
-            <img src="@/assets/images/logo_banner.png">
+            <img src="@/assets/images/banner2.png">
         </div>
         <div class="logo-content">
             <span class="hello">Hello ，</span>
@@ -98,7 +98,7 @@
             <p class="desc">关于TDuckApp登录</p>
             <p class="desc">
                 若微信扫码失败，请打开 微信授权页面 登录 若QQ登录填鸭云异常，
-                可查阅 帮助文档 若因微信、QQ、公众号冻结或账号密码找回失败等
+                可查阅 <a href="https://doc.tduckcloud.com">帮助文档</a> 若因微信、QQ、公众号冻结或账号密码找回失败等
                 无法登录，可 自助申请 登录账号
             </p>
         </div>
@@ -288,16 +288,19 @@ export default {
 }
 
 .logo-banner {
+  text-align: right;
     width: 50%;
 
     img {
-        width: 100%;
+      margin-top: -50px;
+      width: 570px;
+      height: 550px;
     }
 }
 
 .logo-content {
     width: 400px;
-    margin-left: 100px;
+    margin-top: -50px;
 
     .hello {
         font-size: 40px;
