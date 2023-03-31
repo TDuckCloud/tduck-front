@@ -111,22 +111,22 @@
                                         </el-link>
                                     </el-col>
                                 </el-row>
-                                <el-row>
-                                    <el-col :offset="8">
-                                        <div class="other-login">
-                                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">
-                                                <svg-icon class="other-login-icon" name="loginQQ" />
-                                            </span>
-                                            <svg-icon class="other-login-icon"
-                                                      name="loginWx"
-                                                      @click="()=>{
-                                                          this.formType='login'
-                                                          this.loginType='wx'
-                                                      }"
-                                            />
-                                        </div>
-                                    </el-col>
-                                </el-row>
+                                <!--                                <el-row>-->
+                                <!--                                    <el-col :offset="8">-->
+                                <!--                                        <div class="other-login">-->
+                                <!--                                            <span @click="redirectUrl(qqLoginAuthorizeUrl)">-->
+                                <!--                                                <svg-icon class="other-login-icon" name="loginQQ" />-->
+                                <!--                                            </span>-->
+                                <!--                                            <svg-icon class="other-login-icon"-->
+                                <!--                                                      name="loginWx"-->
+                                <!--                                                      @click="()=>{-->
+                                <!--                                                          this.formType='login'-->
+                                <!--                                                          this.loginType='wx'-->
+                                <!--                                                      }"-->
+                                <!--                                            />-->
+                                <!--                                        </div>-->
+                                <!--                                    </el-col>-->
+                                <!--                                </el-row>-->
                             </el-form-item>
                         </el-form>
                     </el-tab-pane>
@@ -209,7 +209,6 @@
     </div>
 </template>
 <script>
-
 import {getCurrentDomain} from '@/utils'
 // 引入组件
 import constants from '@/utils/constants'
@@ -281,8 +280,8 @@ export default {
                 ]
             },
             accountForm: {
-                email: '',
-                phoneNumber: '',
+                email: 'qing@tduckapp.com',
+                phoneNumber: '123456',
                 password: ''
             },
             wxQrCodeLoading: true,

@@ -161,11 +161,12 @@ export default {
         createBlankTemplate() {
             createFormRequest({
                 description: '快来填写你的问卷描述吧',
+                type: 'ORDINARY',
                 name: '问卷名称'
             }).then(res => {
                 this.$router.push({
                     path: '/project/form',
-                    query: { key: res.data }
+                    query: { key: res.data.formKey }
                 })
             })
         },
