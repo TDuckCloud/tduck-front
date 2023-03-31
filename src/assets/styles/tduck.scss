@@ -1,0 +1,500 @@
+/**
+* 通用css样式布局处理
+*/
+//main-container全局样式
+.app-container {
+  padding: 20px;
+}
+
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
+
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+
+//refine vue-multiselect plugin
+.multiselect {
+  line-height: 16px;
+}
+
+.multiselect--active {
+  z-index: 1000 !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.desc-text {
+  color: rgba(155, 155, 155, 100);
+  font-size: 14px;
+  text-align: left;
+}
+
+.title-text {
+  color: #303133;
+  font-size: 18px;
+  text-align: left;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.width-full {
+  width: 100% !important;
+}
+
+.width50 {
+  width: 50% !important;
+}
+
+.width80 {
+  width: 80% !important;
+  margin: 0 auto;
+}
+
+.width90 {
+  width: 80% !important;
+  margin: 0 auto;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+//.el-dialog:not(.is-fullscreen) {
+//  margin-top: 6vh !important;
+//}
+
+.el-table {
+  .el-table__header-wrapper,
+  .el-table__fixed-header-wrapper {
+    th {
+      word-break: break-word;
+      background-color: #f8f8f9;
+      color: #515a6e;
+      height: 40px;
+      font-size: 13px;
+    }
+  }
+
+  .el-table__body-wrapper {
+    .el-button [class*='el-icon-'] + span {
+      margin-left: 1px;
+    }
+  }
+}
+
+/** 表单布局 **/
+.form-header {
+  font-size: 15px;
+  color: #6379bb;
+  border-bottom: 1px solid #ddd;
+  margin: 8px 10px 25px 10px;
+  padding-bottom: 5px;
+}
+
+/** 表格布局 **/
+.pagination-container {
+  position: relative;
+  height: 50px;
+  //margin-bottom: 10px;
+  //margin-top: 15px;
+  padding: 10px 20px !important;
+}
+
+/* tree border */
+.tree-border {
+  margin-top: 5px;
+  border: 1px solid #e5e6e7;
+  background: #ffffff none;
+  border-radius: 4px;
+}
+
+.pagination-container .el-pagination {
+  right: 0;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .pagination-container .el-pagination > .el-pagination__jump {
+    display: none !important;
+  }
+  .pagination-container .el-pagination > .el-pagination__sizes {
+    display: none !important;
+  }
+}
+
+.el-table .fixed-width .el-button--mini {
+  padding-left: 0;
+  padding-right: 0;
+  width: inherit;
+}
+
+/** 表格更多操作下拉样式 */
+.el-table .el-dropdown-link {
+  cursor: pointer;
+  color: #1890ff;
+  margin-left: 5px;
+}
+
+.el-table .el-dropdown,
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+
+.el-tree-node__content > .el-checkbox {
+  margin-right: 8px;
+}
+
+.list-group-striped > .list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.list-group {
+  padding-left: 0px;
+  list-style: none;
+}
+
+.list-group-item {
+  border-bottom: 1px solid #e7eaec;
+  border-top: 1px solid #e7eaec;
+  margin-bottom: -1px;
+  padding: 11px 0px;
+  font-size: 13px;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.el-card__header {
+  padding: 14px 15px 7px;
+  min-height: 40px;
+}
+
+.el-card__body {
+  padding: 15px 20px 20px 20px;
+}
+
+.card-box {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+/* button color */
+.el-button--cyan.is-active,
+.el-button--cyan:active {
+  background: #20b2aa;
+  border-color: #20b2aa;
+  color: #ffffff;
+}
+
+.el-button--cyan:focus,
+.el-button--cyan:hover {
+  background: #48d1cc;
+  border-color: #48d1cc;
+  color: #ffffff;
+}
+
+.el-button--cyan {
+  background-color: #20b2aa;
+  border-color: #20b2aa;
+  color: #ffffff;
+}
+
+/* text color */
+.text-navy {
+  color: #1ab394;
+}
+
+.text-primary {
+  color: inherit;
+}
+
+.text-success {
+  color: #1c84c6;
+}
+
+.text-info {
+  color: #23c6c8;
+}
+
+.text-warning {
+  color: #f8ac59;
+}
+
+.text-danger {
+  color: #ed5565 !important;
+}
+
+.text-muted {
+  color: #888888;
+}
+
+/* image */
+.img-circle {
+  border-radius: 50%;
+}
+
+.img-lg {
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-upload-preview {
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ccc;
+  overflow: hidden;
+}
+
+.top-right-btn {
+  position: relative;
+  float: right;
+}
+
+// 自定义dialog样式
+.t-dialog {
+  overflow: visible;
+  top: 5%;
+}
+
+.t-dialog .el-dialog {
+  min-height: 180px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin: 0 !important;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  border-radius: 10px;
+  max-height: calc(100% - 100px);
+  max-width: calc(100% - 100px);
+}
+
+.t-dialog--top .el-dialog {
+  top: 10%;
+}
+
+.t-dialog .el-dialog__header {
+  padding: 19px 24px;
+  min-height: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.t-dialog .el-dialog__title,
+.t-dialog .el-drawer__header {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  word-wrap: break-word;
+}
+
+.t-dialog .el-dialog__body {
+  margin-bottom: 50px;
+}
+
+.t-dialog .el-dialog .el-dialog__body {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.t-dialog__footer {
+  display: block;
+  padding: 10px 16px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid #f0f0f0;
+  background-color: #fff;
+  text-align: right;
+}
+
+.t-dialog__footer--left {
+  text-align: left;
+}
+
+.t-dialog__footer--center {
+  text-align: center;
+}
+
+// 全屏按钮dialog的样式
+.t__dialog__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.t__dialog__menu {
+  padding-right: 20px;
+}
+
+.t__dialog__menu i {
+  color: #909399;
+  font-size: 15px;
+  //padding-bottom: 7px;
+}
+
+.t__dialog__menu i:hover {
+  color: #409eff;
+}
+
+.t__dialog__menu .el-dialog__body {
+  padding: 20px 20px 5px 10px;
+}
+
+.t__dialog__menu .el-scrollbar__wrap {
+  overflow-x: hidden;
+}
+
+.t-dialog--fullscreen .el-dialog {
+  left: 0;
+  top: 0;
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+  width: 100% !important;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+//辅助文字
+.extra-small-font-size {
+  font-size: 12px;
+}
+
+//正文（小）
+.small-font-size {
+  font-size: 13px;
+}
+
+//正文
+.base-font-size {
+  font-size: 14px;
+}
+
+// 小标题
+.medium-font-size {
+  font-size: 16px;
+}
+
+//标题
+.large-font-size {
+  font-size: 18px;
+}
+
+// 主要文字
+.text-primary-color {
+  color: #303133;
+}
+
+// 常规文字
+.text-base-color {
+  color: #606266;
+}
+
+// 次要文字
+.text-secondary-color {
+  color: #909399;
+}
+
+// 占位文字
+.text-placeholder-color {
+  color: #c0c4cc;
+}
+
+// 主标题
+.extra-large-size {
+  font-size: 20px;
+}
+
+// 标题尺寸
+.title-medium {
+  font-size: 16px;
+}
+
+.title-large {
+  font-size: 16px;
+}
+
+.title-extra-large {
+  font-size: 16px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

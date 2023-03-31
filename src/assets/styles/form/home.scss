@@ -2,270 +2,270 @@
 $selectedColor: rgba(24, 144, 255, 0.05);
 $lighterBlue: #1890ff;
 .form-edit-container {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 60px);
-    overflow-y: hidden;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 60px);
+  overflow-y: hidden;
 }
 .components-list {
-    padding: 8px;
-    box-sizing: border-box;
-    height: 100%;
-    .components-item {
-        display: inline-block;
-        width: 48%;
-        margin: 1%;
-        transition: transform 0ms !important;
-    }
+  padding: 8px;
+  box-sizing: border-box;
+  height: 100%;
+  .components-item {
+    display: inline-block;
+    width: 48%;
+    margin: 1%;
+    transition: transform 0ms !important;
+  }
 }
 .components-draggable {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 .components-title {
-    font-size: 14px;
-    color: #222;
-    margin: 6px 2px;
-    .svg-icon {
-        color: #666;
-        font-size: 18px;
-    }
+  font-size: 14px;
+  color: #222;
+  margin: 6px 2px;
+  .svg-icon {
+    color: #666;
+    font-size: 18px;
+  }
 }
 .components-body {
-    padding: 8px 10px;
-    background: $selectedColor;
-    font-size: 12px;
-    cursor: move;
-    border: 1px dashed $selectedColor;
-    border-radius: 3px;
+  padding: 8px 10px;
+  background: $selectedColor;
+  font-size: 12px;
+  cursor: move;
+  border: 1px dashed $selectedColor;
+  border-radius: 3px;
+  .svg-icon {
+    color: #777;
+    font-size: 15px;
+  }
+  &:hover {
+    border: 1px dashed $--color-primary;
+    color: $--color-primary;
     .svg-icon {
-        color: #777;
-        font-size: 15px;
+      color: $--color-primary;
     }
-    &:hover {
-        border: 1px dashed $--color-primary;
-        color: $--color-primary;
-        .svg-icon {
-            color: $--color-primary;
-        }
-    }
+  }
 }
 .left-board {
-    width: 260px;
-    position: absolute;
-    left: 10px;
-    top: 0;
-    margin-top: 5px;
-    height: calc(100vh - 80px);
-    background-color: rgba(255, 255, 255, 100);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 100);
+  width: 260px;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  margin-top: 5px;
+  height: calc(100vh - 80px);
+  background-color: rgba(255, 255, 255, 100);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 100);
 }
 .el-menu.el-menu--horizontal {
-    border-bottom: none;
+  border-bottom: none;
 }
 .left-scrollbar {
-    height: calc(100vh - 80px);
-    overflow: hidden;
-    margin: 5px;
-    border-radius: 7px;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  margin: 5px;
+  border-radius: 7px;
 }
 .center-scrollbar {
-    height: calc(100vh - 60px);
-    overflow: hidden;
-    width: 90%;
-    margin: 20px auto 0;
-    box-sizing: border-box;
-    background-color: rgb(255, 255, 255);
-    border: 2px solid rgba(255, 255, 255, 100);
-    overflow-y: hidden;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+  width: 90%;
+  margin: 20px auto 0;
+  box-sizing: border-box;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgba(255, 255, 255, 100);
+  overflow-y: hidden;
 }
 .center-board {
-    height: calc(100vh - 220px);
-    width: auto;
-    margin: 0 350px 80px 260px;
-    box-sizing: border-box;
+  height: calc(100vh - 220px);
+  width: auto;
+  margin: 0 350px 80px 260px;
+  box-sizing: border-box;
 }
 .empty-info {
-    position: absolute;
-    top: 36%;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 18px;
-    color: $--color-primary;
-    letter-spacing: 4px;
+  position: absolute;
+  top: 36%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 18px;
+  color: $--color-primary;
+  letter-spacing: 4px;
 }
 .action-bar {
-    position: relative;
-    height: 42px;
-    text-align: right;
-    padding: 0 15px;
-    box-sizing: border-box;
-    border: 1px solid #f1e8e8;
-    border-top: none;
-    border-left: none;
-    .delete-btn {
-        color: #f56c6c;
-    }
+  position: relative;
+  height: 42px;
+  text-align: right;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border: 1px solid #f1e8e8;
+  border-top: none;
+  border-left: none;
+  .delete-btn {
+    color: #f56c6c;
+  }
 }
 .center-board-row {
-    padding: 12px 12px 15px 12px;
-    box-sizing: border-box;
-    overflow-y: hidden;
-    & > .el-form {
-        // 69 = 12+15+42
-        height: calc(100vh - 69px);
-    }
+  padding: 12px 12px 15px 12px;
+  box-sizing: border-box;
+  overflow-y: hidden;
+  & > .el-form {
+    // 69 = 12+15+42
+    height: calc(100vh - 69px);
+  }
 }
 .drawing-board {
-    height: 100%;
+  height: 100%;
+  position: relative;
+  .components-body {
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+  }
+  .sortable-ghost {
     position: relative;
-    .components-body {
-        padding: 0;
-        margin: 0;
-        font-size: 0;
+    display: block;
+    overflow: hidden;
+    &::before {
+      content: ' ';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 3px;
+      background: $--color-primary;
+      z-index: 2;
     }
-    .sortable-ghost {
-        position: relative;
-        display: block;
-        overflow: hidden;
-        &::before {
-            content: " ";
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: 3px;
-            background: $--color-primary;
-            z-index: 2;
-        }
-    }
-    .components-item.sortable-ghost {
-        width: 100%;
-        height: 60px;
-        background-color: $selectedColor;
-    }
-    .active-from-item {
-        & > .el-form-item {
-            background: $selectedColor;
-            border-radius: 6px;
-        }
-        & > .drawing-item-copy,
-        & > .drawing-item-delete {
-            display: initial;
-        }
-        & > .component-name {
-            color: $lighterBlue;
-        }
-    }
-    .el-form-item {
-        margin-bottom: 15px;
-    }
-}
-.drawing-item {
-    position: relative;
-    cursor: move;
-    &.unfocus-bordered:not(.active-from-item) > div:first-child {
-        border: 1px dashed #ccc;
-    }
-    .el-form-item {
-        padding: 12px 10px;
-    }
-}
-.drawing-row-item {
-    position: relative;
-    cursor: move;
-    box-sizing: border-box;
-    border: 1px dashed #ccc;
-    border-radius: 3px;
-    padding: 0 2px;
-    margin-bottom: 15px;
-    .drawing-row-item {
-        margin-bottom: 2px;
-    }
-    .el-col {
-        margin-top: 22px;
-    }
-    .el-form-item {
-        margin-bottom: 0;
-    }
-    .drag-wrapper {
-        min-height: 80px;
-    }
-    &.active-from-item {
-        border: 1px dashed $lighterBlue;
-    }
-    .component-name {
-        position: absolute;
-        top: 0;
-        left: 0;
-        font-size: 12px;
-        color: #bbb;
-        display: inline-block;
-        padding: 0 6px;
-    }
-}
-.drawing-item,
-.drawing-row-item {
-    &:hover {
-        & > .el-form-item {
-            background: $selectedColor;
-            border-radius: 6px;
-        }
-        & > .drawing-item-copy,
-        & > .drawing-item-delete {
-            display: initial;
-        }
+  }
+  .components-item.sortable-ghost {
+    width: 100%;
+    height: 60px;
+    background-color: $selectedColor;
+  }
+  .active-from-item {
+    & > .el-form-item {
+      background: $selectedColor;
+      border-radius: 6px;
     }
     & > .drawing-item-copy,
     & > .drawing-item-delete {
-        display: none;
-        position: absolute;
-        top: -10px;
-        width: 22px;
-        height: 22px;
-        line-height: 22px;
-        text-align: center;
-        border-radius: 50%;
-        font-size: 12px;
-        border: 1px solid;
-        cursor: pointer;
-        z-index: 1;
+      display: initial;
     }
-    & > .drawing-item-copy {
-        right: 56px;
-        border-color: $lighterBlue;
-        color: $lighterBlue;
-        background: #fff;
-        &:hover {
-            background: $lighterBlue;
-            color: #fff;
-        }
+    & > .component-name {
+      color: $lighterBlue;
     }
+  }
+  .el-form-item {
+    margin-bottom: 15px;
+  }
+}
+.drawing-item {
+  position: relative;
+  cursor: move;
+  &.unfocus-bordered:not(.active-from-item) > div:first-child {
+    border: 1px dashed #ccc;
+  }
+  .el-form-item {
+    padding: 12px 10px;
+  }
+}
+.drawing-row-item {
+  position: relative;
+  cursor: move;
+  box-sizing: border-box;
+  border: 1px dashed #ccc;
+  border-radius: 3px;
+  padding: 0 2px;
+  margin-bottom: 15px;
+  .drawing-row-item {
+    margin-bottom: 2px;
+  }
+  .el-col {
+    margin-top: 22px;
+  }
+  .el-form-item {
+    margin-bottom: 0;
+  }
+  .drag-wrapper {
+    min-height: 80px;
+  }
+  &.active-from-item {
+    border: 1px dashed $lighterBlue;
+  }
+  .component-name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+    color: #bbb;
+    display: inline-block;
+    padding: 0 6px;
+  }
+}
+.drawing-item,
+.drawing-row-item {
+  &:hover {
+    & > .el-form-item {
+      background: $selectedColor;
+      border-radius: 6px;
+    }
+    & > .drawing-item-copy,
     & > .drawing-item-delete {
-        right: 24px;
-        border-color: #f56c6c;
-        color: #f56c6c;
-        background: #fff;
-        &:hover {
-            background: #f56c6c;
-            color: #fff;
-        }
+      display: initial;
     }
+  }
+  & > .drawing-item-copy,
+  & > .drawing-item-delete {
+    display: none;
+    position: absolute;
+    top: -10px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 12px;
+    border: 1px solid;
+    cursor: pointer;
+    z-index: 1;
+  }
+  & > .drawing-item-copy {
+    right: 56px;
+    border-color: $lighterBlue;
+    color: $lighterBlue;
+    background: #fff;
+    &:hover {
+      background: $lighterBlue;
+      color: #fff;
+    }
+  }
+  & > .drawing-item-delete {
+    right: 24px;
+    border-color: #f56c6c;
+    color: #f56c6c;
+    background: #fff;
+    &:hover {
+      background: #f56c6c;
+      color: #fff;
+    }
+  }
 }
 
 .form-name-text {
-    padding: 6px 10px;
-    border: 1px dashed transparent;
-    line-height: 30px;
-    margin: 0;
+  padding: 6px 10px;
+  border: 1px dashed transparent;
+  line-height: 30px;
+  margin: 0;
 }
 .form-name-text input {
-    border: none;
-    background-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 [contenteditable]:focus {
-    outline: none;
-    background-color: #f4f4f4;
-    border: 1px solid #f4f4f4;
+  outline: none;
+  background-color: #f4f4f4;
+  border: 1px solid #f4f4f4;
 }

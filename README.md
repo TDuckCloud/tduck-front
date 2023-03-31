@@ -24,7 +24,7 @@
 <br />
 
 
-## 项目简介
+## 简介 - idea
 
 - 2019年初，同事想做一场针对全国范围内的照片数据收集活动，经过考察当时使用了一款saas工具：[*客表单]；
 
@@ -39,41 +39,31 @@
 
 ------------------------------
 
-
-## Hot！社区活动
-
-[💥 如何获取 [开源版表单编辑器] 源码](https://doc.tduckcloud.com/openSource/#hot-%E7%A4%BE%E5%8C%BA%E6%B4%BB%E5%8A%A8)
-
-------------------------------
-
-
-## 查看演示
-
+## 演示 - Demonstrate
 
 - 在线体验：<a href="http://www.tduckcloud.com" target="_blank">演示地址</a>
 
+## 文档 - Document
+- 项目文档： <a href="https://doc.tduckcloud.com" target="_blank">文档地址</a>
 
-## 文档地址
+##  如有帮助请点亮 Star ⭐️
+![登录](readmeImages/star.gif)
 
-- <a href="https://doc.tduckcloud.com" target="_blank">部署文档</a>
+## 预览-开源版 - Preview
 
 
-## 预览-开源版
+![登录](readmeImages/screely-1680875090915.png)
+![我的表单](readmeImages/screely-1680873937150.png)
+![表单设计器](readmeImages/screely-1680873554938.png)
+![模板中心](readmeImages/screely-1680874308945.png)
+![逻辑设置](readmeImages/screely-1680873488767.png)
+![用户管理](readmeImages/screely-1680874985938.png)
+![系统配置](readmeImages/screely-1680874351097.png)
+![回收设置](readmeImages/screely-1680873612592.png)
+![数据详情](readmeImages/screely-1680873703554.png)
+![保存模板](readmeImages/screely-1680873844396.png)
+![发布表单](readmeImages/screely-1680873661475.png)
+![统计概览](readmeImages/screely-1680873817576.png)
+![外观设置](readmeImages/screely-1680873577743.png)
 
-![screely-1677667217485](https://doc-oss.tduckcloud.com/doc/screely-1677667217485.png)
 
-![screely-1677666654915](https://doc-oss.tduckcloud.com/doc/screely-1677666654915.png)
-
-![screely-1677666871018](https://doc-oss.tduckcloud.com/doc/screely-1677666871018.png)
-
-![screely-1677666942894](https://doc-oss.tduckcloud.com/doc/screely-1677666942894.png)
-
-![screely-1677666958248](https://doc-oss.tduckcloud.com/doc/screely-1677666958248.png)
-
-![screely-1677666975392](https://doc-oss.tduckcloud.com/doc/screely-1677666975392.png)
-
-![screely-1677666993088](https://doc-oss.tduckcloud.com/doc/screely-1677666993088.png)
-
-![screely-1677667119617](https://doc-oss.tduckcloud.com/doc/screely-1677667119617.png)
-
-![screely-1677667148732](https://doc-oss.tduckcloud.com/doc/screely-1677667148732.png)

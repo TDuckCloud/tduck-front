@@ -17,52 +17,52 @@ Vue.use(Router)
  */
 const routes = []
 const require_module = require.context('./modules', false, /.js$/)
-require_module.keys().forEach(file_name => {
-    routes.push(require_module(file_name).default)
+require_module.keys().forEach((file_name) => {
+  routes.push(require_module(file_name).default)
 })
 
 routes.push({
-    path: '*',
-    component: () => import('@/views/404'),
-    meta: {
-        title: '找不到页面'
-    }
+  path: '*',
+  component: () => import('@/views/404'),
+  meta: {
+    title: '找不到页面'
+  }
 })
 
 const router = new Router({
-    mode: 'history',
-    routes: routes.flat()
+  mode: 'history',
+  routes: routes.flat()
 })
 
 // 解决路由在 push/replace 了相同地址报错的问题
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location).catch((err) => err)
 }
 const originalReplace = Router.prototype.replace
 Router.prototype.replace = function replace(location) {
-    return originalReplace.call(this, location).catch(err => err)
+  return originalReplace.call(this, location).catch((err) => err)
 }
 
 router.beforeEach((to, from, next) => {
-    NProgress.start()
-    if (to.meta.requireLogin) {
-        if (store.getters['user/isLogin']) {
-            next()
-            NProgress.done()
-        } else {
-            next({
-                path: '/login',
-                query: {
-                    redirect: to.fullPath
-                }
-            })
-            NProgress.done()
-        }
+  NProgress.start()
+  if (to.meta.requireLogin) {
+    if (store.getters['user/isLogin']) {
+      next()
+      NProgress.done()
     } else {
-        next()
-        NProgress.done()
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      })
+      NProgress.done()
     }
+  } else {
+    next()
+    NProgress.done()
+  }
 })
 
 export default router

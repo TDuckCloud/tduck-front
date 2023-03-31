@@ -1,50 +1,42 @@
 <template>
-    <div class="write-container">
-        <h1 id="inActiveTime" style="display: none;" />
-        <div v-if="writeStatus==0" v-cloak>
-            <el-result icon="error" :title="writeNotStartPrompt" :sub-title="writeNotStartPrompt" />
-        </div>
-        <div v-if="writeStatus==1" class="form-container">
-            <biz-project-form
-                v-if="formConfig.formKey"
-                :form-config="formConfig"
-                @submit="submitForm"
-            />
-        </div>
-        <div v-if="writeStatus==2" v-cloak class="title-icon-view">
-            <el-result icon="success"
-                       :title="userFormSetting.promptText?userFormSetting.promptTextContent:'提交成功！'"
-            />
-            <div style="text-align: center">
-                <el-image
-                    v-if="userFormSetting.promptImg"
-                    :src="userFormSetting.promptImgUrl"
-                    fit="cover"
-                />
-                <!--                <el-button v-if="userFormSetting.publicResult" type="primary" @click="openPublicResultHandle">-->
-                <!--                    查看数据-->
-                <!--                </el-button>-->
-            </div>
-        </div>
+  <div class="write-container">
+    <h1 id="inActiveTime" style="display: none" />
+    <div v-cloak v-if="writeStatus == 0">
+      <el-result :title="writeNotStartPrompt" icon="error" />
     </div>
+    <div v-cloak v-if="writeStatus == 3">
+      <el-card class="pwdinput-card text-center">
+        <div slot="header" class="clearfix">
+          <span> 请输入密码填写</span>
+        </div>
+        <el-input v-model="writePassword" placeholder="请输入密码填写" />
+        <el-button class="width50 mt20" type="primary" @click="handleCheckWritePwd"> 确定</el-button>
+      </el-card>
+    </div>
+    <div v-if="writeStatus == 1" class="form-container">
+      <biz-project-form v-if="formConfig.formKey" ref="bizProjectForm" :form-config="formConfig" @submit="submitForm" />
+    </div>
+    <div v-cloak v-if="writeStatus == 2" class="title-icon-view">
+      <div v-if="userFormSetting.submitShowType === 2" v-html="userFormSetting.submitShowCustomPageContent" />
+      <el-result v-else :title="'提交成功'" icon="success" />
+    </div>
+  </div>
 </template>
 
 <script>
-import {BizProjectForm} from 'tduck-form-generator'
+import Cookies from 'js-cookie'
+import { BizProjectForm } from 'tduck-form-generator'
 import 'tduck-form-generator/dist/TduckForm.css'
-import {getQueryString} from '@/utils'
+import { getQueryString } from '@/utils'
 import constants from '@/utils/constants'
-import {getAuthorizationUrl, getAuthorizationUserInfo, getWxSignature} from '@/api/project/wxmp'
-import {setWxConfig, onlyWxOpenHandle} from './wx'
-import _ from 'lodash'
-import mixin from '../TduckFormMixin'
-import {createPublicFormResultRequest, viewFormResultRequest} from '@/api/project/data'
-import {
-    getShareSettingRequest,
-    getSubmitSettingRequest,
-    getWriteSettingRequest,
-    getWriteSettingStatusRequest
-} from '@/api/project/setting'
+import { removeFormData } from '@/utils/db'
+import { getAuthorizationUrl, getAuthorizationUserInfo, getWxSignature } from '@/api/project/wxmp'
+import { isWxEnv, onlyWxOpenHandle, setWxConfig } from './wx'
+import TduckFormMixin from '../TduckFormMixin'
+import { createFormResultRequest, publicCreateFormResultRequest, viewFormResultRequest } from '@/api/project/data'
+import { checkWritePwdRequest, getPublicSettingsRequest, getWriteSettingStatusRequest } from '@/api/project/setting'
+import { jumpUrl } from './SubmitJump'
+import { checkWriteCountCap, saveWriteCount } from '@/views/form/write/DeviceWriteCount'
 
 const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
@@ -52,142 +44,208 @@ const ua = uaParser(navigator.userAgent)
 require('@/utils/ut')
 
 export default {
-    name: 'WriteView',
-    components: {
-        BizProjectForm
-    },
-    mixins: [mixin],
-    props: {},
-    data() {
-        return {
-            inActiveTime: 0,
-            formConfig: {
-                formKey: '',
-                preview: false,
-                showBtns: true
-            },
-            writeStatus: 1,
-            // 不允许填写的提示信息
-            writeNotStartPrompt: '',
-            userFormSetting: {
-            },
-            // 微信授权地址
-            wxAuthorizationUrl: '',
-            wxAuthorizationCode: '',
-            wxUserInfo: {},
-            wxSignature: {}
-        }
-    },
-    async created() {
-        let key = this.$route.query.key || this.$route.params.key
-        this.formConfig.formKey = key
-        // 微信授权重定向到该页 会携带code参数
-        let wxCode = getQueryString('code')
-        if (wxCode) {
-            this.wxAuthorizationCode = wxCode
-            await this.getWxAuthorizationUserInfo()
-        }
-        // 微信逻辑授权结束
-        this.getWxAuthorizationUrl()
-        // 检查是否能进入填写
-        this.queryProjectSettingStatus()
-        this.queryProjectSetting()
-        if (constants.enableWx) {
-            // 加载微信相关 获取签名
-            getWxSignature({url: window.location.href}).then(res => {
-                this.wxSignature = res.data
-                getShareSettingRequest(this.formConfig.formKey).then(res => {
-                    setWxConfig(this.wxSignature, res.data)
-                })
-            })
-        }
-    },
-    mounted() {
-        viewFormResultRequest(this.formConfig.formKey).then(() => {
-        })
-    }, methods: {
-        queryProjectSettingStatus() {
-            // 是否能进入填写
-            getWriteSettingStatusRequest({
-                formKey: this.formConfig.formKey,
-                wxOpenId: this.wxUserInfo ? this.wxUserInfo.openid : ''
-            }).then(res => {
-                if (res.msg) {
-                    this.writeNotStartPrompt = res.msg
-                    this.writeStatus = 0
-                }
-            })
-        },
-        getWxAuthorizationUserInfo() {
-            // 根据code 获取用户授权信息
-            let wxAuthorizationCode = this.wxAuthorizationCode
-            return getAuthorizationUserInfo({
-                code: wxAuthorizationCode
-            }).then(res => {
-                if (res.data) {
-                    this.wxUserInfo = res.data
-                }
-            })
-        },
-        getWxAuthorizationUrl() {
-            // 获取微信授权url地址
-            getAuthorizationUrl({url: window.location.href}).then(res => {
-                if (res.data) {
-                    this.wxAuthorizationUrl = res.data
-                }
-            })
-        },
-        queryProjectSetting() {
-            // 提交设置
-            getSubmitSettingRequest(this.formConfig.formKey).then(res => {
-                if (res.data) {
-                    this.userFormSetting = this.userFormSetting ? _.assign(this.userFormSetting, res.data) : res.data
-                }
-            })
-            // 填写设置
-            getWriteSettingRequest(this.formConfig.formKey).then(res => {
-                if (res.data) {
-                    this.userFormSetting = this.userFormSetting ? _.assign(this.userFormSetting, res.data) : res.data
-                    // 仅在微信环境打开
-                    if (res.data && res.data.wxWrite) {
-                        // 记录微信用户信息
-                        if (res.data.recordWxUser && !this.wxAuthorizationCode) {
-                            location.href = this.wxAuthorizationUrl
-                        } else {
-                            onlyWxOpenHandle()
-                        }
-                    }
-                }
-            })
-
-        },
-        openPublicResultHandle() {
-            let formKey = this.formConfig.formKey
-            this.$router.replace({path: '/project/public/result', query: {formKey}})
-        },
-        submitForm(data) {
-            // 完成时间
-            let inActiveTime = document.getElementById('inActiveTime').innerText
-            createPublicFormResultRequest({
-                'completeTime': inActiveTime,
-                'formKey': this.formConfig.formKey,
-                'submitOs': ua.os.name,
-                'submitBrowser': ua.browser.name,
-                'submitUa': ua,
-                'wxUserInfo': this.wxUserInfo,
-                'wxOpenId': this.wxUserInfo ? this.wxUserInfo.openid : '',
-                'originalData': data.formModel
-            }).then(() => {
-                this.writeStatus = 2
-                if (this.userFormSetting.submitJump) {
-                    setTimeout(() => {
-                        window.location.replace(this.userFormSetting.submitJumpUrl)
-                    }, 1000)
-                }
-
-            })
-        }
+  name: 'WriteView',
+  components: {
+    BizProjectForm
+  },
+  mixins: [TduckFormMixin],
+  props: {
+    // 1：公开填写 2：指定成员填写
+    writeType: {
+      type: Number,
+      default: 1
     }
+  },
+  data() {
+    return {
+      formKey: '',
+      writePassword: '',
+      inActiveTime: 0,
+      formConfig: {
+        formKey: '',
+        preview: false,
+        showBtns: true
+      },
+      writeStatus: 1,
+      // 不允许填写的提示信息
+      writeNotStartPrompt: '',
+      userFormSetting: {},
+      // 微信授权地址
+      wxAuthorizationUrl: '',
+      wxAuthorizationCode: '',
+      wxUserInfo: {},
+      wxSignature: {},
+      // 待提交表单数据
+      submitFormData: {
+        completeTime: null,
+        formKey: null,
+        submitOs: ua.os.name,
+        submitBrowser: ua.browser.name,
+        submitUa: ua,
+        wxUserInfo: null,
+        wxOpenId: null,
+        originalData: null
+      },
+      // 提交后返回的数据
+      submitResult: {
+        // 随机编号
+        randomNumberText: '',
+        // 考试成绩
+        examScoreText: ''
+      }
+    }
+  },
+  async created() {
+    this.formKey = this.$route.query.key || this.$route.params.key
+    // cookie获取微信用户信息
+    this.getCookieAuthorizationUserInfo()
+    // 微信授权重定向到该页 会携带code参数
+    let wxCode = getQueryString('code')
+    if (wxCode) {
+      this.wxAuthorizationCode = wxCode
+      await this.getWxAuthorizationUserInfo()
+    }
+    // 微信逻辑授权结束 授权地址
+    this.getWxAuthorizationUrl()
+    // 检查是否能进入填写
+    this.queryProjectSettingStatus()
+    // 查询相关设置 检查是否能打开等
+    let settingRes = await this.queryProjectSetting()
+    // 非微信环境不加载微信相关 加快访问速度
+    if (constants.enableWx && isWxEnv()) {
+      // 加载微信相关 获取签名
+      getWxSignature({ url: window.location.href }).then((res) => {
+        this.wxSignature = res.data
+        setWxConfig(this.wxSignature, settingRes.data)
+      })
+    }
+    viewFormResultRequest(this.formKey).then(() => {})
+  },
+  methods: {
+    queryProjectSettingStatus() {
+      // 是否能进入填写
+      getWriteSettingStatusRequest({
+        formKey: this.formKey,
+        type: this.writeType,
+        wxOpenId: this.wxUserInfo ? this.wxUserInfo.openid : ''
+      }).then((res) => {
+        if (res.msg) {
+          this.writeNotStartPrompt = res.msg
+          this.writeStatus = 0
+        }
+      })
+    },
+    getCookieAuthorizationUserInfo() {
+      // cookie缓存拿一次 没有的话调接口拿
+      let wxUserInfo = Cookies.get('wxUserInfo')
+      if (wxUserInfo) {
+        wxUserInfo = JSON.parse(wxUserInfo)
+        console.log(wxUserInfo)
+        if (wxUserInfo.openid) {
+          this.wxUserInfo = wxUserInfo
+        }
+      }
+    },
+    getWxAuthorizationUserInfo() {
+      // 根据code 获取用户授权信息
+      let wxAuthorizationCode = this.wxAuthorizationCode
+      return getAuthorizationUserInfo({
+        code: wxAuthorizationCode
+      }).then((res) => {
+        if (res.data) {
+          console.log('wxuser')
+          this.wxUserInfo = res.data
+          Cookies.set('wxUserInfo', JSON.stringify(res.data))
+          console.log(this.wxUserInfo)
+        }
+      })
+    },
+    getWxAuthorizationUrl() {
+      // 获取微信授权url地址
+      getAuthorizationUrl({ url: window.location.href }).then((res) => {
+        if (res.data) {
+          this.wxAuthorizationUrl = res.data
+        }
+      })
+    },
+    async queryProjectSetting() {
+      // 填写设置
+      let res = await getPublicSettingsRequest(this.formKey)
+      this.formConfig.formKey = this.formKey
+      if (res.data) {
+        this.userFormSetting = res.data
+        this.formConfig.setting = res.data
+        // 设备填写次数校验
+        this.checkDeviceWriteLimit()
+        // 仅在微信环境打开
+        if (res.data && res.data.onlyWxWrite) {
+          // 记录微信用户信息
+          if (res.data.recordWxUser && !this.wxAuthorizationCode) {
+            if (Object.keys(this.wxUserInfo).length === 0) {
+              location.href = this.wxAuthorizationUrl
+            }
+          } else {
+            onlyWxOpenHandle()
+          }
+        }
+        // 开启了密码填写
+        if (res.data && res.data.passwordWriteStatus) {
+          this.writeStatus = 3
+        }
+      }
+      return res
+    },
+    /**
+     * 检查设备填写次数
+     */
+    checkDeviceWriteLimit() {
+      if (this.userFormSetting.deviceWriteCountLimitStatus) {
+        const flag = checkWriteCountCap(this.formKey, this.userFormSetting.deviceWriteCountLimit)
+        if (flag) {
+          this.writeNotStartPrompt = this.userFormSetting.deviceWriteCountLimitText
+          this.writeStatus = 0
+        }
+        return flag
+      }
+    },
+    handleCheckWritePwd() {
+      checkWritePwdRequest({
+        formKey: this.formKey,
+        password: this.writePassword
+      }).then((res) => {
+        this.writeStatus = 1
+      })
+    },
+    async submitForm(data) {
+      // 完成时间
+      this.submitFormData.completeTime = document.getElementById('inActiveTime').innerText
+      this.submitFormData.wxUserInfo = this.wxUserInfo
+      this.submitFormData.wxOpenId = this.wxUserInfo ? this.wxUserInfo.openid : ''
+      this.submitFormData.originalData = data.formModel
+      this.submitFormData.formKey = this.formKey
+      this.submitFormData.formId = data.formId
+      this.submitFormData.formType = this.$refs.bizProjectForm.formConf.formType
+      let res = null
+      if (this.writeType === 1) {
+        res = await publicCreateFormResultRequest(this.submitFormData)
+      } else {
+        res = await createFormResultRequest(this.submitFormData)
+      }
+      this.handleSubmitSuccess(res.data)
+    },
+    // 提交成功后处理
+    handleSubmitSuccess(data) {
+      this.submitResult = data
+      // 删除临时缓存数据
+      removeFormData(this.formKey)
+      // 如果开启了设备填写次数限制 则保存记录
+      saveWriteCount(this.formKey)
+      this.writeStatus = 2
+      if (this.userFormSetting.submitJump) {
+        jumpUrl(this.userFormSetting.submitJumpUrl, data.id)
+      }
+    }
+  }
 }
 </script>
 
@@ -209,9 +267,6 @@ export default {
   height: 100%;
   width: 100%;
 }
-.form-container{
-  height: 100%;
-}
 
 .icon-view {
   width: 59px;
@@ -229,71 +284,13 @@ export default {
   color: white;
   font-size: 30px;
 }
-</style>
 
-<style lang="scss">
-@import '../../../assets/styles/elementui-mobile.scss';
-
-.project-form-wrapper {
-  width: 100%;
-  min-height: 100%;
-  padding: 20px 0px;
-  background-color: rgba(158, 207, 250, 0.3);
+.pwdinput-card {
+  width: 350px;
+  margin: 200px auto;
+  min-height: 200px;
 }
-
-.project-form {
-  margin: 0px auto;
-  width: 800px;
-  padding: 15px;
-  background-repeat: repeat;
-  background-color: #FFFFFF;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
-}
-
-.project-form .describe-html img {
-  max-width: 780px;
-  margin: 0px;
-}
-
-.project-body::-webkit-scrollbar {
-  width: 0 !important;
-  background: transparent;
-}
-
-.project-body {
-  -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none;
-}
-
-.logo-img {
-  max-height: 120px;
-}
-
-.submit-btn-form-item button {
-  width: 20%;
-}
-
-.support-text {
-  color: #545454;
-  text-shadow: 0 1px 1px #e9e9e9;
-  margin-top: 20px;
-}
-
-@media screen and (max-width: 750px) {
-  .project-form {
-    width: 100% !important;
-  }
-  .logo-img {
-    max-height: 2.94rem;
-  }
-  .submit-btn-form-item {
-    text-align: center;
-  }
-  .submit-btn-form-item button {
-    width: 80%;
-  }
-  .project-form .describe-html img {
-    width: 95vw !important;
-  }
+::v-deep .project-form {
+  padding: 20px;
 }
 </style>

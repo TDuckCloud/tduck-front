@@ -17,31 +17,36 @@ import '@/components/autoRegister'
 import VueClipboard from 'vue-clipboard2'
 import './assets/icons'
 import Process from '@/components/HandleProcess/process'
-
+import { parseTime, resetForm } from '@/utils/tduck'
+import './plugin'
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$store = store
 Vue.prototype.$cookies = Cookies
-Vue.prototype.msgSuccess = function(msg) {
-    this.$message({showClose: true, message: msg, type: 'success'})
+Vue.prototype.msgSuccess = function (msg) {
+  this.$message({ showClose: true, message: msg, type: 'success' })
 }
-Vue.prototype.msgError = function(msg) {
-    this.$message({showClose: true, message: msg, type: 'error'})
+Vue.prototype.msgError = function (msg) {
+  this.$message({ showClose: true, message: msg, type: 'error' })
 }
-Vue.prototype.msgWarning = function(msg) {
-    this.$message({showClose: true, message: msg, type: 'warning'})
+Vue.prototype.msgWarning = function (msg) {
+  this.$message({ showClose: true, message: msg, type: 'warning' })
 }
-Vue.prototype.msgInfo = function(msg) {
-    this.$message.info(msg)
+Vue.prototype.msgInfo = function (msg) {
+  this.$message.info(msg)
 }
 Vue.prototype.$process = Process
+
+Vue.prototype.parseTime = parseTime
+Vue.prototype.resetForm = resetForm
+
 Vue.use(VueClipboard)
 Vue.use(meta)
-Vue.use(Element, {size: 'small', zIndex: 3000})
+Vue.use(Element, { size: 'small', zIndex: 3000 })
 Vue.config.productionTip = false
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  router,
+  store,
+  render: (h) => h(App)
 }).$mount('#app')
