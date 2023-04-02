@@ -1,107 +1,84 @@
 <template>
-    <div>
-        <el-container class="home-container">
-            <el-header class="header-container" height="38">
-                <div>
-                    <img
-                        class="header-logo-img"
-                        src="https://oss.tduckcloud.com/logo-blue.png"
-                        @click="$router.push({ path: '/' })"
-                    >
-                </div>
-                <div class="right-header">
-                    <!--                    <el-link href="https://www.tduckcloud.com" target="_blank">
-                        了解TDUCK企业版
-                    </el-link>-->
-                    <el-popover
-                        placement="bottom-end"
-                        trigger="click"
-                        width="150"
-                    >
-                        <div class="user-person-menu">
-                            <div>
-                                <p v-if="getUserInfo" class="nick-name">
-                                    {{ getUserInfo.name }}
-                                </p>
-                            </div>
+    <div class="home-container">
+        <div class="header-container">
+            <div>
+                <img
+                    class="header-logo-img"
+                    src="~@/assets/images/logo-blue.png"
+                    @click="$router.push({ path: '/' })"
+                >
+            </div>
+            <div class="right-header">
+                <el-popover placement="bottom-end" trigger="click" width="150">
+                    <div class="user-person-menu">
+                        <div>
+                            <p v-if="getUserInfo" class="nick-name">
+                                {{ getUserInfo.name }}
+                            </p>
+                        </div>
+                        <el-divider />
+                        <div>
+                            <p
+                                class="person-menu-item"
+                                @click="$router.push({ path: '/home/member' })"
+                            >
+                                <font-icon class="fab fa-get-pocket" />
+                                我的账户
+                            </p>
                             <el-divider />
-                            <div>
-                                <p
-                                    class="person-menu-item"
-                                    @click="
-                                        $router.push({ path: '/home/member' })
-                                    "
-                                >
-                                    <font-icon class="fab fa-get-pocket" />
-                                    我的账户
-                                </p>
-                                <el-divider />
-                                <p
-                                    class="person-menu-item"
-                                    @click="logoutHandle"
-                                >
-                                    <font-icon class="fas fa-sign-out" />
-                                    退出登录
-                                </p>
-                            </div>
+                            <p class="person-menu-item" @click="logoutHandle">
+                                <font-icon class="fas fa-sign-out" />
+                                退出登录
+                            </p>
                         </div>
-                        <div slot="reference">
-                            <img
-                                v-if="getUserInfo"
-                                :src="getUserInfo.avatar"
-                                class="user-avatar"
-                            >
-                        </div>
-                    </el-popover>
+                    </div>
+                    <div slot="reference">
+                        <img
+                            v-if="getUserInfo"
+                            :src="getUserInfo.avatar"
+                            class="user-avatar"
+                        >
+                    </div>
+                </el-popover>
+            </div>
+        </div>
+        <div class="content-container">
+            <div class="menu-box">
+                <el-button type="primary" @click="createBlankTemplate">
+                    新建项目
+                </el-button>
+                <div class="menu-view">
+                    <div
+                        v-for="menu in menuList"
+                        :key="menu.route"
+                        :class="
+                            defaultActiveMenu === menu.route
+                                ? 'menu-item-active menu-item'
+                                : 'menu-item'
+                        "
+                        @click="menuClickHandle(menu)"
+                    >
+                        <font-icon :class="menu.icon" />
+                        <span>{{ menu.name }}</span>
+                    </div>
                 </div>
-            </el-header>
-            <el-container class="content-container">
-                <el-aside width="280px">
-                    <el-card class="menu-box">
-                        <el-button type="primary" @click="createBlankTemplate">
-                            新建项目
-                        </el-button>
-                        <div class="menu-view">
-                            <div
-                                v-for="menu in menuList"
-                                :key="menu.route"
-                                :class="
-                                    defaultActiveMenu == menu.route
-                                        ? 'menu-item-active menu-item'
-                                        : 'menu-item'
-                                "
-                                @click="menuClickHandle(menu)"
-                            >
-                                <font-icon :class="menu.icon" />
-                                <span>{{ menu.name }}</span>
-                            </div>
-                        </div>
-                    </el-card>
-                </el-aside>
-                <el-container class="scroll-container">
-                    <el-container class="view-container">
-                        <el-main>
-                            <router-view />
-                            <el-footer>
-                                <div class="about-container">
-                                    <span class="desc-text"><a
-                                        href="https://www.tduckcloud.com"
-                                        target="view_window"
-                                    >TDUCK官网</a></span>
-                                </div>
-                            </el-footer>
-                        </el-main>
-                    </el-container>
-                </el-container>
-            </el-container>
-        </el-container>
+            </div>
+            <div class="view-container">
+                <router-view />
+                <el-footer>
+                    <div class="about-container">
+                        <span class="desc-text"><a href="https://www.tduckcloud.com" target="view_window">TDUCK官网</a></span>
+                    </div>
+                </el-footer>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import store from '@/store'
 import router from '@/router'
-import { createFormRequest } from '@/api/project/form'
+import {createFormRequest} from '@/api/project/form'
 
 export default {
     name: 'NewIndex',
@@ -133,8 +110,7 @@ export default {
             return store
         },
         getUserInfo() {
-            let user = JSON.parse(this.getStore.getters['user/userInfo'])
-            return user
+            return JSON.parse(this.getStore.getters['user/userInfo'])
         }
     },
     created() {
@@ -196,135 +172,127 @@ export default {
 $menuActiveText: #409eff;
 
 .home-container {
-    background-color: rgba(247, 247, 247, 90);
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    flex-direction: column;
+  background-color: rgba(247, 247, 247, 90);
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+
 }
 
 .content-container {
-    height: calc(100vh - 38px);
-    overflow: hidden;
-
-    .view-container {
-        flex-direction: column;
-    }
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  .view-container {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .header-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  height: 45px;
+  line-height: 45px;
+  min-width: 1024px;
+  .header-logo-img {
+    width: 100px;
+    float: left;
+    margin-top: 5px;
+    margin-left: 55px;
+  }
+  .right-header {
     display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-    line-height: 38px;
-    min-width: 1024px;
-    .header-logo-img {
-        width: 100px;
-        float: left;
-      margin-top: 5px;
-        margin-left: 55px;
+    flex-direction: row;
+    > * {
+      margin: 0 20px;
     }
-    .right-header {
-        display: flex;
-        flex-direction: row;
-        > * {
-            margin: 0 20px;
-        }
-    }
-    .user-avatar {
-        width: 35px;
-        height: 35px;
-        border-radius: 100px;
-        cursor: pointer;
-        vertical-align: middle;
-    }
+  }
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    cursor: pointer;
+    vertical-align: middle;
+  }
 }
 
-.menu-view {
+.menu-box{
+   width:15%;
+   display: flex;
+   padding: 10px 20px;
+   flex-direction: column;
+  background-color: rgba(255, 255, 255, 100);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  .menu-view {
     flex: 1;
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 100);
     padding: 20px;
     text-align: center;
 
     .menu-item-active {
-        color: $menuActiveText !important;
+      color: $menuActiveText !important;
     }
     .menu-item {
-        color: #333;
-        font-size: 16px;
-        text-align: left;
-        line-height: 35px;
-        &:hover {
-            cursor: pointer;
-            color: $menuActiveText;
-        }
-        & .fas:hover {
-            color: $menuActiveText;
-        }
-        .fas {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin: 5px;
-        }
-        span {
-            margin-left: 10px;
-        }
+      color: #333;
+      font-size: 16px;
+      text-align: left;
+      line-height: 35px;
+      &:hover {
+        cursor: pointer;
+        color: $menuActiveText;
+      }
+      & .fas:hover {
+        color: $menuActiveText;
+      }
+      .fas {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin: 5px;
+      }
+      span {
+        margin-left: 10px;
+      }
     }
+  }
 }
-.banner-container {
-    height: 60px;
-}
-.el-aside {
-    padding: 0;
-    margin: 0;
-    .el-card {
-        height: 100%;
-        ::v-deep .el-card__body {
-            height: 100%;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-        }
-        .el-button {
-            width: 80%;
-            margin-top: 20px;
-        }
-    }
-}
+
 .user-person-menu {
-    .nick-name {
-        height: 16px;
-        color: rgba(70, 70, 70, 86);
-        font-size: 14px;
-        line-height: 16px;
-        text-align: left;
+  .nick-name {
+    height: 16px;
+    color: rgba(70, 70, 70, 86);
+    font-size: 14px;
+    line-height: 16px;
+    text-align: left;
+  }
+  .person-menu-item {
+    color: rgba(70, 70, 70, 86);
+    font-size: 14px;
+    text-align: left;
+    &:hover {
+      cursor: pointer;
+      color: $menuActiveText;
     }
-    .person-menu-item {
-        color: rgba(70, 70, 70, 86);
-        font-size: 14px;
-        text-align: left;
-        &:hover {
-            cursor: pointer;
-            color: $menuActiveText;
-        }
-    }
-    .el-divider {
-        margin: 5px 0;
-    }
-    .person-menu-divider {
-        background-color: rgba(210, 210, 210, 78);
-        border: 1px solid rgba(210, 210, 210, 78);
-    }
+  }
+  .el-divider {
+    margin: 5px 0;
+  }
+  .person-menu-divider {
+    background-color: rgba(210, 210, 210, 78);
+    border: 1px solid rgba(210, 210, 210, 78);
+  }
 }
 .about-container {
-    text-align: center;
-    .fa-user {
-        font-size: 19px;
-        color: rgba(172, 172, 172, 100);
-        margin: 1px;
-    }
+  text-align: center;
+  .fa-user {
+    font-size: 19px;
+    color: rgba(172, 172, 172, 100);
+    margin: 1px;
+  }
 }
 </style>
