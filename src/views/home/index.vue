@@ -245,9 +245,9 @@ $menuActiveText: #409eff;
 }
 
 .menu-box {
-  width: 15%;
+  min-width: 15%;
   display: flex;
-  padding: 10px 20px;
+  padding: 5px;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 100);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
