@@ -1,93 +1,102 @@
 <template>
-    <div class="preview-container">
-        <el-tabs v-if="formConfig.formKey" type="card">
-            <el-tab-pane>
-                <span slot="label"><i class="el-icon-mobile" />
-                    手机
-                </span>
-                <div class="preview-layer">
-                    <div class="preview-bg" />
-                    <div class="preview-phone">
-                        <iframe id="preview-html"
-                                :src="mobilePreviewUrl"
-                                class="preview-html" frameborder="0"
-                                name="preview-html"
-                                scrolling="auto"
-                        />
-                    </div>
-                </div>
-                <div v-if="mobilePreviewUrl&&previewQrcode" class="qrcode-view">
-                    <p>手机扫码查看效果</p>
-                    <p class="text-danger">
-                        * 预览只能查看效果，无法提交数据
-                    </p>
-                    <vue-qr
-                        v-if="mobilePreviewUrl&&previewQrcode" :size="194" :text="mobilePreviewUrl"
-                    />
-                </div>
-            </el-tab-pane>
-            <el-tab-pane>
-                <span slot="label"><i class="el-icon-monitor" />
-                    电脑
-                </span>
-                <el-scrollbar style="height: 77vh;overflow-x: hidden!important;">
-                    <biz-project-form
-                        v-if="formConfig.formKey"
-                        :form-config="formConfig"
-                    />
-                </el-scrollbar>
-            </el-tab-pane>
-        </el-tabs>
-    </div>
+  <div class="preview-container">
+    <el-tabs v-if="formConfig.formKey" type="card">
+      <el-tab-pane>
+        <span slot="label"
+          ><i class="el-icon-mobile" />
+          手机
+        </span>
+        <div class="preview-layer">
+          <div class="preview-bg" />
+          <div class="preview-phone">
+            <iframe
+              id="preview-html"
+              :src="mobilePreviewUrl"
+              class="preview-html"
+              frameborder="0"
+              name="preview-html"
+              scrolling="auto"
+            />
+          </div>
+        </div>
+        <div v-if="mobilePreviewUrl && previewQrcode" class="qrcode-view">
+          <p style="font-weight: bold; font-size: 16px">手机扫码预览</p>
+          <p class="tips-text">* 预览仅查看效果，无法提交数据</p>
+          <p>
+            <vue-qr
+              v-if="mobilePreviewUrl && previewQrcode"
+              :size="134"
+              style="border-radius: 10px"
+              :text="mobilePreviewUrl"
+            />
+          </p>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane>
+        <span slot="label"
+          ><i class="el-icon-monitor" />
+          电脑
+        </span>
+        <el-scrollbar style="height: 77vh; overflow-x: hidden !important">
+          <biz-project-form v-if="formConfig.formKey" :form-config="formConfig" />
+        </el-scrollbar>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
-import {BizProjectForm} from 'tduck-form-generator'
+import { BizProjectForm } from 'tduck-form-generator'
 import 'tduck-form-generator/dist/TduckForm.css'
 import VueQr from 'vue-qr'
 import mixin from '../TduckFormMixin'
 
 export default {
-    name: 'PreView',
-    components: {
-        BizProjectForm,
-        VueQr
-    },
-    mixins: [mixin],
-    props: {
-        previewQrcode: null
-    },
-    data() {
-        return {
-            formKey: null,
-            mobilePreviewUrl: '',
-            formConfig: {
-                formKey: '',
-                showBtns: true
-            }
-        }
-    },
-    mounted() {
-        this.formKey = this.$route.query.key
-        let url = window.location.protocol + '//' + window.location.host
-        this.mobilePreviewUrl = `${url}/project/form/view?key=${this.formKey}`
-        this.$set(this.formConfig, 'formKey', this.formKey)
+  name: 'PreView',
+  components: {
+    BizProjectForm,
+    VueQr
+  },
+  mixins: [mixin],
+  props: {
+    previewQrcode: null
+  },
+  data() {
+    return {
+      formKey: null,
+      mobilePreviewUrl: '',
+      formConfig: {
+        formKey: '',
+        showBtns: true
+      }
     }
+  },
+  mounted() {
+    this.formKey = this.$route.query.key
+    let url = window.location.protocol + '//' + window.location.host
+    this.mobilePreviewUrl = `${url}/project/form/view?key=${this.formKey}`
+    this.$set(this.formConfig, 'formKey', this.formKey)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.tips-text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .preview-container {
   margin: 0;
   padding-top: 30px;
   height: 100vh;
-  overflow: hidden!important;
+  overflow: hidden !important;
   background-color: var(--color-bg);
 }
 
 ::v-deep .el-tabs--card > .el-tabs__header .el-tabs__nav {
-  border: 1px solid #E4E7ED !important;
+  border: 1px solid #e4e7ed !important;
+  border-radius: 10px;
+  background-color: white;
 }
 
 ::v-deep .el-tabs__header {
@@ -101,13 +110,18 @@ export default {
 }
 
 ::v-deep .el-tabs--card > .el-tabs__header .el-tabs__item {
-  background-color: white;
-  border: 1px solid white;
+  background-color: transparent;
+  //border: 1px solid white;
 }
 
-::v-deep .project-form{
-  margin: 40px auto 0px;
+::v-deep .project-form {
+  padding: 20px;
 }
+
+::v-deep .project-form-wrapper {
+  background-color: transparent;
+}
+
 div.preview-layer {
   width: 500px;
   height: 100%;
@@ -160,5 +174,4 @@ div.preview-layer .preview-phone {
   border-bottom-width: 0;
   border-left-width: 0;
 }
-
 </style>

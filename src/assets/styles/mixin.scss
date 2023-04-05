@@ -1,108 +1,104 @@
 @mixin clearfix {
-    &::after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
 }
 @mixin scrollBar {
-    &::-webkit-scrollbar-track-piece {
-        background: #d3dce6;
-    }
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #99a9bf;
-        border-radius: 20px;
-    }
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
 }
 @mixin relative {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 @mixin pct($pct) {
-    width: #{$pct};
-    position: relative;
-    margin: 0 auto;
+  width: #{$pct};
+  position: relative;
+  margin: 0 auto;
 }
 @mixin triangle($width, $height, $color, $direction) {
-    $width: $width/2;
-    $color-border-style: $height solid $color;
-    $transparent-border-style: $width solid transparent;
+  $width: $width/2;
+  $color-border-style: $height solid $color;
+  $transparent-border-style: $width solid transparent;
 
-    height: 0;
-    width: 0;
-    @if $direction==up {
-        border-bottom: $color-border-style;
-        border-left: $transparent-border-style;
-        border-right: $transparent-border-style;
-    }
-    @else if $direction==right {
-        border-left: $color-border-style;
-        border-top: $transparent-border-style;
-        border-bottom: $transparent-border-style;
-    }
-    @else if $direction==down {
-        border-top: $color-border-style;
-        border-left: $transparent-border-style;
-        border-right: $transparent-border-style;
-    }
-    @else if $direction==left {
-        border-right: $color-border-style;
-        border-top: $transparent-border-style;
-        border-bottom: $transparent-border-style;
-    }
+  height: 0;
+  width: 0;
+  @if $direction==up {
+    border-bottom: $color-border-style;
+    border-left: $transparent-border-style;
+    border-right: $transparent-border-style;
+  } @else if $direction==right {
+    border-left: $color-border-style;
+    border-top: $transparent-border-style;
+    border-bottom: $transparent-border-style;
+  } @else if $direction==down {
+    border-top: $color-border-style;
+    border-left: $transparent-border-style;
+    border-right: $transparent-border-style;
+  } @else if $direction==left {
+    border-right: $color-border-style;
+    border-top: $transparent-border-style;
+    border-bottom: $transparent-border-style;
+  }
 }
 // @mixin 通过 @include 调用使用
 // % 通过 @extend 调用使用
 // 文字超出隐藏，默认为单行超出隐藏，可设置多行
 @mixin text-overflow($line: 1, $fixed-width: true) {
-    @if ($line==1 and $fixed-width==true) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    @else {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: $line;
-        overflow: hidden;
-    }
+  @if ($line==1 and $fixed-width==true) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line;
+    overflow: hidden;
+  }
 }
 
 // 定位居中，默认水平居中，可选择垂直居中，或者水平垂直都居中
 @mixin position-center($type: x) {
-    position: absolute;
-    @if ($type==x) {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    @if ($type==y) {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-    @if ($type==xy) {
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%);
-    }
+  position: absolute;
+  @if ($type==x) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  @if ($type==y) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @if ($type==xy) {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
 }
 
 // 文字两端对齐
 %justify-align {
-    text-align: justify;
-    text-align-last: justify;
+  text-align: justify;
+  text-align-last: justify;
 }
 
 // 清除浮动
 %clearfix {
-    zoom: 1;
-    &::before,
-    &::after {
-        content: '';
-        display: block;
-        clear: both;
-    }
+  zoom: 1;
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
 }

@@ -4,220 +4,226 @@
 @import './tduck.scss';
 
 body {
-    height: 100%;
-    margin: 0;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    color: #25262b;
+  height: 100%;
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji;
+  color: #25262b;
 }
 label {
-    font-weight: 700;
+  font-weight: 700;
 }
 html {
-    height: 100%;
-    margin: 0;
-    box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 #app {
-    margin: 0;
-    height: 100%;
+  margin: 0;
+  height: 100%;
 }
 *,
 *::before,
 *::after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 .no-padding {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 .padding-content {
-    padding: 4px 0;
+  padding: 4px 0;
 }
 a:focus,
 a:active {
-    outline: none;
+  outline: none;
 }
 a,
 a:focus,
 a:hover {
-    cursor: pointer;
-    color: inherit;
-    text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 div:focus {
-    outline: none;
+  outline: none;
 }
 .fr {
-    float: right;
+  float: right;
 }
 .fl {
-    float: left;
+  float: left;
 }
 .pr-5 {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 .pl-5 {
-    padding-left: 5px;
+  padding-left: 5px;
 }
 .pl-10 {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 .mt-5 {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 .mr-10 {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 .ml-20 {
-    margin-left: 20px !important;
+  margin-left: 20px !important;
 }
 .ml-10 {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .block {
-    display: block;
+  display: block;
 }
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 .inlineBlock {
-    display: block;
+  display: block;
 }
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 .flex-row {
-    display: flex;
-    flex-direction: row;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
 }
 .flex-column {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 .flex-center {
-    display: flex;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 .desc-text {
-    color: rgba(155, 155, 155, 100);
-    font-size: 14px;
-    text-align: left;
+  color: rgba(155, 155, 155, 100);
+  font-size: 14px;
+  text-align: left;
 }
 .width-full {
-    width: 100% !important;
+  width: 100% !important;
 }
 .width50 {
-    width: 50% !important;
+  width: 50% !important;
 }
 .width80 {
-    width: 80% !important;
-    margin: 0 auto;
+  width: 80% !important;
+  margin: 0 auto;
 }
 .width90 {
-    width: 80% !important;
-    margin: 0 auto;
+  width: 80% !important;
+  margin: 0 auto;
 }
 .text-overflow {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .clearfix {
-    &::after {
-        visibility: hidden;
-        display: block;
-        font-size: 0;
-        content: " ";
-        clear: both;
-        height: 0;
-    }
+  &::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ' ';
+    clear: both;
+    height: 0;
+  }
 }
 aside {
-    background: #eef1f6;
-    padding: 8px 24px;
-    margin-bottom: 20px;
-    border-radius: 2px;
-    display: block;
-    font-size: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    color: #2c3e50;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    a {
-        color: #337ab7;
-        cursor: pointer;
-        &:hover {
-            color: rgb(32, 160, 255);
-        }
+  background: #eef1f6;
+  padding: 8px 24px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  display: block;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: #2c3e50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  a {
+    color: #337ab7;
+    cursor: pointer;
+    &:hover {
+      color: rgb(32, 160, 255);
     }
+  }
 }
 
 //main-container全局样式
 .app-container {
-    padding: 20px;
+  padding: 20px;
 }
 .components-container {
-    margin: 30px 50px;
-    position: relative;
+  margin: 30px 50px;
+  position: relative;
 }
 .pagination-container {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 .sub-navbar {
-    height: 50px;
-    line-height: 50px;
-    position: relative;
-    width: 100%;
-    text-align: right;
-    padding-right: 20px;
-    transition: 600ms ease position;
-    background: linear-gradient(90deg, rgba(32, 182, 249, 1) 0%, rgba(32, 182, 249, 1) 0%, rgba(33, 120, 241, 1) 100%, rgba(33, 120, 241, 1) 100%);
-    .subtitle {
-        font-size: 20px;
-        color: #fff;
-    }
-    &.draft {
-        background: #d0d0d0;
-    }
-    &.deleted {
-        background: #d0d0d0;
-    }
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+  width: 100%;
+  text-align: right;
+  padding-right: 20px;
+  transition: 600ms ease position;
+  background: linear-gradient(
+    90deg,
+    rgba(32, 182, 249, 1) 0%,
+    rgba(32, 182, 249, 1) 0%,
+    rgba(33, 120, 241, 1) 100%,
+    rgba(33, 120, 241, 1) 100%
+  );
+  .subtitle {
+    font-size: 20px;
+    color: #fff;
+  }
+  &.draft {
+    background: #d0d0d0;
+  }
+  &.deleted {
+    background: #d0d0d0;
+  }
 }
 .link-type,
 .link-type:focus {
-    color: #337ab7;
-    cursor: pointer;
-    &:hover {
-        color: rgb(32, 160, 255);
-    }
+  color: #337ab7;
+  cursor: pointer;
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
 }
 
 //refine vue-multiselect plugin
 .multiselect {
-    line-height: 16px;
+  line-height: 16px;
 }
 .multiselect--active {
-    z-index: 1000 !important;
+  z-index: 1000 !important;
 }
-
 
 // 滚动条
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
-::-webkit-scrollbar-track{
-  -webkit-box-shadow: 0 0 3px rgba(0,0,0,0.3) inset;
-  background-color: #F5F5F5;
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) inset;
+  background-color: #f5f5f5;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   border-radius: 3px;
   -webkit-box-shadow: none !important;
 }
@@ -226,20 +232,28 @@ aside {
   background-image: none !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #DD5E89 !important;
+  background-color: rgba(64, 158, 255, 0.1) !important;
 }
 
 ::selection {
-  background:#d3d3d3;
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
 }
 
 ::-moz-selection {
-  background:#d3d3d3;
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
 }
 
 ::-webkit-selection {
-  background:#d3d3d3;
-  color:#555;
+  background: #d3d3d3;
+  color: #555;
+}
+
+.project-form {
+  padding: 20px;
+}
+
+:root {
+  --form-theme-color: #409eff;
 }

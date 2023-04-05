@@ -1,44 +1,28 @@
 <template>
-    <el-container>
-        <el-header class="el-page-header">
-            <h5 v-if="projectData">
-                {{ projectData.name }}
-            </h5>
-            <el-button type="primary" @click="openFormHandle">
-                访问表单
-            </el-button>
-        </el-header>
-        <el-main>
-            <el-table
-                :data="projectResultList"
-                class="public-result-table"
-            >
-                <el-table-column type="expand">
-                    <template slot-scope="props">
-                        <el-form class="public-table-expand" label-position="left">
-                            <el-form-item v-for="item in projectItemList" :key="item.id" :label="item.label">
-                                <result-item :field-item-id="item.formItemId" :project-item-data="item"
-                                             :result-data="props.row"
-                                />
-                            </el-form-item>
-                        </el-form>
-                    </template>
-                </el-table-column>
-                <el-table-column
-                    label="提交序号"
-                    prop="serialNumber"
-                />
-                <el-table-column
-                    label="提交地址"
-                    prop="submitAddress"
-                />
-                <el-table-column
-                    label="提交时间"
-                    prop="createTime"
-                />
-            </el-table>
-        </el-main>
-    </el-container>
+  <el-container>
+    <el-header class="el-page-header">
+      <h5 v-if="projectData">
+        {{ projectData.name }}
+      </h5>
+      <el-button type="primary" @click="openFormHandle"> 访问表单 </el-button>
+    </el-header>
+    <el-main>
+      <el-table :data="projectResultList" class="public-result-table">
+        <el-table-column type="expand">
+          <template slot-scope="props">
+            <el-form class="public-table-expand" label-position="left">
+              <el-form-item v-for="item in projectItemList" :key="item.id" :label="item.label">
+                <result-item :field-item-id="item.formItemId" :project-item-data="item" :result-data="props.row" />
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
+        <el-table-column label="提交序号" prop="serialNumber" />
+        <el-table-column label="提交地址" prop="submitAddress" />
+        <el-table-column label="提交时间" prop="createTime" />
+      </el-table>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -46,76 +30,75 @@ import _ from 'lodash'
 import ResultItem from './item'
 
 export default {
-    name: 'StatisticsPublic',
-    components: {
-        ResultItem
-    },
-    metaInfo: {
-        title: '反馈结果',
-        meta: [
-            {
-                name: 'viewport',
-                content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=2,user-scalable=yes'
-            }
-        ]
-    },
-    data() {
-        return {
-            projectResultList: [],
-            projectItemList: [],
-            projectData: null,
-            projectItemColumns: {},
-            // 查询条件
-            queryConditions: {
-                current: 1,
-                size: 10,
-                projectKey: '',
-                beginDateTime: '',
-                endDateTime: ''
-            },
-            projectKey: null,
-            tableData: []
-        }
-    },
-    created() {
-        // this.projectKey = this.$route.query.projectKey
-        // this.queryConditions.projectKey = this.projectKey
-        // this.queryProjectResult()
-        // this.queryProjectItems()
-        // this.queryProject()
-    },
-    methods: {
-        openFormHandle() {
-            this.$router.replace({path: `/s/${this.projectKey}`})
-        },
-        queryProject() {
-            this.$api.get(`/user/form/${this.projectKey}`).then(res => {
-                this.projectData = res.data
-            })
-        },
-        queryProjectResult() {
-            this.$api.get('/user/form/result/public/page', {params: this.queryConditions}).then(res => {
-                let {records, total, size} = res.data
-                this.projectResultList = records
-                this.total = total
-                this.queryConditions.size = size
-            })
-        },
-        queryProjectItems() {
-            this.$api.get('/user/form/item/list', {params: {key: this.projectKey, displayType: true}}).then(res => {
-                if (res.data) {
-                    res.data.map(item => {
-                        _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)
-                    })
-                }
-                this.projectItemList = res.data
-            })
-        }
+  name: 'StatisticsPublic',
+  components: {
+    ResultItem
+  },
+  metaInfo: {
+    title: '反馈结果',
+    meta: [
+      {
+        name: 'viewport',
+        content: 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=2,user-scalable=yes'
+      }
+    ]
+  },
+  data() {
+    return {
+      projectResultList: [],
+      projectItemList: [],
+      projectData: null,
+      projectItemColumns: {},
+      // 查询条件
+      queryConditions: {
+        current: 1,
+        size: 10,
+        projectKey: '',
+        beginDateTime: '',
+        endDateTime: ''
+      },
+      projectKey: null,
+      tableData: []
     }
+  },
+  created() {
+    // this.projectKey = this.$route.query.projectKey
+    // this.queryConditions.projectKey = this.projectKey
+    // this.queryProjectResult()
+    // this.queryProjectItems()
+    // this.queryProject()
+  },
+  methods: {
+    openFormHandle() {
+      this.$router.replace({ path: `/s/${this.projectKey}` })
+    },
+    queryProject() {
+      this.$api.get(`/user/form/${this.projectKey}`).then((res) => {
+        this.projectData = res.data
+      })
+    },
+    queryProjectResult() {
+      this.$api.get('/user/form/result/public/page', { params: this.queryConditions }).then((res) => {
+        let { records, total, size } = res.data
+        this.projectResultList = records
+        this.total = total
+        this.queryConditions.size = size
+      })
+    },
+    queryProjectItems() {
+      this.$api.get('/user/form/item/list', { params: { key: this.projectKey, displayType: true } }).then((res) => {
+        if (res.data) {
+          res.data.map((item) => {
+            _.set(this.projectItemColumns, `field${item.formItemId}`, item.label)
+          })
+        }
+        this.projectItemList = res.data
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
-
 .el-header {
   display: flex;
   flex-direction: row;
@@ -160,5 +143,4 @@ export default {
     width: 50%;
   }
 }
-
 </style>

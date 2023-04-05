@@ -3,36 +3,36 @@
  */
 
 const state = {
-    reLogin: false
+  reLogin: false
 }
 
 const getters = {
-    isReLogin: state => {
-        return state.reLogin
-    }
+  isReLogin: (state) => {
+    return state.reLogin
+  }
 }
 
 const actions = {
-    loginExpired(context, status) {
-        return new Promise(resolve => {
-            context.commit('setReLogin', {
-                status: status
-            })
-            resolve()
-        })
-    }
+  loginExpired(context, status) {
+    return new Promise((resolve) => {
+      context.commit('setReLogin', {
+        status: status
+      })
+      resolve()
+    })
+  }
 }
 
 const mutations = {
-    setReLogin(state, data) {
-        state.reLogin = data.status
-    }
+  setReLogin(state, data) {
+    state.reLogin = data.status
+  }
 }
 
 export default {
-    namespaced: true,
-    state,
-    actions,
-    getters,
-    mutations
+  namespaced: true,
+  state,
+  actions,
+  getters,
+  mutations
 }
