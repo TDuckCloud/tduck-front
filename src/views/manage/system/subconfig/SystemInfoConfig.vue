@@ -10,13 +10,13 @@
     >
       <el-switch v-model="form.openWxMpLogin" placeholder="https://pro.tduckcloud.com/" />
     </el-form-item>
-    <!--        <el-form-item-->
-    <!--            label="域名"-->
-    <!--            prop="webBaseUrl"-->
-    <!--            :rules="[{ required: true, message: '请输入项目前端所在域名', trigger: 'blur' }]"-->
-    <!--        >-->
-    <!--            <el-input v-model="form.webBaseUrl" placeholder="https://pro.tduckcloud.com/" />-->
-    <!--        </el-form-item>-->
+    <el-form-item
+      label="基础域名"
+      prop="webBaseUrl"
+      :rules="[{ required: true, message: '请输入项目前端所在域名', trigger: 'blur' }]"
+    >
+      <el-input v-model="form.webBaseUrl" placeholder="https://pro.tduckcloud.com/" />
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="handleSubmit"> 保存</el-button>
     </el-form-item>
