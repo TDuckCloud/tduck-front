@@ -13,7 +13,9 @@
               />
             </el-form-item>
             <el-form-item>
-              <el-button class="search-template-btn" type="primary" @click="queryTemplatePage"> 查询 </el-button>
+              <el-button class="search-template-btn" type="primary" @click="queryTemplatePage" icon="el-icon-search">
+                查询</el-button
+              >
             </el-form-item>
           </el-form>
         </div>
@@ -39,14 +41,14 @@
           <div v-for="template in templateList" :key="template.id" class="project-template-view">
             <img
               :src="template.coverImg ? template.coverImg : require('@/assets/images/99d0.png')"
-              style="width: 150px; height: 133px; border-radius: 10px"
+              class="preview-img"
             />
             <p class="project-template-title">
               {{ template.name }}
             </p>
-            <div class="project-template-use-view">
-              <el-button icon="el-icon-view" type="text" @click="toProjectTemplate(template.formKey)"> 查看 </el-button>
-              <el-button icon="el-icon-delete" type="text" @click="handleDelete(template)"> 删除 </el-button>
+            <div class="">
+              <el-button icon="el-icon-view" type="text" @click="toProjectTemplate(template.formKey)"> 查看</el-button>
+              <el-button icon="el-icon-delete" type="text" @click="handleDelete(template)"> 删除</el-button>
             </div>
           </div>
         </div>
@@ -134,6 +136,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.preview-img {
+  width: 90%;
+  height: 130px;
+  margin-top: 8px;
+  border-radius: 10px;
+}
+
 .create-container {
   margin: 0 auto;
   padding: 50px;
@@ -208,7 +217,7 @@ export default {
   color: rgba(16, 16, 16, 100);
   font-size: 14px;
   margin: 0 3px;
-  line-height: 30px;
+  line-height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

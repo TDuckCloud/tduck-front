@@ -77,13 +77,8 @@ export default {
         },
         {
           route: '/project/template',
-          name: '模板中心',
+          name: '共享模板',
           icon: 'fa-caret-square-o-up'
-        },
-        {
-          route: '/project/recycle',
-          name: '回收站',
-          icon: 'fa-trash'
         },
         {
           route: '/manage/user',
@@ -93,9 +88,14 @@ export default {
         },
         {
           route: '/manage/system',
-          name: '系统管理',
-          icon: 'fa-arrow-circle-up',
+          name: '系统配置',
+          icon: 'el-icon-s-tools',
           admin: true
+        },
+        {
+          route: '/project/recycle',
+          name: '回收中心',
+          icon: 'fa-trash'
         }
       ]
     }
@@ -126,7 +126,7 @@ export default {
         },
         {
           route: '/manage/system',
-          name: '系统管理',
+          name: '系统配置',
           icon: 'fa-arrow-circle-up'
         }
       )
@@ -245,7 +245,7 @@ $menuActiveText: #409eff;
 }
 
 .menu-box {
-  min-width: 15%;
+  min-width: 12%;
   display: flex;
   padding: 5px;
   flex-direction: column;
@@ -265,10 +265,11 @@ $menuActiveText: #409eff;
     .menu-item {
       color: #333;
       font-size: 16px;
-      line-height: 30px;
-      padding: 5px 25px;
+      line-height: 20px;
+      padding: 5px 15px;
+      margin-top: 15px;
       border-radius: 5px;
-      text-align: left;
+      text-align: center;
 
       &:hover {
         cursor: pointer;

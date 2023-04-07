@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-alert class="mb10" title="重启生效" type="success" />
-    <el-form ref="fileEnvConfig" :model="form" label-width="150px">
+    <el-alert class="title" title="* 请注意，更改此配置后，需要重启后端项目才能生效" type="success" />
+    <el-form class="form" ref="fileEnvConfig" :model="form" label-width="150px">
       <el-form-item
         label="存储平台"
         prop="ossType"
@@ -21,7 +21,7 @@
         prop="accessKeyId"
         :rules="[{ required: true, message: '请输入AccessKeyID', trigger: 'blur' }]"
       >
-        <el-input v-model="form.accessKeyId" placeholder="请输入AccessKeyID" />
+        <el-input class="input" v-model="form.accessKeyId" placeholder="请输入AccessKeyID" />
       </el-form-item>
       <el-form-item
         v-if="form.ossType !== 'LOCAL'"
@@ -86,4 +86,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.form {
+  margin-top: 20px;
+  width: 600px;
+}
+</style>

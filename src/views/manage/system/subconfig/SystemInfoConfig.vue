@@ -1,14 +1,13 @@
 <template>
-  <el-form v-if="!loading" ref="systemInfoConfig" :model="form" label-width="120px">
+  <el-form style="width: 600px" v-if="!loading" ref="systemInfoConfig" :model="form" label-width="120px">
     <el-form-item label="系统版本">
       <el-tag type="success" effect="dark"> V4.0</el-tag>
     </el-form-item>
-    <el-form-item
-      label="公众号登录"
-      prop="openWxMpLogin"
-      :rules="[{ required: true, message: '请输入项目前端所在域名', trigger: 'blur' }]"
-    >
+    <el-form-item label="公众号登录" prop="openWxMpLogin">
       <el-switch v-model="form.openWxMpLogin" placeholder="https://pro.tduckcloud.com/" />
+      <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">
+        * 开启公众号登录后，请在配置文件中进行公众号参数配置并重新编译重启后端
+      </div>
     </el-form-item>
     <el-form-item
       label="基础域名"
@@ -16,6 +15,7 @@
       :rules="[{ required: true, message: '请输入项目前端所在域名', trigger: 'blur' }]"
     >
       <el-input v-model="form.webBaseUrl" placeholder="https://pro.tduckcloud.com/" />
+      <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">* 请填写站点实际域名</div>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="handleSubmit"> 保存</el-button>

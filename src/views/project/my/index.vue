@@ -108,7 +108,7 @@
         />
       </div>
     </div>
-    <el-dialog :visible.sync="createFormVisible" title="创建表单" width="30%">
+    <el-dialog class="create-form-dialog" :visible.sync="createFormVisible" title="创建表单" width="30%">
       <el-form ref="createForm" :model="formData" label-width="100px">
         <el-form-item :rules="[{ required: true, message: '名称不能为空' }]" label="表单名称" prop="name">
           <el-input v-model="formData.name" autocomplete="off" />
@@ -209,9 +209,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.create-form-dialog {
+  border-radius: 10px !important;
+}
+
 .app-container {
   width: 100%;
   height: 100%;
+  padding-top: 50px;
+  padding-left: 90px;
 }
 
 .form-container {

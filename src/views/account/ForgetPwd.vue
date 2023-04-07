@@ -2,11 +2,7 @@
   <div class="app-container">
     <div v-if="retrieveStep === 1" class="pwd-container">
       <div>
-        <img
-          class="header-logo-img"
-          src="https://oss.tduckcloud.com/logo-blue.png"
-          @click="$router.push({ path: '/' })"
-        />
+        <img class="header-logo-img" src="~@/assets/images/logo-blue.png" @click="$router.push({ path: '/' })" />
         <h4 class="title">找回密码</h4>
         <el-tabs v-model="retrieveType" class="login-form">
           <!--                    <el-tab-pane label="手机找回" name="phone">-->
@@ -50,11 +46,7 @@
       </div>
     </div>
     <div v-if="retrieveStep === 2" class="reset-pwd-view">
-      <img
-        class="header-logo-img"
-        src="https://oss.tduckcloud.com/logo-blue.png"
-        @click="$router.push({ path: '/' })"
-      />
+      <img class="header-logo-img" src="~@/assets/images/logo-blue.png" @click="$router.push({ path: '/' })" />
       <div>
         <h4 class="title">重置密码</h4>
         <div class="rest-pwd-user-view">

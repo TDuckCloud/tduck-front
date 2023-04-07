@@ -23,29 +23,24 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"> 新增 </el-button>
+        <el-button type="primary" icon="el-icon-plus" size="small" @click="handleAdd"> 新增 </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate">
+        <el-button type="success" icon="el-icon-edit" size="small" :disabled="single" @click="handleUpdate">
           修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete">
+        <el-button type="danger" icon="el-icon-delete" size="small" :disabled="multiple" @click="handleDelete">
           删除
         </el-button>
       </el-col>
     </el-row>
 
-    <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
+    <el-table style="margin-top: 10px" v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="Id" align="center" prop="id" />
       <el-table-column label="昵称" align="center" prop="name" />
-      <el-table-column label="头像" align="center" prop="avatar">
-        <template slot-scope="scope">
-          <el-avatar :src="scope.row.avatar" />
-        </template>
-      </el-table-column>
       <el-table-column label="性别" align="center" prop="gender">
         <template slot-scope="scope">
           <el-tag>

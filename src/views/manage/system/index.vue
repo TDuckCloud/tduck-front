@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card style="padding-top: 20px; padding-left: 50px">
     <el-tabs v-model="activeName" @tab-click="handleTabClick">
       <el-tab-pane label="系统配置" name="systemInfoConfig">
         <system-info-config v-if="activeName === 'systemInfoConfig'" />
