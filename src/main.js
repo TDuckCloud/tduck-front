@@ -18,7 +18,7 @@ import VueClipboard from 'vue-clipboard2'
 import './assets/icons'
 import Process from '@/components/HandleProcess/process'
 import { parseTime, resetForm } from '@/utils/tduck'
-
+import './plugin'
 Vue.prototype.$api = api
 Vue.prototype.$dayjs = dayjs
 Vue.prototype.$store = store
