@@ -145,7 +145,7 @@ export default {
 
 .create-container {
   margin: 0 auto;
-  padding: 50px;
+  padding: 50px 150px;
   width: 100%;
 
   .el-pagination {
