@@ -46,6 +46,9 @@
 ## 文档 - Document
 - 项目文档： <a href="https://doc.tduckcloud.com" target="_blank">文档地址</a>
 
+##  如有帮助请点亮 Star ⭐️
+![登录](readmeImages/star.gif)
+
 ## 预览-开源版 - Preview
 
 
