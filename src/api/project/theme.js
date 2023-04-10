@@ -1,34 +1,31 @@
 import { deleteRequest, getRequest, postRequest, putRequest } from '../baseRequest'
 
-// 获取模板分类
-export const getFormTemplateTypeListRequest = (params) => getRequest('/form/template/type/list', params)
+// 查询项目主题外观模板列表
+export const listTheme = (params) => getRequest('/form/theme/page', params)
 
-// 保存为模板
-export const createTemplateRequest = (data) => postRequest('/form/template/create', data)
+// 查询项目主题外观模板详细
+export const getTheme = (id) => getRequest('/form/theme/' + id)
 
-// 删除模板
-export const deleteFormTemplateRequest = (data) => postRequest('/form/template/delete', data)
+// 新增项目主题外观模板
+export const addTheme = (data) => postRequest('/form/theme', data)
 
-// 获取模板数据
-export const getFormTemplatePageRequest = (params) => getRequest('/form/template/page', params)
+// 修改项目主题外观模板
+export const updateTheme = (data) => putRequest('/form/theme', data)
 
-// 使用模板创建表单
-export const useTemplateCreateFormRequest = (data) => postRequest('/user/form/use-template/create', data)
+// 删除项目主题外观模板
+export const delTheme = (id) => deleteRequest('/form/theme/' + id)
 
-// 查询项目模板分类列表
-export const listCategory = (params) => getRequest('/form/template/category/page', params)
+// 查询单主题分类列表
+export const listCategory = (params) => getRequest('/form/theme/category/list', params)
 
-// 查询项目模板分类详细
-export const getCategory = (id) => getRequest('/form/template/category/' + id)
+// 查询单主题分类详细
+export const getCategory = (id) => getRequest('/form/theme/category/' + id)
 
-// 新增项目模板分类
-export const addCategory = (data) => postRequest('/form/template/category', data)
+// 新增单主题分类
+export const addCategory = (data) => postRequest('/form/theme/category', data)
 
-// 修改项目模板分类
-export const updateCategory = (data) => putRequest('/form/template/category', data)
+// 修改单主题分类
+export const updateCategory = (data) => putRequest('/form/theme/category', data)
 
-// 删除项目模板分类
-export const delCategory = (id) => deleteRequest('/form/template/category/' + id)
-
-// 导出项目模板分类
-export const exportCategory = (params) => getRequest('/form/template/category/export', params)
+// 删除单主题分类
+export const delCategory = (id) => deleteRequest('/form/theme/category/' + id)

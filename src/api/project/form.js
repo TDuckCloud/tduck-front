@@ -6,7 +6,7 @@ export const createFormRequest = (data) => postRequest('/user/form/create', data
 export const updateFormRequest = (data) => postRequest('/user/form/update', data)
 // 获取项目详情
 export const getProjectRequest = (formKey) => getRequest(`/user/form/${formKey}`)
-// 恢复表单
+//恢复表单
 export const restoreRecycleFormRequest = (data) => postRequest('/user/form/recycle/restore', data)
 // 从回收站删除表单
 export const deleteRecycleFormRequest = (data) => postRequest('/user/form/recycle/delete', data)
@@ -46,9 +46,3 @@ export const saveUserThemeRequest = (data) => postRequest('/user/form/theme/save
 
 // 查询表单主题
 export const getUserThemeRequest = (projectKey) => getRequest(`/user/form/theme/${projectKey}`)
-
-// 查询表单文件夹树
-export const getUserFormFolderTreeRequest = () => getRequest('user/form/folderTree')
-
-// 我协作的表单
-export const getMyCooperationFormsRequest = (params) => getRequest('user/form/my/cooperation', params)

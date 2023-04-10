@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { deleteRecycleFormRequest, listRecycleFormRequest, restoreRecycleFormRequest } from '../../../api/project/form'
+import { deleteRecycleFormRequest, listRecycleFormRequest, restoreRecycleFormRequest } from '@/api/project/form'
 
 export default {
   name: 'RecycleBin',
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     restoreProject(key) {
-      restoreRecycleFormRequest({ key: key }).then((res) => {
+      restoreRecycleFormRequest({ formKey: key }).then((res) => {
         if (res.data) {
           this.msgSuccess('恢复成功')
           this.queryRecycleProjectPage()
@@ -70,7 +70,7 @@ export default {
       })
     },
     deleteProject(key) {
-      deleteRecycleFormRequest({ key: key }).then((res) => {
+      deleteRecycleFormRequest({ formKey: key }).then((res) => {
         if (res.data) {
           this.msgSuccess('刪除成功')
           this.queryRecycleProjectPage()

@@ -3,7 +3,41 @@
     <div class="left-container">
       <el-scrollbar class="left-scrollbar-container">
         <p class="theme-title mb10">外观主题</p>
-        <el-empty description="暂无" />
+        <el-row :gutter="5">
+          <!--          <el-col :span="4">-->
+          <!--            <span class="theme-prompt-text">风格</span>-->
+          <!--          </el-col>-->
+          <el-col v-for="item in styleList" :key="item.key" :span="4" :xl="4" :lg="4" :md="8" :sm="8" :xs="10">
+            <span
+              :class="{ 'style-btn-active': activeStyle === item.key }"
+              class="style-btn"
+              @click="activeStyleHandle(item)"
+              >{{ item.label }}
+            </span>
+          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-col
+            v-for="t in themeList"
+            :key="t.id"
+            :span="8"
+            class="theme-img-view"
+            @click.native="activeThemeHandle(t)"
+          >
+            <p :class="{ 'head-list-view-select': activeTheme.id === t.id }" style="height: 100px">
+              <el-image
+                :class="{ 'head-list-img-active': activeTheme.id === t.id }"
+                :src="t.headImgUrl"
+                class="head-list-img"
+                fit="cover"
+              >
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline" />
+                </div>
+              </el-image>
+            </p>
+          </el-col>
+        </el-row>
       </el-scrollbar>
     </div>
     <pre-view :key="projectFormKey" :form-key="formKey" />
