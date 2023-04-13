@@ -27,7 +27,7 @@
     "resize-detector": "^0.3.0",
     "signature_pad": "^3.0.0-beta.4",
     "tduck-form-generator": "1.7.4",
-    "ua-parser-js": "^0.7.23",
+    "ua-parser-js": "^0.7.33",
     "vant": "^2.12.25",
     "vue": "^2.6.12",
     "vue-clipboard2": "^0.3.1",
