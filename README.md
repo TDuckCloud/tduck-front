@@ -1,8 +1,6 @@
-
-<br />
 <p align="center">
     <a href="https://www.tduckcloud.com" target="_blank" rel="noopener noreferrer">
-        <img style="margin-bottom: 0px;" width="80px" src="https://oss.tduckcloud.com/lading-image/ICO-icon.png" alt="TDUCK logo" />
+        <img style="margin-bottom: 0px;" width="50px" src="https://oss.tduckcloud.com/lading-image/ICO-icon.png" alt="TDUCK logo" />
     </a>
 </p>
 
@@ -23,10 +21,11 @@
 
 <br />
 
+简体中文 |  [English](./README_en.md)
 
 ## 简介 - idea
 
-- 2019年初，同事想做一场针对全国范围内的照片数据收集活动，经过考察当时使用了一款saas工具：[*客表单]；
+- 2019年初，同事想做一场针对全国范围内的照片数据收集活动，经过考察当时使用了一款saas工具;
 
 - 由于数据量较大，saas工具的部分业务组件、附件存储费用偏高(对我来说)；而且收集的内容隐私性要求高，在当时saas的工具无法满足独立部署。考虑到安全性和费用等问题，我开始规划自己的表单系统。
 
@@ -49,8 +48,10 @@
 ##  如有帮助请点亮 Star ⭐️
 ![登录](readmeImages/star.gif)
 
-## 预览-开源版 - Preview
+## 前端项目
+- https://gitee.com/TDuckApp/tduck-front
 
+## 预览-开源版 - Preview
 
 ![登录](readmeImages/screely-1680875090915.png)
 ![我的表单](readmeImages/screely-1680873937150.png)
