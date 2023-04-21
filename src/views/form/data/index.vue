@@ -388,9 +388,9 @@ export default {
       this.$refs.baseTable.exportMsg()
       exportDataRequest(params).then((response) => {
         if (options.type == 'csv') {
-          this.download(response, options.filename, '.csv')
+          this.download(response.data, options.filename, '.csv')
         } else {
-          this.download(response, options.filename)
+          this.download(response.data, options.filename)
         }
         this.$refs.baseTable.endExportMsg()
       })
