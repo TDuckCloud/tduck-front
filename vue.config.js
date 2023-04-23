@@ -18,7 +18,10 @@ module.exports = {
     proxy: {
       '/tduck-api': {
         target: 'http://localhost:8999',
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_API_ROOT]: ''
+        }
       }
     }
   },
