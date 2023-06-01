@@ -9,12 +9,6 @@
     >
       <template #toolbar>
         <el-button v-if="checkBtnPerms('add')" icon="el-icon-plus" type="primary" @click="handleAdd"> 添加 </el-button>
-        <el-button v-if="checkBtnPerms('query')" icon="el-icon-search" type="primary" @click="handleQuery">
-          查询
-        </el-button>
-        <el-button v-if="checkBtnPerms('import')" icon="el-icon-upload2" type="primary" @click="handleImport">
-          导入
-        </el-button>
         <el-button v-if="checkBtnPerms('download')" icon="el-icon-download" type="primary" @click="handleDownload">
           下载附件
         </el-button>
