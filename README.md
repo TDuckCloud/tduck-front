@@ -52,6 +52,8 @@
 
 ## 前端项目
 - https://gitee.com/TDuckApp/tduck-front
+- 特别说明：v4版本表单设计器使用的是pro版本的能力，设计器部分为npm引入不支持修改，但可以永久免费使用；
+- 如需更改可购买pro版对应套餐。
 
 ## 预览-开源版 - Preview
 
