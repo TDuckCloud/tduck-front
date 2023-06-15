@@ -33,7 +33,7 @@
 
 - 2019年底「COVID-19」的出现，对问卷表单系统的需求又上升一个等级，我们通过不断优化，使企事业单位能够低成本快速拥有一套独立部署的表单问卷系统，即时赋能业务。
 
-- [开源版](https://demo.tduckapp.com) 经过了2年的优化后，功能趋于稳定； 2021年下半年推出了[tduck-Pro商业版](https://pro.tduckcloud.com)。
+- [社区版](https://demo.tduckapp.com) 经过了2年的优化后，功能趋于稳定； 2021年下半年推出了[tduck-Pro商业版](https://pro.tduckcloud.com)。
 
 
 ------------------------------
@@ -55,7 +55,7 @@
 - 特别说明：v4版本表单设计器使用pro版本能力，设计器部分为npm引入不支持修改，但可以永久免费使用！
 - 如需更改可购买pro版对应套餐。
 
-## 预览-开源版 - Preview
+## 预览-社区版 - Preview
 
 ![登录](readmeImages/screely-1680875090915.png)
 ![我的表单](readmeImages/screely-1680873937150.png)
