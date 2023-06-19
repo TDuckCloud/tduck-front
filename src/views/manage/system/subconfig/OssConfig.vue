@@ -1,6 +1,16 @@
 <template>
   <div>
-    <el-alert class="title" title="* 请注意，更改此配置后，需要重启后端项目才能生效" type="success" />
+    <el-alert class="title" title="* 请注意，更改此配置后，需要重启后端项目才能生效" type="info">
+      <a
+        href="https://doc.tduckcloud.com/openSource/configure/fileConfigure.html"
+        target="_blank"
+        style="color: #0080ff"
+        type="primary"
+      >
+        文件配置文档</a
+      >
+    </el-alert>
+
     <el-form class="form" ref="fileEnvConfig" :model="form" label-width="150px">
       <el-form-item
         label="存储平台"
