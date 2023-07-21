@@ -172,10 +172,7 @@ export default {
         .then(() => {
           this.$store.dispatch('user/logout').then(() => {
             router.push({
-              path: '/login',
-              query: {
-                redirect: router.currentRoute.fullPath
-              }
+              path: '/login'
             })
           })
         })
