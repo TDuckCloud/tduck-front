@@ -15,15 +15,30 @@
     <br />   
     <a href="https://www.tduckcloud.com/" target="_blank">官方网站</a>&nbsp;
     <a href="https://doc.tduckcloud.com"  target="_blank" >部署文档</a>&nbsp;
-    <a href="https://pro.tduckcloud.com/s/QUiDSKq8" target="_blank">微信群</a>&nbsp;
+    <a href="https://pro.tduckcloud.com/s/QUiDSKq8" target="_blank">用户社区</a>&nbsp;
     <a href="https://space.bilibili.com/409825300" target="_blank">bilibili频道</a>
 </p>
 
-<br />
 
 简体中文 |  [English](./README_en.md)
 
-## 简介 - idea
+### 社区活动 🔥
+- 给项目助力，获取社区版最新 **表单编辑器源码**！（限时）
+- 活动参与方式：[点击查看](https://doc.tduckcloud.com/openSource/#hot-%E7%A4%BE%E5%8C%BA%E6%B4%BB%E5%8A%A8-%F0%9F%94%A5)
+- 项目发展离不开您的助力，如有帮助请点亮star
+  ![登录](readmeImages/star.gif)
+
+### 演示地址
+- <a href="http://www.tduckcloud.com" target="_blank">在线体验</a>
+- 部署管理员账号：admin@tduckcloud.com
+- 部署默认密码：123456
+- <a href="https://doc.tduckcloud.com" target="_blank">项目文档</a>
+- [更新日志](https://doc.tduckcloud.com/openSource/changeLog.html)
+- [使用宝塔部署](https://doc.tduckcloud.com/openSource/deploy/openSourceDeploy.html)
+- [使用docker快速启动](https://doc.tduckcloud.com/openSource/deploy/dockerDeploy.html)
+
+
+## 项目介绍 - idea
 
 - 2019年初，同事想做一场针对全国范围内的照片数据收集活动，经过考察当时使用了一款saas工具;
 
@@ -33,29 +48,14 @@
 
 - 2019年底「COVID-19」的出现，对问卷表单系统的需求又上升一个等级，我们通过不断优化，使企事业单位能够低成本快速拥有一套独立部署的表单问卷系统，即时赋能业务。
 
-- [社区版](https://demo.tduckapp.com) 经过了2年的优化后，功能趋于稳定； 2021年下半年推出了[tduck-Pro商业版](https://pro.tduckcloud.com)。
+- [社区版](https://demo.tduckapp.com) 经过了2年的优化后，功能趋于稳定； 2021年下半年推出了[tduck-Pro商业版](https://pro.tduckcloud.com)，2023年5月推出<a href="https://pro.tduckcloud.com/s/LNnVStZV" target="_blank">TReport可视化大屏>>内测招募🔥</a>。
 
 
 ------------------------------
 
-## 演示 - Demonstrate
-
-- 在线体验：<a href="http://www.tduckcloud.com" target="_blank">演示地址</a>
-- 部署管理员账号：admin@tduckcloud.com
-- 部署默认密码：123456
-
-## 文档 - Document
-- 项目文档： <a href="https://doc.tduckcloud.com" target="_blank">文档地址</a>
-
-##  如有帮助请点亮 Star ⭐️
-![登录](readmeImages/star.gif)
-
-## 前端项目
-- https://gitee.com/TDuckApp/tduck-front
-- 特别说明：v4版本表单设计器使用pro版本能力，设计器部分为npm引入不支持修改，但可以永久免费使用！
-- 如需更改可购买pro版对应套餐。
 
 ## 预览-社区版 - Preview
+
 
 ![登录](readmeImages/screely-1680875090915.png)
 ![我的表单](readmeImages/screely-1680873937150.png)
@@ -70,7 +70,6 @@
 ![发布表单](readmeImages/screely-1680873661475.png)
 ![统计概览](readmeImages/screely-1680873817576.png)
 ![外观设置](readmeImages/screely-1680873577743.png)
-
 
 ## 免责声明
 
@@ -87,4 +86,5 @@ TDUCK填鸭表单不提供任何形式的保证。所有与使用本站相关的
 TDUCK填鸭表单一直坚持合法合规的开发和销售软件产品。我们诚挚地希望所有用户遵守国家法律法规，在合法的前提下使用我们的产品。
 
 特此声明。
+
 
