@@ -37,7 +37,7 @@
     "vue-router": "^3.4.8",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.5.1",
-    "vxe-table": "^3.3.14",
+    "vxe-table": "3.4.6",
     "vxe-table-plugin-export-xlsx": "^2.2.1",
     "xe-utils": "^3.4.0"
   },
