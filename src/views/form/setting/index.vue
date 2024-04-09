@@ -13,6 +13,9 @@
       <el-tab-pane label="分享设置">
         <share-setting />
       </el-tab-pane>
+      <el-tab-pane label="数据推送">
+        <data-push />
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -21,6 +24,7 @@ import SubmitSetting from './submit'
 import WriteSetting from './write'
 import NotifySetting from './notify'
 import ShareSetting from './share'
+import DataPush from './DataPush'
 
 export default {
   name: 'ProjectSetting',
@@ -28,7 +32,8 @@ export default {
     SubmitSetting,
     WriteSetting,
     NotifySetting,
-    ShareSetting
+    ShareSetting,
+    DataPush
   },
   data() {
     return {}

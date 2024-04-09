@@ -1,7 +1,7 @@
 <template>
   <el-form style="width: 600px" v-if="!loading" ref="systemInfoConfig" :model="form" label-width="120px">
     <el-form-item label="系统版本">
-      <el-tag type="success" effect="dark"> V4.0</el-tag>
+      <el-tag effect="dark" type="success"> V5.0</el-tag>
     </el-form-item>
     <el-form-item label="公众号登录" prop="openWxMpLogin">
       <el-switch v-model="form.openWxMpLogin" placeholder="https://pro.tduckcloud.com/" />

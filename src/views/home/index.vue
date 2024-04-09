@@ -93,6 +93,24 @@ export default {
           admin: true
         },
         {
+          route: '/project/template/category',
+          name: '模板分类',
+          icon: 'el-icon-bank-card',
+          admin: true
+        },
+        {
+          route: '/project/theme/index',
+          name: '主题列表',
+          icon: 'el-icon-view',
+          admin: true
+        },
+        {
+          route: '/project/theme/category',
+          name: '主题分类',
+          icon: 'el-icon-edit',
+          admin: true
+        },
+        {
           route: '/project/recycle',
           name: '回收中心',
           icon: 'fa-trash'
@@ -115,9 +133,7 @@ export default {
   created() {
     let user = this.getStore.getters['user/userInfo'] || {}
     const isAdmin = user.admin
-    console.log('aaaa')
     if (isAdmin) {
-      console.log('aaaa')
       this.menuList.push(
         {
           route: '/manage/user',

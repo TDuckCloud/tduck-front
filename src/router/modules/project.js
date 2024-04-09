@@ -19,7 +19,21 @@ export default [
         meta: { requireLogin: true },
         component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template/index')
       },
-
+      {
+        path: 'template/category',
+        meta: { requireLogin: true },
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/project/template/category.vue')
+      },
+      {
+        path: 'theme/category',
+        meta: { requireLogin: true },
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/project/theme/category.vue')
+      },
+      {
+        path: 'theme/index',
+        meta: { requireLogin: true },
+        component: () => import(/* webpackChunkName: 'root' */ '@/views/project/theme/index.vue')
+      },
       {
         path: 'template/preview',
         meta: { requireLogin: true },
