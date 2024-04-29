@@ -5,33 +5,6 @@
         <img class="header-logo-img" src="~@/assets/images/logo-blue.png" @click="$router.push({ path: '/' })" />
         <h4 class="title">找回密码</h4>
         <el-tabs v-model="retrieveType" class="login-form">
-          <!--                    <el-tab-pane label="手机找回" name="phone">-->
-          <!--                        <el-form ref="phoneForm" :model="retrieveAccountForm" :rules="phoneRules" label-width="0px">-->
-          <!--                            <el-form-item prop="phoneNumber">-->
-          <!--                                <el-input-->
-          <!--                                    v-model="retrieveAccountForm.phoneNumber"-->
-          <!--                                    autocomplete="off"-->
-          <!--                                    placeholder="请输入手机号"-->
-          <!--                                />-->
-          <!--                            </el-form-item>-->
-          <!--                            <el-form-item label="" prop="code">-->
-          <!--                                <el-input v-model="retrieveAccountForm.code" class="width50" autocomplete="off" placeholder="请输入验证码" />-->
-          <!--                                <el-button-->
-          <!--                                    :disabled="emailValidateCodeBtn"-->
-          <!--                                    class="ml-20"-->
-          <!--                                    type="primary"-->
-          <!--                                    @click="sendPhoneValidateCodeHandle"-->
-          <!--                                >-->
-          <!--                                    {{ emailValidateCodeBtnText }}-->
-          <!--                                </el-button>-->
-          <!--                            </el-form-item>-->
-          <!--                            <el-form-item>-->
-          <!--                                <el-button class="width-full" type="primary" @click="phoneRetrievePassWordHandle">-->
-          <!--                                    找回密码-->
-          <!--                                </el-button>-->
-          <!--                            </el-form-item>-->
-          <!--                        </el-form>-->
-          <!--                    </el-tab-pane>-->
           <el-tab-pane label="邮箱找回" name="email">
             <el-form ref="emailForm" :model="retrieveAccountForm" :rules="emailRules" label-width="0px" status-icon>
               <el-form-item label="" prop="email">
@@ -47,7 +20,7 @@
     </div>
     <div v-if="retrieveStep === 2" class="reset-pwd-view">
       <img class="header-logo-img" src="~@/assets/images/logo-blue.png" @click="$router.push({ path: '/' })" />
-      <div>
+      <div class="reset-pwd-inner-wrap">
         <h4 class="title">重置密码</h4>
         <div class="rest-pwd-user-view">
           <i class="el-icon-user" />
@@ -272,8 +245,10 @@ export default {
 }
 
 .reset-pwd-view {
-  div {
-    width: 350px;
+  width: 650px;
+
+  .reset-pwd-inner-wrap {
+    width: 650px;
     padding: 50px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     .rest-pwd-user-view {
