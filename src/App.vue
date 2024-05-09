@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import TduckForm from 'tduck-form-generator'
+import { getCurrentDomain } from '@/utils'
+
 export default {
   provide() {
     return {
@@ -18,6 +21,13 @@ export default {
   },
   watch: {
     $route: 'routeChange'
+  },
+  beforeCreate() {
+    if (process.env['VUE_APP_API_ROOT']) {
+      localStorage.setItem(TduckForm.constant.BASE_URL, process.env['VUE_APP_API_ROOT'])
+    } else {
+      localStorage.setItem(TduckForm.constant.BASE_URL, getCurrentDomain())
+    }
   },
   methods: {
     reload() {
