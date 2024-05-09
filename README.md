@@ -4,7 +4,7 @@
     </a>
 </p>
 
-<p align="center">一款在线数据收集/问卷调查工具</p>
+<p align="center">一款免费的在线数据收集/问卷调查工具</p>
 
 <p align="center">
     <img src='https://gitee.com/TDuckApp/tduck-platform/badge/star.svg?theme=dark' alt='star'></img>
@@ -15,7 +15,7 @@
     <br />   
     <a href="https://www.tduckcloud.com/" target="_blank">官方网站</a>&nbsp;
     <a href="https://doc.tduckcloud.com"  target="_blank" >部署文档</a>&nbsp;
-    <a href="https://pro.tduckcloud.com/s/QUiDSKq8" target="_blank">用户社区</a>&nbsp;
+    <a href="https://gitee.com/TDuckApp/tduck-platform/issues" target="_blank">用户社区</a>&nbsp;
     <a href="https://space.bilibili.com/409825300" target="_blank">bilibili频道</a>
 </p>
 
@@ -24,20 +24,18 @@
 
 ## 项目介绍 - idea
 
-- 2019年初，同事想做一场针对全国范围内的照片数据收集活动，经过考察当时使用了一款saas工具;
-
-- 由于数据量较大，saas工具的部分业务组件、附件存储费用偏高(对我来说)；而且收集的内容隐私性要求高，在当时saas的工具无法满足独立部署。考虑到安全性和费用等问题，我开始规划自己的表单系统。
-
-- 逛了开源社区发现当时国内的开源表单系统比较少，或者说还达不到我们对「美」的追求；于是计划用空余时间写一个问卷表单系统，并从开源做起。```tduck表单```由此诞生。
-
-- 2019年底「COVID-19」的出现，对问卷表单系统的需求又上升一个等级，我们通过不断优化，使企事业单位能够低成本快速拥有一套独立部署的表单问卷系统，即时赋能业务。
+- Tduck填鸭表单是一款自定义表单工具，支持问卷调查、数据收集等功能。采用无代码理念支持开发自定义组件，简单拖拽即可生成表单，完成数据收集。采用SpringBoot+Vue+ElementUI技术栈，功能强大界面清新，支持一键部署。
 
 - [社区版](https://demo.tduckapp.com) 经过了2年的优化后，功能趋于稳定； 2021年下半年推出了[tduck-Pro版](https://pro.tduckcloud.com)，2023年5月推出<a href="https://pro.tduckcloud.com/s/LNnVStZV" target="_blank">可视化大屏</a>。
+
+- 2023年12月推出：<a href="https://www.tduckcloud.com/x" target="_blank">TDuckX-Vue3旗舰版</a>。
+
+- 2024年1月 **全量开源** 大屏产品：<a href="https://gitee.com/TDuckApp/tduck-report-platform" target="_blank">TReport</a>，4月支持表单数据通过WebHook集成至大屏端，实现数据同步：[数据同步教程](https://www.bilibili.com/video/BV1MH4y1K7Xa/)。
 
 
 ### 社区活动 🔥🔥🔥🔥
 - 给项目助力，获取社区版最新 **表单编辑器源码**！（限时）
-- 活动参与方式：[点击查看](https://doc.tduckcloud.com/openSource/#hot-%E7%A4%BE%E5%8C%BA%E6%B4%BB%E5%8A%A8-%F0%9F%94%A5)
+- 活动参与方式：[点击查看](https://doc.tduckcloud.com/openSource/activity.html)
 - 项目发展离不开您的助力，如有帮助请点亮star
 
 ![登录](readmeImages/star.gif)
@@ -52,7 +50,7 @@
 ### 版本区别
 - 功能对比：https://docs.qq.com/sheet/DSUhoR2pOc2RuZ0Va?tab=BB08J2
 - 社区版：https://demo.tduckapp.com/home
-- Pro版：https://pro.tduckcloud.com
+- 官网：https://www.tduckcloud.com
 - 小程序插件：https://doc.tduckcloud.com/functionDesc/uniappDesc.html
 
 ### 项目部署
@@ -77,18 +75,18 @@ docker run -e SPRING_DATASOURCE_URL="jdbc:mysql://127.0.0.1:3310/tduck-v4?useSSL
 - 常见问题：https://doc.tduckcloud.com/openSource/deploy/usualQuestion.html
 
 ### 关于问题咨询
-- 此项目为Tduck团队兼职维护，如果您在使用社区版过程中遇到了问题，可在社区查看常见问题或留言进行求助 - [点击进入填鸭问答社区](https://support.qq.com/products/389844/)
+- 此项目为Tduck团队兼职维护，如果您在使用社区版过程中遇到了问题，可在社区查看常见问题或留言进行求助 - [点击进入填鸭问答社区](https://gitee.com/TDuckApp/tduck-platform/issues)
 ------------------------------
 
 ## 预览-社区版 - Preview
 
 ![登录](readmeImages/screely-1680875090915.png)
-![我的表单](readmeImages/screely-1680873937150.png)
+![我的项目](readmeImages/screely-1713235168567.png)
 ![表单设计器](readmeImages/screely-1680873554938.png)
 ![模板中心](readmeImages/screely-1680874308945.png)
 ![逻辑设置](readmeImages/screely-1680873488767.png)
-![用户管理](readmeImages/screely-1680874985938.png)
-![系统配置](readmeImages/screely-1680874351097.png)
+![用户管理](readmeImages/screely-1713235303271.png)
+![系统配置](readmeImages/screely-1713235232698.png)
 ![回收设置](readmeImages/screely-1680873612592.png)
 ![数据详情](readmeImages/screely-1680873703554.png)
 ![保存模板](readmeImages/screely-1680873844396.png)
