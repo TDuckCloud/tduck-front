@@ -23,11 +23,13 @@ export default {
     $route: 'routeChange'
   },
   beforeCreate() {
+    window.tduckBaseUrl = process.env['VUE_APP_API_ROOT']
     if (process.env['VUE_APP_API_ROOT']) {
       localStorage.setItem(TduckForm.constant.BASE_URL, process.env['VUE_APP_API_ROOT'])
     } else {
       localStorage.setItem(TduckForm.constant.BASE_URL, getCurrentDomain())
     }
+    console.log('更新日期：2024-5-9 13:37')
   },
   methods: {
     reload() {
