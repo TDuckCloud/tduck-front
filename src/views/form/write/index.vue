@@ -64,7 +64,8 @@ export default {
       formConfig: {
         formKey: '',
         preview: false,
-        showBtns: true
+        showBtns: true,
+        supportText: 'Powered By Tduck 填鸭表单'
       },
       writeStatus: 1,
       // 不允许填写的提示信息
