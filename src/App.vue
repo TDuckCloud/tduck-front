@@ -29,7 +29,7 @@ export default {
     } else {
       localStorage.setItem(TduckForm.constant.BASE_URL, getCurrentDomain())
     }
-    console.log('更新日期：2024-5-9 13:37')
+    console.log('更新日期：2024-8-2 16:37')
   },
   methods: {
     reload() {
