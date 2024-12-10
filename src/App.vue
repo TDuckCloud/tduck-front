@@ -29,7 +29,9 @@ export default {
     } else {
       localStorage.setItem(TduckForm.constant.BASE_URL, getCurrentDomain())
     }
-    console.log('更新日期：2024-8-2 16:37')
+    window.aMapKey = process.env['VUE_APP_MAP_KEY']
+    window.aMapSecurityJsCode = process.env['VUE_APP_SECURITY_JSCODE']
+    console.log('更新日期：2024-12-10 16:37')
   },
   methods: {
     reload() {

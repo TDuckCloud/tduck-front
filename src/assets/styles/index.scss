@@ -30,6 +30,10 @@ html {
 *::after {
   box-sizing: inherit;
 }
+p{
+  margin: 0;
+}
+
 .no-padding {
   padding: 0 !important;
 }
