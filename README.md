@@ -1,4 +1,4 @@
-![输入图片说明](doc/logo-banner.png)
+![输入图片说明](https://doc-oss.tduckcloud.com/doc/logo-banner.png)
 <p align="center">
     <img src='https://gitee.com/TDuckApp/tduck-platform/badge/star.svg?theme=dark' alt='star'></img>
     <img src='https://gitee.com/TDuckApp/tduck-platform/badge/fork.svg?theme=dark' alt='fork'></img>
