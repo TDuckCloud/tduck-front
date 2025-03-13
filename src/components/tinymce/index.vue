@@ -70,8 +70,6 @@ export default {
       selector: `#${this.tinymceId}${this.inline ? 'inline' : ''}`,
       language: 'zh_CN',
       menubar: 'false',
-      icons: 'tduck',
-      skin: 'tduck',
       placeholder: this.placeholder,
       // skin_url: "/tinymce/skins/ui/tduck",
       // content_css: "/tinymce/skins/content/tduck",

@@ -26,10 +26,12 @@
       <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">* 请填写站点实际域名</div>
     </el-form-item>
     <el-form-item label="版权说明" prop="copyright">
-      <div style='height: 200px'>
-        <tinymce v-model='form.copyright'
-                 toolbar='undo redo |  fontsize | bold italic underline strikethrough | align link   lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview  '
-                 placeholder="请输入版权说明" />
+      <div style="height: 200px">
+        <tinymce
+          v-model="form.copyright"
+          toolbar="  fontsizeselect bold italic underline strikethrough undo redo  blockquote removeformat alignleft aligncenter alignright   hr  link  charmap preview     forecolor backcolor fullscreen "
+          placeholder="请输入版权说明"
+        />
       </div>
       <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">* 显示在系统底部的版权信息</div>
     </el-form-item>
