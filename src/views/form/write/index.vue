@@ -1,5 +1,6 @@
 <template>
   <div class="write-container">
+    <form-qrcode />
     <h1 id="inActiveTime" style="display: none" />
     <div v-cloak v-if="writeStatus == 0">
       <el-result :title="writeNotStartPrompt" icon="error" />
@@ -37,6 +38,7 @@ import { createFormResultRequest, publicCreateFormResultRequest, viewFormResultR
 import { checkWritePwdRequest, getPublicSettingsRequest, getWriteSettingStatusRequest } from '@/api/project/setting'
 import { jumpUrl } from './SubmitJump'
 import { checkWriteCountCap, saveWriteCount } from '@/views/form/write/DeviceWriteCount'
+import FormQrcode from '@/views/form/write/FormQrcode.vue'
 
 const uaParser = require('ua-parser-js')
 const ua = uaParser(navigator.userAgent)
@@ -46,6 +48,7 @@ require('@/utils/ut')
 export default {
   name: 'WriteView',
   components: {
+    FormQrcode,
     BizProjectForm
   },
   mixins: [TduckFormMixin],

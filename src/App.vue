@@ -22,16 +22,24 @@ export default {
   watch: {
     $route: 'routeChange'
   },
-  beforeCreate() {
+  async beforeCreate() {
     window.tduckBaseUrl = process.env['VUE_APP_API_ROOT']
     if (process.env['VUE_APP_API_ROOT']) {
       localStorage.setItem(TduckForm.constant.BASE_URL, process.env['VUE_APP_API_ROOT'])
     } else {
       localStorage.setItem(TduckForm.constant.BASE_URL, getCurrentDomain())
     }
+    // 获取系统配置并存储到 localStorage
+    try {
+      const sysRes = await this.$api.get('/public/systemInfoConfig')
+      const systemConfig = JSON.parse(sysRes.data)
+      localStorage.setItem('systemConfig', JSON.stringify(systemConfig))
+    } catch (error) {
+      console.error('获取系统配置失败:', error)
+    }
     window.aMapKey = process.env['VUE_APP_MAP_KEY']
     window.aMapSecurityJsCode = process.env['VUE_APP_SECURITY_JSCODE']
-    console.log('更新日期：2024-12-10 16:37')
+    console.log('更新日期：2025-3-13 16:37')
   },
   methods: {
     reload() {
@@ -46,7 +54,14 @@ export default {
   },
   metaInfo: {
     titleTemplate: (title) => {
-      return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE
+      try {
+        const systemConfig = JSON.parse(localStorage.getItem('systemConfig'))
+        const systemName = systemConfig?.systemName || process.env.VUE_APP_TITLE
+        return title ? `${title} - ${systemName}` : systemName
+      } catch (error) {
+        console.error('获取系统名称失败:', error)
+        return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE
+      }
     }
   }
 }

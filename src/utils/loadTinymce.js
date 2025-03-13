@@ -4,6 +4,8 @@ import ELEMENT from 'element-ui'
 let tinymceObj
 
 export default function loadTinymce(cb) {
+  const tinymceUrl = window.origin + '/tinymce/tinymce.min.js'
+
   if (tinymceObj) {
     cb(tinymceObj)
     return
@@ -17,7 +19,7 @@ export default function loadTinymce(cb) {
     background: 'rgba(255, 255, 255, 0.5)'
   })
 
-  loadScript('//lib.baomitu.com/tinymce/5.8.2/tinymce.min.js', () => {
+  loadScript(tinymceUrl, () => {
     loading.close()
     // eslint-disable-next-line no-undef
     tinymceObj = tinymce

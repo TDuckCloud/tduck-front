@@ -65,12 +65,7 @@
         </el-tab-pane>
       </el-tabs>
       <register v-else @success="registerSuccessHandle" />
-      <p class="desc">关于TDuckApp登录</p>
-      <p class="desc">
-        若微信扫码失败，请打开 微信授权页面 登录 若QQ登录填鸭云异常， 可查阅
-        <a href="https://doc.tduckcloud.com">帮助文档</a> 若因微信、QQ、公众号冻结或账号密码找回失败等 无法登录，可
-        自助申请 登录账号
-      </p>
+      <div class="copyright" v-if="copyright" v-html="copyright"></div>
     </div>
   </div>
 </template>
@@ -128,15 +123,17 @@ export default {
       refreshWxQrcodeTimer: null,
       wxQrcodeResultTimer: null,
       qqLoginAuthorizeUrl: '',
-      enableWx: false
+      enableWx: false,
+      copyright: ''
     }
   },
   computed: {},
   watch: {},
   async created() {
     let sysRes = await this.$api.get('/public/systemInfoConfig')
-    let { openWxMpLogin } = JSON.parse(sysRes.data)
+    let { openWxMpLogin, copyright } = JSON.parse(sysRes.data)
     this.enableWx = openWxMpLogin || false
+    this.copyright = copyright || ''
     if (this.enableWx) {
       const self = this
       this.getLoginWxQrCode()
@@ -342,5 +339,14 @@ export default {
   background: #408efc;
   border-radius: 10px;
   width: 145px;
+}
+
+.copyright {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #909399;
+  font-size: 14px;
 }
 </style>

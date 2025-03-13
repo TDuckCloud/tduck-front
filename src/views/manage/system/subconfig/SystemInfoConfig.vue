@@ -3,6 +3,14 @@
     <el-form-item label="系统版本">
       <el-tag effect="dark" type="success"> V5.0</el-tag>
     </el-form-item>
+    <el-form-item
+      label="系统名称"
+      prop="systemName"
+      :rules="[{ required: true, message: '请输入系统名称', trigger: 'blur' }]"
+    >
+      <el-input v-model="form.systemName" placeholder="请输入系统名称" />
+    </el-form-item>
+
     <el-form-item label="公众号登录" prop="openWxMpLogin">
       <el-switch v-model="form.openWxMpLogin" placeholder="https://pro.tduckcloud.com/" />
       <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">
@@ -17,6 +25,14 @@
       <el-input v-model="form.webBaseUrl" placeholder="https://pro.tduckcloud.com/" />
       <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">* 请填写站点实际域名</div>
     </el-form-item>
+    <el-form-item label="版权说明" prop="copyright">
+      <div style='height: 200px'>
+        <tinymce v-model='form.copyright'
+                 toolbar='undo redo |  fontsize | bold italic underline strikethrough | align link   lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview  '
+                 placeholder="请输入版权说明" />
+      </div>
+      <div style="margin-left: 10px; font-size: 12px; color: #8a8f97">* 显示在系统底部的版权信息</div>
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="handleSubmit"> 保存</el-button>
     </el-form-item>
@@ -25,10 +41,13 @@
 
 <script>
 import ConfigMixin from './ConfigMixin'
-
+import Tinymce from '@/components/tinymce/index.vue'
 export default {
   name: 'SystemInfoConfig',
   mixins: [ConfigMixin],
+  components: {
+    Tinymce
+  },
   data() {
     return {
       loading: true,
