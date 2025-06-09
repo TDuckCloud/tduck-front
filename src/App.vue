@@ -39,7 +39,7 @@ export default {
     }
     window.aMapKey = process.env['VUE_APP_MAP_KEY']
     window.aMapSecurityJsCode = process.env['VUE_APP_SECURITY_JSCODE']
-    console.log('更新日期：2025-3-13 16:37')
+    console.log('更新日期：2025-6-9 12:15:19')
   },
   methods: {
     reload() {
