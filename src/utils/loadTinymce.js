@@ -10,6 +10,11 @@ export default function loadTinymce(cb) {
     cb(tinymceObj)
     return
   }
+  if (window.tinymce) {
+    tinymceObj = window.tinymce
+    cb(tinymceObj)
+    return
+  }
 
   const loading = ELEMENT.Loading.service({
     fullscreen: true,
