@@ -74,7 +74,10 @@ export default {
   mounted() {
     this.formKey = this.$route.query.key
     let url = window.location.protocol + '//' + window.location.host
-    this.mobilePreviewUrl = `${url}/project/form/view?key=${this.formKey}`
+    // 支持二级目录访问
+    let publicPath = process.env.BASE_URL || '/'
+    let modeSign = this.$router.mode == 'hash' ? '#' : ''
+    this.mobilePreviewUrl = `${url}${publicPath}${modeSign}/project/form/view?key=${this.formKey}`
     this.$set(this.formConfig, 'formKey', this.formKey)
   }
 }
