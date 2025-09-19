@@ -152,7 +152,7 @@
 <script>
 import { jsonSimpleClone } from '@/utils'
 import { getFormLogicRequest, listProjectItemRequest, saveFormLogicRequest } from '@/api/project/form'
-import { debounce } from 'throttle-debounce'
+import { debounce } from 'lodash'
 
 export default {
   name: 'ProjectLogic',
@@ -333,14 +333,14 @@ export default {
         })
       })
     },
-    saveProjectLogic: debounce(430, true, function (logicList) {
+    saveProjectLogic: debounce(function (logicList) {
       let data = { formKey: this.formKey, scheme: logicList }
       saveFormLogicRequest(data).then((res) => {
         this.isLoading = false
         this.isSave = ''
         this.saveMessage = '已保存'
       })
-    })
+    }, 300)
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <el-form style="width: 600px" v-if="!loading" ref="systemInfoConfig" :model="form" label-width="120px">
     <el-form-item label="系统版本">
-      <el-tag effect="dark" type="success"> V5.0</el-tag>
+      <el-tag effect="dark" type="success"> V5.2</el-tag>
     </el-form-item>
     <el-form-item
       label="系统名称"

@@ -18,40 +18,15 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['form:template:category:save']"
-          icon="el-icon-plus"
-          plain
-          size="mini"
-          type="primary"
-          @click="handleAdd"
-        >
-          新增
-        </el-button>
+        <el-button icon="el-icon-plus" plain size="mini" type="primary" @click="handleAdd"> 新增 </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['form:template:category:update']"
-          :disabled="single"
-          icon="el-icon-edit"
-          plain
-          size="mini"
-          type="success"
-          @click="handleUpdate"
-        >
+        <el-button :disabled="single" icon="el-icon-edit" plain size="mini" type="success" @click="handleUpdate">
           修改
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['form:template:category:delete']"
-          :disabled="multiple"
-          icon="el-icon-delete"
-          plain
-          size="mini"
-          type="danger"
-          @click="handleDelete"
-        >
+        <el-button :disabled="multiple" icon="el-icon-delete" plain size="mini" type="danger" @click="handleDelete">
           删除
         </el-button>
       </el-col>
@@ -65,24 +40,8 @@
       <el-table-column align="center" label="排序" prop="sort" />
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
         <template slot-scope="scope">
-          <el-button
-            v-hasPermi="['form:template:category:update']"
-            icon="el-icon-edit"
-            size="mini"
-            type="text"
-            @click="handleUpdate(scope.row)"
-          >
-            修改
-          </el-button>
-          <el-button
-            v-hasPermi="['form:template:category:delete']"
-            icon="el-icon-delete"
-            size="mini"
-            type="text"
-            @click="handleDelete(scope.row)"
-          >
-            删除
-          </el-button>
+          <el-button icon="el-icon-edit" size="mini" type="text" @click="handleUpdate(scope.row)"> 修改 </el-button>
+          <el-button icon="el-icon-delete" size="mini" type="text" @click="handleDelete(scope.row)"> 删除 </el-button>
         </template>
       </el-table-column>
     </el-table>
