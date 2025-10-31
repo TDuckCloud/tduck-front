@@ -90,7 +90,10 @@ export default {
   mounted() {
     this.formKey = this.$route.query.key
     let url = window.location.protocol + '//' + window.location.host
-    this.writeLink = `${url}/s/${this.formKey}`
+    // 支持二级目录访问
+    let publicPath = process.env.BASE_URL || '/'
+    let modeSign = this.$router.mode == 'hash' ? '#' : ''
+    this.writeLink = `${url}${publicPath}${modeSign}/s/${this.formKey}`
     this.getProjectStatus()
   },
   methods: {
