@@ -55,11 +55,14 @@ TDuck填鸭表单 是国内首批基于Vue开源的问卷/表单收集工具。
 
 ### 其他产品
 
+
 [填鸭表单-TDuckPro-Vue2版](https://pro.tduckcloud.com)；
 
 [填鸭表单-TDuckX-Vue3版](https://x.tduckcloud.com)；
 
-[填鸭表单-TReport可视化大屏](https://report.tduckcloud.com)；
+[填鸭表单-TDuck社区版](https://demo.tduckapp.com)；
+
+[填鸭表单-TReport可视化大屏](https://gitee.com/TDuckApp/tduck-report-platform)；
 
 
 > ps：表单系统有3个版本（社区、Pro、TDuckX），此处绕不清的友友可以看看 [填鸭表单功能对比](http://https://docs.qq.com/sheet/DSUhoR2pOc2RuZ0Va?tab=BB08J2)
