@@ -603,4 +603,35 @@ export default {
   opacity: 0;
   transform: translateY(-8px);
 }
+
+@media (max-width: 576px) {
+  .forget-pwd-wrapper {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    padding: 20px 10px 60px 10px !important;
+  }
+
+  .glow-circle {
+    filter: blur(60px) !important;
+    &.glow-1 {
+      width: 250px !important;
+      height: 250px !important;
+    }
+    &.glow-2 {
+      width: 300px !important;
+      height: 300px !important;
+    }
+  }
+
+  .forget-card {
+    padding: 30px 20px !important;
+    margin-top: 40px !important;
+    margin-bottom: 20px !important;
+    border-radius: 16px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
 </style>

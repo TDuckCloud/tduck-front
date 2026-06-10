@@ -678,4 +678,53 @@ export default {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    padding: 24px 12px 60px 12px !important;
+  }
+
+  .bg-glowing-blob {
+    filter: blur(80px) !important;
+    &.blob-1 {
+      width: 300px !important;
+      height: 300px !important;
+    }
+    &.blob-2 {
+      width: 350px !important;
+      height: 350px !important;
+    }
+  }
+
+  .login-card-wrapper {
+    width: 100% !important;
+    max-width: 420px !important;
+    min-height: auto !important;
+    padding: 24px 16px !important;
+    margin-top: 40px !important;
+    margin-bottom: 20px !important;
+    border-radius: 16px !important;
+  }
+
+  .logo-banner {
+    display: none !important;
+  }
+
+  .logo-content {
+    padding-left: 0 !important;
+    flex: 1 !important;
+    width: 100% !important;
+  }
+
+  .copyright {
+    position: static !important;
+    transform: none !important;
+    margin: 20px auto 0 auto !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+}
 </style>
