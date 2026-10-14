@@ -410,8 +410,8 @@ export default {
         password: [
           { required: true, trigger: 'blur', message: '请输入新密码' },
           {
-            pattern: constants.passwordReg,
-            message: constants.passwordRegDesc
+            pattern: constants.strongPasswordReg,
+            message: constants.strongPasswordRegDesc
           }
         ],
         repeatPassword: [{ required: true, trigger: 'blur', validator: validateRePass }]

@@ -41,8 +41,20 @@ export default {
           this.percentage = rate
         }
         if (url) {
-          this.downloadUrl = url
           clearInterval(this.timer)
+          if (url === 'EMPTY_FILES') {
+            this.message = '未发现有效附件文件'
+            this.completeMessage = '未发现有效附件文件'
+            this.$message.warning('未发现有效附件文件，无法生成压缩包')
+            return
+          }
+          if (url === 'ERROR') {
+            this.message = '导出文件失败，请稍后重试'
+            this.completeMessage = '导出文件失败，请稍后重试'
+            this.$message.error('导出文件失败，请稍后重试')
+            return
+          }
+          this.downloadUrl = url
         }
       })
     },

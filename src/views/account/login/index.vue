@@ -87,6 +87,9 @@
       </div>
     </div>
 
+    <!-- 首次登录强制修改密码弹窗 -->
+    <first-login-update-pwd ref="firstLoginUpdatePwd" @success="loginSuccessHandle" />
+
     <!-- 极简高雅页脚 -->
     <div class="copyright" v-if="copyright" v-html="copyright"></div>
   </div>
@@ -97,11 +100,13 @@ import { getCurrentDomain } from '@/utils'
 // 引入组件
 import constants from '@/utils/constants'
 import Register from '../register/index.vue'
+import FirstLoginUpdatePwd from './FirstLoginUpdatePwd.vue'
 
 export default {
   name: 'Login',
   components: {
-    Register
+    Register,
+    FirstLoginUpdatePwd
   },
   data() {
     const validateAccount = (rule, value, callback) => {
@@ -216,7 +221,11 @@ export default {
         })
         .then((res) => {
           if (res.data) {
-            this.loginSuccessHandle(res.data)
+            if (res.data.needChangePassword) {
+              this.$refs.firstLoginUpdatePwd.show(res.data)
+            } else {
+              this.loginSuccessHandle(res.data)
+            }
           }
         })
     },
@@ -253,7 +262,11 @@ export default {
               data: this.accountForm
             })
             .then((res) => {
-              this.loginSuccessHandle(res.data)
+              if (res.data && res.data.needChangePassword) {
+                this.$refs.firstLoginUpdatePwd.show(res.data, this.accountForm.password)
+              } else {
+                this.loginSuccessHandle(res.data)
+              }
             })
         } else {
           console.log('error submit!!')
