@@ -2,7 +2,7 @@
   <div class="config-form-wrapper">
     <el-form v-if="!loading" ref="systemInfoConfig" :model="form" label-position="top" class="modern-form">
       <el-form-item label="系统当前版本">
-        <el-tag effect="light" class="modern-tag">V6.0</el-tag>
+        <el-tag effect="light" class="modern-tag">V6.1</el-tag>
         <div class="form-hint">当前系统运行的基础版本号</div>
       </el-form-item>
 

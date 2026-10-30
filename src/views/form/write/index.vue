@@ -88,6 +88,7 @@ export default {
         submitUa: ua,
         wxUserInfo: null,
         wxOpenId: null,
+        writePassword: '',
         originalData: null
       },
       // 提交后返回的数据
@@ -229,6 +230,7 @@ export default {
       this.submitFormData.formKey = this.formKey
       this.submitFormData.formId = data.formId
       this.submitFormData.formType = this.$refs.bizProjectForm.formConf.formType
+      this.submitFormData.writePassword = this.writePassword
       let res = null
       if (this.writeType === 1) {
         res = await publicCreateFormResultRequest(this.submitFormData)
