@@ -81,7 +81,7 @@
             </h3>
             <div class="card-meta">
               <span class="meta-tag">
-                {{ getTypeName(template.type) }}
+                {{ template.categoryName || getTypeName(template.categoryId || template.type) }}
               </span>
               <span class="meta-icon">
                 <i class="el-icon-arrow-right"></i>
@@ -211,8 +211,8 @@ export default {
     // 根据当前类型 ID 获取对应的分类名字
     getTypeName(typeId) {
       if (!typeId) return '默认分类'
-      const found = this.templateTypeList.find((t) => t.id.toString() === typeId.toString())
-      return found ? found.name : '精选模板'
+      const found = this.templateTypeList.find((t) => t && t.id != null && String(t.id) === String(typeId))
+      return found ? found.name : '默认分类'
     },
 
     // 图片加载失败退化方案
