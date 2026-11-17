@@ -1,6 +1,14 @@
 <template>
   <!-- 添加或修改单模板对话框 -->
   <el-dialog class="t-dialog t-dialog--top" title="保存模板" :visible.sync="open" width="500px" append-to-body>
+    <el-alert
+      v-if="!isAdmin"
+      title="提示：仅超级管理员可以保存公开模板，普通用户只能保存个人模板"
+      type="warning"
+      :closable="false"
+      show-icon
+      style="margin-bottom: 18px"
+    />
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="封面图" prop="coverImg">
         <imageUpload v-model="form.coverImg" />
@@ -50,6 +58,17 @@ export default {
       }
     }
   },
+  computed: {
+    isAdmin() {
+      try {
+        const userInfoStr = this.$store.getters['user/userInfo']
+        const user = typeof userInfoStr === 'string' ? JSON.parse(userInfoStr) : userInfoStr
+        return !!(user && user.admin)
+      } catch (e) {
+        return false
+      }
+    }
+  },
   mounted() {
     getFormTemplateTypeListRequest().then((res) => {
       this.templateTypeList = res.data
@@ -81,6 +100,10 @@ export default {
       this.resetForm('form')
     },
     submitForm() {
+      if (!this.isAdmin) {
+        this.msgWarning('仅超级管理员可以保存公开模板，普通用户只能保存个人模板')
+        return
+      }
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.form.formKey = this.formKey

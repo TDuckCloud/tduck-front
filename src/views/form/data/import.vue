@@ -59,7 +59,7 @@ export default {
           formKey: ''
         },
         // 设置上传的请求头部
-        headers: { Authorization: 'Bearer ' + getToken() },
+        headers: { token: getToken() },
         // 上传的地址
         url: process.env.VUE_APP_API_ROOT + '/user/form/data/import'
       }

@@ -47,13 +47,17 @@ export default {
       default: ''
     }
   },
+  computed: {
+    headers() {
+      return {
+        token: getToken()
+      }
+    }
+  },
   data() {
     return {
       dialogVisible: false,
-      uploadImgUrl: process.env.VUE_APP_API_ROOT + '/common/upload', // 上传的图片服务器地址
-      headers: {
-        Authorization: 'Bearer ' + getToken()
-      }
+      uploadImgUrl: process.env.VUE_APP_API_ROOT + '/common/upload' // 上传的图片服务器地址
     }
   },
   watch: {},
