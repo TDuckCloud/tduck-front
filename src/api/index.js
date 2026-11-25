@@ -30,7 +30,7 @@ api.interceptors.request.use((request) => {
    * 全局拦截请求发送前提交的参数
    * 以下代码为示例，在登录状态下，分别对 post 和 get 请求加上 token 参数
    */
-  if (store.getters['user/isLogin']) {
+  if (!request.headers.token && store.getters['user/isLogin']) {
     request.headers.token = store.state.user.token
   }
   signRequest(request)

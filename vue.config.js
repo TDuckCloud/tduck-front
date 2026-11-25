@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs')
 
 const name = process.env['VUE_APP_TITLE ']
 
@@ -32,8 +31,7 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src'),
-        'tduck-form-generator$': path.resolve(__dirname, '../tduck-front-full/src/formgen/src/index.js')
+        '@': resolve('src')
       }
     }
   },
